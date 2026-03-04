@@ -26,7 +26,12 @@
                 <img src="assets/logo.png" alt="The Residential Address"
                     style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
             </a>
-            <nav class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links" id="navLinks">
+                <!-- Dropdown for Services -->
+                <button class="nav-close" id="navClose" aria-label="Close menu">✕</button>
                 <!-- Dropdown for Services -->
                 <div class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Services ▾</a>
@@ -328,6 +333,31 @@
 
     <!-- ═══════ Scripts ═══════ -->
     <script>
+                // Mobile hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navClose = document.getElementById('navClose');
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+
+            navClose.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+
+            // Close when clicking a nav link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) header.classList.add('scrolled');

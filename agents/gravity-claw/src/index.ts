@@ -29,6 +29,24 @@ bot.use(async (ctx, next) => {
 bot.on("message:text", async (ctx) => {
     const incomingMsg = ctx.message.text;
     const chatId = ctx.chat.id;
+    const isGroupChat = chatId < 0; // Negative IDs = groups/supergroups
+
+    // ─── Group Chat Filter ─────────────────────────────────────────────
+    // In group chats, only respond when Max is directly addressed.
+    // In DMs, always respond.
+    if (isGroupChat) {
+        const botUsername = ctx.me.username?.toLowerCase() || "";
+        const msgLower = incomingMsg.toLowerCase();
+        const isMentioned = msgLower.includes(`@${botUsername}`);
+        const isNamedMax = msgLower.includes("max");
+        const isReplyToBot = ctx.message.reply_to_message?.from?.id === ctx.me.id;
+
+        if (!isMentioned && !isNamedMax && !isReplyToBot) {
+            // Not addressed to Max — ignore silently
+            return;
+        }
+    }
+
     console.log(`[RCVD] Chat: ${chatId} | User: ${ctx.from.id} -> ${incomingMsg}`);
 
     await ctx.replyWithChatAction("typing");
