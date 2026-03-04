@@ -242,7 +242,7 @@ header.scrolled {
 
 @media (max-width: 768px) {
     .logo {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 
@@ -261,8 +261,8 @@ header.scrolled {
 
 @media (max-width: 768px) {
     .logo .logo-icon {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
     }
 }
 
@@ -299,8 +299,8 @@ header.scrolled {
 
 @media (max-width: 768px) {
     .hamburger span {
-        width: 22px;
-        height: 2px;
+        width: 18px;
+        height: 1.5px;
     }
 }
 
