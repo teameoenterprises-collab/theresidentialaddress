@@ -314,6 +314,7 @@ header.scrolled {
 
 .btn-whatsapp:hover {
     background: #2be070;
+    color: #ffffff !important;
     transform: translateY(-3px);
     box-shadow: 0 12px 35px rgba(37, 211, 102, 0.3);
 }
