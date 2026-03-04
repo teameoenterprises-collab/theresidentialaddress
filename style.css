@@ -240,6 +240,12 @@ header.scrolled {
     letter-spacing: -0.02em;
 }
 
+@media (max-width: 768px) {
+    .logo {
+        font-size: 0.9rem;
+    }
+}
+
 .logo .logo-icon {
     width: 36px;
     height: 36px;
@@ -251,6 +257,13 @@ header.scrolled {
     font-size: 1rem;
     font-weight: 900;
     color: white;
+}
+
+@media (max-width: 768px) {
+    .logo .logo-icon {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .nav-links {
@@ -282,6 +295,13 @@ header.scrolled {
     background: var(--text-main);
     border-radius: 2px;
     transition: 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .hamburger span {
+        width: 22px;
+        height: 2px;
+    }
 }
 
 .nav-close {
