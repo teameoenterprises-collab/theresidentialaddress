@@ -52,7 +52,13 @@ bot.on("message:text", async (ctx) => {
     await ctx.replyWithChatAction("typing");
 
     try {
-        const agentReply = await processAgentMessage(incomingMsg, chatId.toString());
+        const agentReply = await processAgentMessage(
+            incomingMsg,
+            chatId.toString(),
+            async (progressMsg) => {
+                await ctx.reply(progressMsg);
+            }
+        );
         await ctx.reply(agentReply);
         console.log(`[SENT] Chat: ${chatId} -> ${agentReply}`);
     } catch (error) {

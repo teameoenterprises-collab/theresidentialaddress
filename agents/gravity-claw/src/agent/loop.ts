@@ -59,7 +59,7 @@ function saveAndTrimHistory(chatId: string) {
 }
 
 // ─── Agent Loop ─────────────────────────────────────────────────────────────
-export async function processAgentMessage(userMessage: string, chatId: string): Promise<string> {
+export async function processAgentMessage(userMessage: string, chatId: string, onProgress?: (msg: string) => Promise<void>): Promise<string> {
 
     // Multi-Agent Router
     let SYSTEM_PROMPT = `You are a helpful and concise AI assistant.`;
@@ -166,6 +166,18 @@ You have access to the project filesystem via MCP tools (prefixed with 'filesyst
         // 1. Handle Tool Calls
         if (response.functionCalls && response.functionCalls.length > 0) {
             console.log(`[AGENT] Iteration ${iteration}: Calling ${response.functionCalls.length} tool(s)...`);
+
+            if (onProgress && response.functionCalls[0]?.name) {
+                const cName = response.functionCalls[0].name;
+                let progressMsg = "⏳ Processing...";
+                if (cName.includes("read")) progressMsg = "📖 Reading files...";
+                else if (cName.includes("edit") || cName.includes("write")) progressMsg = "✏️ Editing files...";
+                else if (cName.includes("deploy")) progressMsg = "🚀 Deploying updates...";
+                else if (cName.includes("search")) progressMsg = "🔍 Searching...";
+                else progressMsg = `🛠 Running tool: ${cName.replace("filesystem__", "")}`;
+
+                await onProgress(progressMsg).catch(console.error);
+            }
 
             const toolResults = [];
             for (const call of response.functionCalls) {
