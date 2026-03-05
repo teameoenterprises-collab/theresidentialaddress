@@ -59,7 +59,7 @@ function saveAndTrimHistory(chatId: string) {
 }
 
 // ─── Agent Loop ─────────────────────────────────────────────────────────────
-export async function processAgentMessage(userMessage: string, chatId: string, onProgress?: (msg: string) => Promise<void>): Promise<string> {
+export async function processAgentMessage(userParts: any[], chatId: string, onProgress?: (msg: string) => Promise<void>): Promise<string> {
 
     // Multi-Agent Router
     let SYSTEM_PROMPT = `You are a helpful and concise AI assistant.`;
@@ -158,7 +158,7 @@ You have access to the project filesystem via MCP tools (prefixed with 'filesyst
 
     let iteration = 0;
     // Send the initial user message
-    let response = await chat.sendMessage({ message: userMessage });
+    let response = await chat.sendMessage({ message: userParts });
 
     while (iteration < MAX_ITERATIONS) {
         iteration++;
@@ -240,7 +240,7 @@ You have access to the project filesystem via MCP tools (prefixed with 'filesyst
 
             if (finalText) {
                 // Save conversation turn to history + persist to SQLite
-                history.push({ role: "user", parts: [{ text: userMessage }] });
+                history.push({ role: "user", parts: userParts });
                 history.push({ role: "model", parts: [{ text: finalText }] });
                 saveAndTrimHistory(chatId);
 
@@ -256,7 +256,7 @@ You have access to the project filesystem via MCP tools (prefixed with 'filesyst
     }
 
     // Save even if we hit max iterations
-    history.push({ role: "user", parts: [{ text: userMessage }] });
+    history.push({ role: "user", parts: userParts });
     history.push({ role: "model", parts: [{ text: "I was working on your request but it required too many steps. Please try breaking it into smaller tasks." }] });
     saveAndTrimHistory(chatId);
 
