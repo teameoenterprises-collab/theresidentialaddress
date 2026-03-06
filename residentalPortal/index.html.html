@@ -1,0 +1,3894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security headers (X-Frame-Options and frame-ancestors must be set server-side) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    img-src 'self' data: blob: https://*.supabase.co https://*.supabase.in;
+    connect-src 'self' https://*.supabase.co https://*.supabase.in wss://*.supabase.co https://cdn.jsdelivr.net;
+    base-uri 'self';
+    form-action 'self';
+  " />
+  <title>The Residential Address — Client Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ─── Supabase config ────────────────────────────────────────────
+    // Keys are split and assembled at runtime so they are never stored
+    // as a single readable string in source. The anon key is intentionally
+    // public-safe (it only allows what RLS permits), but splitting it
+    // prevents trivial scraping by bots and removes it from source-view.
+    const _cfg = [
+      'aHR0cHM6Ly9pdWx1aHh2cXludHh0cnhldnFiYi5zdXBhYmFzZS5jbw==',
+      'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1sMWJIVm9lSFp4ZVc1MGVIUnllR1YyY1dKaUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpJMk9USTROVFlzSW1WNGNDSTZNakE0T0RJMk9EZzFObjAuS2RucHdRal9jbjZmV3QtSnhMRDFSRVFxbnY4UXQydlBtOF9GZHZVQ205TQ=='
+    ].map(s => atob(s));
+    const SUPABASE_URL      = _cfg[0];
+    const SUPABASE_ANON_KEY = _cfg[1];
+  </script>
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --forest:   #1a3a2a;
+      --forest2:  #234d38;
+      --forest3:  #0f2419;
+      --gold:     #b8973a;
+      --gold2:    #d4af55;
+      --parch:    #f5f0e8;
+      --parch2:   #ece6d8;
+      --parch3:   #ddd5c5;
+      --white:    #fdfaf5;
+      --ink:      #0c0f0a;
+      --ink2:     #2a2a20;
+      --muted:    #7a7060;
+      --green:    #166534;
+      --green-bg: #dcfce7;
+      --amber:    #92400e;
+      --amber-bg: #fef9c3;
+      --blue:     #1e3a5f;
+      --blue-bg:  #dbeafe;
+      --red:      #991b1b;
+      --red-bg:   #fee2e2;
+      --shadow-s: 0 1px 4px rgba(12,15,10,0.07);
+      --shadow-m: 0 4px 16px rgba(12,15,10,0.10);
+      --shadow-l: 0 12px 40px rgba(12,15,10,0.16);
+      --radius:   12px;
+      --sb-width: 240px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 15px; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--parch);
+      color: var(--ink);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select, textarea { font-family: inherit; }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .hidden  { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+    /* ============================================================
+       LOADING SCREEN
+    ============================================================ */
+    #screen-loading {
+      position: fixed;
+      inset: 0;
+      background: var(--forest3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #screen-loading.out {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loading-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--gold2);
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+    }
+    .loading-sub {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 40px;
+    }
+    .loading-bar {
+      width: 180px;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      animation: barFill 1.6s ease-in-out forwards;
+    }
+    @keyframes barFill { from { width: 0; } to { width: 100%; } }
+
+    /* ============================================================
+       AUTH SCREEN
+    ============================================================ */
+    #screen-auth {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Left decorative panel */
+    .auth-left {
+      width: 42%;
+      background: var(--forest);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 52px 56px;
+    }
+    .auth-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 100% 60% at 110% 10%, rgba(184,151,58,0.20) 0%, transparent 55%),
+        radial-gradient(ellipse 70%  70% at -10% 90%, rgba(184,151,58,0.10) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .auth-brand {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .auth-brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--gold);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .auth-brand-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .auth-brand-text small {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+    .auth-headline {
+      position: relative;
+      z-index: 1;
+    }
+    .auth-headline h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 46px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .auth-headline h1 em {
+      color: var(--gold2);
+      font-style: italic;
+    }
+    .auth-headline p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.50);
+      max-width: 300px;
+    }
+    .auth-features {
+      position: relative;
+      z-index: 1;
+    }
+    .auth-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+    .auth-feature:last-child { margin-bottom: 0; }
+    .auth-feature-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: rgba(184,151,58,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .auth-feature span {
+      font-size: 13px;
+      color: rgba(255,255,255,0.60);
+      line-height: 1.4;
+    }
+
+    /* Right form panel */
+    .auth-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 48px;
+      background: var(--parch);
+    }
+    .auth-box {
+      width: 100%;
+      max-width: 400px;
+    }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1.5px solid var(--parch3);
+      margin-bottom: 36px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .auth-tab.active {
+      color: var(--forest);
+      border-bottom-color: var(--gold);
+    }
+    .form-title {
+      margin-bottom: 28px;
+    }
+    .form-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .form-title p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+    .error-banner {
+      display: none;
+      background: var(--red-bg);
+      border: 1px solid #fca5a5;
+      color: var(--red);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--parch3);
+      border-radius: 9px;
+      font-size: 14px;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--gold);
+    }
+    .field input::placeholder {
+      color: #b8ad9e;
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .auth-footer a {
+      color: var(--gold);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 9px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .btn-primary {
+      background: var(--forest);
+      color: var(--white);
+      width: 100%;
+      padding: 13px;
+      font-size: 15px;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--forest2);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-l);
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--ink);
+    }
+    .btn-gold:hover:not(:disabled) {
+      background: var(--gold2);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink2);
+      border: 1.5px solid var(--parch3);
+    }
+    .btn-ghost:hover:not(:disabled) {
+      border-color: var(--ink2);
+      background: var(--parch2);
+    }
+    .btn-sm {
+      padding: 6px 13px;
+      font-size: 12.5px;
+    }
+    .btn-full {
+      width: 100%;
+      justify-content: center;
+      padding: 13px;
+      font-size: 15px;
+    }
+
+    /* ============================================================
+       PORTAL LAYOUT
+    ============================================================ */
+    #screen-portal {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sb-width);
+      height: 100vh;
+      background: var(--forest);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow: hidden;
+    }
+    .sb-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 22px 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .sb-logo-mark {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .sb-logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .sb-logo-name small {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 9.5px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.30);
+      margin-top: 2px;
+    }
+    .sb-nav {
+      flex: 1;
+      padding: 14px 10px;
+      overflow-y: auto;
+    }
+    .sb-section-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      padding: 0 10px;
+      margin: 16px 0 6px;
+    }
+    .sb-section-label:first-child {
+      margin-top: 4px;
+    }
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: rgba(255,255,255,0.52);
+      font-size: 13.5px;
+      font-weight: 400;
+      transition: all 0.15s ease;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+    .sb-item:hover {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.85);
+    }
+    .sb-item.active {
+      background: rgba(184,151,58,0.16);
+      color: var(--gold2);
+      font-weight: 500;
+    }
+    .sb-item-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .sb-item-label { flex: 1; }
+    .sb-badge {
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .sb-footer {
+      padding: 12px 10px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .sb-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 8px;
+    }
+    .sb-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .sb-user-info { flex: 1; min-width: 0; }
+    .sb-user-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sb-user-role {
+      font-size: 11px;
+      color: rgba(255,255,255,0.32);
+      margin-top: 1px;
+    }
+    .sb-logout {
+      color: rgba(255,255,255,0.28);
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.18s;
+      flex-shrink: 0;
+    }
+    .sb-logout:hover { color: rgba(255,255,255,0.70); }
+
+    /* Main content */
+    .main {
+      margin-left: var(--sb-width);
+      flex: 1;
+      padding: 34px 38px;
+      min-height: 100vh;
+    }
+    .page {
+      display: none;
+      animation: pageIn 0.28s ease;
+    }
+    .page.active { display: block; }
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       PAGE COMPONENTS
+    ============================================================ */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+    }
+    .page-header-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .page-header-left p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Stat cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--parch2);
+      border-radius: var(--radius);
+      padding: 20px 20px 16px;
+      box-shadow: var(--shadow-s);
+    }
+    .stat-card-icon { font-size: 22px; margin-bottom: 10px; }
+    .stat-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .stat-card-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-card-value.green { color: var(--green); font-size: 18px; margin-top: 6px; }
+    .stat-card-value.amber { color: var(--amber); }
+    .stat-card-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    /* Grid layouts */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+    /* Card */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--parch2);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-s);
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .card-title-right { margin-left: auto; }
+
+    /* Status pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .pill-active   { background: var(--green-bg);  color: var(--green); }
+    .pill-complete { background: var(--blue-bg);   color: var(--blue);  }
+    .pill-pending  { background: var(--amber-bg);  color: var(--amber); }
+    .pill-inactive { background: #f3f4f6;           color: #6b7280;      }
+    .pill-lease    { background: var(--blue-bg);   color: var(--blue);  }
+    .pill-utility  { background: #e0f2fe;           color: #075985;      }
+    .pill-llc      { background: #ede9fe;           color: #4c1d95;      }
+    .pill-itin     { background: var(--amber-bg);  color: var(--amber); }
+    .pill-bank     { background: var(--green-bg);  color: var(--green); }
+    .pill-other    { background: #f3f4f6;           color: #6b7280;      }
+
+    /* Service list items */
+    .service-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--parch2);
+    }
+    .service-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .service-row:first-child { padding-top: 0; }
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .service-info { flex: 1; min-width: 0; }
+    .service-name { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+    .service-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Mail rows */
+    .mail-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .search-wrap { position: relative; flex: 1; }
+    .search-wrap input {
+      width: 100%;
+      padding: 9px 14px 9px 34px;
+      border: 1.5px solid var(--parch3);
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .search-wrap input:focus { border-color: var(--gold); }
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .filter-select {
+      padding: 9px 12px;
+      border: 1.5px solid var(--parch3);
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      cursor: pointer;
+    }
+    .mail-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      margin-bottom: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .mail-row:hover { background: var(--parch); }
+    .mail-row.unread {
+      background: #fffdf4;
+      border-color: rgba(184,151,58,0.28);
+    }
+    .unread-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .unread-dot.read {
+      background: transparent;
+      border: 1.5px solid var(--parch3);
+    }
+    .mail-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--parch2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .mail-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .mail-body { flex: 1; min-width: 0; }
+    .mail-sender {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .mail-row.unread .mail-sender { font-weight: 600; }
+    .mail-subject {
+      font-size: 12.5px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .mail-meta { text-align: right; flex-shrink: 0; }
+    .mail-date { font-size: 11.5px; color: var(--muted); }
+    .cat-pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 7px;
+      margin-top: 4px;
+    }
+    .cat-usps  { background: var(--blue-bg);  color: var(--blue);  }
+    .cat-bank  { background: var(--green-bg); color: var(--green); }
+    .cat-irs   { background: var(--amber-bg); color: var(--amber); }
+    .cat-other { background: #f3f4f6;          color: #4b5563;      }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+    }
+    .empty-state-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; line-height: 1.6; }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--parch2);
+    }
+    .data-table td {
+      padding: 12px;
+      font-size: 13.5px;
+      color: var(--ink);
+      border-bottom: 1px solid var(--parch2);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover td { background: var(--parch); }
+    .td-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .td-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: var(--ink);
+    }
+    .td-name { font-weight: 500; font-size: 13.5px; }
+    .td-sub  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    /* Upload / forms */
+    .form-section { max-width: 560px; }
+    .upload-zone {
+      border: 2px dashed var(--parch3);
+      border-radius: 10px;
+      padding: 36px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .upload-zone:hover,
+    .upload-zone.drag {
+      border-color: var(--gold);
+      background: #fffef7;
+    }
+    .upload-zone-icon { font-size: 32px; margin-bottom: 10px; }
+    .upload-zone p { font-size: 13.5px; color: var(--muted); }
+    .upload-zone strong { color: var(--ink); }
+    .upload-zone small { display: block; font-size: 12px; margin-top: 4px; }
+    .file-chip {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      background: var(--parch);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .file-chip-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 7px;
+      background: var(--parch2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .file-chip-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .file-chip-name { font-size: 13px; font-weight: 500; color: var(--ink); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-chip-size { font-size: 12px; color: var(--muted); }
+    .file-chip-remove { color: var(--muted); cursor: pointer; font-size: 16px; flex-shrink: 0; transition: color 0.15s; }
+    .file-chip-remove:hover { color: var(--ink); }
+
+    /* Toggle switches */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--parch2);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-svc-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .toggle-svc-info { flex: 1; }
+    .toggle-svc-name { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+    .toggle-svc-status { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .toggle-switch { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: var(--parch3);
+      border-radius: 21px;
+      transition: background 0.2s;
+    }
+    .toggle-track::before {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--white);
+      left: 3px;
+      top: 3px;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--forest); }
+    .toggle-switch input:checked + .toggle-track::before { transform: translateX(17px); }
+
+    /* Admin client list: table on desktop, cards on mobile */
+    .admin-table-wrap { display: block; }
+    .admin-cards-wrap { display: none; }
+
+    /* Sidebar user button — clickable for clients */
+    #sb-user-btn {
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    #sb-user-btn:hover { background: rgba(255,255,255,0.07); }
+
+    /* ============================================================
+       PROFILE MODAL
+    ============================================================ */
+    #profile-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12,15,10,0.50);
+      backdrop-filter: blur(4px);
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #profile-overlay.open { display: flex; }
+    .profile-modal {
+      background: var(--white);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: var(--shadow-l);
+      animation: pageIn 0.22s ease;
+      overflow: hidden;
+    }
+    .profile-modal-header {
+      background: var(--forest);
+      padding: 28px 28px 24px;
+      position: relative;
+    }
+    .profile-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255,255,255,0.10);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .profile-modal-close:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .profile-modal-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 14px;
+      border: 3px solid rgba(255,255,255,0.15);
+    }
+    .profile-modal-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 3px;
+    }
+    .profile-modal-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold2);
+    }
+    .profile-modal-body { padding: 22px 28px 26px; }
+    .profile-info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--parch2);
+    }
+    .profile-info-row:last-of-type { border-bottom: none; }
+    .profile-info-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--parch);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .profile-info-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .profile-info-value {
+      font-size: 13.5px;
+      color: var(--ink);
+    }
+    .profile-info-value.empty { color: var(--muted); font-style: italic; }
+    .profile-edit-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--parch2);
+    }
+    .profile-edit-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .profile-save-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 600px) {
+      #profile-overlay { padding: 0; align-items: flex-end; }
+      .profile-modal { border-radius: 20px 20px 0 0; max-height: 92vh; overflow-y: auto; }
+    }
+
+    /* ============================================================
+       CLIENT DETAIL POPUP
+    ============================================================ */
+    .client-popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: rgba(12,15,10,0.45);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .client-popup-overlay.open { display: flex; }
+    .client-popup {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 28px 28px 24px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: var(--shadow-l);
+      animation: pageIn 0.22s ease;
+      position: relative;
+    }
+    .client-popup-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--parch2);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .client-popup-close:hover { background: var(--parch3); color: var(--ink); }
+    .client-popup-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+    .client-popup-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .client-popup-role {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .client-popup-divider {
+      height: 1px;
+      background: var(--parch2);
+      margin-bottom: 18px;
+    }
+    .client-popup-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .client-popup-row:last-child { margin-bottom: 0; }
+    .client-popup-row-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--parch);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .client-popup-row-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .client-popup-row-value {
+      font-size: 13.5px;
+      color: var(--ink);
+      word-break: break-all;
+    }
+    .client-popup-row-value.empty { color: var(--muted); font-style: italic; }
+
+    /* ============================================================
+       ADMIN CLIENT CARDS (mobile)
+    ============================================================ */
+    .client-card {
+      background: var(--white);
+      border: 1px solid var(--parch2);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-s);
+    }
+    .client-card-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 12px;
+    }
+    .client-card-info { flex: 1; min-width: 0; }
+    .client-card-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .client-card-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .client-card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; font-size: 12.5px; color: var(--ink2); }
+    .client-card-meta-item { display: flex; align-items: center; gap: 5px; }
+    .client-card-meta-label { color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .client-card-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+    .client-card-actions .btn { flex: 1; min-width: 80px; font-size: 12px; padding: 7px 10px; }
+
+    /* ============================================================
+       MAIL ACCORDION
+    ============================================================ */
+    .mail-accordion {
+      border: 1.5px solid var(--parch2);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: border-color 0.18s;
+    }
+    .mail-accordion.unread { border-color: rgba(184,151,58,0.35); background: #fffdf4; }
+    .mail-accordion-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 12px 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .mail-accordion-header:hover { background: var(--parch); }
+    .mail-accordion.unread .mail-accordion-header:hover { background: #fff9e6; }
+    .mail-accordion-chevron {
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.22s ease;
+      margin-left: auto;
+    }
+    .mail-accordion.open .mail-accordion-chevron { transform: rotate(180deg); }
+    .mail-accordion-body {
+      display: none;
+      padding: 0 14px 14px;
+      border-top: 1px solid var(--parch2);
+    }
+    .mail-accordion.open .mail-accordion-body { display: block; }
+    .mail-accordion-desc {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--ink2);
+      background: var(--parch);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 7px 7px 0;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+    .mail-accordion-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .mobile-topbar {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--forest);
+      z-index: 150;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .topbar-hamburger {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .topbar-hamburger:hover { background: rgba(255,255,255,0.14); }
+    .topbar-hamburger span {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: var(--gold2);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .topbar-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .topbar-hamburger.open span:nth-child(2) { opacity: 0; }
+    .topbar-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .topbar-brand {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+    .topbar-brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .topbar-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ============================================================
+       MAIL VIEWER (full screen overlay)
+    ============================================================ */
+    #mail-viewer {
+      position: fixed;
+      inset: 0;
+      background: var(--parch);
+      z-index: 600;
+      display: none;
+      flex-direction: column;
+    }
+    #mail-viewer.open { display: flex; }
+    .mv-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--parch2);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .mv-back {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.15s;
+      padding: 4px;
+    }
+    .mv-back:hover { color: var(--ink); }
+    .mv-header-info { flex: 1; min-width: 0; }
+    .mv-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mv-date { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+    .mv-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .mv-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 32px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .mv-body img {
+      max-width: 100%;
+      max-height: 72vh;
+      border-radius: 10px;
+      box-shadow: var(--shadow-l);
+      display: block;
+    }
+    .mv-no-scan {
+      text-align: center;
+      width: 100%;
+      max-width: 560px;
+      padding-top: 24px;
+    }
+    .mv-no-scan-icon { font-size: 72px; margin-bottom: 20px; }
+    .mv-no-scan h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .mv-no-scan p { font-size: 14px; color: var(--muted); max-width: 360px; margin: 0 auto; line-height: 1.6; }
+
+    /* ============================================================
+       MODAL (assign services)
+    ============================================================ */
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12,15,10,0.50);
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-l);
+      animation: pageIn 0.22s ease;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--ink); }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--forest);
+      color: var(--white);
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      box-shadow: var(--shadow-l);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all 0.28s ease;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.error { background: #7f1d1d; }
+    .toast-icon { font-size: 15px; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+
+    /* ── Sidebar overlay (mobile) ── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 99;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-overlay.open { display: block; }
+
+    /* ── Tablet (≤1024px) ── */
+    @media (max-width: 1024px) {
+      :root { --sb-width: 210px; }
+      .auth-left { width: 38%; padding: 40px 36px; }
+      .auth-headline h1 { font-size: 38px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .main { padding: 28px 24px; }
+    }
+
+    /* ── Small tablet / large phone (≤860px) ── */
+    @media (max-width: 860px) {
+      /* Auth */
+      .auth-left { display: none; }
+      .auth-right { padding: 40px 28px; }
+
+      /* Show mobile topbar */
+      .mobile-topbar { display: flex; }
+
+      /* Portal layout — sidebar hidden off-canvas */
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s ease;
+        z-index: 200;
+        width: 260px;
+        top: 0; /* cover full height including topbar area */
+      }
+      .sidebar.open { transform: translateX(0); }
+
+      .main {
+        margin-left: 0;
+        padding: 24px 18px;
+        padding-top: calc(56px + 24px); /* topbar height + spacing */
+      }
+
+      /* Grids */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+
+      /* Page header stack on small screens */
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .page-header .btn { width: auto; align-self: stretch; justify-content: center; }
+
+      /* Mail toolbar */
+      .mail-toolbar { flex-wrap: wrap; }
+      .mail-toolbar .search-wrap { min-width: 0; flex: 1 1 200px; }
+      .filter-select { flex: 1 1 120px; }
+
+      /* Tables — horizontally scrollable */
+      .card { overflow-x: auto; }
+      .data-table { min-width: 500px; }
+      /* Switch admin client list to cards on tablet/mobile */
+      .admin-table-wrap { display: none; }
+      .admin-cards-wrap { display: block; }
+
+      /* Form section full width */
+      .form-section { max-width: 100%; }
+
+      /* History modal full-width on mobile */
+      #history-overlay { padding: 12px !important; }
+      #history-overlay > div { max-height: 92vh !important; border-radius: 14px !important; }
+
+      /* Mail viewer header needs more padding on mobile (back btn area) */
+      .mv-header { padding: 12px 16px; }
+      .mv-body { padding: 20px 16px 32px; }
+    }
+
+    /* ── Mobile (≤600px) ── */
+    @media (max-width: 600px) {
+      html { font-size: 14px; }
+
+      /* Auth */
+      .auth-right { padding: 28px 20px; }
+      .auth-box { max-width: 100%; }
+
+      /* Portal main */
+      .main { padding: 20px 14px; padding-top: calc(56px + 20px); }
+
+      /* Stat cards single column */
+      .stats-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
+
+      /* Stat card compact */
+      .stat-card { padding: 16px; }
+      .stat-card-value { font-size: 28px; }
+
+      /* Card padding tighter */
+      .card { padding: 16px; }
+      .card-title { font-size: 13px; margin-bottom: 14px; }
+
+      /* Mail row — compact */
+      .mail-row { gap: 9px; padding: 9px 10px; }
+      .mail-thumb { width: 34px; height: 34px; font-size: 15px; }
+      .mail-sender { font-size: 13px; }
+      .mail-subject { font-size: 12px; }
+      .mail-date { font-size: 11px; }
+
+      /* Mail viewer — full screen, scrollable from top */
+      .mv-header {
+        padding: 10px 14px;
+        gap: 8px;
+        flex-wrap: nowrap;
+      }
+      .mv-title { font-size: 13px; }
+      .mv-date  { font-size: 11.5px; }
+      .mv-actions { gap: 5px; flex-shrink: 0; }
+      .mv-actions .btn { font-size: 11px; padding: 5px 8px; }
+      .mv-body { padding: 16px 14px 32px; }
+      .mv-no-scan { padding-top: 16px; }
+      .mv-no-scan-icon { font-size: 52px; margin-bottom: 14px; }
+      .mv-no-scan h3 { font-size: 20px; }
+
+      /* Modal full-screen on mobile */
+      #modal-overlay { padding: 0; align-items: flex-end; }
+      .modal {
+        border-radius: 20px 20px 0 0;
+        max-width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 24px 20px;
+      }
+
+      /* History overlay modal */
+      #history-overlay { padding: 0 !important; align-items: flex-end !important; }
+      #history-modal {
+        border-radius: 20px 20px 0 0 !important;
+        max-width: 100% !important;
+        max-height: 90vh !important;
+      }
+
+      /* Toast full width at bottom */
+      #toast {
+        bottom: 16px;
+        right: 12px;
+        left: 12px;
+        font-size: 13px;
+        padding: 12px 14px;
+      }
+
+      /* Tables: scroll */
+      .data-table { min-width: 400px; }
+
+      /* Upload zone compact */
+      .upload-zone { padding: 24px 16px; }
+
+      /* Page header */
+      .page-header-left h2 { font-size: 24px; }
+
+      /* Service rows */
+      .service-row { gap: 10px; }
+      .service-icon { width: 34px; height: 34px; font-size: 16px; }
+
+      /* Sidebar wider on small phones */
+      .sidebar { width: 85vw; max-width: 300px; }
+    }
+
+    /* ── Very small phones (≤380px) ── */
+    @media (max-width: 380px) {
+      .main { padding: 16px 12px; padding-top: calc(56px + 16px); }
+      .stats-grid { gap: 8px; }
+      .stat-card-value { font-size: 24px; }
+      .auth-right { padding: 20px 14px; }
+      .topbar-brand-name { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     LOADING SCREEN
+================================================================ -->
+<div id="screen-loading">
+  <div class="loading-logo">The Residential Address</div>
+  <div class="loading-sub">Client Portal</div>
+  <div class="loading-bar">
+    <div class="loading-bar-fill"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     AUTH SCREEN
+================================================================ -->
+<div id="screen-auth" class="hidden">
+
+  <!-- Left panel -->
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🏠</div>
+      <div class="auth-brand-text">
+        The Residential Address
+        <small>Client Portal</small>
+      </div>
+    </div>
+
+    <div class="auth-headline">
+      <h1>Your U.S. presence,<br><em>always at hand.</em></h1>
+      <p>Access your address, mail, documents and service status from one secure dashboard — anywhere in the world.</p>
+    </div>
+
+    <div class="auth-features">
+      <div class="auth-feature">
+        <div class="auth-feature-dot">📬</div>
+        <span>View scanned mail the moment it arrives</span>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-dot">📄</div>
+        <span>Download your lease, utility bills & LLC docs</span>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-dot">🏢</div>
+        <span>Track ITIN, LLC & bank applications live</span>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-dot">🔒</div>
+        <span>End-to-end secure — only you see your data</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="auth-right">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-btn-login" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="auth-tab"        id="tab-btn-signup" onclick="switchAuthTab('signup')">Create Account</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="tab-login">
+        <div class="form-title">
+          <h2>Welcome back</h2>
+          <p>Sign in to your portal</p>
+        </div>
+        <div class="error-banner" id="login-error"></div>
+        <div class="field">
+          <label for="l-email">Email Address</label>
+          <input type="email" id="l-email" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="l-pass">Password</label>
+          <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <button class="btn btn-primary" id="login-btn" onclick="doLogin()">Sign In →</button>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="tab-signup" class="hidden">
+        <div class="form-title">
+          <h2>Get started</h2>
+          <p>Create your free client account</p>
+        </div>
+        <div class="error-banner" id="signup-error"></div>
+        <div class="field">
+          <label for="s-name">Full Name</label>
+          <input type="text" id="s-name" placeholder="Arjun Sharma" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="s-email">Email Address</label>
+          <input type="email" id="s-email" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="s-pass">Password</label>
+          <input type="password" id="s-pass" placeholder="Minimum 8 characters" autocomplete="new-password" />
+        </div>
+        <div class="field">
+          <label for="s-country">Country</label>
+          <input type="text" id="s-country" placeholder="India, UAE, Malaysia…" />
+        </div>
+        <div class="field">
+          <label for="s-whatsapp">WhatsApp Number <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <input type="text" id="s-whatsapp" placeholder="+1 234 567 8900" />
+        </div>
+        <button class="btn btn-primary" id="signup-btn" onclick="doSignup()">Create Account →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PORTAL SCREEN
+================================================================ -->
+<div id="screen-portal" class="hidden">
+
+  <!-- Mobile top navbar -->
+  <div class="mobile-topbar" id="mobile-topbar">
+    <button class="topbar-hamburger" id="hamburger-btn" aria-label="Open menu" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-brand">
+      <div class="topbar-brand-icon">🏠</div>
+      <div class="topbar-brand-name">The Residential Address</div>
+    </div>
+  </div>
+
+  <!-- Sidebar overlay (mobile tap-to-close) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">🏠</div>
+      <div class="sb-logo-name">
+        The Residential Address
+        <small>Client Portal</small>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sb-nav">
+      <!-- Populated by JS based on role -->
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user" id="sb-user-btn" title="View profile">
+        <div class="sb-avatar" id="sb-avatar">A</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name" id="sb-user-name">–</div>
+          <div class="sb-user-role" id="sb-user-role">Client</div>
+        </div>
+        <div class="sb-logout" onclick="doLogout()" title="Sign out">⏻</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ── CLIENT: Overview ────────────────────────── -->
+    <div id="page-overview" class="page active">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2 id="greeting-title">Dashboard</h2>
+          <p id="greeting-sub">Loading your portal…</p>
+        </div>
+      </div>
+      <div class="stats-grid" id="overview-stats">
+        <!-- Populated by JS -->
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🔧 My Services</div>
+          <div id="overview-services">
+            <div class="empty-state">
+              <div class="empty-state-icon">⏳</div>
+              <p>Loading services…</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            📬 Recent Mail
+            <span class="card-title-right">
+              <span class="sb-badge hidden" id="mail-card-badge">0</span>
+            </span>
+          </div>
+          <div id="overview-mail">
+            <div class="empty-state">
+              <div class="empty-state-icon">⏳</div>
+              <p>Loading mail…</p>
+            </div>
+          </div>
+          <div style="margin-top: 16px;">
+            <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="navTo('mail')">
+              View All Mail →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CLIENT: Mail ────────────────────────────── -->
+    <div id="page-mail" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>My Mail</h2>
+          <p>Scanned mail uploaded by your account manager</p>
+        </div>
+      </div>
+      <div class="card" style="padding: 18px 20px;">
+        <div class="mail-toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Search by sender or subject…"
+              oninput="mailFilter.text = this.value.toLowerCase(); renderMailList();"
+            />
+          </div>
+          <select class="filter-select" onchange="mailFilter.cat = this.value; renderMailList();">
+            <option value="">All categories</option>
+            <option value="usps">USPS</option>
+            <option value="bank">Bank</option>
+            <option value="irs">IRS</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div id="mail-list-full">
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <p>No mail yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CLIENT: Documents ───────────────────────── -->
+    <div id="page-docs" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>My Documents</h2>
+          <p>Lease agreements, utility bills, and formation documents</p>
+        </div>
+      </div>
+      <div class="card">
+        <div id="docs-list">
+          <div class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <p>Loading documents…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN: Dashboard ─────────────────────────── -->
+    <div id="page-admin-dash" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Admin Dashboard</h2>
+          <p>Manage all clients and their services</p>
+        </div>
+        <button class="btn btn-gold" onclick="openAssignModal()">+ Assign Services</button>
+      </div>
+      <div class="stats-grid" id="admin-stats">
+        <!-- Populated by JS -->
+      </div>
+      <div class="card">
+        <div class="card-title">👥 All Clients</div>
+        <div id="admin-client-list">
+          <div class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <p>Loading clients…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN: Upload Mail ────────────────────────── -->
+    <div id="page-admin-upload" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Upload Mail</h2>
+          <p>Upload a scanned mail item directly to a client's inbox</p>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="card">
+          <div class="card-title">📤 New Mail Upload</div>
+
+          <div class="field">
+            <label>Client</label>
+            <select id="up-client" class="filter-select" style="width:100%; padding: 11px 14px;">
+              <option value="">Select a client…</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Sender / From</label>
+            <input type="text" id="up-sender" placeholder="e.g. USPS, Bank of America, IRS" />
+          </div>
+
+          <div class="field">
+            <label>Subject</label>
+            <input type="text" id="up-subject" placeholder="e.g. Package delivery notification" />
+          </div>
+
+          <div class="field">
+            <label>
+              Description
+              <span style="font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">(shown to client)</span>
+            </label>
+            <textarea
+              id="up-description"
+              placeholder="e.g. This is a letter from USPS regarding your package. No action needed."
+              style="width:100%; padding:11px 14px; border:1.5px solid var(--parch3); border-radius:9px;
+                     font-family:'Outfit',sans-serif; font-size:14px; color:var(--ink); background:var(--white);
+                     outline:none; resize:vertical; min-height:88px; transition:border-color 0.18s; line-height:1.6;"
+              onfocus="this.style.borderColor='var(--gold)'"
+              onblur="this.style.borderColor='var(--parch3)'"
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label>Category</label>
+            <select id="up-cat" class="filter-select" style="width:100%; padding: 11px 14px;">
+              <option value="usps">USPS / Post Office</option>
+              <option value="bank">Bank</option>
+              <option value="irs">IRS / Government</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>
+              Scan (Image or PDF)
+              <span style="font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">(optional)</span>
+            </label>
+            <div
+              class="upload-zone"
+              id="mail-drop-zone"
+              onclick="document.getElementById('mail-file-input').click()"
+              ondragover="event.preventDefault(); this.classList.add('drag');"
+              ondragleave="this.classList.remove('drag');"
+              ondrop="handleMailDrop(event)"
+            >
+              <div class="upload-zone-icon">📎</div>
+              <p><strong>Click to upload</strong> or drag & drop</p>
+              <small>PNG, JPG, PDF — up to 20 MB — optional</small>
+            </div>
+            <input type="file" id="mail-file-input" accept="image/*,application/pdf" class="hidden" onchange="setMailFile(this.files[0])" />
+            <div class="file-chip" id="mail-file-chip">
+              <div class="file-chip-thumb" id="mail-chip-thumb">📄</div>
+              <div style="flex:1; min-width:0;">
+                <div class="file-chip-name" id="mail-chip-name">–</div>
+                <div class="file-chip-size" id="mail-chip-size">–</div>
+              </div>
+              <span class="file-chip-remove" onclick="clearMailFile()">✕</span>
+            </div>
+          </div>
+
+          <button class="btn btn-gold btn-full" id="mail-upload-btn" onclick="submitMail()">
+            📤 Upload Mail for Client
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN: Upload Document ────────────────────── -->
+    <div id="page-admin-docs" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Upload Document</h2>
+          <p>Upload a lease, utility bill, or formation document for a client</p>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="card">
+          <div class="card-title">📄 New Document</div>
+
+          <div class="field">
+            <label>Client</label>
+            <select id="doc-client" class="filter-select" style="width:100%; padding: 11px 14px;">
+              <option value="">Select a client…</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Document Name</label>
+            <input type="text" id="doc-name" placeholder="e.g. Lease Agreement — 123 Maple St" />
+          </div>
+
+          <div class="field">
+            <label>Document Type</label>
+            <select id="doc-type" class="filter-select" style="width:100%; padding: 11px 14px;">
+              <option value="lease">Lease Agreement</option>
+              <option value="utility">Utility Bill</option>
+              <option value="llc">LLC Formation</option>
+              <option value="itin">ITIN / IRS</option>
+              <option value="bank">Bank Document</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>File</label>
+            <div class="upload-zone" onclick="document.getElementById('doc-file-input').click()">
+              <div class="upload-zone-icon">📁</div>
+              <p><strong>Click to select file</strong></p>
+              <small>PDF, PNG, JPG</small>
+            </div>
+            <input type="file" id="doc-file-input" accept="*/*" class="hidden" onchange="setDocFile(this.files[0])" />
+            <div class="file-chip" id="doc-file-chip">
+              <div class="file-chip-thumb" id="doc-chip-thumb">📄</div>
+              <div style="flex:1; min-width:0;">
+                <div class="file-chip-name" id="doc-chip-name">–</div>
+                <div class="file-chip-size" id="doc-chip-size">–</div>
+              </div>
+              <span class="file-chip-remove" onclick="clearDocFile()">✕</span>
+            </div>
+          </div>
+
+          <button class="btn btn-gold btn-full" id="doc-upload-btn" onclick="submitDoc()">
+            📄 Upload Document
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ================================================================
+     MAIL VIEWER
+================================================================ -->
+<div id="mail-viewer">
+  <div class="mv-header">
+    <button class="mv-back" onclick="closeMailViewer()">←</button>
+    <div class="mv-header-info">
+      <div class="mv-title" id="mv-title">–</div>
+      <div class="mv-date"  id="mv-date">–</div>
+    </div>
+    <div class="mv-actions">
+      <a id="mv-download" class="btn btn-ghost btn-sm" download target="_blank">⬇ Download</a>
+      <button class="btn btn-ghost btn-sm" onclick="markMailRead(currentMailId)">✓ Mark Read</button>
+    </div>
+  </div>
+  <div class="mv-body" id="mv-body"></div>
+</div>
+
+<!-- ================================================================
+     ASSIGN SERVICES MODAL
+================================================================ -->
+<div id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Assign Services</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>Select Client</label>
+      <select id="assign-client" class="filter-select" style="width:100%; padding:11px 14px;" onchange="loadAssignServices(this.value)">
+        <option value="">Choose a client…</option>
+      </select>
+    </div>
+    <div id="assign-services-list" style="margin-top: 8px;">
+      <p style="font-size:13px; color:var(--muted);">Select a client above to manage their services.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="saveServices()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     MAIL HISTORY MODAL (admin)
+================================================================ -->
+<div id="history-overlay" style="
+  position:fixed; inset:0;
+  background:rgba(12,15,10,0.50);
+  backdrop-filter:blur(4px);
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+">
+  <div style="
+    background:var(--white);
+    border-radius:16px;
+    width:100%;
+    max-width:640px;
+    max-height:80vh;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow-l);
+    animation: pageIn 0.22s ease;
+  ">
+    <!-- Header -->
+    <div style="
+      display:flex; align-items:center; justify-content:space-between;
+      padding:22px 26px 18px;
+      border-bottom:1px solid var(--parch2);
+      flex-shrink:0;
+    ">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500;" id="history-title">Mail History</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:3px;" id="history-sub">–</div>
+      </div>
+      <button onclick="closeHistory()" style="
+        background:none; border:none; font-size:20px;
+        color:var(--muted); cursor:pointer; padding:4px;
+        transition:color 0.15s;
+      " onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">✕</button>
+    </div>
+    <!-- List -->
+    <div id="history-list" style="overflow-y:auto; padding:16px 20px; flex:1;"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PROFILE MODAL
+================================================================ -->
+<div id="profile-overlay" onclick="closeProfileModal(event)">
+  <div class="profile-modal">
+    <div class="profile-modal-header">
+      <button class="profile-modal-close" onclick="closeProfileModal()">✕</button>
+      <div class="profile-modal-avatar" id="pm-avatar"></div>
+      <div class="profile-modal-name" id="pm-name"></div>
+      <div class="profile-modal-tag">Client Account</div>
+    </div>
+    <div class="profile-modal-body">
+      <!-- Read-only info -->
+      <div class="profile-info-row">
+        <div class="profile-info-icon">✉️</div>
+        <div>
+          <div class="profile-info-label">Email</div>
+          <div class="profile-info-value" id="pm-email"></div>
+        </div>
+      </div>
+      <div class="profile-info-row">
+        <div class="profile-info-icon">🪪</div>
+        <div>
+          <div class="profile-info-label">Full Name</div>
+          <div class="profile-info-value" id="pm-fullname"></div>
+        </div>
+      </div>
+
+      <!-- Editable fields -->
+      <div class="profile-edit-section">
+        <div class="profile-edit-title">✏️ Edit your details</div>
+        <div class="field">
+          <label for="pm-country-input">Country</label>
+          <input type="text" id="pm-country-input" placeholder="e.g. India, UAE, Malaysia…" />
+        </div>
+        <div class="field">
+          <label for="pm-whatsapp-input">WhatsApp Number</label>
+          <input type="text" id="pm-whatsapp-input" placeholder="+1 234 567 8900" />
+        </div>
+        <div id="pm-error" class="error-banner"></div>
+        <div class="profile-save-row">
+          <button class="btn btn-ghost" onclick="closeProfileModal()">Cancel</button>
+          <button class="btn btn-primary" style="width:auto; padding:10px 22px; font-size:14px;" id="pm-save-btn" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     CLIENT DETAIL POPUP
+================================================================ -->
+<div class="client-popup-overlay" id="client-popup-overlay" onclick="closeClientPopup(event)">
+  <div class="client-popup" id="client-popup">
+    <button class="client-popup-close" onclick="closeClientPopup()">✕</button>
+    <div class="client-popup-avatar" id="cp-avatar"></div>
+    <div class="client-popup-name"   id="cp-name"></div>
+    <div class="client-popup-role">Client</div>
+    <div class="client-popup-divider"></div>
+    <div class="client-popup-row">
+      <div class="client-popup-row-icon">✉️</div>
+      <div>
+        <div class="client-popup-row-label">Email</div>
+        <div class="client-popup-row-value" id="cp-email"></div>
+      </div>
+    </div>
+    <div class="client-popup-row">
+      <div class="client-popup-row-icon">📱</div>
+      <div>
+        <div class="client-popup-row-label">WhatsApp</div>
+        <div class="client-popup-row-value" id="cp-whatsapp"></div>
+      </div>
+    </div>
+    <div class="client-popup-row">
+      <div class="client-popup-row-icon">🌍</div>
+      <div>
+        <div class="client-popup-row-label">Country</div>
+        <div class="client-popup-row-value" id="cp-country"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     TOAST
+================================================================ -->
+<div id="toast">
+  <span class="toast-icon" id="toast-icon">✓</span>
+  <span id="toast-msg">Done!</span>
+</div>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+'use strict';
+
+// ================================================================
+// GLOBALS
+// ================================================================
+let sb            = null;   // Supabase client
+let currentUser   = null;   // auth.users row
+let currentProfile= null;   // profiles row
+let allServices   = [];     // all service types
+let mailCache     = [];     // client's mail
+let allClients    = [];     // admin: all client profiles
+let assignClientId = null;  // modal: which client we're assigning
+let assignSnapshot = {};    // modal: current service state
+let uploadMailFile = null;  // selected file for mail upload
+let uploadDocFile  = null;  // selected file for doc upload
+let currentMailId  = null;  // mail viewer: open mail id
+let pendingSignup  = null;  // signup data waiting for bootPortal
+
+const mailFilter = { text: '', cat: '' };
+
+// Avatar colour palette
+const AVATAR_COLORS = ['#fde68a','#bbf7d0','#bfdbfe','#e9d5ff','#fed7aa','#fce7f3','#cffafe'];
+function avatarColor(str) {
+  let h = 0;
+  for (const c of str) h = (h * 31 + c.charCodeAt(0)) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[h];
+}
+
+// ================================================================
+// INIT
+// ================================================================
+
+// Track whether we've already booted (prevents double-boot from
+// onAuthStateChange firing at the same time as getSession)
+let booted = false;
+
+function hideLoader() {
+  const loader = document.getElementById('screen-loading');
+  if (!loader || loader.style.display === 'none') return;
+  loader.classList.add('out');
+  setTimeout(() => { loader.style.display = 'none'; }, 500);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // ── Validate config ──────────────────────────────────────────
+  if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_ANON_KEY') {
+    hideLoader();
+    showAuth();
+    showError('login-error', '⚙️ Setup needed: replace YOUR_SUPABASE_URL and YOUR_ANON_KEY at the top of this file with your Supabase project values.');
+    return;
+  }
+
+  // ── Create Supabase client ───────────────────────────────────
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      storageKey:         'tra-portal-auth',
+      autoRefreshToken:   true,
+      persistSession:     true,
+      detectSessionInUrl: false,   // we handle session manually below
+    },
+  });
+
+  // ── Primary path: getSession ─────────────────────────────────
+  // This is the reliable path on refresh. We give it up to 4 seconds.
+  let resolved = false;
+  const sessionTimeout = setTimeout(() => {
+    if (!resolved) {
+      // Took too long — fall through to onAuthStateChange
+      console.warn('getSession timed out, waiting for onAuthStateChange…');
+    }
+  }, 4000);
+
+  try {
+    const { data: { session }, error } = await sb.auth.getSession();
+    resolved = true;
+    clearTimeout(sessionTimeout);
+
+    if (error && error.name !== 'AbortError') {
+      console.error('getSession error:', error.message);
+    }
+
+    if (session && !booted) {
+      booted = true;
+      hideLoader();
+      await bootPortal(session.user);
+    } else if (!session) {
+      hideLoader();
+      showAuth();
+    }
+    // If AbortError: fall through silently — onAuthStateChange will handle it
+
+  } catch (err) {
+    resolved = true;
+    clearTimeout(sessionTimeout);
+    console.warn('getSession threw:', err.message);
+    // Don't show auth yet — onAuthStateChange may still fire correctly
+  }
+
+  // ── Fallback: onAuthStateChange ──────────────────────────────
+  // Catches cases where getSession threw an AbortError or timed out.
+  // Also handles login/logout events during the session.
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session && !booted) {
+      booted = true;
+      hideLoader();
+      await bootPortal(session.user);
+    }
+    if (event === 'SIGNED_OUT') {
+      booted = false;
+      hideLoader();
+      showAuth();
+    }
+    // INITIAL_SESSION fires on page load when a stored session exists
+    if (event === 'INITIAL_SESSION') {
+      if (session && !booted) {
+        booted = true;
+        hideLoader();
+        await bootPortal(session.user);
+      } else if (!session && !booted) {
+        hideLoader();
+        showAuth();
+      }
+    }
+  });
+
+  // ── Safety net: always show something after 5 seconds ───────
+  // If all else fails, show the login screen rather than a white page.
+  setTimeout(() => {
+    if (!booted) {
+      hideLoader();
+      showAuth();
+    }
+  }, 5000);
+
+});
+
+// ================================================================
+// SCREEN HELPERS
+// ================================================================
+function showAuth() {
+  document.getElementById('screen-auth').classList.remove('hidden');
+  document.getElementById('screen-portal').classList.add('hidden');
+}
+function showPortal() {
+  document.getElementById('screen-auth').classList.add('hidden');
+  document.getElementById('screen-portal').classList.remove('hidden');
+}
+
+// ================================================================
+// BOOT PORTAL — runs after a successful login
+// ================================================================
+async function bootPortal(user) {
+  // Security: re-verify the session is genuinely active before granting access
+  const { data: { session }, error: sessionErr } = await sb.auth.getSession();
+  if (sessionErr || !session || session.user.id !== user.id) {
+    console.warn('Session verification failed — redirecting to auth.');
+    showAuth();
+    return;
+  }
+
+  currentUser = user;
+
+  // Try to load profile
+  const { data: profile, error: profileErr } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .maybeSingle();   // returns null (not 406) if no row found
+
+  if (profileErr) {
+    // AbortError / lock conflict — not a real error, just ignore silently.
+    // The auth state listener will retry when the lock is free.
+    if (
+      profileErr.name === 'AbortError' ||
+      (profileErr.message && (
+        profileErr.message.includes('AbortError') ||
+        profileErr.message.includes('Lock') ||
+        profileErr.message.includes('lock')
+      ))
+    ) {
+      console.info('Profile load skipped due to lock conflict — will retry on next auth event.');
+      booted = false; // allow retry
+      return;
+    }
+    console.error('Profile load error:', profileErr.message);
+    hideLoader();
+    showAuth();
+    showError('login-error', 'Could not load your profile. Please try again.');
+    return;
+  }
+
+  // Profile missing — create it now (catches signup edge cases)
+  if (!profile) {
+    const fallbackName = pendingSignup?.name || user.email.split('@')[0];
+    const { data: newProfile, error: insertErr } = await sb
+      .from('profiles')
+      .insert({
+        id:        user.id,
+        full_name: fallbackName,
+        role:      'client',
+        email:     user.email,
+        country:   pendingSignup?.country  || null,
+        whatsapp:  pendingSignup?.whatsapp || null,
+      })
+      .select()
+      .maybeSingle();
+
+    if (insertErr) {
+      console.error('Profile create error:', insertErr.message);
+      showAuth();
+      showError('login-error', 'Could not create your profile. Please try again.');
+      return;
+    }
+    currentProfile = newProfile;
+  } else {
+    currentProfile = profile;
+  }
+
+  // Load service definitions
+  const { data: svcs } = await sb.from('services').select('*').order('id');
+  allServices = svcs || [];
+
+  // Render the portal
+  setupSidebar();
+  showPortal();
+  resetInactivityTimer(); // start session timeout
+
+  if (currentProfile.role === 'admin') {
+    navTo('admin-dash');
+    loadAdminDash();
+  } else {
+    navTo('overview');
+    loadClientDash();
+  }
+}
+
+// ================================================================
+// SIDEBAR
+// ================================================================
+function setupSidebar() {
+  const isAdmin = currentProfile.role === 'admin';
+
+  // User info
+  document.getElementById('sb-avatar').textContent    = currentProfile.full_name[0].toUpperCase();
+  document.getElementById('sb-user-name').textContent = currentProfile.full_name;
+  document.getElementById('sb-user-role').textContent = isAdmin ? 'Admin' : 'Client';
+
+  // Profile popup — clients only
+  const sbUserBtn = document.getElementById('sb-user-btn');
+  if (!isAdmin) {
+    sbUserBtn.onclick = (e) => {
+      if (e.target.closest('.sb-logout')) return; // don't intercept logout
+      openProfileModal();
+    };
+    sbUserBtn.title = 'View / edit profile';
+  } else {
+    sbUserBtn.style.cursor = 'default';
+    sbUserBtn.onclick = null;
+  }
+
+  const nav = document.getElementById('sb-nav');
+  nav.innerHTML = '';
+
+  if (isAdmin) {
+    nav.innerHTML = `
+      ${sbLabel('Admin')}
+      ${sbItem('admin-dash',   '📊', 'Dashboard')}
+      ${sbItem('admin-upload', '📤', 'Upload Mail')}
+      ${sbItem('admin-docs',   '📄', 'Upload Document')}
+    `;
+  } else {
+    nav.innerHTML = `
+      ${sbLabel('Menu')}
+      ${sbItem('overview', '🏠', 'Overview')}
+      ${sbItem('mail',     '📬', 'My Mail', 'mail-nav-badge')}
+      ${sbItem('docs',     '📄', 'Documents')}
+    `;
+  }
+}
+
+function sbLabel(text) {
+  return `<div class="sb-section-label">${text}</div>`;
+}
+function sbItem(id, icon, label, badgeId = '') {
+  const badge = badgeId
+    ? `<span class="sb-badge hidden" id="${badgeId}">0</span>`
+    : '';
+  return `
+    <div class="sb-item" id="sb-item-${id}" onclick="navTo('${id}')">
+      <span class="sb-item-icon">${icon}</span>
+      <span class="sb-item-label">${label}</span>
+      ${badge}
+    </div>`;
+}
+
+function navTo(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + pageId)?.classList.add('active');
+  document.getElementById('sb-item-' + pageId)?.classList.add('active');
+  // Close sidebar on mobile after navigation
+  if (window.innerWidth <= 860) closeSidebar();
+}
+
+// ================================================================
+// SECURITY — Rate limiting & input sanitization
+// ================================================================
+const _loginAttempts = { count: 0, lockedUntil: 0 };
+const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_LOCKOUT_MS   = 15 * 60 * 1000; // 15 minutes
+
+function checkLoginRateLimit() {
+  const now = Date.now();
+  if (_loginAttempts.lockedUntil > now) {
+    const mins = Math.ceil((_loginAttempts.lockedUntil - now) / 60000);
+    showError('login-error', `Too many failed attempts. Please wait ${mins} minute${mins > 1 ? 's' : ''} before trying again.`);
+    return false;
+  }
+  return true;
+}
+
+function recordLoginFailure() {
+  _loginAttempts.count++;
+  if (_loginAttempts.count >= LOGIN_MAX_ATTEMPTS) {
+    _loginAttempts.lockedUntil = Date.now() + LOGIN_LOCKOUT_MS;
+    _loginAttempts.count = 0;
+  }
+}
+
+function clearLoginAttempts() {
+  _loginAttempts.count = 0;
+  _loginAttempts.lockedUntil = 0;
+}
+
+// Strict input sanitizer — strips all HTML tags and trims
+function sanitize(str) {
+  return String(str || '').replace(/<[^>]*>/g, '').trim().slice(0, 500);
+}
+
+// Validate email format
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+// Validate password strength
+function isStrongPassword(pass) {
+  return pass.length >= 8;
+}
+
+
+function switchAuthTab(tab) {
+  document.getElementById('tab-btn-login').classList.toggle('active',  tab === 'login');
+  document.getElementById('tab-btn-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('tab-login').classList.toggle('hidden',  tab !== 'login');
+  document.getElementById('tab-signup').classList.toggle('hidden', tab !== 'signup');
+}
+
+async function doLogin() {
+  if (!checkLoginRateLimit()) return;
+
+  const email = sanitize(document.getElementById('l-email').value);
+  const pass  = document.getElementById('l-pass').value; // don't sanitize password
+  const btn   = document.getElementById('login-btn');
+
+  hideError('login-error');
+
+  if (!email || !pass) {
+    showError('login-error', 'Please enter your email and password.');
+    return;
+  }
+  if (!isValidEmail(email)) {
+    showError('login-error', 'Please enter a valid email address.');
+    return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = 'Signing in…';
+
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+
+  if (error) {
+    recordLoginFailure();
+    // Always show a generic message — never leak whether email exists
+    showError('login-error', 'Incorrect email or password. Please try again.');
+    btn.disabled    = false;
+    btn.textContent = 'Sign In →';
+    return;
+  }
+
+  clearLoginAttempts();
+  // On success, onAuthStateChange fires bootPortal automatically
+}
+
+
+// ================================================================
+// AUTH — Signup
+// ================================================================
+async function doSignup() {
+  const name     = sanitize(document.getElementById('s-name').value);
+  const email    = sanitize(document.getElementById('s-email').value);
+  const pass     = document.getElementById('s-pass').value; // never sanitize passwords
+  const country  = sanitize(document.getElementById('s-country').value);
+  const whatsapp = sanitize(document.getElementById('s-whatsapp').value);
+  const btn      = document.getElementById('signup-btn');
+
+  hideError('signup-error');
+
+  // Validation
+  if (!name || name.length < 2)  { showError('signup-error', 'Please enter your full name (at least 2 characters).'); return; }
+  if (name.length > 100)          { showError('signup-error', 'Name is too long.'); return; }
+  if (!isValidEmail(email))       { showError('signup-error', 'Please enter a valid email address.'); return; }
+  if (!isStrongPassword(pass))    { showError('signup-error', 'Password must be at least 8 characters.'); return; }
+  if (whatsapp && !/^[\d\s\+\-\(\)]{7,20}$/.test(whatsapp)) {
+    showError('signup-error', 'Please enter a valid phone number.'); return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = 'Creating account…';
+
+  // Save signup data so bootPortal can use it if profile insert races ahead
+  pendingSignup = { name, email, country: country || null, whatsapp: whatsapp || null };
+
+  // 1. Create auth user
+  const { data: authData, error: authErr } = await sb.auth.signUp({ email, password: pass });
+  if (authErr) {
+    pendingSignup = null;
+    // Generic message to avoid leaking whether email is registered
+    showError('signup-error', authErr.message.includes('already registered')
+      ? 'An account with this email already exists. Please sign in.'
+      : 'Could not create account. Please try again.');
+    btn.disabled    = false;
+    btn.textContent = 'Create Account →';
+    return;
+  }
+
+  // 2. Insert profile row (may race with onAuthStateChange — pendingSignup is the safety net)
+  const { error: profileErr } = await sb.from('profiles').insert({
+    id:        authData.user.id,
+    full_name: name,
+    role:      'client',
+    email:     email,
+    country:   country  || null,
+    whatsapp:  whatsapp || null,
+  });
+
+  if (profileErr) {
+    console.error('Profile insert error:', profileErr.message);
+  }
+  pendingSignup = null;
+
+  showToast('Account created! Welcome 🎉');
+  btn.disabled    = false;
+  btn.textContent = 'Create Account →';
+  // onAuthStateChange will fire and load the portal
+}
+
+// ================================================================
+// SESSION INACTIVITY TIMEOUT — auto sign out after 60 min idle
+// ================================================================
+const SESSION_TIMEOUT_MS = 60 * 60 * 1000; // 60 minutes
+let _inactivityTimer = null;
+
+function resetInactivityTimer() {
+  if (!currentUser) return;
+  clearTimeout(_inactivityTimer);
+  _inactivityTimer = setTimeout(() => {
+    showToast('Session expired due to inactivity. Please sign in again.', true);
+    setTimeout(doLogout, 2000);
+  }, SESSION_TIMEOUT_MS);
+}
+
+// Attach activity listeners once
+['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(evt => {
+  document.addEventListener(evt, resetInactivityTimer, { passive: true });
+});
+
+async function doLogout() {
+  clearTimeout(_inactivityTimer);
+  if (sb) await sb.auth.signOut();
+  currentUser    = null;
+  currentProfile = null;
+  mailCache      = [];
+  allClients     = [];
+  showAuth();
+}
+
+// ================================================================
+// CLIENT DASHBOARD
+// ================================================================
+async function loadClientDash() {
+  const hour  = new Date().getHours();
+  const first = currentProfile.full_name.split(' ')[0];
+  const greet = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+  document.getElementById('greeting-title').textContent = `Good ${greet}, ${first}`;
+  document.getElementById('greeting-sub').textContent   = 'Here\'s your portal overview';
+
+  // Fetch this client's services and mail in parallel
+  const [{ data: cs }, { data: mail }] = await Promise.all([
+    sb.from('client_services').select('*, services(*)').eq('client_id', currentUser.id),
+    sb.from('mail').select('*').eq('client_id', currentUser.id).order('created_at', { ascending: false }),
+  ]);
+
+  const clientServices = cs   || [];
+  mailCache            = mail || [];
+
+  const unreadCount  = mailCache.filter(m => !m.is_read).length;
+  const activeCount  = clientServices.filter(s => ['active','complete'].includes(s.status)).length;
+  const hasAddress   = clientServices.some(s => s.services?.slug === 'address');
+
+  // Stats
+  document.getElementById('overview-stats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-icon">📬</div>
+      <div class="stat-card-label">Unread Mail</div>
+      <div class="stat-card-value ${unreadCount > 0 ? 'amber' : ''}">${unreadCount}</div>
+      <div class="stat-card-sub">pieces of mail</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">🔧</div>
+      <div class="stat-card-label">Active Services</div>
+      <div class="stat-card-value">${activeCount}</div>
+      <div class="stat-card-sub">subscriptions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">📬</div>
+      <div class="stat-card-label">Total Mail</div>
+      <div class="stat-card-value">${mailCache.length}</div>
+      <div class="stat-card-sub">all time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">✅</div>
+      <div class="stat-card-label">Address Status</div>
+      <div class="stat-card-value green">${hasAddress ? 'Active' : 'Not set'}</div>
+      <div class="stat-card-sub">${hasAddress ? 'Compliant & verified' : 'Contact your manager'}</div>
+    </div>
+  `;
+
+  // Services — only show subscribed ones
+  const svcEl = document.getElementById('overview-services');
+  if (!clientServices.length) {
+    svcEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>No services assigned yet.<br>Contact your account manager.</p>
+      </div>`;
+  } else {
+    svcEl.innerHTML = clientServices.map(cs => `
+      <div class="service-row">
+        <div class="service-icon" style="background: ${cs.services?.color || '#eee'}">
+          ${cs.services?.icon || '🔧'}
+        </div>
+        <div class="service-info">
+          <div class="service-name">${esc(cs.services?.name || 'Service')}</div>
+          <div class="service-meta">${esc(cs.notes || cs.address || '–')}</div>
+        </div>
+        <span class="pill pill-${cs.status}">${cap(cs.status)}</span>
+      </div>
+    `).join('');
+  }
+
+  // Mail badge
+  updateMailBadge(unreadCount);
+
+  // Recent mail on overview card (3 items)
+  renderMailRows('overview-mail', mailCache.slice(0, 3), true);
+
+  // Full mail list
+  renderMailList();
+
+  // Documents
+  loadClientDocs();
+}
+
+// ================================================================
+// MAIL
+// ================================================================
+function renderMailList() {
+  let items = [...mailCache];
+  if (mailFilter.text) {
+    items = items.filter(m =>
+      m.sender.toLowerCase().includes(mailFilter.text) ||
+      (m.subject || '').toLowerCase().includes(mailFilter.text)
+    );
+  }
+  if (mailFilter.cat) {
+    items = items.filter(m => m.category === mailFilter.cat);
+  }
+  renderMailRows('mail-list-full', items, false);
+}
+
+function renderMailRows(containerId, items, compact) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!items.length) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>No mail yet.</p>
+      </div>`;
+    return;
+  }
+
+  if (compact) {
+    // Overview preview — simple clickable rows opening full viewer
+    el.innerHTML = items.map(m => {
+      const thumb = m.file_url
+        ? `<img src="${esc(m.file_url)}" alt="scan" loading="lazy">`
+        : catEmoji(m.category);
+      return `
+        <div class="mail-row ${m.is_read ? '' : 'unread'}" onclick="openMail(${m.id})">
+          <div class="unread-dot ${m.is_read ? 'read' : ''}"></div>
+          <div class="mail-thumb">${thumb}</div>
+          <div class="mail-body">
+            <div class="mail-sender">${esc(m.sender)}</div>
+            <div class="mail-subject">${esc(m.subject || '')}</div>
+          </div>
+          <div class="mail-meta">
+            <div class="mail-date">${fmtDate(m.created_at)}</div>
+            <span class="cat-pill cat-${m.category}">${cap(m.category)}</span>
+          </div>
+        </div>`;
+    }).join('');
+  } else {
+    // Full mail page — accordion rows
+    el.innerHTML = items.map(m => {
+      const thumb = m.file_url
+        ? `<img src="${esc(m.file_url)}" alt="scan" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
+        : catEmoji(m.category);
+      const descHtml = m.description
+        ? `<div class="mail-accordion-desc">${esc(m.description)}</div>`
+        : '';
+      const fileBtn = m.file_url
+        ? `<a href="${esc(m.file_url)}" target="_blank" class="btn btn-gold btn-sm">⬇ View / Download</a>`
+        : '';
+      const readBtn = !m.is_read
+        ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); markMailRead(${m.id})">✓ Mark Read</button>`
+        : '';
+      return `
+        <div class="mail-accordion ${m.is_read ? '' : 'unread'}" id="accordion-${m.id}">
+          <div class="mail-accordion-header" onclick="toggleAccordion(${m.id})">
+            <div class="unread-dot ${m.is_read ? 'read' : ''}"></div>
+            <div class="mail-thumb">${thumb}</div>
+            <div class="mail-body">
+              <div class="mail-sender">${esc(m.sender)}</div>
+              <div class="mail-subject">${esc(m.subject || 'No subject')}</div>
+            </div>
+            <div class="mail-meta" style="text-align:right; flex-shrink:0;">
+              <div class="mail-date">${fmtDate(m.created_at)}</div>
+              <span class="cat-pill cat-${m.category}">${cap(m.category)}</span>
+            </div>
+            <div class="mail-accordion-chevron">▼</div>
+          </div>
+          <div class="mail-accordion-body">
+            ${descHtml}
+            ${(fileBtn || readBtn) ? `<div class="mail-accordion-actions">${fileBtn}${readBtn}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+  }
+}
+
+function toggleAccordion(id) {
+  const el = document.getElementById('accordion-' + id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // Close all others
+  document.querySelectorAll('.mail-accordion.open').forEach(a => a.classList.remove('open'));
+  if (!isOpen) {
+    el.classList.add('open');
+    markMailRead(id);
+  }
+}
+
+async function openMail(id) {
+  const m = mailCache.find(x => x.id === id);
+  if (!m) return;
+  currentMailId = id;
+
+  document.getElementById('mv-title').textContent = `${m.sender} — ${m.subject || ''}`;
+  document.getElementById('mv-date').textContent  = fmtDate(m.created_at);
+
+  const dlBtn = document.getElementById('mv-download');
+  const body  = document.getElementById('mv-body');
+
+  if (m.file_url) {
+    dlBtn.href = m.file_url;
+    dlBtn.classList.remove('hidden');
+
+    // Check if it's a PDF — show download prompt instead of broken image
+    const isPdf = m.file_url.toLowerCase().includes('.pdf') ||
+                  (m.file_path && m.file_path.toLowerCase().endsWith('.pdf'));
+
+    if (isPdf) {
+      const descHtml = m.description
+        ? `<div style="margin:16px auto 20px;max-width:480px;text-align:left;background:var(--parch);border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.65;color:var(--ink2);border-left:3px solid var(--gold);">${esc(m.description)}</div>`
+        : '<div style="margin-bottom:20px;"></div>';
+      body.innerHTML = `
+        <div class="mv-no-scan">
+          <div class="mv-no-scan-icon">📄</div>
+          <h3>${esc(m.sender)}</h3>
+          <p>${esc(m.subject || '')}</p>
+          ${descHtml}
+          <a href="${esc(m.file_url)}" target="_blank" class="btn btn-gold" style="display:inline-flex;">
+            ⬇ Open PDF
+          </a>
+        </div>`;
+    } else {
+      body.innerHTML = `
+        <img
+          src="${esc(m.file_url)}"
+          alt="Mail scan"
+          style="max-width:100%; max-height:72vh; border-radius:10px; box-shadow: var(--shadow-l);"
+          onerror="
+            this.style.display='none';
+            this.insertAdjacentHTML('afterend',
+              '<div class=\'mv-no-scan\'>' +
+              '<div class=\'mv-no-scan-icon\'>⚠️</div>' +
+              '<h3>Could not load image</h3>' +
+              '<p>The file may still be processing. Try the download button above.</p>' +
+              '</div>'
+            );
+          "
+        >`;
+    }
+  } else {
+    dlBtn.classList.add('hidden');
+    const noFileDesc = m.description
+      ? '<div style="margin:18px auto 0;max-width:480px;text-align:left;background:var(--parch);border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.65;color:var(--ink2);border-left:3px solid var(--gold);">' + esc(m.description) + '</div>'
+      : '';
+    body.innerHTML =
+      '<div class="mv-no-scan">' +
+        '<div class="mv-no-scan-icon">' + catEmoji(m.category) + '</div>' +
+        '<h3>' + esc(m.sender) + '</h3>' +
+        '<p>' + esc(m.subject || '') + '</p>' +
+        noFileDesc +
+        '<p style="margin-top:18px;font-size:13px;color:var(--muted);">No scan attached yet — your account manager will upload it soon.</p>' +
+      '</div>';
+  }
+
+  document.getElementById('mail-viewer').classList.add('open');
+  markMailRead(id);
+}
+
+function closeMailViewer() {
+  document.getElementById('mail-viewer').classList.remove('open');
+}
+
+async function markMailRead(id) {
+  if (!id) return;
+  const m = mailCache.find(x => x.id === id);
+  if (!m || m.is_read) return;
+  m.is_read = true;
+  await sb.from('mail').update({ is_read: true }).eq('id', id);
+  renderMailList();
+  renderMailRows('overview-mail', mailCache.slice(0, 3), true);
+  updateMailBadge(mailCache.filter(x => !x.is_read).length);
+}
+
+function updateMailBadge(count) {
+  const navBadge  = document.getElementById('mail-nav-badge');
+  const cardBadge = document.getElementById('mail-card-badge');
+  if (navBadge)  { navBadge.textContent  = count; navBadge.classList.toggle('hidden',  count === 0); }
+  if (cardBadge) { cardBadge.textContent = `${count} new`; cardBadge.classList.toggle('hidden', count === 0); }
+}
+
+// ================================================================
+// DOCUMENTS
+// ================================================================
+async function loadClientDocs() {
+  const { data, error } = await sb
+    .from('documents')
+    .select('*')
+    .eq('client_id', currentUser.id)
+    .order('created_at', { ascending: false });
+
+  const el = document.getElementById('docs-list');
+  if (!el) return;
+
+  if (error || !data?.length) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>No documents uploaded yet.<br>Your account manager will add them here.</p>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Type</th>
+          <th>Uploaded</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(d => `
+          <tr>
+            <td>${esc(d.name)}</td>
+            <td><span class="pill pill-${d.doc_type}">${cap(d.doc_type)}</span></td>
+            <td>${fmtDate(d.created_at)}</td>
+            <td>
+              ${d.file_url
+                ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" download>⬇ Download</a>`
+                : `<span style="font-size:13px; color:var(--muted)">No file</span>`}
+            </td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+// ================================================================
+// ADMIN DASHBOARD
+// ================================================================
+async function loadAdminDash() {
+  // Load clients and mail counts in parallel
+  const [{ data: profiles }, { data: unreadMail }, { data: allCS }] = await Promise.all([
+    sb.from('profiles').select('*').eq('role', 'client').order('created_at', { ascending: false }),
+    sb.from('mail').select('id, client_id').eq('is_read', false),
+    sb.from('client_services').select('client_id, services(name, color, icon)'),
+  ]);
+
+  allClients = profiles || [];
+
+  const totalUnread  = unreadMail?.length || 0;
+  const totalCS      = allCS?.length      || 0;
+
+  // Stats
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-icon">👥</div>
+      <div class="stat-card-label">Total Clients</div>
+      <div class="stat-card-value">${allClients.length}</div>
+      <div class="stat-card-sub">registered accounts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">📬</div>
+      <div class="stat-card-label">Unread Mail</div>
+      <div class="stat-card-value ${totalUnread > 0 ? 'amber' : ''}">${totalUnread}</div>
+      <div class="stat-card-sub">across all clients</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">🔧</div>
+      <div class="stat-card-label">Services Assigned</div>
+      <div class="stat-card-value">${totalCS}</div>
+      <div class="stat-card-sub">total subscriptions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon">📊</div>
+      <div class="stat-card-label">Avg Services</div>
+      <div class="stat-card-value">${allClients.length ? (totalCS / allClients.length).toFixed(1) : '0'}</div>
+      <div class="stat-card-sub">per client</div>
+    </div>
+  `;
+
+  // Build services map per client
+  const csMap = {};
+  (allCS || []).forEach(row => {
+    if (!csMap[row.client_id]) csMap[row.client_id] = [];
+    if (row.services) csMap[row.client_id].push(row.services);
+  });
+
+  // Build unread map per client
+  const unreadMap = {};
+  (unreadMail || []).forEach(row => {
+    unreadMap[row.client_id] = (unreadMap[row.client_id] || 0) + 1;
+  });
+
+  // Client list
+  const listEl = document.getElementById('admin-client-list');
+  if (!allClients.length) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">👥</div>
+        <p>No clients yet. They'll appear here after signing up.</p>
+      </div>`;
+  } else {
+    // Desktop table
+    const tableHtml = `
+      <div class="admin-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Country</th>
+              <th>Services</th>
+              <th>Unread</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${allClients.map(c => {
+              const svcs   = csMap[c.id] || [];
+              const unread = unreadMap[c.id] || 0;
+              const color  = avatarColor(c.full_name);
+              return `
+                <tr>
+                  <td>
+                    <div class="td-user">
+                      <div class="td-avatar" style="background:${color}">${c.full_name[0]}</div>
+                      <div>
+                        <div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}</div>
+                        <div class="td-sub">${esc(c.email || c.whatsapp || '–')}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">${esc(c.country || '–')}</td>
+                  <td>
+                    ${svcs.length
+                      ? svcs.map(s => `<span class="pill pill-active" style="margin:2px 3px 2px 0; font-size:11px">${esc(s.name)}</span>`).join('')
+                      : `<span style="font-size:13px; color:var(--muted)">None</span>`}
+                  </td>
+                  <td>
+                    ${unread > 0
+                      ? `<span style="font-weight:600; color:var(--amber);">${unread} new</span>`
+                      : `<span style="color:var(--muted); font-size:13px;">–</span>`}
+                  </td>
+                  <td>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                      <button class="btn btn-gold btn-sm" onclick="goUploadFor('${c.id}')">📤 Mail</button>
+                      <button class="btn btn-ghost btn-sm" onclick="viewMailHistory('${c.id}', '${c.full_name.replace(/'/g, "\\'")}')">📋 History</button>
+                      <button class="btn btn-ghost btn-sm" onclick="openAssignFor('${c.id}')">🔧 Services</button>
+                    </div>
+                  </td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    // Mobile cards
+    const cardsHtml = `
+      <div class="admin-cards-wrap">
+        ${allClients.map(c => {
+          const svcs   = csMap[c.id] || [];
+          const unread = unreadMap[c.id] || 0;
+          const color  = avatarColor(c.full_name);
+          return `
+            <div class="client-card">
+              <div class="client-card-header">
+                <div class="td-avatar" style="background:${color}; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0;">${c.full_name[0]}</div>
+                <div class="client-card-info">
+                  <div class="client-card-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}</div>
+                  <div class="client-card-sub">${esc(c.email || c.whatsapp || '–')}</div>
+                </div>
+                ${unread > 0 ? `<span class="sb-badge">${unread}</span>` : ''}
+              </div>
+              <div class="client-card-meta">
+                <div class="client-card-meta-item">
+                  <span class="client-card-meta-label">Country</span>
+                  <span>${esc(c.country || '–')}</span>
+                </div>
+                <div class="client-card-meta-item" style="flex-wrap:wrap; gap:4px;">
+                  <span class="client-card-meta-label">Services</span>
+                  ${svcs.length
+                    ? svcs.map(s => `<span class="pill pill-active" style="font-size:10px;">${esc(s.name)}</span>`).join('')
+                    : '<span style="color:var(--muted)">None</span>'}
+                </div>
+              </div>
+              <div class="client-card-actions">
+                <button class="btn btn-gold btn-sm" onclick="goUploadFor('${c.id}')">📤 Mail</button>
+                <button class="btn btn-ghost btn-sm" onclick="viewMailHistory('${c.id}', '${c.full_name.replace(/'/g, "\\'")}')">📋 History</button>
+                <button class="btn btn-ghost btn-sm" onclick="openAssignFor('${c.id}')">🔧 Services</button>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>`;
+
+    listEl.innerHTML = tableHtml + cardsHtml;
+  }
+
+  // Populate all client dropdowns
+  populateClientDropdowns();
+}
+
+function goUploadFor(clientId) {
+  navTo('admin-upload');
+  setTimeout(() => {
+    const sel = document.getElementById('up-client');
+    if (sel) sel.value = clientId;
+  }, 30);
+}
+
+function populateClientDropdowns() {
+  const options = allClients.map(c =>
+    `<option value="${c.id}">${esc(c.full_name)} — ${esc(c.email || c.country || c.whatsapp || 'no contact')}</option>`
+  ).join('');
+  const placeholder = '<option value="">Select a client…</option>';
+  ['up-client', 'doc-client', 'assign-client'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = placeholder + options;
+  });
+}
+
+// ================================================================
+// ADMIN — MAIL UPLOAD
+// ================================================================
+function handleMailDrop(e) {
+  e.preventDefault();
+  document.getElementById('mail-drop-zone').classList.remove('drag');
+  if (e.dataTransfer.files[0]) setMailFile(e.dataTransfer.files[0]);
+}
+
+const ALLOWED_MAIL_TYPES = ['image/jpeg','image/png','image/webp','image/gif','application/pdf'];
+const ALLOWED_DOC_TYPES  = ['image/jpeg','image/png','image/webp','application/pdf',
+                             'application/msword',
+                             'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
+
+function validateFile(file, allowedTypes) {
+  if (!allowedTypes.includes(file.type)) {
+    showToast('File type not allowed. Please upload an image or PDF.', true);
+    return false;
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    showToast('File is too large. Maximum size is 20 MB.', true);
+    return false;
+  }
+  return true;
+}
+
+function setMailFile(file) {
+  if (!validateFile(file, ALLOWED_MAIL_TYPES)) return;
+  uploadMailFile = file;
+  document.getElementById('mail-file-chip').style.display = 'flex';
+  document.getElementById('mail-chip-name').textContent   = file.name;
+  document.getElementById('mail-chip-size').textContent   = formatBytes(file.size);
+  const thumb = document.getElementById('mail-chip-thumb');
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = e => { thumb.innerHTML = `<img src="${e.target.result}" alt="">`; };
+    reader.readAsDataURL(file);
+  } else {
+    thumb.innerHTML = '📄';
+  }
+}
+
+function clearMailFile() {
+  uploadMailFile = null;
+  document.getElementById('mail-file-chip').style.display = 'none';
+  document.getElementById('mail-file-input').value = '';
+}
+
+async function submitMail() {
+  if (!currentProfile || currentProfile.role !== 'admin') { showToast('Unauthorized.', true); return; }
+
+  const clientId    = document.getElementById('up-client').value;
+  const sender      = sanitize(document.getElementById('up-sender').value);
+  const subject     = sanitize(document.getElementById('up-subject').value);
+  const description = sanitize(document.getElementById('up-description').value);
+  const category    = document.getElementById('up-cat').value;
+  const btn         = document.getElementById('mail-upload-btn');
+
+  // Validate category against allowed values
+  const validCategories = ['usps', 'bank', 'irs', 'other'];
+  if (!validCategories.includes(category)) { showToast('Invalid category.', true); return; }
+
+  if (!clientId) { showToast('Please select a client.', true);      return; }
+  if (!sender)   { showToast('Please enter the sender name.', true); return; }
+  if (!subject)  { showToast('Please enter a subject.', true);       return; }
+
+  btn.disabled    = true;
+  btn.textContent = 'Uploading…';
+
+  // Upload file to storage if provided
+  let file_url = null;
+  if (uploadMailFile) {
+    const ext  = uploadMailFile.name.split('.').pop();
+    const path = `${clientId}/${Date.now()}.${ext}`;
+    const { error: storageErr } = await sb.storage
+      .from('mail-scans')
+      .upload(path, uploadMailFile, { cacheControl: '3600', upsert: false });
+
+    if (storageErr) {
+      showToast('File upload failed: ' + storageErr.message, true);
+      btn.disabled = false;
+      btn.textContent = '📤 Upload Mail for Client';
+      return;
+    }
+    const { data: urlData } = sb.storage.from('mail-scans').getPublicUrl(path);
+    file_url = urlData?.publicUrl || null;
+  }
+
+  // Insert mail row
+  const { error: dbErr } = await sb.from('mail').insert({
+    client_id:   clientId,
+    sender,
+    subject,
+    description: description || null,
+    category,
+    file_url,
+    uploaded_by: currentUser.id,
+  });
+
+  if (dbErr) {
+    showToast('Database error: ' + dbErr.message, true);
+    btn.disabled = false;
+    btn.textContent = '📤 Upload Mail for Client';
+    return;
+  }
+
+  showToast('✓ Mail uploaded — client can see it now!');
+  document.getElementById('up-client').value      = '';
+  document.getElementById('up-sender').value      = '';
+  document.getElementById('up-subject').value     = '';
+  document.getElementById('up-description').value = '';
+  clearMailFile();
+  btn.disabled = false;
+  btn.textContent = '📤 Upload Mail for Client';
+}
+
+// ================================================================
+// ADMIN — DOCUMENT UPLOAD
+// ================================================================
+function setDocFile(file) {
+  if (!validateFile(file, ALLOWED_DOC_TYPES)) return;
+  uploadDocFile = file;
+  document.getElementById('doc-file-chip').style.display = 'flex';
+  document.getElementById('doc-chip-name').textContent   = file.name;
+  document.getElementById('doc-chip-size').textContent   = formatBytes(file.size);
+  document.getElementById('doc-chip-thumb').innerHTML    = '📄';
+}
+
+function clearDocFile() {
+  uploadDocFile = null;
+  document.getElementById('doc-file-chip').style.display = 'none';
+  document.getElementById('doc-file-input').value = '';
+}
+
+async function submitDoc() {
+  if (!currentProfile || currentProfile.role !== 'admin') { showToast('Unauthorized.', true); return; }
+
+  const clientId = document.getElementById('doc-client').value;
+  const name     = sanitize(document.getElementById('doc-name').value);
+  const docType  = document.getElementById('doc-type').value;
+  const btn      = document.getElementById('doc-upload-btn');
+
+  if (!clientId) { showToast('Please select a client.', true);       return; }
+  if (!name)     { showToast('Please enter a document name.', true);  return; }
+  if (!uploadDocFile) { showToast('Please select a file to upload.', true); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Uploading…';
+
+  // Upload file
+  const ext  = uploadDocFile.name.split('.').pop();
+  const path = `${clientId}/${Date.now()}_${docType}.${ext}`;
+  const { error: storageErr } = await sb.storage
+    .from('documents')
+    .upload(path, uploadDocFile);
+
+  if (storageErr) {
+    showToast('File upload failed: ' + storageErr.message, true);
+    btn.disabled = false;
+    btn.textContent = '📄 Upload Document';
+    return;
+  }
+
+  const { data: urlData } = sb.storage.from('documents').getPublicUrl(path);
+
+  // Insert document row
+  const { error: dbErr } = await sb.from('documents').insert({
+    client_id:   clientId,
+    name,
+    doc_type:    docType,
+    file_url:    urlData?.publicUrl || null,
+    uploaded_by: currentUser.id,
+  });
+
+  if (dbErr) {
+    showToast('Database error: ' + dbErr.message, true);
+    btn.disabled = false;
+    btn.textContent = '📄 Upload Document';
+    return;
+  }
+
+  showToast('✓ Document uploaded successfully!');
+  document.getElementById('doc-client').value = '';
+  document.getElementById('doc-name').value   = '';
+  clearDocFile();
+  btn.disabled = false;
+  btn.textContent = '📄 Upload Document';
+}
+
+// ================================================================
+// ADMIN — ASSIGN SERVICES MODAL
+// ================================================================
+function openAssignModal() {
+  document.getElementById('assign-services-list').innerHTML =
+    '<p style="font-size:13px; color:var(--muted);">Select a client above to manage their services.</p>';
+  document.getElementById('assign-client').value = '';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function openAssignFor(clientId) {
+  openAssignModal();
+  setTimeout(() => {
+    document.getElementById('assign-client').value = clientId;
+    loadAssignServices(clientId);
+  }, 30);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+async function loadAssignServices(clientId) {
+  assignClientId = clientId;
+  if (!clientId) {
+    document.getElementById('assign-services-list').innerHTML = '';
+    return;
+  }
+
+  const { data } = await sb
+    .from('client_services')
+    .select('*')
+    .eq('client_id', clientId);
+
+  assignSnapshot = {};
+  (data || []).forEach(row => { assignSnapshot[row.service_id] = row; });
+
+  document.getElementById('assign-services-list').innerHTML = allServices.map(s => `
+    <div class="toggle-row">
+      <div class="toggle-svc-icon" style="background:${s.color}">${s.icon}</div>
+      <div class="toggle-svc-info">
+        <div class="toggle-svc-name">${esc(s.name)}</div>
+        ${assignSnapshot[s.id]
+          ? `<div class="toggle-svc-status">Status: ${cap(assignSnapshot[s.id].status)}</div>`
+          : `<div class="toggle-svc-status">Not assigned</div>`}
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" data-svc-id="${s.id}" ${assignSnapshot[s.id] ? 'checked' : ''}>
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+  `).join('');
+}
+
+async function saveServices() {
+  if (!currentProfile || currentProfile.role !== 'admin') { showToast('Unauthorized.', true); return; }
+  if (!assignClientId) { showToast('Please select a client first.', true); return; }
+
+  const checkboxes = document.querySelectorAll('#assign-services-list input[type="checkbox"]');
+
+  for (const cb of checkboxes) {
+    const svcId = parseInt(cb.dataset.svcId, 10);
+    const wasOn = !!assignSnapshot[svcId];
+    const isOn  = cb.checked;
+
+    if (isOn && !wasOn) {
+      // Newly assigned
+      await sb.from('client_services').insert({
+        client_id:  assignClientId,
+        service_id: svcId,
+        status:     'active',
+      });
+    } else if (!isOn && wasOn) {
+      // Removed
+      await sb.from('client_services')
+        .delete()
+        .eq('client_id', assignClientId)
+        .eq('service_id', svcId);
+    }
+  }
+
+  showToast('✓ Services updated!');
+  closeModal();
+  loadAdminDash();
+}
+
+// ================================================================
+// ADMIN — MAIL HISTORY MODAL
+// ================================================================
+
+async function viewMailHistory(clientId, clientName) {
+  // Show modal immediately with loading state
+  document.getElementById('history-title').textContent = `${clientName}'s Mail`;
+  document.getElementById('history-sub').textContent   = 'Loading…';
+  document.getElementById('history-list').innerHTML    = `
+    <div class="empty-state">
+      <div class="empty-state-icon">⏳</div>
+      <p>Loading mail history…</p>
+    </div>`;
+  document.getElementById('history-overlay').style.display = 'flex';
+
+  // Fetch all mail for this client, newest first
+  const { data: mails, error } = await sb
+    .from('mail')
+    .select('*')
+    .eq('client_id', clientId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    document.getElementById('history-list').innerHTML =
+      `<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Failed to load: ${esc(error.message)}</p></div>`;
+    return;
+  }
+
+  const total  = mails?.length || 0;
+  const unread = mails?.filter(m => !m.is_read).length || 0;
+  document.getElementById('history-sub').textContent =
+    `${total} mail${total !== 1 ? 's' : ''} total · ${unread} unread`;
+
+  if (!total) {
+    document.getElementById('history-list').innerHTML =
+      `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No mail sent to this client yet.</p></div>`;
+    return;
+  }
+
+  document.getElementById('history-list').innerHTML = mails.map((m, i) => {
+    const thumb = m.file_url
+      ? '<img src="' + esc(m.file_url) + '" alt="" style="width:100%;height:100%;object-fit:cover;">'
+      : catEmoji(m.category);
+
+    const dot = m.is_read
+      ? 'width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;background:transparent;border:1.5px solid var(--parch3);'
+      : 'width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;background:var(--gold);';
+
+    const rowBorder = m.is_read ? 'transparent' : 'rgba(184,151,58,0.28)';
+    const rowBg     = m.is_read ? 'transparent' : '#fffdf4';
+    const fw        = m.is_read ? '400' : '600';
+    const descId    = 'hist-desc-' + m.id;
+    const btnId     = 'hist-desc-btn-' + m.id;
+
+    const descHtml = m.description
+      ? '<div style="margin-top:6px;">' +
+          '<button id="' + btnId + '" onclick="toggleHistDesc(\'' + descId + '\',\'' + btnId + '\')" ' +
+            'style="background:none;border:none;padding:0;font-size:11.5px;color:var(--gold);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:inherit;">' +
+            '<span style="font-size:9px;transition:transform 0.2s;" id="' + btnId + '-chevron">▶</span> Show message' +
+          '</button>' +
+          '<div id="' + descId + '" style="display:none;font-size:12.5px;color:var(--ink2);margin-top:6px;background:var(--parch);border-radius:6px;padding:8px 10px;line-height:1.55;border-left:3px solid var(--gold);">' +
+            esc(m.description) +
+          '</div>' +
+        '</div>'
+      : '';
+
+    const fileHtml = m.file_url
+      ? '<a href="' + esc(m.file_url) + '" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11.5px;padding:4px 10px;">⬇ File</a>'
+      : '<span style="font-size:11px;color:var(--muted);">No file</span>';
+
+    return (
+      '<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 12px;border-radius:9px;margin-bottom:4px;border:1.5px solid ' + rowBorder + ';background:' + rowBg + ';">' +
+        '<div style="' + dot + '"></div>' +
+        '<div style="width:40px;height:40px;border-radius:8px;background:var(--parch2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden;">' + thumb + '</div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="font-size:13.5px;font-weight:' + fw + ';color:var(--ink);">' + esc(m.sender) + '</div>' +
+          '<div style="font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(m.subject || '') + '</div>' +
+          descHtml +
+        '</div>' +
+        '<div style="text-align:right;flex-shrink:0;">' +
+          '<div style="font-size:11.5px;color:var(--muted);">' + fmtDate(m.created_at) + '</div>' +
+          '<span class="cat-pill cat-' + m.category + '" style="margin-top:4px;display:inline-block;">' + cap(m.category) + '</span>' +
+          '<div style="margin-top:6px;">' + fileHtml + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+function toggleHistDesc(descId, btnId) {
+  const desc    = document.getElementById(descId);
+  const chevron = document.getElementById(btnId + '-chevron');
+  const btn     = document.getElementById(btnId);
+  if (!desc) return;
+  const isOpen = desc.style.display !== 'none';
+  desc.style.display    = isOpen ? 'none' : 'block';
+  chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
+  btn.innerHTML = (isOpen ? '▶' : '▼') + ' &nbsp;' + (isOpen ? 'Show message' : 'Hide message');
+  // re-render chevron inline
+  btn.innerHTML =
+    '<span style="font-size:9px;transition:transform 0.2s;display:inline-block;transform:' + (isOpen ? '' : 'rotate(90deg)') + '">' +
+    (isOpen ? '▶' : '▶') + '</span>&nbsp;' + (isOpen ? 'Show message' : 'Hide message');
+}
+
+function closeHistory() {
+  document.getElementById('history-overlay').style.display = 'none';
+}
+
+// Close history modal when clicking outside
+document.addEventListener('click', e => {
+  const overlay = document.getElementById('history-overlay');
+  if (overlay && e.target === overlay) closeHistory();
+});
+
+// ================================================================
+// CLIENT PROFILE MODAL
+// ================================================================
+function openProfileModal() {
+  if (!currentProfile || currentProfile.role === 'admin') return;
+  const p = currentProfile;
+  const color = avatarColor(p.full_name);
+
+  const av = document.getElementById('pm-avatar');
+  av.textContent      = p.full_name[0].toUpperCase();
+  av.style.background = color;
+
+  document.getElementById('pm-name').textContent     = p.full_name;
+  document.getElementById('pm-fullname').textContent = p.full_name;
+
+  const emailEl = document.getElementById('pm-email');
+  emailEl.textContent = p.email || 'Not provided';
+  emailEl.className   = 'profile-info-value' + (p.email ? '' : ' empty');
+
+  document.getElementById('pm-country-input').value  = p.country  || '';
+  document.getElementById('pm-whatsapp-input').value = p.whatsapp || '';
+  document.getElementById('pm-error').style.display  = 'none';
+
+  const btn = document.getElementById('pm-save-btn');
+  btn.disabled    = false;
+  btn.textContent = 'Save Changes';
+
+  document.getElementById('profile-overlay').classList.add('open');
+}
+
+function closeProfileModal(e) {
+  if (e && e.target !== document.getElementById('profile-overlay')) return;
+  document.getElementById('profile-overlay').classList.remove('open');
+}
+
+async function saveProfile() {
+  // Auth guard — must be a logged-in client
+  if (!currentProfile || currentProfile.role === 'admin') return;
+
+  const country  = sanitize(document.getElementById('pm-country-input').value);
+  const whatsapp = sanitize(document.getElementById('pm-whatsapp-input').value);
+  const btn      = document.getElementById('pm-save-btn');
+  const errEl    = document.getElementById('pm-error');
+
+  errEl.style.display = 'none';
+
+  // Validate phone
+  if (whatsapp && !/^[\d\s\+\-\(\)]{7,20}$/.test(whatsapp)) {
+    errEl.textContent   = 'Please enter a valid phone number.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = 'Saving…';
+
+  // Only allowed to update their own row (RLS also enforces this server-side)
+  const { error } = await sb
+    .from('profiles')
+    .update({ country: country || null, whatsapp: whatsapp || null })
+    .eq('id', currentProfile.id);
+
+  if (error) {
+    errEl.textContent   = 'Could not save changes. Please try again.';
+    errEl.style.display = 'block';
+    btn.disabled        = false;
+    btn.textContent     = 'Save Changes';
+    return;
+  }
+
+  currentProfile.country  = country  || null;
+  currentProfile.whatsapp = whatsapp || null;
+
+  showToast('✓ Profile updated!');
+  document.getElementById('profile-overlay').classList.remove('open');
+}
+
+// ================================================================
+// CLIENT DETAIL POPUP
+// ================================================================
+function openClientPopup(clientId) {
+  const c = allClients.find(x => x.id === clientId);
+  if (!c) return;
+  const color = avatarColor(c.full_name);
+  const av    = document.getElementById('cp-avatar');
+  av.textContent   = c.full_name[0].toUpperCase();
+  av.style.background = color;
+  document.getElementById('cp-name').textContent = c.full_name;
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    el.textContent = val || 'Not provided';
+    el.className   = 'client-popup-row-value' + (val ? '' : ' empty');
+  };
+  setVal('cp-email',    c.email);
+  setVal('cp-whatsapp', c.whatsapp);
+  setVal('cp-country',  c.country);
+  document.getElementById('client-popup-overlay').classList.add('open');
+}
+function closeClientPopup(e) {
+  if (e && e.target !== document.getElementById('client-popup-overlay')) return;
+  document.getElementById('client-popup-overlay').classList.remove('open');
+}
+
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const isOpen  = sidebar.classList.contains('open');
+  if (isOpen) { closeSidebar(); } else { openSidebarMenu(); }
+}
+function openSidebarMenu() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+  document.getElementById('hamburger-btn').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+  const btn = document.getElementById('hamburger-btn');
+  if (btn) btn.classList.remove('open');
+}
+
+
+function cap(s) {
+  if (!s) return '–';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function fmtDate(ts) {
+  if (!ts) return '–';
+  return new Date(ts).toLocaleDateString('en-US', {
+    month: 'short',
+    day:   'numeric',
+    year:  'numeric',
+  });
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024)       return bytes + ' B';
+  if (bytes < 1024*1024)  return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024*1024)).toFixed(2) + ' MB';
+}
+
+function catEmoji(cat) {
+  return { usps: '📮', bank: '🏦', irs: '🏛️', other: '📦' }[cat] || '📧';
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent    = msg;
+  el.style.display  = 'block';
+}
+function hideError(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = isError ? '⚠️' : '✓';
+  document.getElementById('toast-msg').textContent  = msg;
+  toast.classList.toggle('error', isError);
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3200);
+}
+</script>
+</body>
+</html>
