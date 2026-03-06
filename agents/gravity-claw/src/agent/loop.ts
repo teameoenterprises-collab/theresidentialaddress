@@ -10,9 +10,12 @@ import { deployToolDefinition, executeDeploy } from "../tools/deploy.js";
 import { generateImageToolDefinition, executeGenerateImage } from "../tools/image.js";
 import { mcpManager } from "../tools/mcp.js";
 import { saveChatHistory, loadChatHistory } from "../memory/db.js";
+import { mdToPdf } from "md-to-pdf";
+import fs from "fs";
+import path from "path";
 
 const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey: process.env.GEMINI_API_KEY!,
 });
 
 const MAX_ITERATIONS = 15;
@@ -93,7 +96,8 @@ export async function processAgentMessage(
     chatId: string,
     agentContext: AgentContext,
     onProgress?: (msg: string) => Promise<void>,
-    onPhoto?: (path: string) => Promise<void>
+    onPhoto?: (path: string) => Promise<void>,
+    onFile?: (path: string, filename: string) => Promise<void>
 ): Promise<string> {
 
     const SYSTEM_PROMPT = agentContext.systemPrompt;
@@ -129,6 +133,18 @@ export async function processAgentMessage(
         rememberFactToolDefinition,
         searchMemoryToolDefinition,
         deployToolDefinition,
+        {
+            name: "generate_pdf",
+            description: "Converts a Markdown string into a PDF and sends it to the user. Use this for multi-lead reports or long strategy documents to improve readability on mobile.",
+            parameters: {
+                type: "object",
+                properties: {
+                    markdown: { type: "string", description: "The full markdown content to convert." },
+                    filename: { type: "string", description: "The desired filename (e.g., reddit_leads.pdf)." }
+                },
+                required: ["markdown", "filename"]
+            }
+        },
         ...mcpFunctionDeclarations
     ];
 
@@ -140,33 +156,38 @@ export async function processAgentMessage(
     const history = getHistory(chatId, agentContext.name);
 
     // Create a chat session WITH history so Max remembers previous messages
-    const chat = ai.chats.create({
-        model: "gemini-2.5-flash",
-        config: {
-            systemInstruction: SYSTEM_PROMPT,
-            tools: [{
-                functionDeclarations: allFunctionDeclarations
-            }],
-            temperature: 0.2,
-        },
+    const genModel = ai.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: SYSTEM_PROMPT,
+        tools: [{
+            functionDeclarations: allFunctionDeclarations
+        }],
+    });
+
+    const chat = genModel.startChat({
         history: history.length > 0 ? history : undefined,
+        generationConfig: {
+            temperature: 0.2,
+        }
     });
 
     let iteration = 0;
     let lastGeneratedImagePath: string | null = null;
 
     // Send the initial user message
-    let response = await chat.sendMessage({ message: userParts });
+    let chatResponse = await chat.sendMessage(userParts);
+    let currentResponse = chatResponse.response;
 
     while (iteration < MAX_ITERATIONS) {
         iteration++;
 
         // 1. Handle Tool Calls
-        if (response.functionCalls && response.functionCalls.length > 0) {
-            console.log(`[${agentContext.name}] Iteration ${iteration}: Calling ${response.functionCalls.length} tool(s)...`);
+        const calls = currentResponse.functionCalls();
+        if (calls && calls.length > 0) {
+            console.log(`[${agentContext.name}] Iteration ${iteration}: Calling ${calls.length} tool(s)...`);
 
-            if (onProgress && response.functionCalls[0]?.name) {
-                const cName = response.functionCalls[0].name;
+            if (onProgress && calls[0]?.name) {
+                const cName = calls[0].name;
                 let progressMsg = "⏳ Processing...";
                 if (cName.includes("read")) progressMsg = "📖 Reading files...";
                 else if (cName.includes("edit") || cName.includes("write")) progressMsg = "✏️ Editing files...";
@@ -178,7 +199,7 @@ export async function processAgentMessage(
             }
 
             const toolResults = [];
-            for (const call of response.functionCalls) {
+            for (const call of calls) {
                 let result: any;
 
                 // --- Native Tools ---
@@ -204,6 +225,39 @@ export async function processAgentMessage(
                         lastGeneratedImagePath = res.path;
                     } else {
                         result = res; // string error
+                    }
+                } else if (call.name === "generate_pdf") {
+                    const args = call.args as unknown as { markdown: string; filename: string };
+                    try {
+                        console.log(`[${agentContext.name}] Generating PDF: ${args.filename}`);
+                        let safeFilename = args.filename || `report_${Date.now()}.pdf`;
+                        if (!safeFilename.toLowerCase().endsWith(".pdf")) safeFilename += ".pdf";
+
+                        const reportsDir = path.join(process.cwd(), "temp_reports");
+                        if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
+
+                        const pdfPath = path.join(reportsDir, safeFilename);
+
+                        // @ts-ignore
+                        const pdfResult = await mdToPdf({ content: args.markdown }).catch(err => {
+                            console.error("mdToPdf Internal Error:", err);
+                            throw err;
+                        });
+
+                        if (pdfResult && pdfResult.content) {
+                            fs.writeFileSync(pdfPath, pdfResult.content);
+                            if (onFile) {
+                                await onFile(pdfPath, safeFilename);
+                                result = `✅ PDF successfully generated and sent to user as "${safeFilename}".`;
+                            } else {
+                                result = "⚠️ PDF generated but could not be sent (file handler missing).";
+                            }
+                        } else {
+                            result = "❌ Failed to generate PDF: md-to-pdf returned empty content.";
+                        }
+                    } catch (e: any) {
+                        console.error("PDF Generation Error Details:", e);
+                        result = `❌ Error generating PDF: ${e.message || e}`;
                     }
                 }
                 // --- MCP Tools (Dynamic Routing) ---
@@ -241,12 +295,16 @@ export async function processAgentMessage(
                 });
             }
             // Send the results back to the model
-            response = await chat.sendMessage({
-                message: toolResults
-            });
+            chatResponse = await chat.sendMessage(toolResults);
+            currentResponse = chatResponse.response;
         } else {
             // 2. Handle final text response
-            const finalText = response.text?.trim();
+            let finalText = "";
+            try {
+                finalText = currentResponse.text()?.trim() || "";
+            } catch (e) {
+                console.warn(`[${agentContext.name}] Response text() failed (likely empty or tool-only).`);
+            }
 
             if (finalText) {
                 // Save conversation turn to history + persist to SQLite
@@ -255,7 +313,6 @@ export async function processAgentMessage(
 
                 if (lastGeneratedImagePath) {
                     try {
-                        const fs = require('fs');
                         const imgBuf = fs.readFileSync(lastGeneratedImagePath);
                         history.push({
                             role: "user",
@@ -285,9 +342,8 @@ export async function processAgentMessage(
             } else {
                 // Edge case: model returned neither tools nor text
                 console.warn(`[${agentContext.name}] Iteration ${iteration}: No text and no tool calls. Nudging model for a summary...`);
-                response = await chat.sendMessage({
-                    message: "Please provide a summary of what you just did, or if you encountered an issue, explain what happened."
-                });
+                chatResponse = await chat.sendMessage("Please provide a summary of what you just did, or if you encountered an issue, explain what happened.");
+                currentResponse = chatResponse.response;
             }
         }
     }
@@ -297,5 +353,5 @@ export async function processAgentMessage(
     history.push({ role: "model", parts: [{ text: "I was working on your request but it required too many steps. Please try breaking it into smaller tasks." }] });
     saveAndTrimHistory(chatId, agentContext.name);
 
-    return "⚠️ I was working on your request but it required too many steps. Try breaking it into a smaller task (e.g., 'Read us-phone.html' first, then 'Update the hero section to say X').";
+    return "⚠️ I was working on your request but it required too many steps. Try breaking it into a smaller task.";
 }
