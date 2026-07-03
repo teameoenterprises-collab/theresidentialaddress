@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Referral — James Baker &amp; Associates</title>
+  <title>Referral — The Residential Address</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&family=Public+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0e2a52; --navy2: #163c74; --navy3: #081b36; --navy4: #051025;
@@ -16,9 +16,9 @@
       --line: rgba(14,42,82,0.14);
       --shadow: 0 22px 50px -22px rgba(9,27,54,0.35);
       --ease: cubic-bezier(.22,.68,.2,1);
-      --font-display: 'Bodoni Moda', serif;
-      --font-body: 'Public Sans', sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'Inter', sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -51,7 +51,7 @@
     .light .eyebrow { color: var(--gold3); }
     .light .eyebrow::before { background: var(--gold3); }
 
-    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
     .reveal.in { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) {
@@ -68,9 +68,15 @@
       border-bottom: 1px solid transparent; transition: border-color .3s, background .3s, padding .3s;
     }
     .nav.scrolled { border-color: var(--line); background: rgba(246,248,252,0.94); padding: 12px 1.5rem; }
-    .nav-brand { display: flex; align-items: center; }
-    .nav-brand img { height: 34px; width: auto; display: block; transition: height .3s; }
-    .nav.scrolled .nav-brand img { height: 28px; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; }
+    .nav-brand .mark {
+      width: 34px; height: 34px; border-radius: 9px; background: var(--navy); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; color: var(--gold3);
+      transition: height .3s, width .3s;
+    }
+    .nav-brand .mark svg { width: 18px; height: 18px; }
+    .nav-brand .word { font-family: var(--font-display); font-size: 19px; color: var(--navy3); line-height: 1.1; }
+    .nav-brand .word small { display: block; font-family: var(--font-body); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-top: 1px; }
     .nav-right { display: flex; align-items: center; gap: 22px; }
     .nav-email {
       display: flex; align-items: center; gap: 7px;
@@ -120,15 +126,13 @@
     .ref-cta {
       display: inline-flex; align-items: center; gap: 10px;
       background: linear-gradient(135deg, var(--gold2), var(--gold)); color: var(--navy4);
-      padding: 15px 30px; border-radius: 10px; font-weight: 700; font-size: 15px;
+      padding: 15px 30px; border-radius: 10px; font-weight: 600; font-size: 15px;
       text-decoration: none; box-shadow: 0 14px 30px -10px rgba(173,139,60,0.55);
       transition: transform .25s var(--ease), box-shadow .25s var(--ease);
     }
     .ref-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -8px rgba(173,139,60,0.65); }
     .ref-cta .arrow { transition: transform .25s var(--ease); }
     .ref-cta:hover .arrow { transform: translateX(4px); }
-    .hero-tel { font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px; }
-    .hero-tel:hover { color: var(--white); border-color: var(--white); }
 
     .hero-stats { display: flex; gap: 34px; flex-wrap: wrap; }
     .hero-stats div { min-width: 90px; }
@@ -313,12 +317,16 @@
     .whatsapp-btn {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--white); color: var(--navy3); padding: 14px 26px; border-radius: 10px;
-      text-decoration: none; font-weight: 700; font-size: 14.5px;
+      text-decoration: none; font-weight: 600; font-size: 14.5px;
       border: 1px solid rgba(255,255,255,0.5);
       transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s;
     }
     .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px rgba(0,0,0,0.4); background: var(--offwhite); }
     .whatsapp-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .whatsapp-btn-ghost {
+      background: transparent; border-color: rgba(255,255,255,0.35); color: #fff; padding: 11px 22px;
+    }
+    .whatsapp-btn-ghost:hover { background: rgba(255,255,255,0.1); }
 
     .footer-whatsapp {
       display: inline-flex; align-items: center; gap: 8px;
@@ -379,7 +387,7 @@
     }
 
     function renderPartner(partner) {
-      document.title = `${partner.name} — Referral | James Baker & Associates`;
+      document.title = `${partner.name} — Referral | The Residential Address`;
       const signupUrl = `/portal/?ref=${encodeURIComponent(partner.slug)}`;
 
       // Persist ref code so it survives if the visitor browses before signing up.
@@ -391,12 +399,13 @@
       document.getElementById('ref-content').innerHTML = `
         <nav class="nav" id="siteNav">
           <div class="nav-brand">
-            <img src="/jb-logo.png" alt="James Baker &amp; Associates" />
+            <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg></div>
+            <div class="word">The Residential Address<small>Real US Mailing Address</small></div>
           </div>
           <div class="nav-right">
-            <a class="nav-email" href="mailto:support@jamesbakercpa.com">
+            <a class="nav-email" href="mailto:support@theresidentialaddress.com">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6.5h18v11H3z"/><path d="M3 7l9 6 9-6"/></svg>
-              <span>support@jamesbakercpa.com</span>
+              <span>support@theresidentialaddress.com</span>
             </a>
             <a class="nav-cta" href="${signupUrl}">Get Started</a>
           </div>
@@ -405,16 +414,16 @@
         <header class="hero texture-dark">
           <div class="wrap hero-grid">
             <div class="hero-copy light">
-              <span class="eyebrow">Licensed CPA · International Tax &amp; US Formation</span>
+              <span class="eyebrow">A Real Street Address · Not a PO Box</span>
               <h1>${partner.headline || `${partner.name} sent you here <em>for a reason</em>`}</h1>
-              <p class="lead">${partner.subheadline || 'Sign up through this page and get fast‑tracked, hands‑on onboarding for your US company, bank account, and tax strategy — on us.'}</p>
+              <p class="lead">${partner.subheadline || 'Get a real residential address for your LLC, banking, and mail — with same-day scanning and forwarding. Sign up through this page for priority onboarding.'}</p>
               <div class="hero-actions">
                 <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
               </div>
               <div class="hero-stats">
-                <div><strong>15+</strong><span>Years Experience</span></div>
-                <div><strong>50+</strong><span>Countries Served</span></div>
-                <div><strong>3</strong><span>Day Setup</span></div>
+                <div><strong>10K+</strong><span>Addresses Issued</span></div>
+                <div><strong>50</strong><span>States Covered</span></div>
+                <div><strong>1</strong><span>Day Mail Scanning</span></div>
               </div>
             </div>
             <div class="hero-photo-col">
@@ -433,10 +442,10 @@
           </div>
           <div class="wrap hero-panel-row">
             <ul>
-              <li><span class="check"></span>Personal CPA, not a chatbot</li>
-              <li><span class="check"></span>US LLC formed in the right state</li>
-              <li><span class="check"></span>Bank account, even without an SSN</li>
-              <li><span class="check"></span>IRS compliance handled for you</li>
+              <li><span class="check"></span>A real street address, not a PO Box</li>
+              <li><span class="check"></span>Unlimited mail scanning &amp; forwarding</li>
+              <li><span class="check"></span>Accepted by banks, the IRS, and states</li>
+              <li><span class="check"></span>Package acceptance from any carrier</li>
             </ul>
           </div>
         </header>
@@ -445,7 +454,7 @@
           <div class="wrap">
             <div class="ref-steps reveal">
               <div><div class="ref-num">1</div><strong>Sign up</strong><small>Create your account in under two minutes.</small></div>
-              <div><div class="ref-num">2</div><strong>Get set up</strong><small>We personally onboard and file everything for you.</small></div>
+              <div><div class="ref-num">2</div><strong>Get your address</strong><small>Your real US street address is ready right away.</small></div>
               <div><div class="ref-num">3</div><strong>You're in</strong><small>Referred by ${partner.name}, prioritized from day one.</small></div>
             </div>
           </div>
@@ -453,27 +462,27 @@
 
         <section class="trust-bar">
           <div class="wrap trust-grid">
-            <div class="reveal"><strong data-count="15" data-suffix="+">0</strong><span>Years Experience</span></div>
-            <div class="reveal"><strong data-count="50" data-suffix="+">0</strong><span>Countries Served</span></div>
-            <div class="reveal"><strong data-count="3">0</strong><span>Day Setup Speed</span></div>
-            <div class="reveal"><strong data-count="100" data-suffix="%">0</strong><span>Hands-On Service</span></div>
+            <div class="reveal"><strong data-count="10" data-suffix="K+">0</strong><span>Addresses Issued</span></div>
+            <div class="reveal"><strong data-count="50">0</strong><span>States Covered</span></div>
+            <div class="reveal"><strong data-count="1">0</strong><span>Day Mail Scanning</span></div>
+            <div class="reveal"><strong data-count="99" data-suffix="%">0</strong><span>Client Satisfaction</span></div>
           </div>
         </section>
 
         <section class="section">
           <div class="wrap">
             <div class="section-head reveal">
-              <span class="eyebrow">Why a real expert</span>
-              <h2>Automated platforms give you paperwork.<br>We give you a strategy.</h2>
-              <p>James Baker is a licensed CPA who has spent 15+ years working exclusively with international founders — not a subscription tool.</p>
+              <span class="eyebrow">Why a real address matters</span>
+              <h2>A PO Box gets you a mailbox.<br>We get you a real address.</h2>
+              <p>Banks, the IRS, and state agencies routinely reject PO Boxes. A real residential-style street address keeps every application moving.</p>
             </div>
             <div class="compare reveal">
-              <div class="compare-row head"><span>Feature</span><span>James Baker<span class="tag-recommended">Recommended</span></span><span>Automated Platforms</span></div>
-              <div class="compare-row"><span>Licensed CPA with tax expertise</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
-              <div class="compare-row"><span>Personalized tax strategy</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
-              <div class="compare-row"><span>Hands-on bank account assistance</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
-              <div class="compare-row"><span>Direct IRS compliance management</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
-              <div class="compare-row"><span>3-day setup speed</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row head"><span>Feature</span><span>The Residential Address<span class="tag-recommended">Recommended</span></span><span>PO Box / Virtual Office</span></div>
+              <div class="compare-row"><span>Real street address, not a box</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Accepted for LLC &amp; bank registration</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Same-day mail scanning</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Accepts packages from any carrier</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Keeps your home address private</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
             </div>
           </div>
         </section>
@@ -481,16 +490,16 @@
         <section class="section texture" style="background:var(--offwhite2);">
           <div class="wrap">
             <div class="section-head reveal">
-              <span class="eyebrow">Comprehensive services</span>
-              <h2>Everything your US business needs, handled personally</h2>
+              <span class="eyebrow">What's included</span>
+              <h2>Everything your address needs to do, in one plan</h2>
             </div>
             <div class="services-grid">
-              <div class="svc-card reveal"><div class="svc-icon">LLC</div><h3>LLC Formation &amp; Setup</h3><p>Strategic entity formation in the optimal state — from articles of organization to your operating agreement.</p></div>
-              <div class="svc-card reveal"><div class="svc-icon">$</div><h3>US Bank Account Setup</h3><p>We personally assist with applications, even without an SSN or ITIN, using our banking relationships.</p></div>
-              <div class="svc-card reveal"><div class="svc-icon">%</div><h3>Tax Strategy Planning</h3><p>Personalized optimization based on source-of-income rules, tax treaties, and your business model.</p></div>
-              <div class="svc-card reveal"><div class="svc-icon">IRS</div><h3>Compliance &amp; Reporting</h3><p>Form 5472, 1120, 1065 and state filings — so you never face the $25,000+ penalties for missed filings.</p></div>
-              <div class="svc-card reveal"><div class="svc-icon">+</div><h3>Credit Building</h3><p>Build US business and personal credit from scratch, up the ladder toward higher limits and financing.</p></div>
-              <div class="svc-card reveal"><div class="svc-icon">→</div><h3>Payment Processor Setup</h3><p>Stripe, PayPal, and merchant accounts configured correctly so your revenue never gets interrupted.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">ST</div><h3>Real Street Address</h3><p>A genuine residential-style street address you can use for your LLC, banking, and personal mail — never a PO Box.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">✉</div><h3>Mail Scanning &amp; Forwarding</h3><p>Every piece of mail is scanned and uploaded the same day, with forwarding to anywhere in the world on request.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">PKG</div><h3>Package Acceptance</h3><p>FedEx, UPS, DHL, and USPS packages are all accepted and logged — no missed deliveries, no signature headaches.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">LLC</div><h3>LLC &amp; Banking Ready</h3><p>Built to satisfy the address requirements banks and state agencies expect when you register a company.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">🔒</div><h3>Privacy Protection</h3><p>Keep your actual home address off public LLC filings and business listings.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">APP</div><h3>Online Dashboard</h3><p>View, forward, download, or shred any piece of mail from a simple dashboard, anytime, from any device.</p></div>
             </div>
           </div>
         </section>
@@ -499,15 +508,15 @@
           <div class="wrap">
             <div class="section-head reveal">
               <span class="eyebrow">How it works</span>
-              <h2>The Expansion Ecosystem</h2>
-              <p>A five-layer process that takes you from sign-up to full US compliance in as fast as three days.</p>
+              <h2>From sign-up to your first scanned envelope</h2>
+              <p>A simple five-step flow that gets your new address active in minutes, not weeks.</p>
             </div>
             <div class="process">
-              <div class="p-step reveal"><div class="p-num">01</div><div><h3>Entity Strategy &amp; Formation</h3><p>We review your business model and goals to choose the right structure — LLC, C-Corp, or hybrid — and form it in the right state.</p></div></div>
-              <div class="p-step reveal"><div class="p-num">02</div><div><h3>Banking &amp; Payment Setup</h3><p>Personal assistance with bank applications and payment processors, so approval doesn't hinge on having an SSN.</p></div></div>
-              <div class="p-step reveal"><div class="p-num">03</div><div><h3>Tax Optimization Planning</h3><p>A tax strategy built around your income sources and any treaty benefits you're entitled to.</p></div></div>
-              <div class="p-step reveal"><div class="p-num">04</div><div><h3>Compliance &amp; Reporting</h3><p>All required IRS filings handled directly, keeping you clear of steep foreign-owned LLC penalties.</p></div></div>
-              <div class="p-step reveal"><div class="p-num">05</div><div><h3>Ongoing Growth Support</h3><p>As you scale, your structure adapts — credit building, added entities, and quarterly strategic reviews.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">01</div><div><h3>Sign Up &amp; Choose Your Plan</h3><p>Pick the plan that fits how much mail and how many packages you expect to receive.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">02</div><div><h3>Quick Identity Verification</h3><p>A standard, one-time verification step required to legally operate your mailbox.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">03</div><div><h3>Your Address Goes Live</h3><p>Start using your new street address immediately for your LLC, bank, and personal mail.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">04</div><div><h3>Instant Scan Notifications</h3><p>Get notified the moment mail or a package arrives, with a scan of the envelope in your dashboard.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">05</div><div><h3>Forward, Open, or Shred on Demand</h3><p>Decide what happens to each item — forwarded to you, opened and scanned, or securely shredded.</p></div></div>
             </div>
           </div>
         </section>
@@ -516,12 +525,12 @@
           <div class="wrap">
             <div class="section-head reveal">
               <span class="eyebrow">Client stories</span>
-              <h2>What founders say</h2>
+              <h2>What our members say</h2>
             </div>
             <div class="testi-grid">
-              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Working with him was effortless — the entire process felt handled from start to finish.</p><div class="who"><b>Client from Europe</b>E-Commerce Entrepreneur</div></div>
-              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">I needed a company and a bank account fast. Both were done inside three days.</p><div class="who"><b>Client from South America</b>Digital Service Provider</div></div>
-              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Compliance stopped being something I worried about — they simply take care of it.</p><div class="who"><b>Client from Asia</b>SaaS Founder</div></div>
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">My bank rejected my old PO Box instantly. This address was approved the same day.</p><div class="who"><b>Member in Portugal</b>Digital Nomad</div></div>
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Package acceptance alone was worth switching. Nothing gets missed anymore.</p><div class="who"><b>Member in Texas</b>E-Commerce Seller</div></div>
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Scans show up within hours and I can shred junk mail right from my phone.</p><div class="who"><b>Member in Singapore</b>Remote Founder</div></div>
             </div>
           </div>
         </section>
@@ -535,17 +544,17 @@
                 </div>
                 <div class="bio-chips">
                   <span>Licensed CPA</span>
+                  <span>Trusted Partner</span>
                   <span>15+ Years</span>
                   <span>50+ Countries</span>
-                  <span>100K+ Subscribers</span>
                 </div>
               </div>
               <div>
-                <span class="eyebrow">Meet the founder</span>
-                <h2>James Baker</h2>
-                <p>After leaving a Big Four tax firm over 15 years ago, James has worked exclusively with international entrepreneurs expanding into the US.</p>
-                <p>He's personally helped thousands of founders from 50+ countries form US companies, open bank accounts, and build tax-efficient structures — with a YouTube channel that's become a trusted resource on LLC formation and tax strategy.</p>
-                <blockquote>"We work for you. Not the IRS. Our goal is the lowest tax bill that's legally allowed."</blockquote>
+                <span class="eyebrow">Your referral partner</span>
+                <h2>Why James Baker recommends us</h2>
+                <p>As a CPA who's formed thousands of US companies for international founders, James sends every client here first — a real street address is one of the most common reasons a bank or state filing gets rejected.</p>
+                <p>He partners with The Residential Address because it's built to satisfy exactly what banks, the IRS, and state agencies expect, with same-day mail scanning so nothing important gets missed.</p>
+                <blockquote>"I don't refer clients to a PO Box. A real address is non-negotiable for getting your LLC and bank account approved the first time."</blockquote>
               </div>
             </div>
           </div>
@@ -559,24 +568,28 @@
             </div>
             <div class="faq reveal">
               <details open>
+                <summary>Is this a PO Box? <span class="plus">+</span></summary>
+                <p class="a">No. You receive a real street address, which is why it's accepted for LLC registration and bank account applications where PO Boxes are routinely rejected.</p>
+              </details>
+              <details>
+                <summary>Can I use this address for my LLC and bank account? <span class="plus">+</span></summary>
+                <p class="a">Yes — it's built specifically to meet the address requirements banks and state agencies expect when you register and maintain a company.</p>
+              </details>
+              <details>
+                <summary>How fast is mail scanning? <span class="plus">+</span></summary>
+                <p class="a">Most mail is scanned and available in your dashboard the same day it arrives.</p>
+              </details>
+              <details>
+                <summary>Can you forward packages internationally? <span class="plus">+</span></summary>
+                <p class="a">Yes, packages and mail can be forwarded anywhere in the world on request, right from your dashboard.</p>
+              </details>
+              <details>
+                <summary>Do you accept packages from all carriers? <span class="plus">+</span></summary>
+                <p class="a">Yes — FedEx, UPS, DHL, and USPS deliveries are all accepted and logged automatically.</p>
+              </details>
+              <details>
                 <summary>What happens after I sign up through this referral link? <span class="plus">+</span></summary>
-                <p class="a">Your account is tagged as referred by ${partner.name}, and our team reaches out personally to start your entity, banking, and tax setup — no forms disappearing into a queue.</p>
-              </details>
-              <details>
-                <summary>Is there any extra cost for being referred? <span class="plus">+</span></summary>
-                <p class="a">No. Signing up through this page costs nothing extra — you simply get faster, prioritized onboarding.</p>
-              </details>
-              <details>
-                <summary>How fast can my LLC and bank account be set up? <span class="plus">+</span></summary>
-                <p class="a">Most clients are fully formed and banked in as fast as three days, depending on your country and chosen bank.</p>
-              </details>
-              <details>
-                <summary>Do you work with e-commerce and dropshipping sellers? <span class="plus">+</span></summary>
-                <p class="a">Yes — e-commerce, SaaS, content creators, real estate investors, and remote service providers each get a playbook suited to how they earn.</p>
-              </details>
-              <details>
-                <summary>What if I don't have an SSN or ITIN? <span class="plus">+</span></summary>
-                <p class="a">That's normal for international founders. We assist directly with ITIN applications and bank approvals that don't require an SSN.</p>
+                <p class="a">Your account is tagged as referred by ${partner.name}, so you're placed at the front of onboarding and your address is ready right away.</p>
               </details>
             </div>
           </div>
@@ -586,8 +599,8 @@
           <div class="wrap">
             <div class="final-cta texture-dark reveal">
               <span class="eyebrow">Referred by ${partner.name}</span>
-              <h2>Ready to expand <em>the right way?</em></h2>
-              <p>Set up your US company, bank account, and tax strategy with a CPA who does it personally.</p>
+              <h2>Ready for a real <em>street address?</em></h2>
+              <p>Get your US mailing address set up today — no PO Box, no missed packages, no rejected applications.</p>
               <div class="final-actions">
                 <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
                 <a class="whatsapp-btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">${WHATSAPP_ICON} Chat on WhatsApp</a>
@@ -599,8 +612,8 @@
         <footer>
           <div class="wrap footer-row">
             <a class="footer-whatsapp" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">${WHATSAPP_ICON} WhatsApp us</a>
-            <p>© 2026 James Baker &amp; Associates Corp. · You were referred by ${partner.name}</p>
-            <p><a class="mainsite" href="https://jamesbakercpa.com/" target="_blank" rel="noopener">jamesbakercpa.com</a></p>
+            <p>© 2026 The Residential Address · You were referred by ${partner.name}</p>
+            <p><a class="mainsite" href="https://theresidentialaddress.com/" target="_blank" rel="noopener">theresidentialaddress.com</a></p>
           </div>
         </footer>
       `;
