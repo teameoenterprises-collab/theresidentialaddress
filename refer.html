@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Referral — James Baker &amp; Associates</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&family=Public+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0e2a52; --navy2: #163c74; --navy3: #081b36; --navy4: #051025;
       --blue-mist: #4f7dc2;
       --gold: #ad8b3c; --gold2: #cba956; --gold3: #e8cd8a;
-      --white: #ffffff; --offwhite: #f6f8fc; --offwhite2: #eef2f9; --offwhite3: #dde6f2;
+      --white: #fbfaf6; --offwhite: #f2f3f7; --offwhite2: #e9ecf2; --offwhite3: #d9e0ea;
       --ink: #0c1626; --muted: #5c6b83;
       --line: rgba(14,42,82,0.14);
       --shadow: 0 22px 50px -22px rgba(9,27,54,0.35);
       --ease: cubic-bezier(.22,.68,.2,1);
-      --font-display: 'Newsreader', serif;
-      --font-body: 'Manrope', sans-serif;
+      --font-display: 'Bodoni Moda', serif;
+      --font-body: 'Public Sans', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +51,7 @@
     .light .eyebrow { color: var(--gold3); }
     .light .eyebrow::before { background: var(--gold3); }
 
-    h1, h2, h3 { font-family: var(--font-display); font-weight: 500; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
     .reveal.in { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) {
@@ -71,6 +71,15 @@
     .nav-brand { display: flex; align-items: center; }
     .nav-brand img { height: 34px; width: auto; display: block; transition: height .3s; }
     .nav.scrolled .nav-brand img { height: 28px; }
+    .nav-right { display: flex; align-items: center; gap: 22px; }
+    .nav-email {
+      display: flex; align-items: center; gap: 7px;
+      font-family: var(--font-mono); font-size: 12.5px; color: var(--navy2);
+      text-decoration: none; letter-spacing: 0.01em;
+    }
+    .nav-email svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .nav-email:hover { color: var(--gold); }
+    @media (max-width: 640px) { .nav-email span { display: none; } }
     .nav-cta {
       font-family: var(--font-body); font-size: 13.5px; font-weight: 600; padding: 10px 20px; border-radius: 100px;
       background: var(--navy); color: var(--white); text-decoration: none;
@@ -197,16 +206,35 @@
     .trust-grid span { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: .06em; }
 
     /* ---------- COMPARISON ---------- */
-    .compare { background: var(--white); border: 1px solid var(--offwhite3); border-radius: 18px; overflow: hidden; max-width: 760px; margin: 0 auto; box-shadow: var(--shadow); position: relative; }
+    .compare {
+      background: var(--white); border: 1px solid var(--offwhite3); border-radius: 18px; overflow: hidden;
+      max-width: 760px; margin: 0 auto; box-shadow: var(--shadow); position: relative;
+      background-image: linear-gradient(to right,
+        transparent 0%, transparent 42.9%,
+        rgba(173,139,60,0.09) 42.9%, rgba(173,139,60,0.09) 71.4%,
+        transparent 71.4%, transparent 100%);
+    }
     .compare::before {
       content: ''; position: absolute; inset: 6px; border: 1px solid rgba(173,139,60,0.35); border-radius: 13px; pointer-events: none;
     }
-    .compare-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: center; padding: 16px 26px; border-bottom: 1px solid var(--offwhite2); font-size: 14.5px; }
+    .compare-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: center; padding: 16px 26px; border-bottom: 1px solid var(--offwhite2); font-size: 14.5px; transition: background .2s; }
     .compare-row:last-child { border-bottom: none; }
-    .compare-row.head { background: var(--offwhite2); font-weight: 700; font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--navy3); }
-    .compare-row span.yes, .compare-row span.no { justify-self: center; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
-    .compare-row span.yes { background: rgba(14,42,82,0.10); color: var(--navy2); }
-    .compare-row span.no { background: rgba(92,107,131,0.12); color: var(--muted); }
+    .compare-row:not(.head):hover { background: rgba(173,139,60,0.06); }
+    .compare-row:not(.head):nth-child(even) { background: rgba(14,42,82,0.025); }
+    .compare-row.head {
+      background: linear-gradient(120deg, var(--navy), var(--navy2)); font-weight: 700; font-family: var(--font-mono);
+      font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,0.9);
+    }
+    .compare-row.head span:nth-child(2) { color: var(--gold3); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .tag-recommended {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase;
+      background: var(--gold); color: var(--navy4); padding: 2px 8px; border-radius: 100px; font-weight: 600;
+    }
+    .compare-row span.yes, .compare-row span.no { justify-self: center; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .compare-row span.yes { background: var(--navy); box-shadow: 0 4px 10px -3px rgba(14,42,82,0.5); }
+    .compare-row span.yes svg { width: 14px; height: 14px; stroke: var(--gold3); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .compare-row span.no { background: var(--offwhite2); border: 1px solid var(--offwhite3); }
+    .compare-row span.no svg { width: 11px; height: 11px; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; fill: none; }
 
     /* ---------- SERVICES ---------- */
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -365,7 +393,13 @@
           <div class="nav-brand">
             <img src="/jb-logo.png" alt="James Baker &amp; Associates" />
           </div>
-          <a class="nav-cta" href="${signupUrl}">Get Started</a>
+          <div class="nav-right">
+            <a class="nav-email" href="mailto:support@jamesbakercpa.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6.5h18v11H3z"/><path d="M3 7l9 6 9-6"/></svg>
+              <span>support@jamesbakercpa.com</span>
+            </a>
+            <a class="nav-cta" href="${signupUrl}">Get Started</a>
+          </div>
         </nav>
 
         <header class="hero texture-dark">
@@ -376,7 +410,6 @@
               <p class="lead">${partner.subheadline || 'Sign up through this page and get fast‑tracked, hands‑on onboarding for your US company, bank account, and tax strategy — on us.'}</p>
               <div class="hero-actions">
                 <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
-                <a class="hero-tel" href="tel:866-610-9493">or call 866‑610‑9493</a>
               </div>
               <div class="hero-stats">
                 <div><strong>15+</strong><span>Years Experience</span></div>
@@ -435,12 +468,12 @@
               <p>James Baker is a licensed CPA who has spent 15+ years working exclusively with international founders — not a subscription tool.</p>
             </div>
             <div class="compare reveal">
-              <div class="compare-row head"><span>Feature</span><span>James Baker</span><span>Automated Platforms</span></div>
-              <div class="compare-row"><span>Licensed CPA with tax expertise</span><span class="yes">✓</span><span class="no">✕</span></div>
-              <div class="compare-row"><span>Personalized tax strategy</span><span class="yes">✓</span><span class="no">✕</span></div>
-              <div class="compare-row"><span>Hands-on bank account assistance</span><span class="yes">✓</span><span class="no">✕</span></div>
-              <div class="compare-row"><span>Direct IRS compliance management</span><span class="yes">✓</span><span class="no">✕</span></div>
-              <div class="compare-row"><span>3-day setup speed</span><span class="yes">✓</span><span class="no">✕</span></div>
+              <div class="compare-row head"><span>Feature</span><span>James Baker<span class="tag-recommended">Recommended</span></span><span>Automated Platforms</span></div>
+              <div class="compare-row"><span>Licensed CPA with tax expertise</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Personalized tax strategy</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Hands-on bank account assistance</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>Direct IRS compliance management</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
+              <div class="compare-row"><span>3-day setup speed</span><span class="yes"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></span></div>
             </div>
           </div>
         </section>
@@ -558,7 +591,6 @@
               <div class="final-actions">
                 <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
                 <a class="whatsapp-btn" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener">${WHATSAPP_ICON} Chat on WhatsApp</a>
-                <a class="hero-tel" href="tel:866-610-9493">or call 866‑610‑9493</a>
               </div>
             </div>
           </div>
