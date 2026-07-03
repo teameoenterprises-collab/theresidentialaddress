@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referral — The Residential Address</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #1a3a2a; --forest2: #234d38; --forest3: #0f2419;
+      --gold: #b8973a; --gold2: #d4af55;
+      --parch: #f5f0e8; --parch2: #ece6d8; --parch3: #ddd5c5;
+      --white: #fdfaf5; --ink: #0c0f0a; --muted: #7a7060;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Outfit', sans-serif; background: var(--parch); color: var(--ink); }
+    .ref-hero {
+      max-width: 640px; margin: 0 auto; padding: 4rem 1.5rem 3rem; text-align: center;
+    }
+    .ref-hero img { height: 40px; margin-bottom: 24px; }
+    .ref-hero h1 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 500;
+      font-size: 40px; line-height: 1.15; margin-bottom: 14px; color: var(--forest3);
+    }
+    .ref-hero p { color: var(--muted); font-size: 16px; margin-bottom: 28px; }
+    .ref-cta {
+      display: inline-block; background: var(--forest); color: var(--white);
+      padding: 14px 32px; border-radius: 8px; font-weight: 500; font-size: 15px;
+      text-decoration: none; transition: background 0.18s;
+    }
+    .ref-cta:hover { background: var(--forest2); }
+    .ref-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      max-width: 640px; margin: 0 auto 3rem; padding: 0 1.5rem;
+    }
+    .ref-steps div { text-align: center; }
+    .ref-num {
+      width: 34px; height: 34px; border-radius: 50%; background: var(--gold);
+      color: var(--white); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px; font-weight: 500; font-size: 14px;
+    }
+    .ref-steps strong { font-size: 14px; display: block; margin-bottom: 4px; }
+    .ref-steps small { font-size: 13px; color: var(--muted); }
+    .ref-error {
+      text-align: center; padding: 5rem 1.5rem; color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .ref-error h1 { font-size: 28px; color: var(--forest3); margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <div id="ref-content">
+    <div class="ref-error"><h1>Loading…</h1></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Same project as the portal — reuse those values here.
+    const SUPABASE_URL = 'https://iuluhxvqyntxtrxevqbb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1bHVoeHZxeW50eHRyeGV2cWJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2OTI4NTYsImV4cCI6MjA4ODI2ODg1Nn0.KdnpwQj_cn6fWt-JxLD1REQqnv8Qt2vPm8_FdvUCm9M';
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function getSlug() {
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      return parts.length >= 2 && parts[0] === 'r' ? parts[1] : null;
+    }
+
+    function renderPartner(partner) {
+      document.title = `${partner.name} — Referral | The Residential Address`;
+      const signupUrl = `/portal/?ref=${encodeURIComponent(partner.slug)}`;
+
+      // Persist ref code so it survives if the visitor browses before signing up.
+      // Set on the root path so it's readable from /portal/ too.
+      document.cookie = `ref=${partner.slug}; path=/; max-age=${60 * 60 * 24 * 30}`;
+
+      document.getElementById('ref-content').innerHTML = `
+        <section class="ref-hero">
+          ${partner.logo_url ? `<img src="${partner.logo_url}" alt="${partner.name}" />` : ''}
+          <h1>${partner.headline || `${partner.name} sent you here for a reason`}</h1>
+          <p>${partner.subheadline || 'Sign up through this page and get set up faster, on us.'}</p>
+          <a class="ref-cta" href="${signupUrl}">Get started</a>
+        </section>
+        <section class="ref-steps">
+          <div><div class="ref-num">1</div><strong>Sign up</strong><small>Create your account.</small></div>
+          <div><div class="ref-num">2</div><strong>Get set up</strong><small>We'll onboard you.</small></div>
+          <div><div class="ref-num">3</div><strong>You're in</strong><small>Referred by ${partner.name}.</small></div>
+        </section>
+      `;
+    }
+
+    function renderNotFound() {
+      document.getElementById('ref-content').innerHTML =
+        '<div class="ref-error"><h1>Page not found</h1><p>This referral link isn\'t active.</p></div>';
+    }
+
+    async function init() {
+      const slug = getSlug();
+      if (!slug) return renderNotFound();
+
+      const { data: partner, error } = await sb
+        .from('referral_partners')
+        .select('id, slug, name, logo_url, headline, subheadline')
+        .eq('slug', slug)
+        .eq('active', true)
+        .single();
+
+      if (error || !partner) return renderNotFound();
+
+      renderPartner(partner);
+
+      sb.from('referral_events').insert({
+        partner_id: partner.id,
+        event_type: 'view',
+      });
+    }
+
+    init();
+  </script>
+
+</body>
+</html>
