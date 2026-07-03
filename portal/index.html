@@ -6350,7 +6350,7 @@ async function saveProfileDocs() {
 // ================================================================
 async function openClientPopup(clientId) {
   // Show the popup immediately with what we have cached
-  const cached = allClients.find(x => x.id === clientId);
+  const cached = allClients.find(x => x.id === clientId) || referrerClients.find(x => x.id === clientId);
   if (!cached) return;
 
   const color = avatarColor(cached.full_name);
@@ -6390,6 +6390,8 @@ async function openClientPopup(clientId) {
     // Update cache
     const idx = allClients.findIndex(x => x.id === clientId);
     if (idx !== -1) allClients[idx] = { ...allClients[idx], ...freshClient };
+    const refIdx = referrerClients.findIndex(x => x.id === clientId);
+    if (refIdx !== -1) referrerClients[refIdx] = { ...referrerClients[refIdx], ...freshClient };
   }
 
   // Load ID documents
@@ -7651,7 +7653,8 @@ function renderReferrerClients() {
     return;
   }
 
-  el.innerHTML = `
+  // Desktop table — same pattern/borders as the admin client table
+  const tableHtml = `
     <div class="admin-table-wrap">
       <table class="data-table">
         <thead><tr><th>Client</th><th>Country</th><th>Signed Up</th></tr></thead>
@@ -7664,7 +7667,7 @@ function renderReferrerClients() {
                   <div class="td-user">
                     <div class="td-avatar" style="background:${color}">${c.full_name[0]}</div>
                     <div>
-                      <div class="td-name">${esc(c.full_name)}</div>
+                      <div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}</div>
                       <div class="td-sub">${esc(c.email || c.whatsapp || '–')}</div>
                     </div>
                   </div>
@@ -7676,6 +7679,37 @@ function renderReferrerClients() {
         </tbody>
       </table>
     </div>`;
+
+  // Mobile cards — without this, the list disappears below the
+  // .admin-table-wrap breakpoint since that wrapper is hidden on mobile.
+  const cardsHtml = `
+    <div class="admin-cards-wrap">
+      ${items.map(c => {
+        const color = avatarColor(c.full_name);
+        return `
+          <div class="client-card" style="cursor:pointer;" onclick="openClientPopup('${c.id}')">
+            <div class="client-card-header">
+              <div class="td-avatar" style="background:${color}; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0;">${c.full_name[0]}</div>
+              <div class="client-card-info">
+                <div class="client-card-name">${esc(c.full_name)}</div>
+                <div class="client-card-sub">${esc(c.email || c.whatsapp || '–')}</div>
+              </div>
+            </div>
+            <div class="client-card-meta">
+              <div class="client-card-meta-item">
+                <span class="client-card-meta-label">Country</span>
+                <span>${esc(c.country || '–')}</span>
+              </div>
+              <div class="client-card-meta-item">
+                <span class="client-card-meta-label">Signed Up</span>
+                <span>${fmtDate(c.created_at)}</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+
+  el.innerHTML = tableHtml + cardsHtml;
 }
 
 async function loadReferrerTickets() {
@@ -7793,6 +7827,29 @@ function renderReferrerDocs() {
             </tr>`).join('')}
         </tbody>
       </table>
+    </div>
+    <div class="admin-cards-wrap">
+      ${items.map(d => `
+        <div class="client-card">
+          <div class="client-card-header">
+            <div class="client-card-info">
+              <div class="client-card-name">${esc(d.name)}</div>
+              <div class="client-card-sub">${esc(d._profile?.full_name || '–')}</div>
+            </div>
+            <span class="pill pill-${d.type}">${cap(d.type)}</span>
+          </div>
+          <div class="client-card-meta">
+            <div class="client-card-meta-item">
+              <span class="client-card-meta-label">Uploaded</span>
+              <span>${fmtDate(d.created_at)}</span>
+            </div>
+          </div>
+          <div class="client-card-actions">
+            ${d.file_url
+              ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm">⬇ View</a>`
+              : `<span style="font-size:13px; color:var(--muted)">No file</span>`}
+          </div>
+        </div>`).join('')}
     </div>`;
 }
 
@@ -7846,6 +7903,23 @@ function renderReferrerMail() {
             </tr>`).join('')}
         </tbody>
       </table>
+    </div>
+    <div class="admin-cards-wrap">
+      ${items.map(m => `
+        <div class="client-card">
+          <div class="client-card-header">
+            <div class="client-card-info">
+              <div class="client-card-name">${esc(m.subject || 'No subject')}</div>
+              <div class="client-card-sub">${esc(m.sender)} · ${esc(m._profile?.full_name || '–')}</div>
+            </div>
+          </div>
+          <div class="client-card-meta">
+            <div class="client-card-meta-item">
+              <span class="client-card-meta-label">Date</span>
+              <span>${fmtDate(m.created_at)}</span>
+            </div>
+          </div>
+        </div>`).join('')}
     </div>`;
 }
 
