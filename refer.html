@@ -3,49 +3,285 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Referral — The Residential Address</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <title>Referral — James Baker &amp; Associates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest: #1a3a2a; --forest2: #234d38; --forest3: #0f2419;
-      --gold: #b8973a; --gold2: #d4af55;
+      --forest: #1a3a2a; --forest2: #234d38; --forest3: #0f2419; --forest4: #081a10;
+      --gold: #b8973a; --gold2: #d4af55; --gold3: #efd28a;
       --parch: #f5f0e8; --parch2: #ece6d8; --parch3: #ddd5c5;
       --white: #fdfaf5; --ink: #0c0f0a; --muted: #7a7060;
+      --line: rgba(184,151,58,0.28);
+      --shadow: 0 20px 50px -20px rgba(15,36,25,0.35);
+      --ease: cubic-bezier(.22,.68,.2,1);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Outfit', sans-serif; background: var(--parch); color: var(--ink); }
-    .ref-hero {
-      max-width: 640px; margin: 0 auto; padding: 4rem 1.5rem 3rem; text-align: center;
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif; background: var(--parch); color: var(--ink);
+      -webkit-font-smoothing: antialiased;
     }
-    .ref-hero img { height: 40px; margin-bottom: 24px; }
-    .ref-hero h1 {
-      font-family: 'Cormorant Garamond', serif; font-weight: 500;
-      font-size: 40px; line-height: 1.15; margin-bottom: 14px; color: var(--forest3);
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold2); font-weight: 500;
     }
-    .ref-hero p { color: var(--muted); font-size: 16px; margin-bottom: 28px; }
+    .eyebrow::before {
+      content: ''; width: 16px; height: 1px; background: var(--gold2); display: inline-block;
+    }
+    .light .eyebrow { color: var(--gold); }
+    .light .eyebrow::before { background: var(--gold); }
+
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 1.5rem; background: rgba(245,240,232,0.7);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent; transition: border-color .3s, background .3s, padding .3s;
+    }
+    .nav.scrolled { border-color: var(--line); background: rgba(245,240,232,0.92); padding: 12px 1.5rem; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--forest3); }
+    .nav-brand .mark {
+      width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--gold);
+      font-family: 'Cormorant Garamond', serif; flex-shrink: 0;
+    }
+    .nav-cta {
+      font-size: 13.5px; font-weight: 500; padding: 10px 20px; border-radius: 100px;
+      background: var(--forest); color: var(--white); text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--forest2); transform: translateY(-1px); }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse 120% 90% at 15% -10%, var(--forest2) 0%, var(--forest) 45%, var(--forest4) 100%);
+      color: var(--white); padding: 4.5rem 0 5.5rem;
+    }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; pointer-events: none;
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+    .hero::before { width: 420px; height: 420px; background: var(--gold2); top: -140px; right: -100px; }
+    .hero::after { width: 340px; height: 340px; background: #2f6b4a; bottom: -160px; left: 10%; animation-delay: -6s; }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-30px, 40px) scale(1.12); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero::before, .hero::after { animation: none; } }
+
+    .hero-grid {
+      position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem; align-items: center;
+    }
+    .hero-copy h1 {
+      font-size: 46px; line-height: 1.12; margin: 18px 0 16px; color: var(--white);
+    }
+    .hero-copy h1 em { font-style: italic; color: var(--gold3); }
+    .hero-copy p.lead { color: rgba(253,250,245,0.78); font-size: 17px; line-height: 1.6; max-width: 46ch; margin-bottom: 30px; }
+
+    .hero-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 40px; }
     .ref-cta {
-      display: inline-block; background: var(--forest); color: var(--white);
-      padding: 14px 32px; border-radius: 8px; font-weight: 500; font-size: 15px;
-      text-decoration: none; transition: background 0.18s;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--gold2), var(--gold)); color: var(--forest4);
+      padding: 15px 30px; border-radius: 10px; font-weight: 600; font-size: 15px;
+      text-decoration: none; box-shadow: 0 14px 30px -10px rgba(184,151,58,0.55);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
     }
-    .ref-cta:hover { background: var(--forest2); }
+    .ref-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -8px rgba(184,151,58,0.65); }
+    .ref-cta .arrow { transition: transform .25s var(--ease); }
+    .ref-cta:hover .arrow { transform: translateX(4px); }
+    .hero-tel { font-size: 14px; color: rgba(253,250,245,0.75); text-decoration: none; border-bottom: 1px solid rgba(253,250,245,0.3); padding-bottom: 2px; }
+    .hero-tel:hover { color: var(--white); border-color: var(--white); }
+
+    .hero-stats { display: flex; gap: 34px; flex-wrap: wrap; }
+    .hero-stats div { min-width: 90px; }
+    .hero-stats strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--gold3); font-weight: 500; }
+    .hero-stats span { font-size: 12px; color: rgba(253,250,245,0.6); text-transform: uppercase; letter-spacing: .06em; }
+
+    /* seal / referral card */
+    .hero-side { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+    .seal {
+      width: 168px; height: 168px; border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, var(--gold3), var(--gold) 55%, var(--gold) 100%);
+      display: flex; align-items: center; justify-content: center; position: relative;
+      box-shadow: 0 22px 44px -14px rgba(0,0,0,0.55);
+      animation: sealIn .9s var(--ease) both;
+    }
+    @keyframes sealIn { from { opacity: 0; transform: scale(.6) rotate(-18deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+    .seal::before {
+      content: ''; position: absolute; inset: 10px; border-radius: 50%;
+      border: 1.5px dashed rgba(15,36,25,0.4);
+    }
+    .seal-inner { text-align: center; color: var(--forest4); }
+    .seal-inner img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; margin: 0 auto 6px; border: 2px solid rgba(15,36,25,0.25); }
+    .seal-initial {
+      width: 46px; height: 46px; border-radius: 50%; margin: 0 auto 6px;
+      background: var(--forest4); color: var(--gold3); font-family: 'Cormorant Garamond', serif;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .seal-inner b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+    .seal-inner small { display: block; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; opacity: .75; margin-top: 2px; }
+
+    .hero-panel {
+      width: 100%; background: rgba(253,250,245,0.06); border: 1px solid rgba(253,250,245,0.15);
+      border-radius: 16px; padding: 22px 24px; backdrop-filter: blur(4px);
+    }
+    .hero-panel p.tag { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--gold3); margin-bottom: 12px; }
+    .hero-panel ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .hero-panel li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(253,250,245,0.85); }
+    .check { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); flex-shrink: 0; position: relative; }
+    .check::after { content: ''; position: absolute; left: 5px; top: 3px; width: 4px; height: 7px; border: solid var(--forest4); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+
+    /* ---------- STEPS ---------- */
+    .section { padding: 5rem 0; }
+    .section-head { max-width: 620px; margin: 0 auto 3rem; text-align: center; }
+    .section-head h2 { font-size: 34px; color: var(--forest3); margin-top: 12px; line-height: 1.2; }
+    .section-head p { color: var(--muted); font-size: 15.5px; margin-top: 12px; line-height: 1.6; }
+    .center { text-align: center; }
+
     .ref-steps {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-      max-width: 640px; margin: 0 auto 3rem; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      max-width: 900px; margin: 0 auto; position: relative;
     }
-    .ref-steps div { text-align: center; }
+    .ref-steps::before {
+      content: ''; position: absolute; top: 20px; left: 15%; right: 15%; height: 1px;
+      background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 12px);
+    }
+    .ref-steps div { text-align: center; position: relative; padding: 0 12px; }
     .ref-num {
-      width: 34px; height: 34px; border-radius: 50%; background: var(--gold);
-      color: var(--white); display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 10px; font-weight: 500; font-size: 14px;
+      width: 40px; height: 40px; border-radius: 50%; background: var(--white); border: 1.5px solid var(--gold);
+      color: var(--gold); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px; font-weight: 600; font-size: 15px; font-family: 'Cormorant Garamond', serif;
+      position: relative; z-index: 1;
     }
-    .ref-steps strong { font-size: 14px; display: block; margin-bottom: 4px; }
-    .ref-steps small { font-size: 13px; color: var(--muted); }
-    .ref-error {
-      text-align: center; padding: 5rem 1.5rem; color: var(--muted);
-      font-family: 'Cormorant Garamond', serif;
+    .ref-steps strong { font-size: 16px; display: block; margin-bottom: 6px; color: var(--forest3); }
+    .ref-steps small { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+    /* ---------- TRUST BAR ---------- */
+    .trust-bar { background: var(--forest3); color: var(--white); padding: 2.6rem 0; }
+    .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .trust-grid strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold3); font-weight: 500; }
+    .trust-grid span { font-size: 12.5px; color: rgba(253,250,245,0.65); text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ---------- COMPARISON ---------- */
+    .compare { background: var(--white); border: 1px solid var(--parch3); border-radius: 18px; overflow: hidden; max-width: 760px; margin: 0 auto; box-shadow: var(--shadow); }
+    .compare-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: center; padding: 16px 26px; border-bottom: 1px solid var(--parch2); font-size: 14.5px; }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row.head { background: var(--parch2); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--forest3); }
+    .compare-row span.yes, .compare-row span.no { justify-self: center; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .compare-row span.yes { background: rgba(35,77,56,0.12); color: var(--forest2); }
+    .compare-row span.no { background: rgba(122,112,96,0.12); color: var(--muted); }
+
+    /* ---------- SERVICES ---------- */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .svc-card {
+      background: var(--white); border: 1px solid var(--parch3); border-radius: 16px; padding: 28px 24px;
+      transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
     }
-    .ref-error h1 { font-size: 28px; color: var(--forest3); margin-bottom: 8px; }
+    .svc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--gold); }
+    .svc-icon {
+      width: 44px; height: 44px; border-radius: 12px; background: var(--forest);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+      color: var(--gold3); font-family: 'Cormorant Garamond', serif; font-size: 19px;
+    }
+    .svc-card h3 { font-size: 19px; color: var(--forest3); margin-bottom: 8px; font-weight: 600; }
+    .svc-card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ---------- PROCESS ---------- */
+    .process { max-width: 760px; margin: 0 auto; position: relative; }
+    .process::before { content: ''; position: absolute; left: 27px; top: 8px; bottom: 8px; width: 1px; background: var(--parch3); }
+    .p-step { display: grid; grid-template-columns: 56px 1fr; gap: 22px; margin-bottom: 34px; position: relative; }
+    .p-step:last-child { margin-bottom: 0; }
+    .p-num {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--forest); color: var(--gold3);
+      display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; z-index: 1; border: 3px solid var(--parch);
+    }
+    .p-step h3 { font-size: 19px; color: var(--forest3); margin-bottom: 6px; }
+    .p-step p { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+
+    /* ---------- TESTIMONIALS ---------- */
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testi-card { background: var(--white); border: 1px solid var(--parch3); border-radius: 16px; padding: 26px; }
+    .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+    .testi-card p.quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--forest3); line-height: 1.5; margin-bottom: 16px; }
+    .testi-card .who { font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .testi-card .who b { display: block; color: var(--ink); font-size: 13.5px; text-transform: none; letter-spacing: 0; margin-bottom: 2px; }
+
+    /* ---------- BIO ---------- */
+    .bio { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 3rem; align-items: center; background: var(--white); border: 1px solid var(--parch3); border-radius: 22px; padding: 3rem; }
+    .bio-photo {
+      aspect-ratio: 1/1; border-radius: 18px;
+      background: linear-gradient(155deg, var(--forest2), var(--forest3) 70%);
+      display: flex; align-items: center; justify-content: center; color: var(--gold3);
+      font-family: 'Cormorant Garamond', serif; font-size: 64px; position: relative; overflow: hidden;
+    }
+    .bio-photo::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 20%, rgba(212,175,85,0.25), transparent 60%); }
+    .bio-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .bio-chips span { font-size: 12.5px; padding: 7px 14px; border-radius: 100px; background: var(--parch2); color: var(--forest3); border: 1px solid var(--parch3); }
+    .bio h2 { font-size: 30px; color: var(--forest3); margin-bottom: 14px; }
+    .bio p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
+    .bio blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--forest2); border-left: 2px solid var(--gold); padding-left: 16px; margin-top: 18px; }
+
+    /* ---------- FAQ ---------- */
+    .faq { max-width: 720px; margin: 0 auto; }
+    .faq details {
+      border-bottom: 1px solid var(--parch3); padding: 20px 4px;
+    }
+    .faq summary {
+      cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+      font-size: 16px; font-weight: 500; color: var(--forest3); gap: 20px;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary .plus { font-size: 20px; color: var(--gold); transition: transform .25s var(--ease); flex-shrink: 0; }
+    .faq details[open] summary .plus { transform: rotate(45deg); }
+    .faq p.a { font-size: 14.5px; color: var(--muted); line-height: 1.65; margin-top: 12px; padding-right: 30px; }
+
+    /* ---------- FINAL CTA ---------- */
+    .final-cta {
+      background: radial-gradient(ellipse 100% 100% at 50% 0%, var(--forest2), var(--forest4));
+      color: var(--white); border-radius: 24px; padding: 3.5rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta h2 { font-size: 32px; color: var(--white); margin-bottom: 12px; }
+    .final-cta h2 em { color: var(--gold3); font-style: italic; }
+    .final-cta p { color: rgba(253,250,245,0.75); font-size: 15px; margin-bottom: 26px; }
+    .final-actions { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+
+    /* ---------- FOOTER ---------- */
+    footer { padding: 2.6rem 0 2.4rem; text-align: center; border-top: 1px solid var(--parch3); }
+    footer p { font-size: 13px; color: var(--muted); }
+    footer a.mainsite { color: var(--forest2); text-decoration: underline; text-underline-offset: 3px; }
+
+    .ref-error { text-align: center; padding: 6rem 1.5rem; color: var(--muted); font-family: 'Cormorant Garamond', serif; }
+    .ref-error h1 { font-size: 30px; color: var(--forest3); margin-bottom: 10px; }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side { order: -1; }
+      .hero-copy h1 { font-size: 36px; }
+      .ref-steps { grid-template-columns: 1fr; gap: 26px; }
+      .ref-steps::before { display: none; }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 26px; }
+      .compare-row { font-size: 13px; padding: 14px 16px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .bio { grid-template-columns: 1fr; padding: 2rem; }
+      .bio-photo { max-width: 220px; margin: 0 auto; }
+    }
   </style>
 </head>
 <body>
@@ -67,31 +303,288 @@
     }
 
     function renderPartner(partner) {
-      document.title = `${partner.name} — Referral | The Residential Address`;
+      document.title = `${partner.name} — Referral | James Baker & Associates`;
       const signupUrl = `/portal/?ref=${encodeURIComponent(partner.slug)}`;
 
       // Persist ref code so it survives if the visitor browses before signing up.
       // Set on the root path so it's readable from /portal/ too.
       document.cookie = `ref=${partner.slug}; path=/; max-age=${60 * 60 * 24 * 30}`;
 
+      const initial = (partner.name || '?').trim().charAt(0).toUpperCase();
+
       document.getElementById('ref-content').innerHTML = `
-        <section class="ref-hero">
-          ${partner.logo_url ? `<img src="${partner.logo_url}" alt="${partner.name}" />` : ''}
-          <h1>${partner.headline || `${partner.name} sent you here for a reason`}</h1>
-          <p>${partner.subheadline || 'Sign up through this page and get set up faster, on us.'}</p>
-          <a class="ref-cta" href="${signupUrl}">Get started</a>
+        <nav class="nav" id="siteNav">
+          <div class="nav-brand">
+            <span class="mark">JB</span>
+            James Baker &amp; Associates
+          </div>
+          <a class="nav-cta" href="${signupUrl}">Get Started</a>
+        </nav>
+
+        <header class="hero">
+          <div class="wrap hero-grid">
+            <div class="hero-copy light">
+              <span class="eyebrow">Licensed CPA · International Tax &amp; US Formation</span>
+              <h1>${partner.headline || `${partner.name} sent you here <em>for a reason</em>`}</h1>
+              <p class="lead">${partner.subheadline || 'Sign up through this page and get fast‑tracked, hands‑on onboarding for your US company, bank account, and tax strategy — on us.'}</p>
+              <div class="hero-actions">
+                <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
+                <a class="hero-tel" href="tel:866-610-9493">or call 866‑610‑9493</a>
+              </div>
+              <div class="hero-stats">
+                <div><strong>15+</strong><span>Years Experience</span></div>
+                <div><strong>50+</strong><span>Countries Served</span></div>
+                <div><strong>3</strong><span>Day Setup</span></div>
+              </div>
+            </div>
+            <div class="hero-side">
+              <div class="seal">
+                <div class="seal-inner">
+                  ${partner.logo_url ? `<img src="${partner.logo_url}" alt="${partner.name}" />` : `<div class="seal-initial">${initial}</div>`}
+                  <b>Referred by</b>
+                  <small>${partner.name}</small>
+                </div>
+              </div>
+              <div class="hero-panel">
+                <p class="tag">What you get</p>
+                <ul>
+                  <li><span class="check"></span>Personal CPA, not a chatbot</li>
+                  <li><span class="check"></span>US LLC formed in the right state</li>
+                  <li><span class="check"></span>Bank account, even without an SSN</li>
+                  <li><span class="check"></span>IRS compliance handled for you</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="ref-steps reveal">
+              <div><div class="ref-num">1</div><strong>Sign up</strong><small>Create your account in under two minutes.</small></div>
+              <div><div class="ref-num">2</div><strong>Get set up</strong><small>We personally onboard and file everything for you.</small></div>
+              <div><div class="ref-num">3</div><strong>You're in</strong><small>Referred by ${partner.name}, prioritized from day one.</small></div>
+            </div>
+          </div>
         </section>
-        <section class="ref-steps">
-          <div><div class="ref-num">1</div><strong>Sign up</strong><small>Create your account.</small></div>
-          <div><div class="ref-num">2</div><strong>Get set up</strong><small>We'll onboard you.</small></div>
-          <div><div class="ref-num">3</div><strong>You're in</strong><small>Referred by ${partner.name}.</small></div>
+
+        <section class="trust-bar">
+          <div class="wrap trust-grid">
+            <div class="reveal"><strong data-count="15" data-suffix="+">0</strong><span>Years Experience</span></div>
+            <div class="reveal"><strong data-count="50" data-suffix="+">0</strong><span>Countries Served</span></div>
+            <div class="reveal"><strong data-count="3">0</strong><span>Day Setup Speed</span></div>
+            <div class="reveal"><strong data-count="100" data-suffix="%">0</strong><span>Hands-On Service</span></div>
+          </div>
         </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="section-head reveal">
+              <span class="eyebrow">Why a real expert</span>
+              <h2>Automated platforms give you paperwork.<br>We give you a strategy.</h2>
+              <p>James Baker is a licensed CPA who has spent 15+ years working exclusively with international founders — not a subscription tool.</p>
+            </div>
+            <div class="compare reveal">
+              <div class="compare-row head"><span>Feature</span><span>James Baker</span><span>Automated Platforms</span></div>
+              <div class="compare-row"><span>Licensed CPA with tax expertise</span><span class="yes">✓</span><span class="no">✕</span></div>
+              <div class="compare-row"><span>Personalized tax strategy</span><span class="yes">✓</span><span class="no">✕</span></div>
+              <div class="compare-row"><span>Hands-on bank account assistance</span><span class="yes">✓</span><span class="no">✕</span></div>
+              <div class="compare-row"><span>Direct IRS compliance management</span><span class="yes">✓</span><span class="no">✕</span></div>
+              <div class="compare-row"><span>3-day setup speed</span><span class="yes">✓</span><span class="no">✕</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background:var(--parch2);">
+          <div class="wrap">
+            <div class="section-head reveal">
+              <span class="eyebrow">Comprehensive services</span>
+              <h2>Everything your US business needs, handled personally</h2>
+            </div>
+            <div class="services-grid">
+              <div class="svc-card reveal"><div class="svc-icon">LLC</div><h3>LLC Formation &amp; Setup</h3><p>Strategic entity formation in the optimal state — from articles of organization to your operating agreement.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">$</div><h3>US Bank Account Setup</h3><p>We personally assist with applications, even without an SSN or ITIN, using our banking relationships.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">%</div><h3>Tax Strategy Planning</h3><p>Personalized optimization based on source-of-income rules, tax treaties, and your business model.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">IRS</div><h3>Compliance &amp; Reporting</h3><p>Form 5472, 1120, 1065 and state filings — so you never face the $25,000+ penalties for missed filings.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">+</div><h3>Credit Building</h3><p>Build US business and personal credit from scratch, up the ladder toward higher limits and financing.</p></div>
+              <div class="svc-card reveal"><div class="svc-icon">→</div><h3>Payment Processor Setup</h3><p>Stripe, PayPal, and merchant accounts configured correctly so your revenue never gets interrupted.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="section-head reveal">
+              <span class="eyebrow">How it works</span>
+              <h2>The Expansion Ecosystem</h2>
+              <p>A five-layer process that takes you from sign-up to full US compliance in as fast as three days.</p>
+            </div>
+            <div class="process">
+              <div class="p-step reveal"><div class="p-num">01</div><div><h3>Entity Strategy &amp; Formation</h3><p>We review your business model and goals to choose the right structure — LLC, C-Corp, or hybrid — and form it in the right state.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">02</div><div><h3>Banking &amp; Payment Setup</h3><p>Personal assistance with bank applications and payment processors, so approval doesn't hinge on having an SSN.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">03</div><div><h3>Tax Optimization Planning</h3><p>A tax strategy built around your income sources and any treaty benefits you're entitled to.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">04</div><div><h3>Compliance &amp; Reporting</h3><p>All required IRS filings handled directly, keeping you clear of steep foreign-owned LLC penalties.</p></div></div>
+              <div class="p-step reveal"><div class="p-num">05</div><div><h3>Ongoing Growth Support</h3><p>As you scale, your structure adapts — credit building, added entities, and quarterly strategic reviews.</p></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background:var(--parch2);">
+          <div class="wrap">
+            <div class="section-head reveal">
+              <span class="eyebrow">Client stories</span>
+              <h2>What founders say</h2>
+            </div>
+            <div class="testi-grid">
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Working with him was effortless — the entire process felt handled from start to finish.</p><div class="who"><b>Client from Europe</b>E-Commerce Entrepreneur</div></div>
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">I needed a company and a bank account fast. Both were done inside three days.</p><div class="who"><b>Client from South America</b>Digital Service Provider</div></div>
+              <div class="testi-card reveal"><div class="stars">★★★★★</div><p class="quote">Compliance stopped being something I worried about — they simply take care of it.</p><div class="who"><b>Client from Asia</b>SaaS Founder</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="bio reveal">
+              <div>
+                <div class="bio-photo">JB</div>
+                <div class="bio-chips">
+                  <span>Licensed CPA</span>
+                  <span>15+ Years</span>
+                  <span>50+ Countries</span>
+                  <span>100K+ Subscribers</span>
+                </div>
+              </div>
+              <div>
+                <span class="eyebrow">Meet the founder</span>
+                <h2>James Baker</h2>
+                <p>After leaving a Big Four tax firm over 15 years ago, James has worked exclusively with international entrepreneurs expanding into the US.</p>
+                <p>He's personally helped thousands of founders from 50+ countries form US companies, open bank accounts, and build tax-efficient structures — with a YouTube channel that's become a trusted resource on LLC formation and tax strategy.</p>
+                <blockquote>"We work for you. Not the IRS. Our goal is the lowest tax bill that's legally allowed."</blockquote>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background:var(--parch2);">
+          <div class="wrap">
+            <div class="section-head reveal">
+              <span class="eyebrow">Questions</span>
+              <h2>Frequently asked</h2>
+            </div>
+            <div class="faq reveal">
+              <details open>
+                <summary>What happens after I sign up through this referral link? <span class="plus">+</span></summary>
+                <p class="a">Your account is tagged as referred by ${partner.name}, and our team reaches out personally to start your entity, banking, and tax setup — no forms disappearing into a queue.</p>
+              </details>
+              <details>
+                <summary>Is there any extra cost for being referred? <span class="plus">+</span></summary>
+                <p class="a">No. Signing up through this page costs nothing extra — you simply get faster, prioritized onboarding.</p>
+              </details>
+              <details>
+                <summary>How fast can my LLC and bank account be set up? <span class="plus">+</span></summary>
+                <p class="a">Most clients are fully formed and banked in as fast as three days, depending on your country and chosen bank.</p>
+              </details>
+              <details>
+                <summary>Do you work with e-commerce and dropshipping sellers? <span class="plus">+</span></summary>
+                <p class="a">Yes — e-commerce, SaaS, content creators, real estate investors, and remote service providers each get a playbook suited to how they earn.</p>
+              </details>
+              <details>
+                <summary>What if I don't have an SSN or ITIN? <span class="plus">+</span></summary>
+                <p class="a">That's normal for international founders. We assist directly with ITIN applications and bank approvals that don't require an SSN.</p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="final-cta reveal">
+              <span class="eyebrow">Referred by ${partner.name}</span>
+              <h2>Ready to expand <em>the right way?</em></h2>
+              <p>Set up your US company, bank account, and tax strategy with a CPA who does it personally.</p>
+              <div class="final-actions">
+                <a class="ref-cta" href="${signupUrl}">Get started <span class="arrow">→</span></a>
+                <a class="hero-tel" href="tel:866-610-9493">866‑610‑9493</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          <div class="wrap">
+            <p>© 2026 James Baker &amp; Associates Corp. · You were referred by ${partner.name}</p>
+            <p style="margin-top:6px;"><a class="mainsite" href="https://jamesbakercpa.com/" target="_blank" rel="noopener">jamesbakercpa.com</a></p>
+          </div>
+        </footer>
       `;
+
+      initInteractions();
     }
 
     function renderNotFound() {
       document.getElementById('ref-content').innerHTML =
         '<div class="ref-error"><h1>Page not found</h1><p>This referral link isn\'t active.</p></div>';
+    }
+
+    function initInteractions() {
+      // Sticky nav shadow/blur on scroll
+      const nav = document.getElementById('siteNav');
+      if (nav) {
+        window.addEventListener('scroll', () => {
+          nav.classList.toggle('scrolled', window.scrollY > 12);
+        }, { passive: true });
+      }
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Scroll-reveal
+      const revealEls = document.querySelectorAll('.reveal');
+      if (prefersReduced) {
+        revealEls.forEach(el => el.classList.add('in'));
+      } else if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => io.observe(el));
+      } else {
+        revealEls.forEach(el => el.classList.add('in'));
+      }
+
+      // Animated stat counters
+      const counters = document.querySelectorAll('[data-count]');
+      const animateCounter = (el) => {
+        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        const suffix = el.getAttribute('data-suffix') || '';
+        if (prefersReduced) { el.textContent = target + suffix; return; }
+        const duration = 1200;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      };
+      if ('IntersectionObserver' in window) {
+        const cio = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              cio.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        counters.forEach(el => cio.observe(el));
+      } else {
+        counters.forEach(animateCounter);
+      }
     }
 
     async function init() {
