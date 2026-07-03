@@ -707,6 +707,7 @@
     .pill-itin     { background: var(--amber-bg);  color: var(--amber); }
     .pill-bank     { background: var(--green-bg);  color: var(--green); }
     .pill-other    { background: #f3f4f6;           color: #6b7280;      }
+    .pill-referral { background: #fdf3e0; color: var(--gold); border: 1px solid #f0dfb3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
 
     /* Service list items */
     .service-row {
@@ -3249,6 +3250,9 @@
         </div>
         <button class="cd-sort-btn" id="cd-sort-start"  onclick="cdSetSort('start')">Start Date <span id="cd-arrow-start"  style="font-size:10px;opacity:0.55;">↕</span></button>
         <button class="cd-sort-btn" id="cd-sort-expiry" onclick="cdSetSort('expiry')">Expiry Date <span id="cd-arrow-expiry" style="font-size:10px;opacity:0.55;">↕</span></button>
+        <select class="filter-select" id="cd-referral-filter" onchange="renderClientDetail()">
+          <option value="">All clients</option>
+        </select>
       </div>
       <div id="cd-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading clients…</p></div></div>
     </div>
@@ -3334,6 +3338,82 @@
           <p>No tickets yet.</p>
         </div>
       </div>
+    </div>
+
+    <!-- ── REFERRER: My Clients ────────────────────────── -->
+    <div id="page-referrer-clients" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>My Referred Clients</h2>
+          <p id="ref-clients-sub">Clients who signed up through your referral link</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        <div class="search-wrap" style="flex:1;min-width:180px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="ref-clients-search" placeholder="Search by name or email…" oninput="renderReferrerClients()" />
+        </div>
+      </div>
+      <div class="stats-grid" id="ref-clients-stats" style="margin-bottom:18px;"></div>
+      <div id="ref-clients-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div></div>
+    </div>
+
+    <!-- ── REFERRER: Tickets (view only) ───────────────── -->
+    <div id="page-referrer-tickets" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Client Tickets</h2>
+          <p>Support tickets from your referred clients — view only</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        <div class="search-wrap" style="flex:1;min-width:180px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="ref-tk-search" placeholder="Search by title or client…" oninput="renderReferrerTickets()" />
+        </div>
+        <select class="filter-select" id="ref-tk-filter" onchange="renderReferrerTickets()">
+          <option value="">All statuses</option>
+          <option value="open">Open</option>
+          <option value="in_progress">In Progress</option>
+          <option value="replied">Replied</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <div id="ref-tk-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div></div>
+    </div>
+
+    <!-- ── REFERRER: Documents (view only) ─────────────── -->
+    <div id="page-referrer-docs" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Client Documents</h2>
+          <p>Documents uploaded for your referred clients — view only</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        <div class="search-wrap" style="flex:1;min-width:180px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="ref-docs-search" placeholder="Search by client or document name…" oninput="renderReferrerDocs()" />
+        </div>
+      </div>
+      <div id="ref-docs-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div></div>
+    </div>
+
+    <!-- ── REFERRER: Mail (view only) ──────────────────── -->
+    <div id="page-referrer-mail" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Client Mail</h2>
+          <p>Scanned mail for your referred clients — view only</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        <div class="search-wrap" style="flex:1;min-width:180px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="ref-mail-search" placeholder="Search by client or sender…" oninput="renderReferrerMail()" />
+        </div>
+      </div>
+      <div id="ref-mail-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div></div>
     </div>
 
   </main>
@@ -4098,6 +4178,9 @@ async function bootPortal(user) {
     navTo('admin-dash');
     loadAdminDash();
     loadAdminTickets(); // pre-load ticket badge
+  } else if (currentProfile.role === 'referrer') {
+    navTo('referrer-clients');
+    loadReferrerClients();
   } else {
     navTo('overview');
     loadClientDash();
@@ -4109,16 +4192,17 @@ async function bootPortal(user) {
 // SIDEBAR
 // ================================================================
 function setupSidebar() {
-  const isAdmin = currentProfile.role === 'admin';
+  const isAdmin    = currentProfile.role === 'admin';
+  const isReferrer = currentProfile.role === 'referrer';
 
   // User info
   document.getElementById('sb-avatar').textContent    = currentProfile.full_name[0].toUpperCase();
   document.getElementById('sb-user-name').textContent = currentProfile.full_name;
-  document.getElementById('sb-user-role').textContent = isAdmin ? 'Admin' : 'Client';
+  document.getElementById('sb-user-role').textContent = isAdmin ? 'Admin' : isReferrer ? 'Referral Partner' : 'Client';
 
   // Profile popup — clients only
   const sbUserBtn = document.getElementById('sb-user-btn');
-  if (!isAdmin) {
+  if (!isAdmin && !isReferrer) {
     sbUserBtn.onclick = (e) => {
       if (e.target.closest('.sb-logout')) return; // don't intercept logout
       openProfileModal();
@@ -4141,6 +4225,14 @@ function setupSidebar() {
       ${sbItem('admin-docs',     '📄', 'Upload Document')}
       ${sbItem('admin-tickets',  '🎫', 'Client Tickets', 'admin-tk-badge')}
       ${sbItem('admin-settings', '⚙️', 'Email Settings')}
+    `;
+  } else if (isReferrer) {
+    nav.innerHTML = `
+      ${sbLabel('Referral Partner')}
+      ${sbItem('referrer-clients', '👥', 'My Clients')}
+      ${sbItem('referrer-tickets', '🎫', 'Tickets')}
+      ${sbItem('referrer-docs',    '📄', 'Documents')}
+      ${sbItem('referrer-mail',    '📬', 'Mail')}
     `;
   } else {
     nav.innerHTML = `
@@ -4192,6 +4284,18 @@ function navTo(pageId) {
   }
   if (pageId === 'admin-settings' && currentProfile?.role === 'admin') {
     populateSettingsForm();
+  }
+  if (pageId === 'referrer-clients' && currentProfile?.role === 'referrer') {
+    loadReferrerClients();
+  }
+  if (pageId === 'referrer-tickets' && currentProfile?.role === 'referrer') {
+    loadReferrerTickets();
+  }
+  if (pageId === 'referrer-docs' && currentProfile?.role === 'referrer') {
+    loadReferrerDocs();
+  }
+  if (pageId === 'referrer-mail' && currentProfile?.role === 'referrer') {
+    loadReferrerMail();
   }
   if (window.innerWidth <= 860) closeSidebar();
 }
@@ -5099,7 +5203,7 @@ async function loadClientProofs() {
 async function loadAdminDash() {
   // Load clients, mail, and proof_of_address in parallel
   const [{ data: profiles }, { data: unreadMail }, { data: allProofs }] = await Promise.all([
-    sb.from('profiles').select('*').eq('role', 'client').order('created_at', { ascending: false }),
+    sb.from('profiles').select('*, referral_partners!referral_partner_id(slug)').eq('role', 'client').order('created_at', { ascending: false }),
     sb.from('mail').select('id, client_id').eq('is_read', false),
     sb.from('proof_of_address').select('client_id, proof_types(name)'),
   ]);
@@ -5188,7 +5292,7 @@ async function loadAdminDash() {
                     <div class="td-user">
                       <div class="td-avatar" style="background:${color}">${c.full_name[0]}</div>
                       <div>
-                        <div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}</div>
+                        <div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}${c.referral_partners?.slug ? ` <span class="pill pill-referral" title="Referred by ${esc(c.referral_partners.slug)}">${esc(c.referral_partners.slug)}</span>` : ''}</div>
                         <div class="td-sub">${esc(c.email || c.whatsapp || '–')}</div>
                       </div>
                     </div>
@@ -5229,7 +5333,7 @@ async function loadAdminDash() {
               <div class="client-card-header">
                 <div class="td-avatar" style="background:${color}; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0;">${c.full_name[0]}</div>
                 <div class="client-card-info">
-                  <div class="client-card-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}</div>
+                  <div class="client-card-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}${c.referral_partners?.slug ? ` <span class="pill pill-referral" style="font-size:9px;" title="Referred by ${esc(c.referral_partners.slug)}">${esc(c.referral_partners.slug)}</span>` : ''}</div>
                   <div class="client-card-sub">${esc(c.email || c.whatsapp || '–')}</div>
                 </div>
                 ${unread > 0 ? `<span class="sb-badge">${unread}</span>` : ''}
@@ -7181,7 +7285,7 @@ async function loadClientDetailPage() {
   if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>';
 
   const [{ data: profiles }, { data: csRows }, { data: allProofs }] = await Promise.all([
-    sb.from('profiles').select('*').eq('role', 'client').order('created_at', { ascending: false }),
+    sb.from('profiles').select('*, referral_partners!referral_partner_id(slug)').eq('role', 'client').order('created_at', { ascending: false }),
     sb.from('client_services').select('*'),
     sb.from('proof_of_address').select('client_id, proof_types(name)')
   ]);
@@ -7194,12 +7298,25 @@ async function loadClientDetailPage() {
     if (r.proof_types) proofMap[r.client_id].push(r.proof_types.name);
   });
 
-  cdAllClients = (profiles || []).map(c => Object.assign({}, c, { cs: csMap[c.id] || {}, proofs: proofMap[c.id] || [] }));
+  cdAllClients = (profiles || []).map(c => Object.assign({}, c, { cs: csMap[c.id] || {}, proofs: proofMap[c.id] || [], referralSlug: c.referral_partners?.slug || null }));
+
+  populateReferralFilter();
 
   const sub = document.getElementById('clients-detail-sub');
   if (sub) sub.textContent = cdAllClients.length + ' client' + (cdAllClients.length !== 1 ? 's' : '') + ' · assigned addresses, lease dates & proof of address';
 
   renderClientDetail();
+}
+
+function populateReferralFilter() {
+  const sel = document.getElementById('cd-referral-filter');
+  if (!sel) return;
+  const current = sel.value;
+  const slugs = Array.from(new Set(cdAllClients.map(c => c.referralSlug).filter(Boolean))).sort();
+  sel.innerHTML = '<option value="">All clients</option>' +
+    '<option value="__any__">Any referral</option>' +
+    slugs.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  if (current && (current === '__any__' || slugs.includes(current))) sel.value = current;
 }
 
 function cdSetSort(field) {
@@ -7228,7 +7345,10 @@ function renderClientDetail() {
   const el = document.getElementById('cd-list');
   if (!el) return;
   const q = (document.getElementById('cd-search')?.value || '').toLowerCase().trim();
+  const refFilter = document.getElementById('cd-referral-filter')?.value || '';
   let items = cdAllClients.slice();
+  if (refFilter === '__any__') items = items.filter(c => !!c.referralSlug);
+  else if (refFilter) items = items.filter(c => c.referralSlug === refFilter);
   if (q) items = items.filter(c => c.full_name.toLowerCase().includes(q) || (c.email||'').toLowerCase().includes(q) || (c.cs.assigned_address||'').toLowerCase().includes(q));
   if (cdSortField === 'start') {
     items.sort((a,b) => { const far = new Date('9999'); const aD = a.cs.lease_start ? new Date(a.cs.lease_start) : (cdSortDir==='asc'?far:new Date(0)); const bD = b.cs.lease_start ? new Date(b.cs.lease_start) : (cdSortDir==='asc'?far:new Date(0)); return cdSortDir==='asc'?aD-bD:bD-aD; });
@@ -7247,7 +7367,7 @@ function renderClientDetail() {
       '<div class="cd-row" data-cid="' + c.id + '">' +
         '<div class="cd-row-avatar" style="background:' + color + ';">' + c.full_name[0].toUpperCase() + '</div>' +
         '<div class="cd-row-main">' +
-          '<div class="cd-row-name">' + esc(c.full_name) + '</div>' +
+          '<div class="cd-row-name">' + esc(c.full_name) + (c.referralSlug ? ' <span class="pill pill-referral" title="Referred by ' + esc(c.referralSlug) + '">' + esc(c.referralSlug) + '</span>' : '') + '</div>' +
           '<div class="cd-row-email">' + esc(c.email || c.whatsapp || '–') + (c.country ? ' · ' + esc(c.country) : '') + '</div>' +
           '<div class="cd-row-meta">' +
             '<div><div class="cd-meta-label">📍 Assigned Address</div><div class="cd-meta-value">' + addrHtml + '</div></div>' +
@@ -7480,6 +7600,253 @@ function updateComposeCount() {
   const len = el.innerText.trim().length;
   const counter = document.getElementById('compose-charcount');
   if (counter) counter.textContent = len + ' chars';
+}
+
+// ================================================================
+// REFERRER — view-only dashboard
+// RLS on profiles/tickets/documents/mail already scopes every query
+// below to only this referrer's own referred clients — no manual
+// filtering by referrer_partner_id is needed client-side.
+// ================================================================
+let referrerClients = [];
+let referrerTickets = [];
+let referrerDocs    = [];
+let referrerMail    = [];
+
+async function loadReferrerClients() {
+  const { data: clients, error } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('role', 'client')
+    .order('created_at', { ascending: false });
+
+  if (error) { devLog('loadReferrerClients:', error.message); return; }
+  referrerClients = clients || [];
+
+  const sub = document.getElementById('ref-clients-sub');
+  if (sub) sub.textContent = referrerClients.length + ' client' + (referrerClients.length !== 1 ? 's' : '') + ' signed up through your referral link';
+
+  const statsEl = document.getElementById('ref-clients-stats');
+  if (statsEl) {
+    statsEl.innerHTML = `
+      <div class="stat-card">
+        <div class="stat-card-icon">👥</div>
+        <div class="stat-card-label">Total Referred</div>
+        <div class="stat-card-value">${referrerClients.length}</div>
+      </div>`;
+  }
+
+  renderReferrerClients();
+}
+
+function renderReferrerClients() {
+  const el = document.getElementById('ref-clients-list');
+  if (!el) return;
+  const q = (document.getElementById('ref-clients-search')?.value || '').toLowerCase().trim();
+  let items = referrerClients.slice();
+  if (q) items = items.filter(c => c.full_name.toLowerCase().includes(q) || (c.email || '').toLowerCase().includes(q));
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">👥</div><p>${q ? 'No clients match your search.' : 'No referred clients yet.'}</p></div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="admin-table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Client</th><th>Country</th><th>Signed Up</th></tr></thead>
+        <tbody>
+          ${items.map(c => {
+            const color = avatarColor(c.full_name);
+            return `
+              <tr>
+                <td>
+                  <div class="td-user">
+                    <div class="td-avatar" style="background:${color}">${c.full_name[0]}</div>
+                    <div>
+                      <div class="td-name">${esc(c.full_name)}</div>
+                      <div class="td-sub">${esc(c.email || c.whatsapp || '–')}</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="font-size:13px;">${esc(c.country || '–')}</td>
+                <td style="font-size:13px;">${fmtDate(c.created_at)}</td>
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+async function loadReferrerTickets() {
+  const { data: tickets, error } = await sb
+    .from('tickets')
+    .select('*')
+    .order('updated_at', { ascending: false });
+
+  if (error) { devLog('loadReferrerTickets:', error.message); return; }
+  const rows = tickets || [];
+
+  // Attach client name — RLS on profiles already restricts this to
+  // this referrer's own referred clients, same as loadAdminTickets
+  // does for admins.
+  const userIds = [...new Set(rows.map(t => t.user_id).filter(Boolean))];
+  let profileMap = {};
+  if (userIds.length) {
+    const { data: profiles } = await sb.from('profiles').select('id, full_name').in('id', userIds);
+    (profiles || []).forEach(p => { profileMap[p.id] = p; });
+  }
+  rows.forEach(t => { t._profile = profileMap[t.user_id] || null; });
+
+  referrerTickets = rows;
+  renderReferrerTickets();
+}
+
+function renderReferrerTickets() {
+  const el = document.getElementById('ref-tk-list');
+  if (!el) return;
+  const search = (document.getElementById('ref-tk-search')?.value || '').toLowerCase();
+  const filter = document.getElementById('ref-tk-filter')?.value || '';
+  const items = referrerTickets.filter(t => {
+    if (filter && t.status !== filter) return false;
+    const cname = (t._profile?.full_name || '').toLowerCase();
+    if (search && !t.title.toLowerCase().includes(search) && !cname.includes(search)) return false;
+    return true;
+  });
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>${filter || search ? 'No tickets match your search.' : 'No tickets from your referred clients yet.'}</p></div>`;
+    return;
+  }
+
+  // Read-only rows — reuses the same visual style as admin tickets
+  // but with no click-through to the reply modal.
+  el.innerHTML = items.map(t => `
+    <div class="tk-row" style="cursor:default;">
+      <div class="tk-row-left">
+        <div class="tk-row-id">${tkIdLabel(t.ticket_number)}</div>
+        <div class="tk-row-title">${esc(t.title)}</div>
+        <div class="tk-row-meta">
+          <span>🏷 ${esc(TK_TYPE_LABELS[t.type] || t.type)}</span>
+          <span>🕐 ${fmtDate(t.updated_at || t.created_at)}</span>
+          ${t._profile?.full_name ? `<span class="tk-client-badge">👤 ${esc(t._profile.full_name)}</span>` : ''}
+        </div>
+      </div>
+      <div class="tk-row-right">
+        ${tkStatusPillHTML(t.status)}
+      </div>
+    </div>`).join('');
+}
+
+async function loadReferrerDocs() {
+  const { data: docs, error } = await sb
+    .from('documents')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) { devLog('loadReferrerDocs:', error.message); return; }
+  const rows = docs || [];
+
+  const clientIds = [...new Set(rows.map(d => d.client_id).filter(Boolean))];
+  let profileMap = {};
+  if (clientIds.length) {
+    const { data: profiles } = await sb.from('profiles').select('id, full_name').in('id', clientIds);
+    (profiles || []).forEach(p => { profileMap[p.id] = p; });
+  }
+  rows.forEach(d => { d._profile = profileMap[d.client_id] || null; });
+
+  referrerDocs = rows;
+  renderReferrerDocs();
+}
+
+function renderReferrerDocs() {
+  const el = document.getElementById('ref-docs-list');
+  if (!el) return;
+  const q = (document.getElementById('ref-docs-search')?.value || '').toLowerCase();
+  const items = referrerDocs.filter(d => {
+    if (!q) return true;
+    const cname = (d._profile?.full_name || '').toLowerCase();
+    return cname.includes(q) || (d.name || '').toLowerCase().includes(q);
+  });
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>${q ? 'No documents match your search.' : 'No documents for your referred clients yet.'}</p></div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="admin-table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Client</th><th>Document</th><th>Type</th><th>Uploaded</th><th>Action</th></tr></thead>
+        <tbody>
+          ${items.map(d => `
+            <tr>
+              <td style="font-size:13px;">${esc(d._profile?.full_name || '–')}</td>
+              <td>${esc(d.name)}</td>
+              <td><span class="pill pill-${d.type}">${cap(d.type)}</span></td>
+              <td style="font-size:13px;">${fmtDate(d.created_at)}</td>
+              <td>
+                ${d.file_url
+                  ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm">⬇ View</a>`
+                  : `<span style="font-size:13px; color:var(--muted)">No file</span>`}
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+async function loadReferrerMail() {
+  const { data: mail, error } = await sb
+    .from('mail')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) { devLog('loadReferrerMail:', error.message); return; }
+  const rows = mail || [];
+
+  const clientIds = [...new Set(rows.map(m => m.client_id).filter(Boolean))];
+  let profileMap = {};
+  if (clientIds.length) {
+    const { data: profiles } = await sb.from('profiles').select('id, full_name').in('id', clientIds);
+    (profiles || []).forEach(p => { profileMap[p.id] = p; });
+  }
+  rows.forEach(m => { m._profile = profileMap[m.client_id] || null; });
+
+  referrerMail = rows;
+  renderReferrerMail();
+}
+
+function renderReferrerMail() {
+  const el = document.getElementById('ref-mail-list');
+  if (!el) return;
+  const q = (document.getElementById('ref-mail-search')?.value || '').toLowerCase();
+  const items = referrerMail.filter(m => {
+    if (!q) return true;
+    const cname = (m._profile?.full_name || '').toLowerCase();
+    return cname.includes(q) || (m.sender || '').toLowerCase().includes(q) || (m.subject || '').toLowerCase().includes(q);
+  });
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>${q ? 'No mail matches your search.' : 'No mail for your referred clients yet.'}</p></div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="admin-table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Client</th><th>Sender</th><th>Subject</th><th>Date</th></tr></thead>
+        <tbody>
+          ${items.map(m => `
+            <tr>
+              <td style="font-size:13px;">${esc(m._profile?.full_name || '–')}</td>
+              <td style="font-size:13px;">${esc(m.sender)}</td>
+              <td style="font-size:13px;">${esc(m.subject || '–')}</td>
+              <td style="font-size:13px;">${fmtDate(m.created_at)}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
 }
 
 </script>
