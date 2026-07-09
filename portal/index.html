@@ -3830,6 +3830,7 @@ let uploadDocFile  = null;  // selected file for doc upload
 let currentMailId  = null;  // mail viewer: open mail id
 let pendingSignup  = null;  // signup data waiting for bootPortal
 let pendingReferralCode = null;  // referral partner slug, if this signup came from a referral link
+let referralEventLogged = false; // guards against double-logging when bootPortal's fallback insert and doSignup's own upsert race each other
 
 // Development-mode flag — set to false in production to suppress
 // internal debug messages from the browser console.
@@ -4085,20 +4086,29 @@ async function bootPortal(user) {
     return;
   }
 
-  // Profile missing — create it now (catches signup edge cases)
+  // Profile missing — create it now (catches signup edge cases).
+  // This can race ahead of doSignup()'s own upsert (onAuthStateChange
+  // fires as soon as signUp() succeeds, before doSignup finishes
+  // resolving the referral partner), so we resolve + include referral
+  // attribution here too — whichever path creates the row first now
+  // gets it right.
   if (!profile) {
     const fallbackName = pendingSignup?.name || user.email.split('@')[0];
+    const fallbackReferralPartner = await lookupReferralPartner(pendingReferralCode);
+    const fallbackReferralPartnerId = fallbackReferralPartner?.id || null;
     const { data: newProfile, error: insertErr } = await sb
       .from('profiles')
       .insert({
-        id:              user.id,
-        full_name:       fallbackName,
-        role:            'client',
-        email:           user.email,
-        country:         pendingSignup?.country         || null,
-        whatsapp:        pendingSignup?.whatsapp        || null,
-        phone:           pendingSignup?.phone           || null,
-        mailing_address: pendingSignup?.mailing_address || null,
+        id:                  user.id,
+        full_name:           fallbackName,
+        role:                'client',
+        email:               user.email,
+        country:             pendingSignup?.country         || null,
+        whatsapp:            pendingSignup?.whatsapp        || null,
+        phone:               pendingSignup?.phone           || null,
+        mailing_address:     pendingSignup?.mailing_address || null,
+        referral_partner_id: fallbackReferralPartnerId,
+        referral_status:     fallbackReferralPartnerId ? 'signed_up' : null,
       })
       .select()
       .maybeSingle();
@@ -4110,6 +4120,10 @@ async function bootPortal(user) {
       return;
     }
     currentProfile = newProfile;
+    if (fallbackReferralPartnerId && !referralEventLogged) {
+      referralEventLogged = true;
+      logReferralSignupEvent(fallbackReferralPartnerId, user.id);
+    }
   } else {
     currentProfile = profile;
   }
@@ -4654,7 +4668,13 @@ async function doSignup() {
   }, { onConflict: 'id' });
 
   if (profileErr) devLog('Profile insert error:', profileErr.message);
-  if (referralPartnerId) logReferralSignupEvent(referralPartnerId, uid);
+  if (referralPartnerId && !referralEventLogged) {
+    referralEventLogged = true;
+    logReferralSignupEvent(referralPartnerId, uid);
+  }
+  // Consumed — don't let a leftover value attribute a *different*,
+  // later signup attempted in this same tab/session.
+  pendingReferralCode = null;
 
   // 3. Upload ID documents
   btn.textContent = 'Uploading documents…';
