@@ -709,6 +709,39 @@
     .pill-other    { background: #f3f4f6;           color: #6b7280;      }
     .pill-referral { background: #fdf3e0; color: var(--gold); border: 1px solid #f0dfb3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
 
+    /* ── Payment warning banner (client portal) ── */
+    #payment-warning-banner {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      width: 100%;
+      background: #fee2e2;
+      border-bottom: 1px solid #991b1b;
+    }
+    .pw-banner-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pw-banner-icon { font-size: 16px; flex-shrink: 0; }
+    .pw-banner-text { font-size: 13.5px; color: #7f1d1d; font-weight: 500; line-height: 1.5; }
+    @media (max-width: 480px) {
+      .pw-banner-inner { padding: 8px 12px; gap: 6px; }
+      .pw-banner-text { font-size: 12.5px; }
+    }
+
+    /* ── Paid / Not Paid pill (referrer dashboard) ── */
+    .pay-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+    .pay-pill-paid   { background: #dcfce7; color: #166534; }
+    .pay-pill-unpaid { background: #fef9c3; color: #92400e; }
+    @media (max-width: 480px) {
+      .pay-pill { font-size: 10px; padding: 2px 7px; }
+    }
+
     /* Service list items */
     .service-row {
       display: flex;
@@ -3268,18 +3301,10 @@
       </div>
       <div style="max-width:580px;display:flex;flex-direction:column;gap:18px;">
         <div class="card">
-          <div class="card-title">🔑 Resend API Key</div>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Uses <strong>Resend</strong> to send emails — free at <a href="https://resend.com" target="_blank" style="color:var(--gold);">resend.com</a> (3,000/month free).</p>
-          <!-- ⚠️ SECURITY NOTE: This API key is stored in your Supabase database and loaded into
-               the browser at runtime. While access is restricted by RLS (admin only), storing API
-               keys client-side means they are visible in browser memory after admin login.
-               For higher security, move email sending to a Supabase Edge Function where the key
-               never leaves the server. See: https://supabase.com/docs/guides/functions -->
-          <div style="background:#fef9c3;border:1px solid #fde68a;color:#92400e;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;margin-bottom:14px;">
-            ⚠️ <strong>Security note:</strong> This key is loaded into the browser (admin-only). For production, move email sending to a <a href="https://supabase.com/docs/guides/functions" target="_blank" style="color:#92400e;text-decoration:underline;">Supabase Edge Function</a> so the key never leaves the server.
-          </div>
-          <div class="field"><label>Resend API Key</label><input type="password" id="es-api-key" placeholder="re_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.18s;font-family:monospace;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'" /></div>
+          <div class="card-title">📧 Sending Configuration</div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Emails are sent via a Supabase Edge Function using <strong>Resend</strong>. The API key is stored as a server-side secret — it's never loaded into this browser. To set or rotate it, run <code>supabase secrets set RESEND_API_KEY=...</code> from the CLI.</p>
           <div class="field"><label>From Email Address</label><input type="email" id="es-from-email" placeholder="noreply@theresidentialaddress.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.18s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'" /><div style="font-size:12px;color:var(--muted);margin-top:5px;">Must be verified in Resend. Use <code>onboarding@resend.dev</code> for testing.</div></div>
+          <div class="field" style="margin-top:14px;"><label>Payment Link</label><input type="url" id="es-payment-link" placeholder="https://buy.stripe.com/..." style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.18s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'" /><div style="font-size:12px;color:var(--muted);margin-top:5px;">Used as the "Complete Payment" button in the welcome email.</div></div>
         </div>
         <div class="card">
           <div class="card-title">👤 Admin Notification Email</div>
@@ -3290,6 +3315,7 @@
           <div class="card-title">🔔 Notification Triggers</div>
           <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Notify Admin</div>
           <div class="es-toggle-row"><div class="es-toggle-info"><div class="es-toggle-label">New client signup</div><div class="es-toggle-sub">When a new account is created</div></div><label class="toggle-switch"><input type="checkbox" id="es-t-signup" checked><span class="toggle-track"></span></label></div>
+          <div class="es-toggle-row"><div class="es-toggle-info"><div class="es-toggle-label">Welcome email to client</div><div class="es-toggle-sub">Sent to the client themselves right after they sign up</div></div><label class="toggle-switch"><input type="checkbox" id="es-t-welcome" checked><span class="toggle-track"></span></label></div>
           <div class="es-toggle-row"><div class="es-toggle-info"><div class="es-toggle-label">New support ticket</div><div class="es-toggle-sub">When a client opens a ticket</div></div><label class="toggle-switch"><input type="checkbox" id="es-t-new-ticket" checked><span class="toggle-track"></span></label></div>
           <div class="es-toggle-row"><div class="es-toggle-info"><div class="es-toggle-label">Client ticket reply</div><div class="es-toggle-sub">When a client replies to a ticket</div></div><label class="toggle-switch"><input type="checkbox" id="es-t-client-reply" checked><span class="toggle-track"></span></label></div>
           <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px;">Notify Client</div>
@@ -3860,12 +3886,12 @@ async function lookupReferralPartner(slug) {
   try {
     const { data, error } = await sb
       .from('referral_partners')
-      .select('id')
+      .select('id, contact_email')
       .eq('slug', slug)
       .eq('active', true)
       .single();
     if (error || !data) return null;
-    return data.id;
+    return data; // { id, contact_email }
   } catch (err) {
     devLog('Referral partner lookup failed:', err.message);
     return null;
@@ -4106,7 +4132,37 @@ async function bootPortal(user) {
     navTo('overview');
     loadClientDash();
     loadClientTickets(); // pre-load ticket badge
+    loadPaymentWarning(); // shows the "release to next client" banner if unpaid
   }
+}
+
+// ================================================================
+// PAYMENT WARNING BANNER (client only)
+// The client never reads client_payment_status directly — RLS denies
+// it entirely. This RPC returns ONLY a boolean, never the raw record.
+// ================================================================
+async function loadPaymentWarning() {
+  try {
+    const { data: showWarning, error } = await sb.rpc('get_my_payment_warning');
+    if (error) { devLog('Payment warning check failed:', error.message); return; }
+    renderPaymentWarning(!!showWarning);
+  } catch (err) {
+    devLog('Payment warning check failed:', err.message);
+  }
+}
+
+function renderPaymentWarning(show) {
+  let el = document.getElementById('payment-warning-banner');
+  if (!show) { el?.remove(); return; }
+  if (el) return; // already shown
+  el = document.createElement('div');
+  el.id = 'payment-warning-banner';
+  el.innerHTML = `
+    <div class="pw-banner-inner">
+      <span class="pw-banner-icon">⚠️</span>
+      <span class="pw-banner-text">If payment isn't completed within <strong>2 hours</strong>, we'll need to release your address to the next client on the waitlist due to limited availability.</span>
+    </div>`;
+  document.body.prepend(el);
 }
 
 // ================================================================
@@ -4580,7 +4636,8 @@ async function doSignup() {
 
   // 1b. Resolve referral partner (if any) before the upsert, so it can
   // be written in the same call rather than a separate update.
-  const referralPartnerId = await lookupReferralPartner(pendingReferralCode);
+  const referralPartner   = await lookupReferralPartner(pendingReferralCode);
+  const referralPartnerId = referralPartner?.id || null;
 
   // 2. Upsert profile
   const { error: profileErr } = await sb.from('profiles').upsert({
@@ -4640,7 +4697,8 @@ async function doSignup() {
 
   pendingSignup = null;
   showToast('Account created! Welcome 🎉');
-  emailNewSignup(name, email);
+  notify('new_signup');
+  notify('welcome_client'); // Edge Function looks up the referral BCC itself
   btn.disabled    = false;
   btn.textContent = 'Create Account →';
   // onAuthStateChange will fire and load the portal
@@ -5114,14 +5172,21 @@ async function loadClientProofs() {
 
 // ================================================================
 async function loadAdminDash() {
-  // Load clients, mail, and proof_of_address in parallel
-  const [{ data: profiles }, { data: unreadMail }, { data: allProofs }] = await Promise.all([
+  // Referral partners share this page/function (RLS scopes their query
+  // to only their own referred clients) but must NOT get an editable
+  // payment toggle — they get a read-only Paid/Not Paid pill instead.
+  const isReferrerView = currentProfile.role === 'referrer';
+
+  // Load clients, mail, proof_of_address, and payment status in parallel
+  const [{ data: profiles }, { data: unreadMail }, { data: allProofs }, { data: paymentRows }] = await Promise.all([
     sb.from('profiles').select('*, referral_partners!referral_partner_id(slug)').eq('role', 'client').order('created_at', { ascending: false }),
     sb.from('mail').select('id, client_id').eq('is_read', false),
     sb.from('proof_of_address').select('client_id, proof_types(name)'),
+    sb.from('client_payment_status').select('client_id, paid'),
   ]);
 
-  allClients = profiles || [];
+  const paidMap = Object.fromEntries((paymentRows || []).map(r => [r.client_id, r.paid]));
+  allClients = (profiles || []).map(c => Object.assign({}, c, { paid: paidMap[c.id] ?? false }));
   populateDocHistoryFilter();
 
   const totalUnread = unreadMail?.length || 0;
@@ -5191,6 +5256,7 @@ async function loadAdminDash() {
               <th>Country</th>
               <th>Proof of Address</th>
               <th>Unread</th>
+              <th>Paid</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -5220,6 +5286,14 @@ async function loadAdminDash() {
                     ${unread > 0
                       ? `<span style="font-weight:600; color:var(--amber);">${unread} new</span>`
                       : `<span style="color:var(--muted); font-size:13px;">–</span>`}
+                  </td>
+                  <td>
+                    ${isReferrerView
+                      ? `<span class="pay-pill ${c.paid ? 'pay-pill-paid' : 'pay-pill-unpaid'}">${c.paid ? '✅ Paid' : '⏳ Not Paid'}</span>`
+                      : `<label class="toggle-switch" onclick="event.stopPropagation()" title="${c.paid ? 'Paid' : 'Not paid'}">
+                           <input type="checkbox" ${c.paid ? 'checked' : ''} onchange="togglePaid('${c.id}', this.checked)">
+                           <span class="toggle-track"></span>
+                         </label>`}
                   </td>
                   <td>
                     <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -5262,6 +5336,15 @@ async function loadAdminDash() {
                     ? proofs.map(p => `<span class="pill pill-active" style="font-size:10px;">${esc(p.name)}</span>`).join('')
                     : '<span style="color:var(--muted)">None</span>'}
                 </div>
+                <div class="client-card-meta-item">
+                  <span class="client-card-meta-label">Paid</span>
+                  ${isReferrerView
+                    ? `<span class="pay-pill ${c.paid ? 'pay-pill-paid' : 'pay-pill-unpaid'}">${c.paid ? '✅ Paid' : '⏳ Not Paid'}</span>`
+                    : `<label class="toggle-switch" onclick="event.stopPropagation()">
+                         <input type="checkbox" ${c.paid ? 'checked' : ''} onchange="togglePaid('${c.id}', this.checked)">
+                         <span class="toggle-track"></span>
+                       </label>`}
+                </div>
               </div>
               <div class="client-card-actions">
                 <button class="btn btn-gold btn-sm" onclick="goUploadFor('${c.id}')">📤 Mail</button>
@@ -5277,6 +5360,26 @@ async function loadAdminDash() {
 
   // Populate all client dropdowns
   populateClientDropdowns();
+}
+
+// Admin-only: toggle a client's paid status. Enforced server-side by
+// the payment_admin_all RLS policy (see 01-supabase-migration.sql) —
+// this call is rejected by Postgres itself for any non-admin session,
+// this UI guard is just for a good admin experience.
+async function togglePaid(clientId, paidValue) {
+  const { error } = await sb.from('client_payment_status').upsert({
+    client_id:  clientId,
+    paid:       paidValue,
+    updated_by: currentUser.id,
+  });
+  if (error) {
+    showToast('Could not update payment status.', true);
+    await loadAdminDash(); // re-sync UI with actual DB state
+    return;
+  }
+  const c = allClients.find(x => x.id === clientId);
+  if (c) c.paid = paidValue;
+  showToast(paidValue ? '✓ Marked as paid' : 'Marked as unpaid');
 }
 
 function goUploadFor(clientId) {
@@ -5498,7 +5601,7 @@ async function submitMail() {
     if (cl?.email) {
       const sdr = document.getElementById('up-sender')?.value || 'Your account manager';
       const sbj = document.getElementById('up-subject')?.value || '';
-      emailMailUploaded(cl.email, cl.full_name, sdr, sbj);
+      notify('mail_uploaded', { client_id: cl.id, sender: sdr, subject: sbj });
     }
   }
   toggleAllClients(false);
@@ -5684,7 +5787,7 @@ async function submitDoc() {
     const dcId  = document.getElementById('doc-client')?.value;
     const dcNm  = name || 'New document';
     const cl = allClients.find(x => x.id === dcId);
-    if (cl?.email) emailDocUploaded(cl.email, cl.full_name, dcNm);
+    if (cl?.email) notify('doc_uploaded', { client_id: cl.id, doc_name: dcNm });
   })();
   document.getElementById('doc-client').value = '';
   document.getElementById('doc-name').value   = '';
@@ -5967,7 +6070,7 @@ async function saveProof() {
     const cl = allClients.find(x => x.id === assignClientId);
     const ptEl = document.getElementById('assign-proof-type');
     const ptName = ptEl?.options[ptEl.selectedIndex]?.text || 'Proof document';
-    if (cl?.email) emailProofAssigned(cl.email, cl.full_name, ptName);
+    if (cl?.email) notify('proof_assigned', { client_id: cl.id, proof_type: ptName });
   })();
   clearProofFile();
   document.getElementById('assign-proof-type').value = '';
@@ -6951,14 +7054,14 @@ async function submitReply() {
   const isAdmin = currentProfile.role === 'admin' || currentProfile.role === 'referrer';
 
   // Insert message
-  const { error: msgErr } = await sb.from('ticket_messages').insert({
+  const { data: insertedMsg, error: msgErr } = await sb.from('ticket_messages').insert({
     ticket_id:      currentTicketId,
     sender_id:      currentUser.id,
     sender_role:    isAdmin ? 'admin' : 'client',
     sender_name:    currentProfile.full_name,
     body:           sanitize(body) || '(attachment)',
     attachment_url: attachmentUrl,
-  });
+  }).select().single();
 
   if (msgErr) {
     showToast('Could not send reply.', true);
@@ -7006,9 +7109,9 @@ async function submitReply() {
   showToast('Reply sent!');
   if (isAdmin && t) {
     const owner = allClients.find(x => x.id === t.user_id);
-    if (owner?.email) emailAdminReply(owner.email, owner.full_name, t.title, body);
-  } else if (!isAdmin && t) {
-    emailClientTicketReply(currentProfile.full_name, currentProfile.email || '', t.title, body);
+    if (owner) notify('admin_reply', { client_id: owner.id, ticket_title: t.title, reply_text: body });
+  } else if (!isAdmin && t && insertedMsg?.id) {
+    notify('client_ticket_reply', { message_id: insertedMsg.id });
   }
 }
 
@@ -7118,7 +7221,7 @@ async function submitCreateTicket() {
   // duplicate ticket numbers. Omitting the field lets the DB assign it
   // atomically. If your table's ticket_number column does not yet have a
   // DEFAULT, run the migration SQL included in SECURITY_AUDIT_REPORT.md.
-  const { error } = await sb.from('tickets').insert({
+  const { data: insertedTicket, error } = await sb.from('tickets').insert({
     user_id:        currentUser.id,
     title,
     description:    desc,
@@ -7127,7 +7230,7 @@ async function submitCreateTicket() {
     attachment_url: attachmentUrl,
     created_at:     new Date().toISOString(),
     updated_at:     new Date().toISOString(),
-  });
+  }).select().single();
 
   btn.disabled    = false;
   btn.textContent = '🎫 Submit Ticket';
@@ -7138,12 +7241,7 @@ async function submitCreateTicket() {
   }
 
   showToast('✓ Ticket submitted!');
-  emailNewTicket(
-    currentProfile.full_name,
-    currentProfile.email || '',
-    title,
-    type
-  );
+  if (insertedTicket?.id) notify('new_ticket', { ticket_id: insertedTicket.id });
   closeCreateTicket();
   await loadClientTickets();
 }
@@ -7367,60 +7465,33 @@ async function saveLeaseDetails() {
 // ================================================================
 // EMAIL SYSTEM — Resend API
 // ================================================================
+// NOTE: the Resend API key is NEVER stored or loaded here anymore.
+// It lives only as a secret on the send-email Edge Function. This
+// object is just the non-secret config the UI needs to render.
 let emailSettings = {
-  apiKey: '', fromEmail: '', adminEmail: '',
-  notify: { signup:true, newTicket:true, clientReply:true, mail:true, doc:true, proof:true, reply:true }
+  fromEmail: '', adminEmail: '', paymentLink: '',
+  notify: { signup:true, welcome:true, newTicket:true, clientReply:true, mail:true, doc:true, proof:true, reply:true }
 };
 
-async function sendEmail(to, subject, html) {
-  if (!emailSettings.apiKey || !emailSettings.fromEmail || !to || !to.includes('@')) return;
+// All outbound email now routes through the send-email Edge Function.
+// The browser never sends "to/subject/html" — only an action name and
+// a small payload the function verifies server-side. To change any
+// email's wording, edit supabase/functions/send-email/email-content.ts
+// and redeploy; nothing in this file needs to change for copy edits.
+async function notify(action, payload = {}) {
   try {
-    await fetch('https://api.resend.com/emails', {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
       method: 'POST',
-      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + emailSettings.apiKey },
-      body: JSON.stringify({ from:'The Residential Address <' + emailSettings.fromEmail + '>', to:[to], subject, html }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+        'apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify({ action, payload }),
     });
-  } catch (err) { devLog('Email send failed (non-critical):', err.message); }
-}
-
-function emailWrap(title, body, cta, ctaUrl) {
-  const btn = (cta && ctaUrl) ? '<div style="margin:28px 0 0;"><a href="' + ctaUrl + '" style="display:inline-block;background:#b8973a;color:#fff;font-weight:700;font-size:14px;padding:12px 26px;border-radius:8px;text-decoration:none;">' + cta + '</a></div>' : '';
-  return '<div style="font-family:Outfit,sans-serif;background:#f5f0e8;padding:40px 20px;"><div style="max-width:520px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);"><div style="background:#1a3a2a;padding:24px 32px;"><span style="font-size:18px;font-weight:600;color:#d4af55;letter-spacing:-0.3px;">The Residential Address</span></div><div style="padding:30px 32px;"><h2 style="font-size:20px;font-weight:600;color:#0c0f0a;margin:0 0 14px;">' + title + '</h2><div style="font-size:14px;color:#555;line-height:1.7;">' + body + '</div>' + btn + '</div><div style="background:#f5f0e8;padding:16px 32px;font-size:12px;color:#999;text-align:center;">The Residential Address — Client Portal · Automated notification.</div></div></div>';
-}
-
-function emailNewSignup(clientName, clientEmail) {
-  if (!emailSettings.notify.signup || !emailSettings.adminEmail) return;
-  sendEmail(emailSettings.adminEmail, '🆕 New Client: ' + clientName, emailWrap('New Client Signed Up', '<p>A new client has created an account.</p><table style="width:100%;margin-top:14px;border-collapse:collapse;"><tr><td style="padding:7px 0;color:#888;font-size:13px;width:80px;">Name</td><td style="padding:7px 0;font-weight:600;font-size:13px;">' + clientName + '</td></tr><tr><td style="padding:7px 0;color:#888;font-size:13px;">Email</td><td style="padding:7px 0;font-size:13px;">' + clientEmail + '</td></tr></table>', 'View in Portal', window.location.href));
-}
-
-function emailMailUploaded(clientEmail, clientName, sender, subject) {
-  if (!emailSettings.notify.mail) return;
-  sendEmail(clientEmail, '📬 New mail from ' + sender, emailWrap('You have new mail', '<p>Hi ' + clientName + ',</p><p>A new mail item has been uploaded to your portal.</p><table style="width:100%;margin-top:14px;border-collapse:collapse;"><tr><td style="padding:7px 0;color:#888;font-size:13px;width:80px;">From</td><td style="padding:7px 0;font-weight:600;font-size:13px;">' + sender + '</td></tr><tr><td style="padding:7px 0;color:#888;font-size:13px;">Subject</td><td style="padding:7px 0;font-size:13px;">' + (subject||'—') + '</td></tr></table>', 'View My Mail', window.location.href));
-}
-
-function emailDocUploaded(clientEmail, clientName, docName) {
-  if (!emailSettings.notify.doc) return;
-  sendEmail(clientEmail, '📄 New document added to your account', emailWrap('New Document Available', '<p>Hi ' + clientName + ',</p><p>A new document has been added to your portal.</p><p style="margin-top:12px;padding:12px 16px;background:#f5f0e8;border-radius:8px;font-weight:600;font-size:14px;">📄 ' + docName + '</p>', 'View Documents', window.location.href));
-}
-
-function emailProofAssigned(clientEmail, clientName, proofType) {
-  if (!emailSettings.notify.proof) return;
-  sendEmail(clientEmail, '🏠 Proof of address assigned', emailWrap('Proof of Address Assigned', '<p>Hi ' + clientName + ',</p><p>A proof of address document has been assigned to your account.</p><p style="margin-top:12px;padding:12px 16px;background:#f5f0e8;border-radius:8px;font-weight:600;font-size:14px;">📋 ' + proofType + '</p>', 'View My Portal', window.location.href));
-}
-
-function emailAdminReply(clientEmail, clientName, ticketTitle, replyText) {
-  if (!emailSettings.notify.reply) return;
-  sendEmail(clientEmail, '💬 Reply to your ticket: ' + ticketTitle, emailWrap('Your ticket has a new reply', '<p>Hi ' + clientName + ',</p><p>Your account manager has replied to your support ticket.</p><div style="margin:16px 0;padding:14px 16px;background:#f5f0e8;border-left:3px solid #b8973a;border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.6;">' + (replyText?replyText.slice(0,300)+(replyText.length>300?'…':''):'') + '</div>', 'View Ticket', window.location.href));
-}
-
-function emailNewTicket(clientName, clientEmail, ticketTitle, ticketType) {
-  if (!emailSettings.notify.newTicket || !emailSettings.adminEmail) return;
-  sendEmail(emailSettings.adminEmail, '🎫 New ticket: ' + ticketTitle, emailWrap('New Support Ticket', '<p>A client has submitted a new support ticket.</p><table style="width:100%;margin-top:14px;border-collapse:collapse;"><tr><td style="padding:7px 0;color:#888;font-size:13px;width:80px;">Client</td><td style="padding:7px 0;font-weight:600;font-size:13px;">' + clientName + ' (' + clientEmail + ')</td></tr><tr><td style="padding:7px 0;color:#888;font-size:13px;">Title</td><td style="padding:7px 0;font-size:13px;">' + ticketTitle + '</td></tr></table>', 'View in Portal', window.location.href));
-}
-
-function emailClientTicketReply(clientName, clientEmail, ticketTitle, replyText) {
-  if (!emailSettings.notify.clientReply || !emailSettings.adminEmail) return;
-  sendEmail(emailSettings.adminEmail, '💬 Client replied: ' + ticketTitle, emailWrap('Client Replied to Ticket', '<p><strong>' + clientName + '</strong> (' + clientEmail + ') replied to their ticket.</p><p style="margin-top:8px;font-weight:600;">' + ticketTitle + '</p><div style="margin:14px 0;padding:14px 16px;background:#f5f0e8;border-left:3px solid #b8973a;border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.6;">' + (replyText?replyText.slice(0,300)+(replyText.length>300?'…':''):'') + '</div>', 'View in Portal', window.location.href));
+  } catch (err) { devLog('notify() failed (non-critical):', err.message); }
 }
 
 async function loadEmailSettings() {
@@ -7434,16 +7505,16 @@ async function loadEmailSettings() {
 function populateSettingsForm() {
   const f=(id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
   const t=(id,val)=>{ const el=document.getElementById(id); if(el) el.checked=!!val; };
-  f('es-api-key', emailSettings.apiKey); f('es-from-email', emailSettings.fromEmail); f('es-admin-email', emailSettings.adminEmail);
-  t('es-t-signup', emailSettings.notify.signup); t('es-t-new-ticket', emailSettings.notify.newTicket); t('es-t-client-reply', emailSettings.notify.clientReply);
+  f('es-from-email', emailSettings.fromEmail); f('es-admin-email', emailSettings.adminEmail); f('es-payment-link', emailSettings.paymentLink);
+  t('es-t-signup', emailSettings.notify.signup); t('es-t-welcome', emailSettings.notify.welcome); t('es-t-new-ticket', emailSettings.notify.newTicket); t('es-t-client-reply', emailSettings.notify.clientReply);
   t('es-t-mail', emailSettings.notify.mail); t('es-t-doc', emailSettings.notify.doc); t('es-t-proof', emailSettings.notify.proof); t('es-t-reply', emailSettings.notify.reply);
 }
 
 async function saveEmailSettings() {
   const g=(id)=>{ const el=document.getElementById(id); return el?el.value.trim():''; };
   const c=(id)=>{ const el=document.getElementById(id); return el?el.checked:true; };
-  emailSettings.apiKey=g('es-api-key'); emailSettings.fromEmail=g('es-from-email'); emailSettings.adminEmail=g('es-admin-email');
-  emailSettings.notify = { signup:c('es-t-signup'), newTicket:c('es-t-new-ticket'), clientReply:c('es-t-client-reply'), mail:c('es-t-mail'), doc:c('es-t-doc'), proof:c('es-t-proof'), reply:c('es-t-reply') };
+  emailSettings.fromEmail=g('es-from-email'); emailSettings.adminEmail=g('es-admin-email'); emailSettings.paymentLink=g('es-payment-link');
+  emailSettings.notify = { signup:c('es-t-signup'), welcome:c('es-t-welcome'), newTicket:c('es-t-new-ticket'), clientReply:c('es-t-client-reply'), mail:c('es-t-mail'), doc:c('es-t-doc'), proof:c('es-t-proof'), reply:c('es-t-reply') };
   const { error } = await sb.from('admin_settings').upsert({ key:'email_settings', value:JSON.stringify(emailSettings) }, { onConflict:'key' });
   if (error) { showToast('Could not save settings. Please try again.', true); return; }
   showToast('✓ Email settings saved!');
@@ -7451,11 +7522,10 @@ async function saveEmailSettings() {
 
 async function sendTestEmail() {
   const btn = document.getElementById('test-email-btn');
-  if (!emailSettings.apiKey)    { showToast('Enter your Resend API key first.', true); return; }
   if (!emailSettings.fromEmail) { showToast('Enter a from email address first.', true); return; }
   if (!emailSettings.adminEmail){ showToast('Enter an admin email address first.', true); return; }
   btn.disabled=true; btn.textContent='Sending…';
-  await sendEmail(emailSettings.adminEmail, '✅ The Residential Address — email test', emailWrap('Email configuration is working!', '<p>Your portal email notifications are set up correctly. All enabled triggers will now send emails automatically.</p>'));
+  await notify('test_email');
   btn.disabled=false; btn.textContent='📧 Send Test Email';
   showToast('Test email sent! Check your inbox.');
 }
