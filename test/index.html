@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Residential Address — A U.S. Address for Founders Who Aren't in the U.S.</title>
+  <meta name="description" content="Form your LLC, open a U.S. bank account and receive mail — all under a verified residential address, without a U.S. Social Security number, visit, or local partner." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Residential Address — A U.S. Address for Founders Who Aren't in the U.S." />
+  <meta property="og:description" content="A verified U.S. residential address, registered agent and mail inbox for founders building from anywhere in the world." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ==================================================================
+       ICON SPRITE
+       Inline SVG symbols (lucide-style: 24x24, stroke-based) reused via
+       <use href="#icon-*">. Kept in one place so markup below stays clean.
+       ================================================================== -->
+  <svg class="visually-hidden" aria-hidden="true">
+    <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18"/><path d="M6 6l12 12"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </symbol>
+    <symbol id="icon-stamp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 21h10"/>
+      <path d="M6 18h12v-3a3 3 0 0 0-3-3h-1v-3a2 2 0 0 0-4 0v3H9a3 3 0 0 0-3 3v3Z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/>
+    </symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v18"/>
+      <path d="M15 22V13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v9"/>
+      <path d="M9 6h1"/><path d="M9 10h1"/><path d="M9 14h1"/><path d="M9 18h1"/>
+    </symbol>
+    <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <polyline points="15 2 15 7 20 7"/>
+      <line x1="8" y1="13" x2="16" y2="13"/>
+      <line x1="8" y1="17" x2="16" y2="17"/>
+    </symbol>
+    <symbol id="icon-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="22" x2="21" y2="22"/>
+      <line x1="6" y1="18" x2="6" y2="11"/>
+      <line x1="10" y1="18" x2="10" y2="11"/>
+      <line x1="14" y1="18" x2="14" y2="11"/>
+      <line x1="18" y1="18" x2="18" y2="11"/>
+      <polygon points="12 2 21 8 3 8"/>
+    </symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </symbol>
+    <symbol id="icon-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.3.5-.1 1.1.4 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.5.9.7 1.4.4l.5-.3c.4-.2.6-.6.5-1.1z"/>
+    </symbol>
+    <symbol id="icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"/>
+      <path d="M7 7h10v10"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </symbol>
+  </svg>
+
+  <!-- ==================================================================
+       ANNOUNCEMENT BAR
+       ================================================================== -->
+  <div class="announcement-bar" id="announcementBar">
+    <svg class="announcement-bar__icon" width="14" height="14" aria-hidden="true"><use href="#icon-zap"/></svg>
+    New: EIN turnaround now under 5 business days for foreign-owned LLCs.
+    <button class="announcement-bar__close" id="announcementClose" aria-label="Dismiss announcement">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-x"/></svg>
+    </button>
+  </div>
+
+  <!-- ==================================================================
+       HEADER / NAVIGATION
+       ================================================================== -->
+  <header class="navbar" id="siteHeader">
+    <nav class="container navbar__row" aria-label="Primary">
+      <a href="#top" class="brand">
+        <span class="logo-mark">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+        </span>
+        <span class="logo-wordmark">The Residential Address</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a class="nav-links__link" href="#services">Services</a>
+        <a class="nav-links__link" href="#pricing">Pricing</a>
+        <a class="nav-links__link" href="#how-it-works">How it works</a>
+        <a class="nav-links__link" href="#faq">FAQ</a>
+        <a class="nav-links__link" href="#contact">Contact</a>
+      </div>
+
+      <div class="navbar__actions">
+        <a class="btn-text" href="#contact">Book a call</a>
+        <a class="btn btn--dark btn--sm" href="#pricing">
+          Get your address
+          <svg class="btn__icon" width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconMenu"><use href="#icon-menu"/></svg>
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconClose" class="visually-hidden"><use href="#icon-x"/></svg>
+      </button>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="#services">Services</a></li>
+        <li><a class="mobile-nav__link" href="#pricing">Pricing</a></li>
+        <li><a class="mobile-nav__link" href="#how-it-works">How it works</a></li>
+        <li><a class="mobile-nav__link" href="#faq">FAQ</a></li>
+        <li><a class="mobile-nav__link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="mobile-nav__cta">
+        <a class="btn btn--dark btn--block" href="#pricing">Get your address</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="container hero__grid">
+        <div class="reveal" data-reveal>
+          <span class="hero__eyebrow-badge">
+            <span class="badge-dot"></span>
+            U.S. MAILING ADDRESS · REGISTERED AGENT
+          </span>
+
+          <h1 class="h1 hero__title">A U.S. address for founders who aren't in the U.S.</h1>
+
+          <p class="body-lg hero__subtitle">
+            Form your LLC, open a bank account and receive mail — all under a
+            verified residential address, without a U.S. Social Security
+            number, visit, or local partner.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#pricing">
+              Get your address
+              <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+            </a>
+            <a class="btn btn--outline" href="#contact">Book a consultation</a>
+          </div>
+
+          <div class="hero__trust trust-list">
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              50-state coverage
+            </div>
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              Same-day mail scans
+            </div>
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              Bank-ready in days
+            </div>
+          </div>
+
+          <div class="hero__metrics">
+            <div>
+              <div class="hero__metric-value">128+</div>
+              <div class="hero__metric-label">countries served</div>
+            </div>
+            <div>
+              <div class="hero__metric-value">41k+</div>
+              <div class="hero__metric-label">addresses issued</div>
+            </div>
+            <div>
+              <div class="hero__metric-value">24h</div>
+              <div class="hero__metric-label">avg. scan turnaround</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" data-reveal data-reveal-delay="150">
+          <div class="hero__visual">
+            <div class="panel-card">
+              <div class="mailbox-card__row">
+                <span class="mailbox-card__id">MAILBOX ID · TRA-08421</span>
+                <span class="stamp-badge stamp-badge--sm" aria-hidden="true">
+                  <span class="stamp-badge__inner">
+                    <span class="stamp-badge__label">VERIFIED</span>
+                    <svg class="stamp-badge__icon" width="14" height="14"><use href="#icon-stamp"/></svg>
+                    <span class="stamp-badge__label">U.S. ADDRESS</span>
+                  </span>
+                </span>
+              </div>
+
+              <div class="mailbox-card__body">
+                <div>
+                  <div class="mailbox-card__label">ADDRESSEE</div>
+                  <div class="mailbox-card__name">Amara Chukwu, LLC</div>
+                </div>
+                <div>
+                  <div class="mailbox-card__label">VERIFIED U.S. ADDRESS</div>
+                  <div class="mailbox-card__address">412 Harbor Row, Suite 208<br />Wilmington, DE 19801</div>
+                </div>
+                <div class="mailbox-card__status">
+                  <span class="mailbox-card__status-dot"></span>
+                  Active — scanning enabled
+                </div>
+              </div>
+
+              <div class="route-panel">
+                <svg viewBox="0 0 320 64" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true">
+                  <line x1="12" y1="32" x2="308" y2="32" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+                  <circle cx="16" cy="32" r="4" fill="#94A3B8"/>
+                  <circle cx="304" cy="32" r="5" fill="#2563EB"/>
+                </svg>
+                <span class="route-panel__label route-panel__label--origin">ORIGIN</span>
+                <span class="route-panel__label route-panel__label--delivered">DELIVERED</span>
+              </div>
+            </div>
+
+            <div class="floating-card hero__floating-card">
+              <div class="hero__floating-card-row">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-mail"/></svg>
+                New scan ready
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SOCIAL PROOF / TRUST SECTION
+         ================================================================ -->
+    <section class="section section--tight section--bordered section--bg-alt">
+      <div class="container">
+        <p class="reveal trust-kicker" data-reveal>
+          Trusted by founders building in
+        </p>
+        <div class="reveal logo-cloud" data-reveal data-reveal-delay="80">
+          <span class="logo-cloud__item">NORTHWIND CO.</span>
+          <span class="logo-cloud__item">ORBITAL LABS</span>
+          <span class="logo-cloud__item">FERN &amp; OAK</span>
+          <span class="logo-cloud__item">PALETTE GOODS</span>
+          <span class="logo-cloud__item">VECTOR SUPPLY</span>
+          <span class="logo-cloud__item">HARBORLIGHT</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FEATURES SECTION — "What you get"
+         ================================================================ -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">WHAT YOU GET</span>
+          <h2 class="h2 section-head__title">Everything a remote U.S. presence needs</h2>
+        </div>
+
+        <div class="grid-auto-3 mt-12">
+          <div class="reveal" data-reveal data-reveal-delay="0">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-home"/></svg></span>
+              <h3 class="h3 feature-card__title">Residential address</h3>
+              <p class="body-sm feature-card__desc">A real U.S. street address — not a P.O. box — that satisfies bank, marketplace and state requirements.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="60">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-mail"/></svg></span>
+              <h3 class="h3 feature-card__title">Mail forwarding</h3>
+              <p class="body-sm feature-card__desc">Every piece scanned within a day and routed to you as a physical bundle, a digital PDF, or both.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="120">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-lock"/></svg></span>
+              <h3 class="h3 feature-card__title">Privacy protection</h3>
+              <p class="body-sm feature-card__desc">Keep your home address off public LLC filings by listing ours on formation and registered-agent paperwork.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="180">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg></span>
+              <h3 class="h3 feature-card__title">Compliance support</h3>
+              <p class="body-sm feature-card__desc">Annual report reminders and state deadline tracking, so a missed filing never becomes a dissolved LLC.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="240">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-zap"/></svg></span>
+              <h3 class="h3 feature-card__title">Fast setup</h3>
+              <p class="body-sm feature-card__desc">Verified address, signed agreements and a usable mailing ID in as little as one business day.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="300">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-globe"/></svg></span>
+              <h3 class="h3 feature-card__title">Global access</h3>
+              <p class="body-sm feature-card__desc">Built for founders outside the U.S. — no SSN, no U.S. phone number, no local visit required.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         WHY CHOOSE US — comparison table (dark section)
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container container--lg">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow eyebrow--inverse">WHY THE RESIDENTIAL ADDRESS</span>
+          <h2 class="h2 text-inverse section-head__title">Compared to doing it yourself</h2>
+          <p class="body-base text-inverse-secondary section-head__desc">Most international founders start by piecing this together from three or four separate vendors. Here's what changes when it's one.</p>
+        </div>
+
+        <div class="reveal compare-table mt-10" data-reveal data-reveal-delay="100">
+          <div class="compare-table__head">
+            <span>Comparison</span>
+            <span>Going it alone</span>
+            <span class="text-accent-inverse">The Residential Address</span>
+          </div>
+
+          <div class="compare-table__row">
+            <span class="compare-table__label">Setup time</span>
+            <span class="compare-table__diy">2–6 weeks</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> As little as 1 day</span>
+          </div>
+          <div class="compare-table__row compare-table__row--alt">
+            <span class="compare-table__label">Requires a U.S. visit</span>
+            <span class="compare-table__diy">Often</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Never</span>
+          </div>
+          <div class="compare-table__row">
+            <span class="compare-table__label">Requires an SSN</span>
+            <span class="compare-table__diy">Usually</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Not required</span>
+          </div>
+          <div class="compare-table__row compare-table__row--alt">
+            <span class="compare-table__label">Mail handling</span>
+            <span class="compare-table__diy">Manual, self-managed</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Scanned within 24h</span>
+          </div>
+          <div class="compare-table__row">
+            <span class="compare-table__label">Compliance tracking</span>
+            <span class="compare-table__diy">On you</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Automated reminders</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SERVICES GRID — full service line
+         ================================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">FULL SERVICE LINE</span>
+          <h2 class="h2 section-head__title">Every piece of your U.S. footprint</h2>
+        </div>
+
+        <div class="grid-auto-3 mt-12 gap-4">
+          <a class="reveal service-card" data-reveal data-reveal-delay="0" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"/></svg>
+              <h3 class="h3 h3--sm service-card__title">US Residential Address</h3>
+              <p class="body-sm service-card__desc">A physical, deliverable street address in your name.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="60" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-building"/></svg>
+              <h3 class="h3 h3--sm service-card__title">Business Address</h3>
+              <p class="body-sm service-card__desc">A separate commercial address for your LLC's public filings.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="120" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-file-text"/></svg>
+              <h3 class="h3 h3--sm service-card__title">Registered Agent</h3>
+              <p class="body-sm service-card__desc">Licensed agent service in your state of formation, required by law.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="0" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-mail"/></svg>
+              <h3 class="h3 h3--sm service-card__title">Mail Forwarding</h3>
+              <p class="body-sm service-card__desc">Scan, hold, shred or ship — you decide, item by item.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="60" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-stamp"/></svg>
+              <h3 class="h3 h3--sm service-card__title">Virtual Mailbox</h3>
+              <p class="body-sm service-card__desc">One inbox for every piece of mail, searchable from anywhere.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="120" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-landmark"/></svg>
+              <h3 class="h3 h3--sm service-card__title">US Banking Assistance</h3>
+              <p class="body-sm service-card__desc">Documentation and introductions to founder-friendly U.S. banks.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="0" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-compass"/></svg>
+              <h3 class="h3 h3--sm service-card__title">LLC Formation</h3>
+              <p class="body-sm service-card__desc">State filing, operating agreement and EIN, handled end to end.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="60" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              <h3 class="h3 h3--sm service-card__title">EIN Assistance</h3>
+              <p class="body-sm service-card__desc">Get your federal tax ID without a Social Security number.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="120" href="#contact">
+            <div>
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-plane"/></svg>
+              <h3 class="h3 h3--sm service-card__title">International Founder Support</h3>
+              <p class="body-sm service-card__desc">A team that answers questions in your time zone, not just ours.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         HOW IT WORKS — process steps
+         ================================================================ -->
+    <section class="section section--bg-alt" id="how-it-works">
+      <div class="container">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <span class="eyebrow">HOW IT WORKS</span>
+          <h2 class="h2 section-head__title">From your laptop to a verified U.S. address</h2>
+        </div>
+
+        <div class="steps-grid mt-16">
+          <svg class="steps-grid__connector" viewBox="0 0 1200 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="1200" y2="1" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="1 10"/>
+          </svg>
+
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="0">
+            <div class="step-index">01</div>
+            <h3 class="h3 h3--sm step-title">Choose a plan</h3>
+            <p class="body-sm step-desc">Pick the address and mail-handling tier that matches how you operate.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="110">
+            <div class="step-index">02</div>
+            <h3 class="h3 h3--sm step-title">Submit documents</h3>
+            <p class="body-sm step-desc">Upload ID and formation details through a guided, encrypted checklist.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="220">
+            <div class="step-index">03</div>
+            <h3 class="h3 h3--sm step-title">Receive your address</h3>
+            <p class="body-sm step-desc">Get a verified U.S. address and signed agent forms, usually within a day.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="330">
+            <div class="step-index">04</div>
+            <h3 class="h3 h3--sm step-title">Operate your U.S. business</h3>
+            <p class="body-sm step-desc">Open a bank account, register on marketplaces, and receive mail — from anywhere.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Timeline Section (Session 3) -->
+
+    <!-- Stats Section (Session 3) -->
+
+    <!-- ================================================================
+         TESTIMONIALS — founder stories
+         ================================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">FOUNDER STORIES</span>
+          <h2 class="h2 section-head__title">Built for founders, not headquarters</h2>
+        </div>
+
+        <div class="grid-auto-3 mt-12">
+          <div class="reveal" data-reveal data-reveal-delay="0">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"I had a verified U.S. address before I'd finished my coffee. My bank application went through the same week."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Amara Chukwu</div>
+                  <div class="body-xs">Founder, skincare e-commerce</div>
+                  <div class="body-xs">Lagos, Nigeria</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="70">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"Registered agent, EIN and mail forwarding from one dashboard — I stopped juggling three vendors."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Tomás Alvear</div>
+                  <div class="body-xs">Solo SaaS founder</div>
+                  <div class="body-xs">Santiago, Chile</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="140">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"Marketplace approval needs a real street address. This was the first service that actually delivered one."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Yuki Tanaka</div>
+                  <div class="body-xs">Amazon FBA seller</div>
+                  <div class="body-xs">Osaka, Japan</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="0">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"Mail scans land in my inbox before my team in the U.S. even wakes up. It genuinely closed a time-zone gap."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Elin Björk</div>
+                  <div class="body-xs">Agency owner</div>
+                  <div class="body-xs">Malmö, Sweden</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="70">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"No SSN, no U.S. visit, no problem. My LLC and EIN were done inside two weeks."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Rahul Mehta</div>
+                  <div class="body-xs">Digital nomad, consultant</div>
+                  <div class="body-xs">Jaipur, India</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="140">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"The privacy angle mattered most to me — my home address is nowhere on my public filings now."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Camila Duarte</div>
+                  <div class="body-xs">Freelance designer</div>
+                  <div class="body-xs">Porto, Portugal</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FAQ — accordion
+         ================================================================ -->
+    <section class="section section--bg-alt" id="faq">
+      <div class="container container--sm">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h2 section-head__title">Questions founders ask us first</h2>
+        </div>
+
+        <div class="reveal card faq-list mt-12" data-reveal data-reveal-delay="100" id="faqList">
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="true">
+              <span>Is a residential address the same as a business address?</span>
+              <svg class="faq-item__chevron is-open" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel is-open">
+              <p class="faq-item__answer">Not always. A residential address can serve as your registered address, while a separate business address is often used for public-facing correspondence. We offer both, and can explain which your state and bank prefer.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Do I need to be a U.S. citizen or resident?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">No. The service is built specifically for founders living outside the United States, and none of our core services require a Social Security number.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Is this a P.O. box?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">No. It's a physical, deliverable street address that accepts USPS, FedEx and UPS mail — a requirement most banks and marketplaces enforce.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>How fast is mail scanned and delivered?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Most mail is scanned into your dashboard within 24 hours of arrival. You can then choose to view it digitally, request forwarding, or have it shredded.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can I use this address to open a U.S. bank account?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes — it's one of the most common uses. We also provide the supporting documentation many banks request during remote verification.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What is a registered agent, and do I need one?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">A registered agent accepts legal and state mail on your LLC's behalf. Nearly every U.S. state requires one for LLCs and corporations, regardless of where the owner lives.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can you help me form my LLC from scratch?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes. We handle state filing, your operating agreement, and EIN application as a single guided process.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>How do I get an EIN without an SSN?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">The IRS allows foreign-owned LLCs to apply for an EIN through an alternate process. We prepare and file the required form on your behalf.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Is my home address kept private?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Using our address on your formation and registered-agent paperwork keeps your personal address off most public state records.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What happens if I miss an annual filing deadline?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">We track your state's deadline and send reminders well in advance, since a missed annual report can lead to administrative dissolution.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can I switch plans later?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes, you can move between address, mail and bundled plans at any time from your dashboard.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>How do I cancel?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Cancel anytime from your account settings. We'll forward or destroy any remaining mail per your instructions before closing the mailbox.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FINAL CTA
+         ================================================================ -->
+    <section class="section" id="pricing">
+      <div class="container container--lg">
+        <div class="reveal cta-block" data-reveal>
+          <div class="cta-block__glow" aria-hidden="true"></div>
+          <div class="cta-block__content">
+            <span class="stamp-badge stamp-badge--lg" aria-hidden="true">
+              <span class="stamp-badge__inner">
+                <span class="stamp-badge__label">VERIFIED</span>
+                <svg class="stamp-badge__icon" width="14" height="14"><use href="#icon-stamp"/></svg>
+                <span class="stamp-badge__label">U.S. ADDRESS</span>
+              </span>
+            </span>
+            <h2 class="h2 text-inverse mt-6">Get your U.S. address today</h2>
+            <p class="body-lg text-inverse-secondary mt-4 cta-block__desc">
+              Join founders in 128+ countries operating a verified U.S.
+              presence — no visit, no SSN, no waiting weeks for a mailbox.
+            </p>
+            <div class="cta-block__actions">
+              <a class="btn btn--white" href="#contact">
+                Start your address
+                <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+              </a>
+              <a class="btn btn--outline-inverse" href="#contact">Book a consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================================================================
+       FOOTER
+       ================================================================== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#top" class="brand">
+            <span class="logo-mark">
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+            </span>
+            <span class="logo-wordmark">The Residential Address</span>
+          </a>
+          <p class="body-sm footer__desc">
+            A verified U.S. residential address, registered agent and mail
+            inbox for founders building from anywhere in the world.
+          </p>
+
+          <form class="input-group mt-6" id="newsletterForm" novalidate>
+            <label for="newsletterEmail" class="visually-hidden">Email address</label>
+            <input
+              type="email"
+              id="newsletterEmail"
+              name="email"
+              class="input"
+              placeholder="you@company.com"
+              required
+              aria-describedby="newsletterFeedback"
+            />
+            <button type="submit" class="input-group__submit">Subscribe</button>
+          </form>
+          <p class="body-xs mt-2" id="newsletterFeedback" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="footer__links">
+          <div>
+            <h4 class="footer__col-title">SERVICES</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="#">Residential Address</a></li>
+              <li><a class="footer__link" href="#">Business Address</a></li>
+              <li><a class="footer__link" href="#">Registered Agent</a></li>
+              <li><a class="footer__link" href="#">Mail Forwarding</a></li>
+              <li><a class="footer__link" href="#">Virtual Mailbox</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">FORMATION</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="#">LLC Formation</a></li>
+              <li><a class="footer__link" href="#">EIN Assistance</a></li>
+              <li><a class="footer__link" href="#">US Banking Assistance</a></li>
+              <li><a class="footer__link" href="#">Compliance Support</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">COMPANY</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="#">About</a></li>
+              <li><a class="footer__link" href="#">Careers</a></li>
+              <li><a class="footer__link" href="#">Partners</a></li>
+              <li><a class="footer__link" href="#">Press</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">RESOURCES</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="#">Help Center</a></li>
+              <li><a class="footer__link" href="#">Founder Guides</a></li>
+              <li><a class="footer__link" href="#">State Requirements</a></li>
+              <li><a class="footer__link" href="#">API Status</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="body-xs">© <span id="currentYear">2026</span> The Residential Address. All rights reserved.</p>
+        <div class="footer__legal">
+          <a class="footer__link body-xs" href="#">Privacy</a>
+          <a class="footer__link body-xs" href="#">Terms</a>
+          <a class="footer__link body-xs" href="#">Compliance</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
