@@ -637,6 +637,8 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 .feature-card:hover .feature-card__icon { background: var(--color-blue); color: #fff; transform: rotate(-6deg) scale(1.08); }
 .feature-card__title { margin-top: var(--space-5); }
 .feature-card__desc   { margin-top: var(--space-2); }
+.value-card__icon { display: inline-block; font-size: 2rem; line-height: 1; }
+.section--bg-inverse strong { color: #fff; font-weight: var(--font-weight-semibold); }
 
 .service-card {
   display: flex;
