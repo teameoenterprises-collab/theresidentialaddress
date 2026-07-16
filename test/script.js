@@ -54,10 +54,16 @@
      Sticky header — rAF-throttled scroll listener
      ----------------------------------------------------------------------- */
   function initStickyHeader() {
-    if (!header) return;
+    var progress = qs("#scrollProgress");
+    if (!header && !progress) return;
     var ticking = false;
     function update() {
-      header.classList.toggle("is-scrolled", window.scrollY > 12);
+      if (header) header.classList.toggle("is-scrolled", window.scrollY > 12);
+      if (progress) {
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+        progress.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      }
       ticking = false;
     }
     update();
@@ -66,6 +72,7 @@
       ticking = true;
       requestAnimationFrame(update);
     }, { passive: true });
+    window.addEventListener("resize", debounce(update, 150));
   }
 
   /* -----------------------------------------------------------------------
