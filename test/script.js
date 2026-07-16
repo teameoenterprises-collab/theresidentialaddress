@@ -154,6 +154,47 @@
   }
 
   /* -----------------------------------------------------------------------
+     Count-up — animates [data-count-to] numbers once their container
+     scrolls into view. Falls back to the static final value if reduced
+     motion is on or IntersectionObserver is unavailable.
+     ----------------------------------------------------------------------- */
+  function initCountUp() {
+    var els = qsa("[data-count-to]");
+    if (!els.length) return;
+
+    if (!("IntersectionObserver" in window) || reduceMotion()) return;
+
+    function animate(el) {
+      var end = parseFloat(el.getAttribute("data-count-to"));
+      var suffix = el.getAttribute("data-count-suffix") || "";
+      var duration = 1400;
+      var start = null;
+
+      function step(ts) {
+        if (start === null) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * end) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = end + suffix;
+      }
+      requestAnimationFrame(step);
+    }
+
+    els.forEach(function (el) { el.textContent = "0"; });
+
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        animate(entry.target);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+
+    els.forEach(function (el) { observer.observe(el); });
+  }
+
+  /* -----------------------------------------------------------------------
      FAQ accordion — single-open. Refs are cached once per item at init
      instead of re-queried on every click.
      ----------------------------------------------------------------------- */
@@ -214,6 +255,7 @@
     initMobileNav();
     initSmoothScroll();
     initScrollReveal();
+    initCountUp();
     initFaqAccordion();
     initNewsletterForm();
 
