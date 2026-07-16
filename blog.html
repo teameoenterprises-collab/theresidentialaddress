@@ -1,229 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | The Residential Address</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
-    <meta name="description"
-        content="Insights, compliance updates, and strategies for global founders building US infrastructure.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playball&display=swap"
-        rel="stylesheet">
-    <style>
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | The Residential Address</title>
+  <meta name="description" content="Insights, compliance updates, and strategies for global founders building US infrastructure." />
 
-        .blog-card {
-            background: var(--surface);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-        }
+  <!-- Open Graph -->
+  <meta property="og:title" content="Blog | The Residential Address" />
+  <meta property="og:description" content="Insights, compliance updates, and strategies for global founders building US infrastructure." />
+  <meta property="og:type" content="website" />
 
-        .blog-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .blog-meta {
-            font-size: 0.85rem;
-            color: var(--gold);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .blog-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-            line-height: 1.3;
-        }
-
-        .blog-card p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.6;
-            flex-grow: 1;
-        }
-
-        .read-more {
-            margin-top: 1.5rem;
-            color: var(--text-main);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .blog-card:hover .read-more {
-            color: var(--gold);
-        }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230F172A'/%3E%3Cpath d='M17 10c0 4.5-5 9-5 9s-5-4.5-5-9a5 5 0 0 1 10 0Z' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='10' r='1.8' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-    <!-- ═══════ Header / Navigation ═══════ -->
-    <header id="header">
-        <div class="container nav-content">
-            <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center;">
-                <img src="assets/logo.png" alt="The Residential Address"
-                    style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
-            </a>
-            <nav class="nav-links">
-                <!-- Dropdown for Services -->
-                <div class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Services ▾</a>
-                    <div class="dropdown-content">
-                        <a href="index.html">US Residential Address</a>
-                        <a href="llc-formation.html">LLC Formation</a>
-                        <a href="itin-application.html">ITIN Application</a>
-                        <a href="bank-assistance.html">Bank Assistance</a>
-                    </div>
-                </div>
-                <a href="about.html">About Us</a>
-                <a href="blog.html">Blog</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="https://wa.me/16474367072" class="btn btn-whatsapp"
-                    style="padding: 0.6rem 1.2rem; font-size: 0.9rem; margin-left: 1rem;">💬 Chat on WhatsApp</a>
-            </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ==================================================================
+       ICON SPRITE
+       Inline SVG symbols (lucide-style: 24x24, stroke-based) reused via
+       <use href="#icon-*">. Kept in one place so markup below stays clean.
+       ================================================================== -->
+  <svg class="visually-hidden" aria-hidden="true">
+    <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18"/><path d="M6 6l12 12"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </symbol>
+    <symbol id="icon-stamp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 21h10"/>
+      <path d="M6 18h12v-3a3 3 0 0 0-3-3h-1v-3a2 2 0 0 0-4 0v3H9a3 3 0 0 0-3 3v3Z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/>
+    </symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v18"/>
+      <path d="M15 22V13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v9"/>
+      <path d="M9 6h1"/><path d="M9 10h1"/><path d="M9 14h1"/><path d="M9 18h1"/>
+    </symbol>
+    <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <polyline points="15 2 15 7 20 7"/>
+      <line x1="8" y1="13" x2="16" y2="13"/>
+      <line x1="8" y1="17" x2="16" y2="17"/>
+    </symbol>
+    <symbol id="icon-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="22" x2="21" y2="22"/>
+      <line x1="6" y1="18" x2="6" y2="11"/>
+      <line x1="10" y1="18" x2="10" y2="11"/>
+      <line x1="14" y1="18" x2="14" y2="11"/>
+      <line x1="18" y1="18" x2="18" y2="11"/>
+      <polygon points="12 2 21 8 3 8"/>
+    </symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </symbol>
+    <symbol id="icon-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.3.5-.1 1.1.4 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.5.9.7 1.4.4l.5-.3c.4-.2.6-.6.5-1.1z"/>
+    </symbol>
+    <symbol id="icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"/>
+      <path d="M7 7h10v10"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </symbol>
+  </svg>
+
+  <!-- ==================================================================
+       ANNOUNCEMENT BAR
+       ================================================================== -->
+  <div class="announcement-bar" id="announcementBar">
+    <svg class="announcement-bar__icon" width="14" height="14" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+    Address Approved or Your Money Back — no questions asked.
+    <button class="announcement-bar__close" id="announcementClose" aria-label="Dismiss announcement">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-x"/></svg>
+    </button>
+  </div>
+
+  <!-- ==================================================================
+       HEADER / NAVIGATION
+       ================================================================== -->
+  <header class="navbar" id="siteHeader">
+    <nav class="container navbar__row" aria-label="Primary">
+      <a href="index.html" class="brand">
+        <span class="logo-mark">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+        </span>
+        <span class="logo-wordmark">The Residential Address</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a class="nav-links__link" href="about.html">About Us</a>
+        <a class="nav-links__link" href="blog.html">Blog</a>
+        <a class="nav-links__link" href="index.html#pricing">Pricing</a>
+        <a class="nav-links__link" href="index.html#faq">FAQ</a>
+      </div>
+
+      <div class="navbar__actions">
+        <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconMenu"><use href="#icon-menu"/></svg>
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconClose" class="visually-hidden"><use href="#icon-x"/></svg>
+      </button>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="about.html">About Us</a></li>
+        <li><a class="mobile-nav__link" href="blog.html">Blog</a></li>
+        <li><a class="mobile-nav__link" href="index.html#pricing">Pricing</a></li>
+        <li><a class="mobile-nav__link" href="index.html#faq">FAQ</a></li>
+      </ul>
+      <div class="mobile-nav__cta">
+        <a class="btn btn--dark btn--block" href="https://wa.me/16474367072" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <h1 class="h1">Founder <span class="text-gradient">Insights</span></h1>
+          <p class="body-lg hero__subtitle hero__subtitle--center">Navigating US banking compliance, tax regulations, and operational strategies for international entrepreneurs.</p>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main>
-        <!-- ═══════ Hero ═══════ -->
-        <section class="hero" id="hero">
-            <div class="container hero-centered">
-                <h1>Founder <span class="highlight-gold">Insights</span></h1>
-                <p class="hero-description">Navigating US banking compliance, tax regulations, and operational
-                    strategies for international entrepreneurs.</p>
+    <!-- ================================================================
+         BLOG GRID
+         n8n's automation inserts new posts directly after the opening
+         <div class="blog-grid"> tag as a single unbroken line of markup —
+         keep that exact container/class vocabulary so future automated
+         pushes keep landing (and rendering) correctly.
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container">
+        <div class="blog-grid"><a class="blog-card fade-up" href="best-address-options-for-non-us-business-owners.html"><div class="blog-meta"><span class="blog-category">US Business</span><span class="blog-date">Jul 16, 2026</span></div><h3>Best Address Options for Non-US Business Owners: A Practical Guide</h3><p>Compare the best address options for non-US business owners, from residential to virtual and registered addresses, plus what banks and agencies expect.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="why-new-entrepreneurs-need-a-business-address-before-launching.html"><div class="blog-meta"><span class="blog-category">US Business</span><span class="blog-date">Jul 15, 2026</span></div><h3>Why New Entrepreneurs Need a Business Address Before Launching</h3><p>Learn why a business address matters before launch, from compliance and banking to credibility, privacy, and smoother setup for new entrepreneurs.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="can-you-use-a-residential-address-for-an-llc.html"><div class="blog-meta"><span class="blog-category">LLC Formation</span><span class="blog-date">Jul 14, 2026</span></div><h3>Can You Use a Residential Address for an LLC?</h3><p>Learn when you can use a residential address for an LLC, the privacy and compliance tradeoffs, and better address options for formation.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="residential-address-vs-virtual-office-whats-the-difference.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 13, 2026</span></div><h3>Residential Address vs Virtual Office: What's the Difference?</h3><p>Compare residential address vs virtual office options, costs, privacy, mail handling, and compliance to choose the right address for your business.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="what-is-a-residential-business-address-and-why-it-matters.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 10, 2026</span></div><h3>What Is a Residential Business Address and Why It Matters for Your Business</h3><p>Learn what a residential business address is, when to use one, and how it affects privacy, mail handling, and business credibility.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="us-resident-addresses.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 10, 2026</span></div><h3>US Resident Addresses: What You Need to Know for Mail, Compliance, and Business Use</h3><p>Learn how US resident addresses work for mail, compliance, and business use, plus practical tips for choosing a reliable address solution.</p><div class="read-more">Read More <span>→</span></div></a>
+
+          <a href="blog-1.html" class="blog-card fade-up">
+            <div class="blog-meta">
+              <span>Banking Compliance</span>
+              <span>Oct 12, 2026</span>
             </div>
-        </section>
+            <h3>Why Virtual Mailboxes Cause Bank Rejections in 2026</h3>
+            <p>The days of using cheap PO boxes to open Stripe or Mercury accounts are over. Learn how banks
+                use the USPS CMRA database to flag and shut down foreign founder accounts.</p>
+            <div class="read-more">Read Article →</div>
+          </a>
 
-        <!-- ═══════ Blog Grid ═══════ -->
-        <section class="section section-alt" style="padding-top: 2rem;">
-            <div class="container">
-                <div class="blog-grid"><a class="blog-card fade-up" href="best-address-options-for-non-us-business-owners.html"><div class="blog-meta"><span class="blog-category">US Business</span><span class="blog-date">Jul 16, 2026</span></div><h3>Best Address Options for Non-US Business Owners: A Practical Guide</h3><p>Compare the best address options for non-US business owners, from residential to virtual and registered addresses, plus what banks and agencies expect.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="why-new-entrepreneurs-need-a-business-address-before-launching.html"><div class="blog-meta"><span class="blog-category">US Business</span><span class="blog-date">Jul 15, 2026</span></div><h3>Why New Entrepreneurs Need a Business Address Before Launching</h3><p>Learn why a business address matters before launch, from compliance and banking to credibility, privacy, and smoother setup for new entrepreneurs.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="can-you-use-a-residential-address-for-an-llc.html"><div class="blog-meta"><span class="blog-category">LLC Formation</span><span class="blog-date">Jul 14, 2026</span></div><h3>Can You Use a Residential Address for an LLC?</h3><p>Learn when you can use a residential address for an LLC, the privacy and compliance tradeoffs, and better address options for formation.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="residential-address-vs-virtual-office-whats-the-difference.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 13, 2026</span></div><h3>Residential Address vs Virtual Office: What's the Difference?</h3><p>Compare residential address vs virtual office options, costs, privacy, mail handling, and compliance to choose the right address for your business.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="what-is-a-residential-business-address-and-why-it-matters.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 10, 2026</span></div><h3>What Is a Residential Business Address and Why It Matters for Your Business</h3><p>Learn what a residential business address is, when to use one, and how it affects privacy, mail handling, and business credibility.</p><div class="read-more">Read More <span>→</span></div></a><a class="blog-card fade-up" href="us-resident-addresses.html"><div class="blog-meta"><span class="blog-category">Address Services</span><span class="blog-date">Jul 10, 2026</span></div><h3>US Resident Addresses: What You Need to Know for Mail, Compliance, and Business Use</h3><p>Learn how US resident addresses work for mail, compliance, and business use, plus practical tips for choosing a reliable address solution.</p><div class="read-more">Read More <span>→</span></div></a>
-
-                    <a href="blog-1.html" class="blog-card fade-up">
-                        <div class="blog-meta">
-                            <span>Banking Compliance</span>
-                            <span>Oct 12, 2026</span>
-                        </div>
-                        <h3>Why Virtual Mailboxes Cause Bank Rejections in 2026</h3>
-                        <p>The days of using cheap PO boxes to open Stripe or Mercury accounts are over. Learn how banks
-                            use the USPS CMRA database to flag and shut down foreign founder accounts.</p>
-                        <div class="read-more">Read Article →</div>
-                    </a>
-
-                    <a href="blog-2.html" class="blog-card fade-up">
-                        <div class="blog-meta">
-                            <span>Entity Formation</span>
-                            <span>Sep 28, 2026</span>
-                        </div>
-                        <h3>Wyoming vs. Delaware: Which State is Right for Your LLC?</h3>
-                        <p>If you're a non-US resident forming an LLC, standard advice points to Delaware. But for 90%
-                            of solo founders and e-commerce sellers, Wyoming is actually the superior choice.</p>
-                        <div class="read-more">Read Article →</div>
-                    </a>
-
-                </div>
+          <a href="blog-2.html" class="blog-card fade-up">
+            <div class="blog-meta">
+              <span>Entity Formation</span>
+              <span>Sep 28, 2026</span>
             </div>
-        </section>
-    </main>
+            <h3>Wyoming vs. Delaware: Which State is Right for Your LLC?</h3>
+            <p>If you're a non-US resident forming an LLC, standard advice points to Delaware. But for 90%
+                of solo founders and e-commerce sellers, Wyoming is actually the superior choice.</p>
+            <div class="read-more">Read Article →</div>
+          </a>
 
-    <!-- ═══════ Footer ═══════ -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo"
-                        style="text-decoration: none; display: flex; align-items: center; margin-bottom: 24px;">
-                        <img src="assets/logo.png" alt="The Residential Address"
-                            style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
-                    </a>
-                    <p>The US infrastructure layer for global founders. Banking, addresses, and LLCs made compliant.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="index.html">US Residential Address</a></li>
-                        <li><a href="llc-formation.html">LLC Formation</a></li>
-                        <li><a href="itin-application.html">ITIN Application</a></li>
-                        <li><a href="bank-assistance.html">Bank Assistance</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="index.html#pricing">Pricing</a></li>
-                        <li><a href="index.html#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Trust</h4>
-                    <div class="footer-trust-badges">
-                        <span>IRS Certified</span>
-                        <span>100% Compliant</span>
-                        <span>Money-Back Guarantee</span>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in
-                    Florida, USA.</p>
-                <div style="margin-top: 10px; font-size: 0.8em;">
-                    <a href="privacy.html"
-                        style="color: var(--text-muted); text-decoration: none; margin-right: 15px;">Privacy Policy</a>
-                </div>
-            </div>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- ═══════ Scripts ═══════ -->
-    <script>
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-        });
+  </main>
 
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+<footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="brand">
+            <span class="logo-mark">
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+            </span>
+            <span class="logo-wordmark">The Residential Address</span>
+          </a>
+          <p class="body-sm footer__desc">
+            The US infrastructure layer for global founders. Banking,
+            addresses, and LLCs made compliant.
+          </p>
+          <div class="mt-6">
+            <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+          </div>
+        </div>
 
-        document.querySelectorAll('.fade-up').forEach((el) => {
-            observer.observe(el);
-        });
-    </script>
+        <div class="footer__links">
+          <div>
+            <h4 class="footer__col-title">SERVICES</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="index.html#services">US Residential Address</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/llc-formation.html" target="_blank" rel="noopener">LLC Formation</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/itin-application.html" target="_blank" rel="noopener">ITIN Application</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/bank-assistance.html" target="_blank" rel="noopener">Bank Assistance</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">COMPANY</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="about.html">About Us</a></li>
+              <li><a class="footer__link" href="blog.html">Blog</a></li>
+              <li><a class="footer__link" href="index.html#pricing">Pricing</a></li>
+              <li><a class="footer__link" href="index.html#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">TRUST</h4>
+            <ul class="footer__col-list">
+              <li><span class="footer__link">IRS Certified</span></li>
+              <li><span class="footer__link">100% Compliant</span></li>
+              <li><span class="footer__link">Money-Back Guarantee</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="body-xs">© <span id="currentYear">2026</span> The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in Florida, USA.</p>
+        <div class="footer__legal">
+          <a class="footer__link body-xs" href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-
 </html>

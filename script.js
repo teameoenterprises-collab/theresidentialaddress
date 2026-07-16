@@ -136,11 +136,19 @@
      IntersectionObserver; [data-reveal-delay] sets the stagger (ms).
      ----------------------------------------------------------------------- */
   function initScrollReveal() {
-    var els = qsa("[data-reveal]");
+    // [data-reveal] is our own reveal system (toggles "is-visible").
+    // .fade-up is the class n8n's blog-post automation writes into newly
+    // inserted cards (toggles "visible") — handled here too so future
+    // auto-generated posts animate without any extra wiring.
+    var els = qsa("[data-reveal], .fade-up");
     if (!els.length) return;
 
+    function visibleClassFor(el) {
+      return el.hasAttribute("data-reveal") ? "is-visible" : "visible";
+    }
+
     if (!("IntersectionObserver" in window) || reduceMotion()) {
-      els.forEach(function (el) { el.classList.add("is-visible"); });
+      els.forEach(function (el) { el.classList.add(visibleClassFor(el)); });
       return;
     }
 
@@ -152,7 +160,7 @@
     var observer = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
+        entry.target.classList.add(visibleClassFor(entry.target));
         obs.unobserve(entry.target);
       });
     }, { threshold: 0.15 });

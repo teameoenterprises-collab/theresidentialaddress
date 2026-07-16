@@ -1,223 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | The Residential Address</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
-    <meta name="description"
-        content="Privacy Policy for The Residential Address. Learn how we collect, use, and protect your data.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playball&display=swap"
-        rel="stylesheet">
-    <style>
-        .privacy-content {
-            max-width: 800px;
-            margin: 0 auto;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            padding-bottom: 4rem;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | The Residential Address</title>
+  <meta name="description" content="Privacy Policy for The Residential Address. Learn how we collect, use, and protect your data." />
 
-        .privacy-content h2 {
-            color: var(--text-light);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
+  <!-- Open Graph -->
+  <meta property="og:title" content="Privacy Policy | The Residential Address" />
+  <meta property="og:description" content="Privacy Policy for The Residential Address. Learn how we collect, use, and protect your data." />
+  <meta property="og:type" content="website" />
 
-        .privacy-content h3 {
-            color: var(--text-light);
-            margin-top: 1.5rem;
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        .privacy-content ul {
-            padding-left: 20px;
-            margin-bottom: 1.5rem;
-        }
-
-        .privacy-content li {
-            margin-bottom: 0.5rem;
-        }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230F172A'/%3E%3Cpath d='M17 10c0 4.5-5 9-5 9s-5-4.5-5-9a5 5 0 0 1 10 0Z' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='10' r='1.8' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-    <!-- ═══════ Header / Navigation ═══════ -->
-    <header id="header">
-        <div class="container nav-content">
-            <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center;">
-                <img src="assets/logo.png" alt="The Residential Address"
-                    style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
-            </a>
-            <nav class="nav-links">
-                <!-- Dropdown for Services -->
-                <div class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Services ▾</a>
-                    <div class="dropdown-content">
-                        <a href="index.html">US Residential Address</a>
-                        <a href="llc-formation.html">LLC Formation</a>
-                        <a href="itin-application.html">ITIN Application</a>
-                        <a href="bank-assistance.html">Bank Assistance</a>
-                    </div>
-                </div>
-                <a href="about.html">About Us</a>
-                <a href="blog.html">Blog</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="https://wa.me/16474367072" class="btn btn-whatsapp"
-                    style="padding: 0.6rem 1.2rem; font-size: 0.9rem; margin-left: 1rem;">💬 Chat on WhatsApp</a>
-            </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ==================================================================
+       ICON SPRITE
+       Inline SVG symbols (lucide-style: 24x24, stroke-based) reused via
+       <use href="#icon-*">. Kept in one place so markup below stays clean.
+       ================================================================== -->
+  <svg class="visually-hidden" aria-hidden="true">
+    <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18"/><path d="M6 6l12 12"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </symbol>
+    <symbol id="icon-stamp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 21h10"/>
+      <path d="M6 18h12v-3a3 3 0 0 0-3-3h-1v-3a2 2 0 0 0-4 0v3H9a3 3 0 0 0-3 3v3Z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/>
+    </symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v18"/>
+      <path d="M15 22V13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v9"/>
+      <path d="M9 6h1"/><path d="M9 10h1"/><path d="M9 14h1"/><path d="M9 18h1"/>
+    </symbol>
+    <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <polyline points="15 2 15 7 20 7"/>
+      <line x1="8" y1="13" x2="16" y2="13"/>
+      <line x1="8" y1="17" x2="16" y2="17"/>
+    </symbol>
+    <symbol id="icon-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="22" x2="21" y2="22"/>
+      <line x1="6" y1="18" x2="6" y2="11"/>
+      <line x1="10" y1="18" x2="10" y2="11"/>
+      <line x1="14" y1="18" x2="14" y2="11"/>
+      <line x1="18" y1="18" x2="18" y2="11"/>
+      <polygon points="12 2 21 8 3 8"/>
+    </symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </symbol>
+    <symbol id="icon-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.3.5-.1 1.1.4 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.5.9.7 1.4.4l.5-.3c.4-.2.6-.6.5-1.1z"/>
+    </symbol>
+    <symbol id="icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"/>
+      <path d="M7 7h10v10"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </symbol>
+  </svg>
+
+  <!-- ==================================================================
+       ANNOUNCEMENT BAR
+       ================================================================== -->
+  <div class="announcement-bar" id="announcementBar">
+    <svg class="announcement-bar__icon" width="14" height="14" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+    Address Approved or Your Money Back — no questions asked.
+    <button class="announcement-bar__close" id="announcementClose" aria-label="Dismiss announcement">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-x"/></svg>
+    </button>
+  </div>
+
+  <!-- ==================================================================
+       HEADER / NAVIGATION
+       ================================================================== -->
+  <header class="navbar" id="siteHeader">
+    <nav class="container navbar__row" aria-label="Primary">
+      <a href="index.html" class="brand">
+        <span class="logo-mark">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+        </span>
+        <span class="logo-wordmark">The Residential Address</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a class="nav-links__link" href="about.html">About Us</a>
+        <a class="nav-links__link" href="blog.html">Blog</a>
+        <a class="nav-links__link" href="index.html#pricing">Pricing</a>
+        <a class="nav-links__link" href="index.html#faq">FAQ</a>
+      </div>
+
+      <div class="navbar__actions">
+        <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconMenu"><use href="#icon-menu"/></svg>
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconClose" class="visually-hidden"><use href="#icon-x"/></svg>
+      </button>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="about.html">About Us</a></li>
+        <li><a class="mobile-nav__link" href="blog.html">Blog</a></li>
+        <li><a class="mobile-nav__link" href="index.html#pricing">Pricing</a></li>
+        <li><a class="mobile-nav__link" href="index.html#faq">FAQ</a></li>
+      </ul>
+      <div class="mobile-nav__cta">
+        <a class="btn btn--dark btn--block" href="https://wa.me/16474367072" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <h1 class="h1"><span class="text-gradient">Privacy Policy</span></h1>
+          <p class="body-base hero__subtitle hero__subtitle--center">Effective Date: July 16, 2026</p>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main>
-        <!-- ═══════ Hero ═══════ -->
-        <section class="hero" style="padding-bottom: 2rem;">
-            <div class="container hero-centered">
-                <h1><span class="highlight-gold">Privacy Policy</span></h1>
-                <p class="hero-description">Effective Date: January 1, 2026</p>
-            </div>
-        </section>
+    <!-- ================================================================
+         POLICY TEXT
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container container--sm">
+        <div class="reveal policy-content" data-reveal>
+          <h2>Introduction</h2>
+          <p>The Residential Address ("we," "our," or "us") values your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, store, disclose, and safeguard your information when you visit our website or use our services, including U.S. residential address services, LLC formation assistance, ITIN application support, banking assistance, mail forwarding, and related business solutions. By using our website, you agree to the practices described in this Privacy Policy.</p>
 
-        <!-- ═══════ Policy Text ═══════ -->
-        <section class="section pt-0">
-            <div class="container">
-                <div class="privacy-content">
-                    <p>At The Residential Address (operated by Everest Ventures Group LLC), we are committed to
-                        protecting your privacy
-                        and ensuring the security of your personal data. This Privacy Policy outlines how we collect,
-                        use, and safeguard the information you provide when using our website and services.</p>
+          <h2>Information We Collect</h2>
+          <p>We may collect personal information that you voluntarily provide when requesting our services, including your name, email address, telephone number, mailing address, business details, company formation information, and supporting documentation necessary to complete requested services. We also automatically collect technical information such as your IP address, browser type, device information, website usage statistics, and cookies to improve our services and website performance.</p>
 
-                    <h2>1. Information We Collect</h2>
-                    <p>We collect information necessary to provide our business infrastructure services (including
-                        residential addresses, LLC formations, ITIN applications, and bank assistance). This may
-                        include:</p>
-                    <ul>
-                        <li><strong>Personal Identification Information:</strong> Name, email address, phone number,
-                            passport or government ID details (required for KYC and USPS 1583 compliance).</li>
-                        <li><strong>Business Information:</strong> Company name, EIN, nature of business, and
-                            operational details required for formation or bank introductions.</li>
-                        <li><strong>Payment Information:</strong> Processed securely via a third-party gateway (e.g.,
-                            Stripe). We do not store full credit card details on our servers.</li>
-                        <li><strong>Communication Records:</strong> Texts via WhatsApp or emails regarding your service.
-                        </li>
-                    </ul>
+          <h2>Use of Information</h2>
+          <p>Your information is used to provide requested services, process transactions, communicate with you, verify identities where appropriate, improve our website, comply with legal obligations, prevent fraud, and provide customer support. Where permitted by law, we may also send service updates and marketing communications, which you may opt out of at any time.</p>
 
-                    <h2>2. How We Use Your Information</h2>
-                    <p>We use your data exclusively to deliver and improve the services you request:</p>
-                    <ul>
-                        <li>To verify your identity and satisfy federal anti-money laundering (AML) and Know Your
-                            Customer (KYC) regulations.</li>
-                        <li>To file official documents with State governments (e.g., Wyoming or Delaware) or the IRS
-                            (for EIN/ITINs).</li>
-                        <li>To securely process your incoming physical mail and deliver digitized scans to your
-                            dashboard.</li>
-                        <li>To communicate with you regarding service updates, compliance notices, and customer support.
-                        </li>
-                    </ul>
+          <h2>Sharing</h2>
+          <p>We do not sell your personal information. We may share it only with trusted service providers, payment processors, hosting providers, analytics providers, professional advisers, or government authorities where required by law or necessary to protect our legal rights.</p>
 
-                    <h2>3. Data Sharing and Disclosure</h2>
-                    <p><strong>We do not sell your personal data to third parties.</strong> We only share information
-                        with third parties when functionally necessary:</p>
-                    <ul>
-                        <li><strong>Government Agencies:</strong> The IRS, State Department, or Secretary of State for
-                            explicit filing purposes.</li>
-                        <li><strong>Banking Partners:</strong> If you utilize our Bank Assistance service, we share your
-                            approved package with our partner banks (e.g., Mercury, Relay) at your explicit request.
-                        </li>
-                        <li><strong>Service Providers:</strong> Notaries (for Form 1583) and verified mail couriers.
-                        </li>
-                        <li><strong>Legal Obligations:</strong> We may disclose information if legally mandated by a
-                            valid U.S. court order or federal subpoena.</li>
-                    </ul>
+          <h2>Security</h2>
+          <p>We maintain reasonable administrative, technical, and organizational safeguards to protect personal information from unauthorized access, misuse, disclosure, or destruction. While no online system can guarantee absolute security, we employ commercially reasonable measures to safeguard your information.</p>
 
-                    <h2>4. Data Security</h2>
-                    <p>We employ bank-grade security protocols to protect your sensitive documents. All ID uploads and
-                        sensitive forms are encrypted both in transit (SSL/TLS) and at rest. Physical mail processing
-                        facilities are secured and restricted to vetted personnel only.</p>
+          <h2>Retention</h2>
+          <p>We retain personal information only for as long as necessary to provide our services, comply with legal requirements, resolve disputes, and maintain legitimate business records.</p>
 
-                    <h2>5. Your Rights & Data Retention</h2>
-                    <p>You have the right to request access to, or deletion of, your personal data. We retain your
-                        information only processing it as long as you maintain an active service with us, plus any
-                        legally required duration mandated by U.S. law (such as state Registered Agent requirements).
-                        Upon cancellation, you may request complete destruction of your digital records.</p>
+          <h2>Your Rights</h2>
+          <p>Subject to applicable law, you may request access to, correction of, deletion of, or restriction of the processing of your personal information. You may also request a copy of the personal information we maintain about you.</p>
 
-                    <h2>6. Cookies and Tracking</h2>
-                    <p>We use essential cookies to keep you logged in to your client dashboard and analytics tools to
-                        understand website traffic. You can disable non-essential cookies via your browser settings.</p>
+          <h2>Cookies</h2>
+          <p>Our website uses cookies and similar technologies to improve functionality, remember user preferences, analyze website traffic, and enhance the overall browsing experience. You may manage cookie preferences through your browser settings.</p>
 
-                    <h2>7. Changes to This Policy</h2>
-                    <p>We may update this Privacy Policy from time to time to reflect changes in legal or regulatory
-                        obligations. The revised policy will be posted on this page with an updated "Effective Date."
-                    </p>
+          <h2>Third-Party Links</h2>
+          <p>Our website may include links to third-party websites. We are not responsible for their content or privacy practices, and we encourage users to review the privacy policies of those websites.</p>
 
-                    <h2>8. Contact Us</h2>
-                    <p>If you have any questions or concerns about this Privacy Policy or how your data is handled,
-                        please contact our compliance team via our official WhatsApp support line at +1 647 436 7072 or
-                        via email support.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+          <h2>Changes</h2>
+          <p>We may update this Privacy Policy periodically. Any revisions will be published on this page with an updated effective date.</p>
 
-    <!-- ═══════ Footer ═══════ -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo"
-                        style="text-decoration: none; display: flex; align-items: center; margin-bottom: 24px;">
-                        <img src="assets/logo.png" alt="The Residential Address"
-                            style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
-                    </a>
-                    <p>The US infrastructure layer for global founders. Banking, addresses, and LLCs made compliant.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="index.html">US Residential Address</a></li>
-                        <li><a href="llc-formation.html">LLC Formation</a></li>
-                        <li><a href="itin-application.html">ITIN Application</a></li>
-                        <li><a href="bank-assistance.html">Bank Assistance</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="index.html#pricing">Pricing</a></li>
-                        <li><a href="index.html#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Trust</h4>
-                    <div class="footer-trust-badges">
-                        <span>IRS Certified</span>
-                        <span>100% Compliant</span>
-                        <span>Money-Back Guarantee</span>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in
-                    Florida, USA.</p>
-                <div style="margin-top: 10px; font-size: 0.8em;">
-                    <a href="privacy.html"
-                        style="color: var(--text-muted); text-decoration: none; margin-right: 15px;">Privacy Policy</a>
-                </div>
-            </div>
+          <h2>Contact Us</h2>
+          <p>For questions regarding this Privacy Policy or our privacy practices, please contact The Residential Address using the contact details available on our website.</p>
+
+          <p class="policy-disclaimer">Disclaimer: This Privacy Policy is intended as a general business privacy policy and should be reviewed by qualified legal counsel before publication.</p>
         </div>
-    </footer>
+      </div>
+    </section>
+
+  </main>
+
+<footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="brand">
+            <span class="logo-mark">
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+            </span>
+            <span class="logo-wordmark">The Residential Address</span>
+          </a>
+          <p class="body-sm footer__desc">
+            The US infrastructure layer for global founders. Banking,
+            addresses, and LLCs made compliant.
+          </p>
+          <div class="mt-6">
+            <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="footer__links">
+          <div>
+            <h4 class="footer__col-title">SERVICES</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="index.html#services">US Residential Address</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/llc-formation.html" target="_blank" rel="noopener">LLC Formation</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/itin-application.html" target="_blank" rel="noopener">ITIN Application</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/bank-assistance.html" target="_blank" rel="noopener">Bank Assistance</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">COMPANY</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="about.html">About Us</a></li>
+              <li><a class="footer__link" href="blog.html">Blog</a></li>
+              <li><a class="footer__link" href="index.html#pricing">Pricing</a></li>
+              <li><a class="footer__link" href="index.html#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">TRUST</h4>
+            <ul class="footer__col-list">
+              <li><span class="footer__link">IRS Certified</span></li>
+              <li><span class="footer__link">100% Compliant</span></li>
+              <li><span class="footer__link">Money-Back Guarantee</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="body-xs">© <span id="currentYear">2026</span> The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in Florida, USA.</p>
+        <div class="footer__legal">
+          <a class="footer__link body-xs" href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-
 </html>

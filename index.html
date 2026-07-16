@@ -1,1055 +1,874 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Residential Address | Compliant U.S. Business Addresses</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
-    <meta name="description"
-        content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playball&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Residential Address | Compliant U.S. Business Addresses</title>
+  <meta name="description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders." />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "The Residential Address",
-        "description": "US residential business address, LLC formation, ITIN, and bank account services for non-US founders.",
-        "url": "https://theresidentialaddress.com",
-        "sameAs": [],
-        "areaServed": "Worldwide",
-        "serviceType": ["US Business Address", "LLC Formation", "ITIN Application", "Bank Account Assistance"]
-    }
-    </script>
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Residential Address | Compliant U.S. Business Addresses" />
+  <meta property="og:description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230F172A'/%3E%3Cpath d='M17 10c0 4.5-5 9-5 9s-5-4.5-5-9a5 5 0 0 1 10 0Z' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='10' r='1.8' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-    <!-- ═══════ Header / Navigation ═══════ -->
-    <header id="header">
-        <div class="container nav-content">
-            <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center;">
-                <img src="assets/logo.png" alt="The Residential Address"
-                    style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ==================================================================
+       ICON SPRITE
+       Inline SVG symbols (lucide-style: 24x24, stroke-based) reused via
+       <use href="#icon-*">. Kept in one place so markup below stays clean.
+       ================================================================== -->
+  <svg class="visually-hidden" aria-hidden="true">
+    <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18"/><path d="M6 6l12 12"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </symbol>
+    <symbol id="icon-stamp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 21h10"/>
+      <path d="M6 18h12v-3a3 3 0 0 0-3-3h-1v-3a2 2 0 0 0-4 0v3H9a3 3 0 0 0-3 3v3Z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/>
+    </symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 22V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v18"/>
+      <path d="M15 22V13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v9"/>
+      <path d="M9 6h1"/><path d="M9 10h1"/><path d="M9 14h1"/><path d="M9 18h1"/>
+    </symbol>
+    <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <polyline points="15 2 15 7 20 7"/>
+      <line x1="8" y1="13" x2="16" y2="13"/>
+      <line x1="8" y1="17" x2="16" y2="17"/>
+    </symbol>
+    <symbol id="icon-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="22" x2="21" y2="22"/>
+      <line x1="6" y1="18" x2="6" y2="11"/>
+      <line x1="10" y1="18" x2="10" y2="11"/>
+      <line x1="14" y1="18" x2="14" y2="11"/>
+      <line x1="18" y1="18" x2="18" y2="11"/>
+      <polygon points="12 2 21 8 3 8"/>
+    </symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </symbol>
+    <symbol id="icon-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.3.5-.1 1.1.4 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.5.9.7 1.4.4l.5-.3c.4-.2.6-.6.5-1.1z"/>
+    </symbol>
+    <symbol id="icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"/>
+      <path d="M7 7h10v10"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </symbol>
+  </svg>
+
+  <!-- ==================================================================
+       ANNOUNCEMENT BAR
+       ================================================================== -->
+  <div class="announcement-bar" id="announcementBar">
+    <svg class="announcement-bar__icon" width="14" height="14" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+    Address Approved or Your Money Back — no questions asked.
+    <button class="announcement-bar__close" id="announcementClose" aria-label="Dismiss announcement">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-x"/></svg>
+    </button>
+  </div>
+
+  <!-- ==================================================================
+       HEADER / NAVIGATION
+       ================================================================== -->
+  <header class="navbar" id="siteHeader">
+    <nav class="container navbar__row" aria-label="Primary">
+      <a href="#top" class="brand">
+        <span class="logo-mark">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+        </span>
+        <span class="logo-wordmark">The Residential Address</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a class="nav-links__link" href="about.html">About Us</a>
+        <a class="nav-links__link" href="blog.html">Blog</a>
+        <a class="nav-links__link" href="#pricing">Pricing</a>
+        <a class="nav-links__link" href="#faq">FAQ</a>
+      </div>
+
+      <div class="navbar__actions">
+        <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconMenu"><use href="#icon-menu"/></svg>
+        <svg width="20" height="20" aria-hidden="true" id="navToggleIconClose" class="visually-hidden"><use href="#icon-x"/></svg>
+      </button>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="about.html">About Us</a></li>
+        <li><a class="mobile-nav__link" href="blog.html">Blog</a></li>
+        <li><a class="mobile-nav__link" href="#pricing">Pricing</a></li>
+        <li><a class="mobile-nav__link" href="#faq">FAQ</a></li>
+      </ul>
+      <div class="mobile-nav__cta">
+        <a class="btn btn--dark btn--block" href="https://wa.me/16474367072" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="container hero__grid">
+        <div class="reveal" data-reveal>
+          <span class="hero__eyebrow-badge">
+            <span class="badge-dot"></span>
+            COMPLETE DOCUMENTATION PACKAGE
+          </span>
+
+          <h1 class="h1 hero__title">Get Your <span class="text-gradient">Compliant &amp; Verified</span> U.S. Residential Address</h1>
+
+          <p class="body-lg hero__subtitle">
+            <span class="price-highlight">$2000</span>/year billed annually. No setup fee. Cancel anytime. We
+            provide international founders with a real residential address,
+            signed lease agreement, and Renter's Insurance — everything banks
+            like Mercury, Stripe, and Capital One require for verification.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--gold" href="https://wa.me/16474367072" target="_blank" rel="noopener">
+              💬 Get Started on WhatsApp
+              <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
             </a>
-            <button class="hamburger" id="hamburger" aria-label="Open menu">
-                <span></span><span></span><span></span>
+          </div>
+
+          <div class="hero__trust trust-list">
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              Real Lease Agreement &amp; Bills
+            </div>
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              Compliant Verified Address
+            </div>
+            <div class="trust-item">
+              <svg class="trust-item__icon" width="16" height="16" aria-hidden="true"><use href="#icon-check"/></svg>
+              Stay Protected — 100% Guarantee
+            </div>
+          </div>
+
+          <div class="hero__metrics">
+            <div>
+              <div class="hero__metric-value text-gold" data-count-to="40" data-count-suffix="+">40+</div>
+              <div class="hero__metric-label">countries served</div>
+            </div>
+            <div>
+              <div class="hero__metric-value text-gold" data-count-to="20" data-count-suffix="+">20+</div>
+              <div class="hero__metric-label">founders approved</div>
+            </div>
+            <div>
+              <div class="hero__metric-value text-gold" data-count-to="100" data-count-suffix="%">100%</div>
+              <div class="hero__metric-label">money-back guarantee</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" data-reveal data-reveal-delay="150">
+          <div class="hero__visual">
+            <div class="panel-card">
+              <div class="mailbox-card__row">
+                <span class="mailbox-card__id">LEASE ID · TRA-2000</span>
+                <span class="stamp-badge stamp-badge--sm" aria-hidden="true">
+                  <span class="stamp-badge__inner">
+                    <span class="stamp-badge__label">VERIFIED</span>
+                    <svg class="stamp-badge__icon" width="14" height="14"><use href="#icon-stamp"/></svg>
+                    <span class="stamp-badge__label">U.S. ADDRESS</span>
+                  </span>
+                </span>
+              </div>
+
+              <div class="mailbox-card__body">
+                <div>
+                  <div class="mailbox-card__label">TENANT</div>
+                  <div class="mailbox-card__name">Your Name, LLC</div>
+                </div>
+                <div>
+                  <div class="mailbox-card__label">VERIFIED U.S. ADDRESS</div>
+                  <div class="mailbox-card__address">412 Harbor Row, Suite 208<br />Wilmington, DE 19801</div>
+                </div>
+                <div class="mailbox-card__status">
+                  <span class="mailbox-card__status-dot"></span>
+                  Compliant — bank verified
+                </div>
+              </div>
+
+              <div class="route-panel">
+                <svg viewBox="0 0 320 64" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true">
+                  <line x1="12" y1="32" x2="308" y2="32" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="5 6"/>
+                  <circle cx="16" cy="32" r="4" fill="#94A3B8"/>
+                  <circle cx="304" cy="32" r="5" fill="#2563EB"/>
+                </svg>
+                <span class="route-panel__label route-panel__label--origin">APPLICATION</span>
+                <span class="route-panel__label route-panel__label--delivered">APPROVED</span>
+              </div>
+            </div>
+
+            <div class="floating-card hero__floating-card">
+              <div class="hero__floating-card-row">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-file-text"/></svg>
+                Lease signed
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SOCIAL PROOF / TRUST SECTION
+         ================================================================ -->
+    <section class="section section--tight section--bordered section--bg-inverse">
+      <div class="container">
+        <p class="reveal trust-kicker" data-reveal>
+          20+ Founders Approved for Stripe &amp; US Banks
+        </p>
+        <div class="reveal marquee" data-reveal data-reveal-delay="80">
+          <div class="marquee__track">
+            <span class="logo-cloud__item">🇮🇳 Arjun S. — Stripe Active</span>
+            <span class="logo-cloud__item">🇦🇪 Khalid M. — Capital One Approved</span>
+            <span class="logo-cloud__item">🇲🇾 Wei L. — Mercury Approved</span>
+            <span class="logo-cloud__item">🇫🇷 Pierre D. — Stripe Active</span>
+            <span class="logo-cloud__item">🇵🇰 Hasan A. — Alliant Approved</span>
+            <span class="logo-cloud__item">🇹🇷 Fatma N. — Stripe Active</span>
+            <span class="logo-cloud__item">🇪🇬 Ahmed R. — Capital One Approved</span>
+            <span class="logo-cloud__item">🇩🇪 Max B. — Mercury Approved</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇮🇳 Arjun S. — Stripe Active</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇦🇪 Khalid M. — Capital One Approved</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇲🇾 Wei L. — Mercury Approved</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇫🇷 Pierre D. — Stripe Active</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇵🇰 Hasan A. — Alliant Approved</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇹🇷 Fatma N. — Stripe Active</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇪🇬 Ahmed R. — Capital One Approved</span>
+            <span class="logo-cloud__item" aria-hidden="true">🇩🇪 Max B. — Mercury Approved</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FEATURES SECTION — "The Problem"
+         ================================================================ -->
+    <section class="section section--bg-inverse" id="services">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">THE PROBLEM</span>
+          <h2 class="h2 section-head__title">Why 73% of Non-US Founders Get Rejected by US Banks</h2>
+          <p class="body-base section-head__desc">Banks scan the USPS database. If your address is flagged as a Commercial Mail Receiving Agency, you are automatically out of all the personal banking options.</p>
+        </div>
+
+        <div class="grid-auto-3 mt-12">
+          <div class="reveal" data-reveal data-reveal-delay="0">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-mail"/></svg></span>
+              <h3 class="h3 feature-card__title">Virtual Mailboxes</h3>
+              <p class="body-sm feature-card__desc">Flagged as CMRA. Instant rejection from Stripe, Mercury, and Capital One. Avoid at all costs. Status: Banned.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="60">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-file-text"/></svg></span>
+              <h3 class="h3 feature-card__title">P.O. Boxes</h3>
+              <p class="body-sm feature-card__desc">Banks require a "Physical Street Address." Generic P.O. boxes do not meet Patriot Act requirements. Status: Rejected.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="120">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg></span>
+              <h3 class="h3 feature-card__title">Real Residential Lease</h3>
+              <p class="body-sm feature-card__desc">A legal, signed lease for a real residential unit in your personal name, with a verifiable Renter's Insurance. Passes residential address checks and is bank-friendly. Status: 100% Compliant.</p>
+            </div>
+          </div>
+          <div class="reveal" data-reveal data-reveal-delay="180">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg width="20" height="20" aria-hidden="true"><use href="#icon-lock"/></svg></span>
+              <h3 class="h3 feature-card__title">Bank-Grade Security</h3>
+              <p class="body-sm feature-card__desc">We work directly with property managers to ensure your address is unique and private. Your mail is handled by secure, vetted couriers with tracking for every forward.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         WHY CHOOSE US — comparison table (dark section)
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container container--lg">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow eyebrow--inverse">SIDE BY SIDE</span>
+          <h2 class="h2 text-inverse section-head__title">Virtual Mailbox vs Real Residential Lease</h2>
+          <p class="body-base text-inverse-secondary section-head__desc">Every major bank and payment processor verifies your address against the USPS CMRA database. Virtual mailboxes are flagged. Residential leases pass.</p>
+        </div>
+
+        <div class="reveal compare-table mt-10" data-reveal data-reveal-delay="100">
+          <div class="compare-table__head">
+            <span>Feature</span>
+            <span>Virtual Mailbox (Them)</span>
+            <span class="text-gold-inverse">Real Residential Lease (Us)</span>
+          </div>
+
+          <div class="compare-table__row">
+            <span class="compare-table__label">Personal Bank Verification</span>
+            <span class="compare-table__diy">❌ Flagged as CMRA</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Passes KYC</span>
+          </div>
+          <div class="compare-table__row compare-table__row--alt">
+            <span class="compare-table__label">Stripe Verification</span>
+            <span class="compare-table__diy">❌ Rejected</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Approved</span>
+          </div>
+          <div class="compare-table__row">
+            <span class="compare-table__label">Documents Provided</span>
+            <span class="compare-table__diy">PO Box Confirmation</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Signed Lease + Renter's Insurance</span>
+          </div>
+          <div class="compare-table__row compare-table__row--alt">
+            <span class="compare-table__label">Cost Per Month</span>
+            <span class="compare-table__diy">$400 – $5,000</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> $167 / Month</span>
+          </div>
+          <div class="compare-table__row">
+            <span class="compare-table__label">Ongoing Support</span>
+            <span class="compare-table__diy">❌ None</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> 24/7 Chat Access</span>
+          </div>
+          <div class="compare-table__row compare-table__row--alt">
+            <span class="compare-table__label">Vendor Credit, Mail &amp; Tax Filing</span>
+            <span class="compare-table__diy">❌ Restricted</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Approved</span>
+          </div>
+          <div class="compare-table__row">
+            <span class="compare-table__label">Mail Handling</span>
+            <span class="compare-table__diy">Costs 3X Shipping Price</span>
+            <span class="compare-table__win"><svg width="14" height="14" aria-hidden="true"><use href="#icon-check"/></svg> Just the Shipping Price</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SERVICES GRID — "Built for Global Founders"
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">FOR YOU</span>
+          <h2 class="h2 section-head__title">Built for Global Founders</h2>
+          <p class="body-base section-head__desc">We serve founders from 40+ countries. Here's who benefits most.</p>
+        </div>
+
+        <div class="grid-auto-3 mt-12 gap-4">
+          <a class="reveal service-card" data-reveal data-reveal-delay="0" href="#contact">
+            <div>
+              <span class="service-card__flag" aria-hidden="true">🇮🇳</span>
+              <h3 class="h3 h3--sm service-card__title">Indian SaaS Founders</h3>
+              <p class="body-sm service-card__desc">Accept USD payments via Stripe without getting blocked. ₹~83,000 total for Full Stack.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="60" href="#contact">
+            <div>
+              <span class="service-card__flag" aria-hidden="true">🇦🇪</span>
+              <h3 class="h3 h3--sm service-card__title">UAE E-commerce Sellers</h3>
+              <p class="body-sm service-card__desc">Open a US bank account without visiting the US. AED ~13,200 total for Full Stack.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="120" href="#contact">
+            <div>
+              <span class="service-card__flag" aria-hidden="true">🇲🇾</span>
+              <h3 class="h3 h3--sm service-card__title">Malaysian Digital Nomads</h3>
+              <p class="body-sm service-card__desc">Get a real US address for your US LLC. RM ~16,000 total for Full Stack.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+          <a class="reveal service-card" data-reveal data-reveal-delay="0" href="#contact">
+            <div>
+              <span class="service-card__flag" aria-hidden="true">🇫🇷</span>
+              <h3 class="h3 h3--sm service-card__title">French Tech Founders</h3>
+              <p class="body-sm service-card__desc">Stripe Atlas alternative with residential lease docs. €~3,400 total for Full Stack.</p>
+            </div>
+            <span class="service-card__cta">Learn more <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         HOW IT WORKS — "Process"
+         ================================================================ -->
+    <section class="section section--bg-inverse" id="how-it-works">
+      <div class="container">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <span class="eyebrow">PROCESS</span>
+          <h2 class="h2 section-head__title">Your Complete Address Verification Process</h2>
+          <p class="body-base section-head__desc">Skip the compliance headaches and banking rejections. We handle every detail of your address verification. Fast, legal, and bank-approved address setup.</p>
+        </div>
+
+        <div class="steps-grid mt-16">
+          <svg class="steps-grid__connector" viewBox="0 0 1200 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="1200" y2="1" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="1 10"/>
+          </svg>
+
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="0">
+            <div class="step-index">01</div>
+            <h3 class="h3 h3--sm step-title">You contact us</h3>
+            <p class="body-sm step-desc">Reach out via WhatsApp to get started — typically instant.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="110">
+            <div class="step-index">02</div>
+            <h3 class="h3 h3--sm step-title">We review your needs</h3>
+            <p class="body-sm step-desc">We evaluate your personal profile and ensure our verified addresses align with banking compliance requirements — usually the same day.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="220">
+            <div class="step-index">03</div>
+            <h3 class="h3 h3--sm step-title">You secure your address</h3>
+            <p class="body-sm step-desc">$2000 billed upfront to secure your verified U.S. personal address compliance service — confirmed within hours.</p>
+          </div>
+          <div class="reveal steps-grid__item" data-reveal data-reveal-delay="330">
+            <div class="step-index">04</div>
+            <h3 class="h3 h3--sm step-title">We setup everything</h3>
+            <p class="body-sm step-desc">Mailbox setup, utility connections, and all compliance documents prepared for personal banking verification — typically 1–2 business days.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PERSONAL BANKING, UNLOCKED
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container container--md">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <span class="eyebrow">✔</span>
+          <h2 class="h2 section-head__title">Personal Banking, Unlocked</h2>
+          <p class="body-base section-head__desc">Your profile now meets every compliance requirement with confidence.</p>
+        </div>
+
+        <div class="reveal panel-card mt-10" data-reveal data-reveal-delay="80">
+          <div class="package-grid">
+            <div class="package-item">
+              <span class="package-item__icon" aria-hidden="true">🇺🇸</span>
+              <div class="package-item__label">Real Physical U.S. Address</div>
+            </div>
+            <div class="package-item">
+              <span class="package-item__icon" aria-hidden="true">📄</span>
+              <div class="package-item__label">Real Lease</div>
+            </div>
+            <div class="package-item">
+              <span class="package-item__icon" aria-hidden="true">🇺🇸</span>
+              <div class="package-item__label">Renter's Insurance </div>
+            </div>
+          </div>
+          <div class="mt-8 text-center">
+            <a class="btn btn--gold" href="https://wa.me/16474367072" target="_blank" rel="noopener">COMPLETE PACKAGE</a>
+          </div>
+        </div>
+
+        <div class="reveal mt-14" data-reveal data-reveal-delay="120">
+          <h3 class="h3 text-center">📋 What This Unlocks</h3>
+          <div class="unlock-grid mt-6">
+            <div class="unlock-item">
+              <svg class="unlock-item__icon" width="20" height="20" aria-hidden="true"><use href="#icon-check"/></svg>
+              <div>
+                <div class="unlock-item__title">Instant Bank Approval Confidence</div>
+                <p class="body-sm unlock-item__desc">Apply without hesitation — your profile is built to pass.</p>
+              </div>
+            </div>
+            <div class="unlock-item">
+              <svg class="unlock-item__icon" width="20" height="20" aria-hidden="true"><use href="#icon-check"/></svg>
+              <div>
+                <div class="unlock-item__title">No More Address Verification Issues</div>
+                <p class="body-sm unlock-item__desc">Say goodbye to rejections over documentation.</p>
+              </div>
+            </div>
+            <div class="unlock-item">
+              <svg class="unlock-item__icon" width="20" height="20" aria-hidden="true"><use href="#icon-check"/></svg>
+              <div>
+                <div class="unlock-item__title">A Creditworthy Profile</div>
+                <p class="body-sm unlock-item__desc">A real, verified address that builds trust and credibility.</p>
+              </div>
+            </div>
+            <div class="unlock-item">
+              <svg class="unlock-item__icon" width="20" height="20" aria-hidden="true"><use href="#icon-check"/></svg>
+              <div>
+                <div class="unlock-item__title">Full Compliance Protection</div>
+                <p class="body-sm unlock-item__desc">Stay fully aligned with regulations — no risks, no guesswork.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal guarantee-card mt-14" data-reveal data-reveal-delay="100">
+          <span class="guarantee-card__icon" aria-hidden="true">
+            <svg width="24" height="24"><use href="#icon-shield-check"/></svg>
+          </span>
+          <h3 class="h3 mt-4">Your Personal Profile Is Now Bulletproof</h3>
+          <p class="body-sm mt-3">No more sleepless nights over compliance. No more declined applications. Your profile now carries the same level of legitimacy and trust as established U.S. residents.</p>
+        </div>
+
+        <p class="body-sm text-center mt-8">🌐 Need more services? We can help you with <strong>US banking, LLC formation, and business setup solutions.</strong></p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TESTIMONIALS — "Proof"
+         ================================================================ -->
+    <section class="section section--bg-inverse">
+      <div class="container">
+        <div class="reveal section-head" data-reveal>
+          <span class="eyebrow">PROOF</span>
+          <h2 class="h2 section-head__title">20+ Founders Approved for Stripe &amp; US Banks</h2>
+        </div>
+
+        <div class="grid-auto-3 mt-12">
+          <div class="reveal" data-reveal data-reveal-delay="0">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"I was rejected by 3 banks because of my virtual mailbox. Switched to The Residential Address and got approved by Capital One in 5 days. Life changed."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Arjun S.</div>
+                  <div class="body-xs">SaaS Founder</div>
+                  <div class="body-xs">🇮🇳 India</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="70">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"Same-day LLC, real address, and Stripe live in under a week. I spent 3 months trying with other services. This was instant."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Khalid M.</div>
+                  <div class="body-xs">E-commerce Seller</div>
+                  <div class="body-xs">🇦🇪 UAE</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" data-reveal data-reveal-delay="140">
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars" aria-hidden="true">
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+                <svg width="14" height="14"><use href="#icon-star"/></svg>
+              </div>
+              <p class="testimonial-card__quote">"The real eSIM phone number was the missing piece. My bank kept rejecting VoIP numbers. This one worked immediately for verification."</p>
+              <div class="testimonial-card__meta">
+                <div>
+                  <div class="h3 h3--sm">Wei L.</div>
+                  <div class="body-xs">Digital Nomad</div>
+                  <div class="body-xs">🇲🇾 Malaysia</div>
+                </div>
+                <svg class="testimonial-card__icon" width="20" height="20" aria-hidden="true"><use href="#icon-shield-check"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FAQ — "Compliance FAQ"
+         ================================================================ -->
+    <section class="section section--bg-inverse" id="faq">
+      <div class="container container--sm">
+        <div class="reveal section-head section-head--center" data-reveal>
+          <span class="eyebrow">FAQ</span>
+          <h2 class="h2 section-head__title">Compliance FAQ</h2>
+          <p class="body-base section-head__desc">The real questions founders Google before they buy.</p>
+        </div>
+
+        <div class="reveal card faq-list mt-12" data-reveal data-reveal-delay="100" id="faqList">
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="true">
+              <span>Can I use a virtual mailbox to open a US bank account?</span>
+              <svg class="faq-item__chevron is-open" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
             </button>
-            <nav class="nav-links" id="navLinks">
-                <button class="nav-close" id="navClose" aria-label="Close menu">✕</button>
-                <!-- Dropdown for Services -->
-                <div class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Services ▾</a>
-                    <div class="dropdown-content">
-                        <a href="index.html">US Residential Address</a>
-                        <a href="llc-formation.html">LLC Formation</a>
-                        <a href="itin-application.html">ITIN Application</a>
-                        <a href="bank-assistance.html">Bank Assistance</a>
-                    </div>
-                </div>
-                <a href="about.html">About Us</a>
-                <a href="blog.html">Blog</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="https://wa.me/16474367072" class="btn btn-whatsapp"
-                    style="padding: 0.6rem 1.2rem; font-size: 0.9rem; margin-left: 1rem;">💬 Chat on WhatsApp</a>
-            </nav>
+            <div class="faq-item__panel is-open">
+              <p class="faq-item__answer">No. Most U.S. banks (Capital One, Chase, Mercury, Alliant) scan your address against the USPS CMRA database. Virtual mailboxes are flagged as Commercial Mail Receiving Agencies and are automatically rejected. You need a real residential address with lease documentation.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What documents does Capital One require for non-US residents?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Capital One requires: (1) A valid ITIN, (2) A valid passport, (3) A legitimate, real residential address, (4) A completed W-8BEN form, and (5) A valid passport ID.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Will banks accept my application if I'm based in India?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes. If your personal profile has a compliant U.S. address (residential lease), a valid ITIN, and a U.S. bank account. We've helped 30+ Indian founders get their banks verified and active this quarter alone.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What's the difference between a registered agent address and a residential address?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">A registered agent address is only for receiving legal/state documents—it cannot be used as your address for banks or Stripe. A residential address is a real, physical address with a signed lease that passes bank verification (KYC/AML checks).</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Do I need an ITIN to open a U.S. bank account?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Not always for business accounts. Some banks (like Capital One) accept EIN-only applications for LLCs. However, having an ITIN significantly expands your options and is required for personal banking, credit building, and certain payment processors. We offer ITIN applications for $400.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Is your residential address compliant with U.S. banking regulations?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes. Our addresses are real residential units with legally signed leases. They are not flagged in the USPS CMRA database, they pass Patriot Act verification, and they include Renter's Insurance in your LLC name. If any bank rejects your address, we replace it free of charge or refund you 100%.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can I use this address for a Google Business Profile?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes! Unlike virtual mailbox services that restrict Google Business Profile usage, our residential addresses fully support GBP listing. You'll receive mail verification postcards at your address, which we forward to you.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What happens if my address is rejected by a bank?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">If any U.S. bank or payment processor rejects your residential address, we'll replace it with a new address free of charge or refund you 100%—no questions asked. We have a 100% success rate so far across 30+ founder applications.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Which is better for my LLC: Wyoming or Delaware?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges $300/year in franchise tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred).</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>How long does ITIN processing take?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Standard ITIN processing by the IRS takes 7–11 weeks. We prepare and submit your W-7 application with all supporting documentation. The $400 fee covers our preparation, review, and filing service.</p>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main>
-
-        <!-- ═══════ Section 2: Hero ═══════ -->
-        <section class="hero" id="hero">
-
-            <!-- Animated American Flag Background -->
-            <svg class="hero-flag" viewBox="0 0 1235 650" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- Stripes -->
-                <rect width="1235" height="650" fill="#B22234" />
-                <rect y="50" width="1235" height="50" fill="#fff" />
-                <rect y="150" width="1235" height="50" fill="#fff" />
-                <rect y="250" width="1235" height="50" fill="#fff" />
-                <rect y="350" width="1235" height="50" fill="#fff" />
-                <rect y="450" width="1235" height="50" fill="#fff" />
-                <rect y="550" width="1235" height="50" fill="#fff" />
-                <!-- Canton -->
-                <rect width="494" height="350" fill="#3C3B6E" />
-                <!-- Stars (simplified 5 rows) -->
-                <g fill="#fff" font-size="22" font-family="serif">
-                    <text x="25" y="45">★ ★ ★ ★ ★ ★</text>
-                    <text x="47" y="85">★ ★ ★ ★ ★</text>
-                    <text x="25" y="125">★ ★ ★ ★ ★ ★</text>
-                    <text x="47" y="165">★ ★ ★ ★ ★</text>
-                    <text x="25" y="205">★ ★ ★ ★ ★ ★</text>
-                    <text x="47" y="245">★ ★ ★ ★ ★</text>
-                    <text x="25" y="285">★ ★ ★ ★ ★ ★</text>
-                    <text x="47" y="325">★ ★ ★ ★ ★</text>
-                    <text x="25" y="345">★ ★ ★ ★ ★ ★</text>
-                </g>
-            </svg>
-
-
-            <div class="container hero-centered">
-                <h1>Get Your Compliant & Verified <span class="highlight-gold">U.S. Residential Address</span></h1>
-                <p class="hero-pricing-line">Complete Documentation Package — <strong>$2000/year</strong> billed
-                    annually. No setup fee. Cancel anytime.</p>
-                <p class="hero-description">We provide international founders with a real residential address, signed
-                    lease agreement, and utility bills — everything banks like Mercury, Stripe, and Capital One require
-                    for verification.</p>
-                <div class="hero-ctas">
-
-                    <a href="https://wa.me/16474367072" class="btn btn-whatsapp">💬 Get Started on WhatsApp</a>
-                </div>
-                <div class="hero-pills">
-                    <div class="hero-pill">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                            <polyline points="14 2 14 8 20 8" />
-                        </svg>
-                        Real Lease Agreement & Bills
-                    </div>
-                    <span class="pill-divider"></span>
-                    <div class="hero-pill">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                        </svg>
-                        Compliant Verified Address
-                    </div>
-                    <span class="pill-divider"></span>
-                    <div class="hero-pill">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                        </svg>
-                        Stay Protected — 100% Guarantee
-                    </div>
-                </div>
-            </div>
-
-            <!-- WebGL Shader Canvas -->
-            <canvas id="shaderCanvas" aria-hidden="true"></canvas>
-        </section>
-
-        <!-- ═══════ Section 3: The Problem ═══════ -->
-        <section class="section section-alt" id="problem">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">The Problem</div>
-                    <h2 class="gradient-text">Why 73% of Non-US Founders<br>Get Rejected by US Banks</h2>
-                    <p>Banks scan the USPS database. If your address is flagged as a
-                        <strong>COMMERCIAL MAIL RECEIVING AGENCY</strong>, you are automatically out of all the personal
-                        banking options.
-                    </p>
-                </div>
-
-                <div class="bento-grid">
-                    <!-- Virtual Mailboxes -->
-                    <div class="bento-card">
-                        <div class="icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect width="20" height="16" x="2" y="4" rx="2" />
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                            </svg>
-                        </div>
-                        <h3>Virtual Mailboxes</h3>
-                        <p>Flagged as CMRA. Instant rejection from Stripe, Mercury, and Capital One. Avoid at all
-                            costs.</p>
-                        <div class="status-label" style="color: var(--danger-red);">STATUS: BANNED</div>
-                    </div>
-
-                    <!-- P.O. Boxes -->
-                    <div class="bento-card">
-                        <div class="icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path
-                                    d="M5 8h14M5 8a2 2 0 1 1 0-4h14a2 2 0 1 1 0 4M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8" />
-                            </svg>
-                        </div>
-                        <h3>P.O. Boxes</h3>
-                        <p>Banks require a "Physical Street Address." Generic P.O. boxes do not meet Patriot Act
-                            requirements.</p>
-                        <div class="status-label" style="color: var(--danger-red);">STATUS: REJECTED</div>
-                    </div>
-
-                    <!-- Residential Lease — SUCCESS -->
-                    <div class="bento-card tall success-card">
-                        <div class="icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 1.4rem;">Real Residential Lease</h3>
-                        <p style="margin-bottom: 1.5rem;">A legal, signed lease for a real residential unit in your
-                            personal
-                            name. Accompanied by a verifiable utility bill.</p>
-                        <ul class="price-features" style="margin: 0 0 1.5rem;">
-                            <li style="color: var(--text-main);">Passes Residential Address Check</li>
-                            <li style="color: var(--text-main);">Verifiable Lease Agreement</li>
-                            <li style="color: var(--text-main);">Bank-Friendly Lease</li>
-                            <li style="color: var(--text-main);">Renter Insurance Ready</li>
-                        </ul>
-                        <div class="status-label" style="color: var(--success-green);">STATUS: 100% COMPLIANT</div>
-                    </div>
-
-                    <!-- Bank-Grade Security -->
-                    <div class="bento-card wide">
-                        <div class="icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                            </svg>
-                        </div>
-                        <h3>Bank-Grade Security</h3>
-                        <p>We work directly with property managers to ensure your address is unique and private. Your
-                            mail is handled by secure, vetted couriers with tracking for every forward.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════ Section 4: Virtual vs Real Comparison Table ═══════ -->
-        <section class="section" id="comparison">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Side by Side</div>
-                    <h2 class="gradient-text">Virtual Mailbox vs Real Residential Lease</h2>
-                    <p>Every major bank and payment processor verifies your address against the USPS CMRA database.
-                        Virtual mailboxes are flagged. Residential leases pass.</p>
-                </div>
-
-                <div class="comp-table-wrap">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Virtual Mailbox (Them)</th>
-                                <th>Real Residential Lease (Us)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Personal Bank Verification</td>
-                                <td class="crossmark">❌ Flagged as CMRA</td>
-                                <td class="highlight-cell">✅ Passes KYC</td>
-                            </tr>
-                            <tr>
-                                <td>Stripe Verification</td>
-                                <td class="crossmark">❌ Rejected</td>
-                                <td class="highlight-cell">✅ Approved</td>
-                            </tr>
-                            <tr>
-                                <td>Documents Provided</td>
-                                <td>PO Box Confirmation</td>
-                                <td class="highlight-cell">✅ Signed Lease + Utility Bill</td>
-                            </tr>
-                            <tr>
-                                <td>Cost Per Month</td>
-                                <td>$400 – $5,000</td>
-                                <td class="highlight-cell">$167 / Month</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Ongoing Support</td>
-                                <td class="crossmark">❌ None</td>
-                                <td class="highlight-cell">✅ 24/7 Chat Access</td>
-                            </tr>
-                            <tr>
-                                <td>Vendor Credit, Mail & Tax Filing</td>
-                                <td class="crossmark">❌ Restricted</td>
-                                <td class="highlight-cell">✅ Approved</td>
-                            </tr>
-                            <tr>
-                                <td>Mail Handling</td>
-                                <td>Costs 3X Shipping Price</td>
-                                <td class="highlight-cell">✅ Costs Just the Shipping Price</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ═══════ Section 6: Process Timeline (Zigzag) ═══════ -->
-        <section class="section" id="speed">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Your Complete <span class="highlight-gold">Address Verification</span> Process</h2>
-                    <p>Skip the compliance headaches and banking rejections. We handle every detail of your address
-                        verification.</p>
-                    <p class="process-tagline"><strong>Fast, legal, and bank-approved address setup.</strong></p>
-                </div>
-
-                <div class="zigzag-timeline">
-                    <div class="zigzag-line"></div>
-
-                    <!-- Step 1 — Left -->
-                    <div class="zigzag-row left">
-                        <div class="zigzag-card">
-                            <div class="zigzag-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                                </svg>
-                            </div>
-                            <span class="zigzag-num">1.</span>
-                            <h4>You contact us</h4>
-                            <p>Reach out via Telegram to get started.</p>
-                            <div class="zigzag-time">📅 Instant</div>
-                            <a href="https://t.me/yourchannel" class="btn-telegram">✈ Telegram</a>
-                        </div>
-                        <div class="zigzag-dot"></div>
-                        <div class="zigzag-spacer"></div>
-                    </div>
-
-                    <!-- Step 2 — Right -->
-                    <div class="zigzag-row right">
-                        <div class="zigzag-spacer"></div>
-                        <div class="zigzag-dot"></div>
-                        <div class="zigzag-card">
-                            <div class="zigzag-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                                </svg>
-                            </div>
-                            <span class="zigzag-num">2.</span>
-                            <h4>We review your needs</h4>
-                            <p>We evaluate your personal profile and ensure our verified addresses align with banking
-                                compliance requirements.</p>
-                            <div class="zigzag-time">📅 Same day</div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 — Left -->
-                    <div class="zigzag-row left">
-                        <div class="zigzag-card">
-                            <div class="zigzag-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <line x1="12" y1="1" x2="12" y2="23" />
-                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                </svg>
-                            </div>
-                            <span class="zigzag-num">3.</span>
-                            <h4>You secure your address</h4>
-                            <p>$2000 billed upfront to secure your verified U.S. personal address
-                                compliance service.</p>
-                            <div class="zigzag-time">📅 Within Hours</div>
-                        </div>
-                        <div class="zigzag-dot"></div>
-                        <div class="zigzag-spacer"></div>
-                    </div>
-
-                    <!-- Step 4 — Right -->
-                    <div class="zigzag-row right">
-                        <div class="zigzag-spacer"></div>
-                        <div class="zigzag-dot"></div>
-                        <div class="zigzag-card">
-                            <div class="zigzag-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                                    <polyline points="14 2 14 8 20 8" />
-                                </svg>
-                            </div>
-                            <span class="zigzag-num">4.</span>
-                            <h4>We setup everything</h4>
-                            <p>Mailbox setup, utility connections, and all compliance documents prepared for personal
-                                banking verification.</p>
-                            <div class="zigzag-time">📅 1-2 Business Days</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Completion Card -->
-                <div class="completion-card">
-                    <div class="completion-header">
-                        <div class="completion-check">✔</div>
-                        <h3 class="completion-title">Personal Banking, Unlocked</h3>
-                        <p class="completion-subtitle">Your profile now meets every compliance requirement with
-                            confidence.</p>
-                    </div>
-
-                    <div class="completion-deliverables">
-                        <div class="deliverable">
-                            <div class="deliverable-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                    <circle cx="12" cy="10" r="3" />
-                                </svg>
-                            </div>
-                            <div class="deliverable-label">🇺🇸 ADDRESS</div>
-                            <div class="deliverable-desc">Real Physical U.S. Address</div>
-                        </div>
-                        <div class="deliverable-connector">------+------</div>
-                        <div class="deliverable">
-                            <div class="deliverable-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                                    <polyline points="14 2 14 8 20 8" />
-                                </svg>
-                            </div>
-                            <div class="deliverable-label">📄 LEASE</div>
-                            <div class="deliverable-desc">Real Lease</div>
-                        </div>
-                        <div class="deliverable-connector">------+------</div>
-                        <div class="deliverable">
-                            <div class="deliverable-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                                    <path d="M7 15h0M2 9.5h20" />
-                                </svg>
-                            </div>
-                            <div class="deliverable-label">🇺🇸 UTILITY BILLS</div>
-                            <div class="deliverable-desc">Real U.S. utility bills</div>
-                        </div>
-                    </div>
-
-                    <a href="https://wa.me/16474367072" class="btn btn-gold completion-cta">COMPLETE PACKAGE</a>
-
-                    <div class="completion-benefits">
-                        <div class="benefits-col">
-                            <h4>📋 What This Unlocks:</h4>
-                            <div class="benefit-item">
-                                <span class="benefit-check">✅</span>
-                                <div>
-                                    <strong>Instant Bank Approval Confidence</strong>
-                                    <p>Apply without hesitation — your profile is built to pass.</p>
-                                </div>
-                            </div>
-                            <div class="benefit-item">
-                                <span class="benefit-check">✅</span>
-                                <div>
-                                    <strong>No More Address Verification Issues</strong>
-                                    <p>Say goodbye to rejections over documentation.</p>
-                                </div>
-                            </div>
-                            <div class="benefit-item">
-                                <span class="benefit-check">✅</span>
-                                <div>
-                                    <strong>A Creditworthy Profile</strong>
-                                    <p>A real, verified address that builds trust and credibility.</p>
-                                </div>
-                            </div>
-                            <div class="benefit-item">
-                                <span class="benefit-check">✅</span>
-                                <div>
-                                    <strong>Full Compliance Protection</strong>
-                                    <p>Stay fully aligned with regulations — no risks, no guesswork.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="benefits-col">
-                            <h4>🛡️ Your Personal Profile Is Now Bulletproof</h4>
-                            <p>No more sleepless nights over compliance. No more declined applications. Your profile now
-                                carries the same level of legitimacy and trust as established U.S. residents.</p>
-                            <div class="benefits-upsell">
-                                <span>🌐</span>
-                                <p>Need more services? We can help you with <strong>US banking, LLC formation, and
-                                        business setup solutions.</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════ Section 7: Wall of Proof / Social Proof ═══════ -->
-        <section class="section section-alt" id="proof">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Proof</div>
-                    <h2 class="gradient-text">20+ Founders Approved for<br>Stripe & US Banks</h2>
-                </div>
-
-                <!-- Scrolling Ticker -->
-                <div class="proof-ticker">
-                    <div class="proof-ticker-inner">
-                        <div class="proof-ticker-item"><span class="flag">🇮🇳</span> Arjun S. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇦🇪</span> Khalid M. — Capital One Approved
-                        </div>
-                        <div class="proof-ticker-item"><span class="flag">🇲🇾</span> Wei L. — Mercury Approved</div>
-                        <div class="proof-ticker-item"><span class="flag">🇫🇷</span> Pierre D. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇵🇰</span> Hasan A. — Alliant Approved</div>
-                        <div class="proof-ticker-item"><span class="flag">🇹🇷</span> Fatma N. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇪🇬</span> Ahmed R. — Capital One Approved
-                        </div>
-                        <div class="proof-ticker-item"><span class="flag">🇩🇪</span> Max B. — Mercury Approved</div>
-                        <!-- Duplicated for seamless scroll -->
-                        <div class="proof-ticker-item"><span class="flag">🇮🇳</span> Arjun S. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇦🇪</span> Khalid M. — Capital One Approved
-                        </div>
-                        <div class="proof-ticker-item"><span class="flag">🇲🇾</span> Wei L. — Mercury Approved</div>
-                        <div class="proof-ticker-item"><span class="flag">🇫🇷</span> Pierre D. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇵🇰</span> Hasan A. — Alliant Approved</div>
-                        <div class="proof-ticker-item"><span class="flag">🇹🇷</span> Fatma N. — Stripe Active</div>
-                        <div class="proof-ticker-item"><span class="flag">🇪🇬</span> Ahmed R. — Capital One Approved
-                        </div>
-                        <div class="proof-ticker-item"><span class="flag">🇩🇪</span> Max B. — Mercury Approved</div>
-                    </div>
-                </div>
-
-                <!-- Testimonials Grid -->
-                <div class="proof-grid">
-                    <div class="proof-card">
-                        <div class="proof-quote">"I was rejected by 3 banks because of my virtual mailbox. Switched to
-                            The Residential Address and got approved by Capital One in 5 days. Life changed."</div>
-                        <div class="proof-author">
-                            <div class="proof-avatar">AS</div>
-                            <div>
-                                <div class="proof-name">Arjun S.</div>
-                                <div class="proof-country">🇮🇳 India — SaaS Founder</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="proof-card">
-                        <div class="proof-quote">"Same-day LLC, real address, and Stripe live in under a week. I spent 3
-                            months trying with other services. This was instant."</div>
-                        <div class="proof-author">
-                            <div class="proof-avatar">KM</div>
-                            <div>
-                                <div class="proof-name">Khalid M.</div>
-                                <div class="proof-country">🇦🇪 UAE — E-commerce Seller</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="proof-card">
-                        <div class="proof-quote">"The real eSIM phone number was the missing piece. My bank kept
-                            rejecting VoIP numbers. This one worked immediately for verification."</div>
-                        <div class="proof-author">
-                            <div class="proof-avatar">WL</div>
-                            <div>
-                                <div class="proof-name">Wei L.</div>
-                                <div class="proof-country">🇲🇾 Malaysia — Digital Nomad</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <!-- ═══════ Section 9: Who Is This For? ═══════ -->
-        <section class="section section-alt" id="personas">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">For You</div>
-                    <h2 class="gradient-text">Built for Global Founders</h2>
-                    <p>We serve founders from 40+ countries. Here's who benefits most.</p>
-                </div>
-
-                <div class="persona-grid">
-                    <div class="persona-card">
-                        <div class="persona-flag">🇮🇳</div>
-                        <h4>Indian SaaS Founders</h4>
-                        <p>Accept USD payments via Stripe without getting blocked. ₹~83,000 total for Full Stack.</p>
-                    </div>
-                    <div class="persona-card">
-                        <div class="persona-flag">🇦🇪</div>
-                        <h4>UAE E-commerce Sellers</h4>
-                        <p>Open a US bank account without visiting the US. AED ~13,200 total for Full Stack.</p>
-                    </div>
-                    <div class="persona-card">
-                        <div class="persona-flag">🇲🇾</div>
-                        <h4>Malaysian Digital Nomads</h4>
-                        <p>Get a real US address for your US LLC. RM ~16,000 total for Full Stack.</p>
-                    </div>
-                    <div class="persona-card">
-                        <div class="persona-flag">🇫🇷</div>
-                        <h4>French Tech Founders</h4>
-                        <p>Stripe Atlas alternative with residential lease docs. €~3,400 total for Full Stack.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════ Section 10: Compliance FAQ ═══════ -->
-        <section class="section" id="faq">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">FAQ</div>
-                    <h2 class="gradient-text">Compliance FAQ</h2>
-                    <p>The real questions founders Google before they buy.</p>
-                </div>
-
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <div class="faq-question">Can I use a virtual mailbox to open a US bank account?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">No. Most U.S. banks (Capital One, Chase, Mercury, Alliant)
-                                scan
-                                your address against the USPS CMRA database. Virtual mailboxes are flagged as Commercial
-                                Mail Receiving Agencies and are automatically rejected. You need a real residential
-                                address
-                                with lease documentation.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">What documents does Capital One require for non-US residents?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Capital One requires: (1) A valid ITIN, (2) A valid passport,
-                                (3) A legitimate, real residential address, (4) A completed W-8BEN form, and (5) A valid
-                                passport ID.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">Will banks accept my application if I'm based in India?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Yes. If your personal profile has a compliant U.S. address
-                                (residential lease), a valid ITIN, and a U.S. bank account. We've helped 30+ Indian
-                                founders get their banks verified and active this quarter alone.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">What's the difference between a registered agent address and a
-                            residential address?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">A registered agent address is only for receiving legal/state
-                                documents—it cannot be used as your address for banks or Stripe. A residential address
-                                is
-                                a real, physical address with a signed lease that passes bank verification (KYC/AML
-                                checks).</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">Do I need an ITIN to open a U.S. bank account?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Not always for business accounts. Some banks (like Capital
-                                One)
-                                accept EIN-only applications for LLCs. However, having an ITIN significantly expands
-                                your
-                                options and is required for personal banking, credit building, and certain payment
-                                processors. We offer ITIN applications for $400.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">Is your residential address compliant with U.S. banking regulations?
-                        </div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Yes. Our addresses are real residential units with legally
-                                signed leases. They are not flagged in the USPS CMRA database, they pass Patriot Act
-                                verification, and they include utility bills in your LLC name. If any bank rejects your
-                                address, we replace it free of charge or refund you 100%.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">Can I use this address for a Google Business Profile?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Yes! Unlike virtual mailbox services that restrict Google
-                                Business Profile usage, our residential addresses fully support GBP listing. You'll
-                                receive mail verification postcards at your address, which we forward to you.</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">What happens if my address is rejected by a bank?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">If any U.S. bank or payment processor rejects your residential
-                                address, we'll replace it with a new address free of charge or refund you 100%—no
-                                questions asked. We have a 100% success rate so far across 30+ founder applications.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">Which is better for my LLC: Wyoming or Delaware?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">For most international founders, <strong>Wyoming</strong> is
-                                better: $0 state income tax, a $60/year annual report, strong privacy laws, and no
-                                franchise tax. Delaware charges $300/year in franchise tax and has more complex
-                                compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding
-                                (in
-                                which case, Delaware is preferred).</div>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">How long does ITIN processing take?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">Standard ITIN processing by the IRS takes 7–11 weeks. We
-                                prepare and submit your W-7 application with all supporting documentation. The $400 fee
-                                covers our preparation, review, and filing service.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════ Section 11: Compliance Guarantee ═══════ -->
-        <section class="guarantee-section">
-            <div class="container">
-                <div class="guarantee-badge">
-                    <div class="shield-icon">🛡️</div>
-                    <div>
-                        <h3>Address Approved or Your Money Back</h3>
-                        <p>If any US bank or payment processor rejects your residential address, we'll replace it free
-                            of charge or refund 100%. No questions asked.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════ Section 12: Final CTA ═══════ -->
-        <section class="final-cta" id="contact">
-            <div class="container">
-                <h2 class="gradient-text">Ready to Open<br>Your US Bank Account?</h2>
-                <p>Join 20+ founders who went from Stripe rejection to approved in under 7 days.</p>
-                <div class="cta-buttons">
-                    <a href="https://wa.me/16474367072" class="btn btn-whatsapp">💬 Get Started on WhatsApp</a>
-                </div>
-                <div class="trust-footer">Secure checkout • No hidden fees • Money-back guarantee</div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ═══════ Section 13: Floating WhatsApp ═══════ -->
-    <a href="https://wa.me/16474367072" class="whatsapp-float" aria-label="Chat on WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-    </a>
-
-    <!-- ═══════ Footer ═══════ -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo"
-                        style="text-decoration: none; display: flex; align-items: center; margin-bottom: 24px;">
-                        <img src="assets/logo.png" alt="The Residential Address"
-                            style="height: 28px; width: auto; max-width: 100%; object-fit: contain;">
-                    </a>
-                    <p>The US infrastructure layer for global founders. Banking, addresses, and LLCs made compliant.</p>
-                </div>
-                <!-- Nav Links matching Footer -->
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="index.html">US Residential Address</a></li>
-                        <li><a href="llc-formation.html">LLC Formation</a></li>
-                        <li><a href="itin-application.html">ITIN Application</a></li>
-                        <li><a href="bank-assistance.html">Bank Assistance</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Trust</h4>
-                    <div class="footer-trust-badges">
-                        <span>IRS Certified</span>
-                        <span>100% Compliant</span>
-                        <span>Money-Back Guarantee</span>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in
-                    Florida, USA.</p>
-                <div style="margin-top: 10px; font-size: 0.8em;">
-                    <a href="privacy.html"
-                        style="color: var(--text-muted); text-decoration: none; margin-right: 15px;">Privacy Policy</a>
-                </div>
-            </div>
+    <!-- ================================================================
+         GUARANTEE
+         ================================================================ -->
+    <section class="section section--tight section--bg-inverse">
+      <div class="container container--lg">
+        <div class="reveal guarantee-card" data-reveal>
+          <span class="guarantee-card__icon" aria-hidden="true">
+            <svg width="24" height="24"><use href="#icon-shield-check"/></svg>
+          </span>
+          <h3 class="h3 mt-4">Address Approved or Your Money Back</h3>
+          <p class="body-sm mt-3">If any US bank or payment processor rejects your residential address, we'll replace it free of charge or refund 100%. No questions asked.</p>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- ═══════ Scripts ═══════ -->
-    <script>
-        // Mobile hamburger menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        const navClose = document.getElementById('navClose');
+    <!-- ================================================================
+         FINAL CTA
+         ================================================================ -->
+    <section class="section section--bg-inverse" id="pricing">
+      <div class="container container--lg">
+        <div class="reveal cta-block" data-reveal>
+          <div class="cta-block__glow" aria-hidden="true"></div>
+          <div class="cta-block__content">
+            <span class="stamp-badge stamp-badge--lg" aria-hidden="true">
+              <span class="stamp-badge__inner">
+                <span class="stamp-badge__label">VERIFIED</span>
+                <svg class="stamp-badge__icon" width="14" height="14"><use href="#icon-stamp"/></svg>
+                <span class="stamp-badge__label">U.S. ADDRESS</span>
+              </span>
+            </span>
+            <h2 class="h2 text-inverse mt-6">Get your US address At just $2000/year.!!</h2>
+            <p class="body-lg text-inverse-secondary mt-4 cta-block__desc">
+              Join 20+ founders already using their verified US address —
+              no hidden fees, no long-term contracts, backed by our
+              money-back guarantee.
+            </p>
+            <div class="cta-block__actions">
+              <a class="btn btn--white btn--gold-hover" href="https://wa.me/16474367072" target="_blank" rel="noopener">
+                💬 Get Started on WhatsApp
+                <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+              </a>
+            </div>
+            <p class="body-xs text-gold-inverse mt-4">Secure checkout • No hidden fees • Money-back guarantee</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        if (hamburger && navLinks) {
-            hamburger.addEventListener('click', () => {
-                navLinks.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            });
+  </main>
 
-            navClose.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                document.body.style.overflow = '';
-            });
+  <!-- ==================================================================
+       FOOTER
+       ================================================================== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#top" class="brand">
+            <span class="logo-mark">
+              <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+            </span>
+            <span class="logo-wordmark">The Residential Address</span>
+          </a>
+          <p class="body-sm footer__desc">
+            The US infrastructure layer for global founders. Banking,
+            addresses, and LLCs made compliant.
+          </p>
+          <div class="mt-6">
+            <a class="btn btn--dark btn--sm" href="mailto:support@theresidentialaddress.com">📧 @support@theresidentialaddress.com</a>
+          </div>
+        </div>
 
-            // Close when clicking a nav link
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('open');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
+        <div class="footer__links">
+          <div>
+            <h4 class="footer__col-title">SERVICES</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="#services">US Residential Address</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/llc-formation.html" target="_blank" rel="noopener">LLC Formation</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/itin-application.html" target="_blank" rel="noopener">ITIN Application</a></li>
+              <li><a class="footer__link" href="https://www.theresidentialaddress.com/bank-assistance.html" target="_blank" rel="noopener">Bank Assistance</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">COMPANY</h4>
+            <ul class="footer__col-list">
+              <li><a class="footer__link" href="about.html">About Us</a></li>
+              <li><a class="footer__link" href="blog.html">Blog</a></li>
+              <li><a class="footer__link" href="#pricing">Pricing</a></li>
+              <li><a class="footer__link" href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer__col-title">TRUST</h4>
+            <ul class="footer__col-list">
+              <li><span class="footer__link">IRS Certified</span></li>
+              <li><span class="footer__link">100% Compliant</span></li>
+              <li><span class="footer__link">Money-Back Guarantee</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-        // ─── WebGL Shader Background ───
-        (function initShader() {
-            const canvas = document.getElementById('shaderCanvas');
-            if (!canvas) return;
-            const gl = canvas.getContext('webgl');
-            if (!gl) return;
+      <div class="footer__bottom">
+        <p class="body-xs">© <span id="currentYear">2026</span> The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in Florida, USA.</p>
+        <div class="footer__legal">
+          <a class="footer__link body-xs" href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-            const vsSource = `
-                attribute vec4 aVertexPosition;
-                void main() { gl_Position = aVertexPosition; }
-            `;
-
-            const fsSource = `
-                precision highp float;
-                uniform vec2 iResolution;
-                uniform float iTime;
-
-                const float overallSpeed = 0.15;
-                const float gridSmoothWidth = 0.015;
-                const float axisWidth = 0.05;
-                const float majorLineWidth = 0.025;
-                const float minorLineWidth = 0.0125;
-                const float majorLineFrequency = 5.0;
-                const float minorLineFrequency = 1.0;
-                const float scale = 5.0;
-                const float minLineWidth = 0.02;
-                const float maxLineWidth = 0.25;
-                const float lineSpeed = 1.0 * overallSpeed;
-                const float lineAmplitude = 1.0;
-                const float lineFrequency = 0.2;
-                const float warpSpeed = 0.2 * overallSpeed;
-                const float warpFrequency = 0.5;
-                const float warpAmplitude = 1.0;
-                const float offsetFrequency = 0.5;
-                const float offsetSpeed = 1.33 * overallSpeed;
-                const float minOffsetSpread = 0.4;
-                const float maxOffsetSpread = 1.5;
-                const int linesPerGroup = 12;
-
-                #define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))
-                #define drawCrispLine(pos, halfWidth, t) smoothstep(halfWidth + gridSmoothWidth, halfWidth, abs(pos - (t)))
-                #define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))
-
-                float random(float t) {
-                    return (cos(t) + cos(t * 1.3 + 1.3) + cos(t * 1.4 + 1.4)) / 3.0;
-                }
-
-                float getPlasmaY(float x, float horizontalFade, float offset) {
-                    return random(x * lineFrequency + iTime * lineSpeed) * horizontalFade * lineAmplitude + offset;
-                }
-
-                void main() {
-                    vec2 uv = gl_FragCoord.xy / iResolution.xy;
-                    vec2 space = (gl_FragCoord.xy - iResolution.xy / 2.0) / iResolution.x * 2.0 * scale;
-
-                    float horizontalFade = 1.0 - (cos(uv.x * 6.28) * 0.5 + 0.5);
-                    float verticalFade = 1.0 - (cos(uv.y * 6.28) * 0.5 + 0.5);
-
-                    space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);
-                    space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
-
-                    vec4 lines = vec4(0.0);
-
-                    // American color palette - vibrant
-                    vec4 redLine = vec4(0.9, 0.15, 0.2, 1.0);
-                    vec4 whiteLine = vec4(1.0, 1.0, 1.0, 1.0);
-                    vec4 blueLine = vec4(0.15, 0.25, 0.7, 1.0);
-
-                    for(int l = 0; l < linesPerGroup; l++) {
-                        float normalizedLineIndex = float(l) / float(linesPerGroup);
-                        float offsetTime = iTime * offsetSpeed;
-                        float offsetPosition = float(l) + space.x * offsetFrequency;
-                        float rand = random(offsetPosition + offsetTime) * 0.5 + 0.5;
-                        float halfWidth = mix(minLineWidth, maxLineWidth, rand * horizontalFade) / 2.0;
-                        float offset = random(offsetPosition + offsetTime * (1.0 + normalizedLineIndex)) * mix(minOffsetSpread, maxOffsetSpread, horizontalFade);
-                        float linePosition = getPlasmaY(space.x, horizontalFade, offset);
-                        float line = drawSmoothLine(linePosition, halfWidth, space.y) / 2.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y);
-
-                        float circleX = mod(float(l) + iTime * lineSpeed, 25.0) - 12.0;
-                        vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
-                        float circle = drawCircle(circlePosition, 0.01, space) * 4.0;
-                        line = line + circle;
-
-                        // Cycle through red, white, blue evenly (4 each for 12 lines)
-                        vec4 lineColor = l < 4 ? redLine : (l < 8 ? whiteLine : blueLine);
-                        lines += line * lineColor * rand;
-                    }
-
-                    // Dark navy background gradient
-                    vec4 bgColor1 = vec4(0.03, 0.04, 0.08, 1.0);
-                    vec4 bgColor2 = vec4(0.06, 0.03, 0.08, 1.0);
-                    vec4 fragColor = mix(bgColor1, bgColor2, uv.x);
-                    fragColor *= verticalFade;
-                    fragColor.a = 1.0;
-                    fragColor += lines;
-                    gl_FragColor = fragColor;
-                }
-            `;
-
-            function loadShader(gl, type, source) {
-                const shader = gl.createShader(type);
-                gl.shaderSource(shader, source);
-                gl.compileShader(shader);
-                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                    console.warn('Shader compile error:', gl.getShaderInfoLog(shader));
-                    gl.deleteShader(shader);
-                    return null;
-                }
-                return shader;
-            }
-
-            const vs = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-            const fs = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-            if (!vs || !fs) return;
-
-            const program = gl.createProgram();
-            gl.attachShader(program, vs);
-            gl.attachShader(program, fs);
-            gl.linkProgram(program);
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
-
-            const buf = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-
-            const posLoc = gl.getAttribLocation(program, 'aVertexPosition');
-            const resLoc = gl.getUniformLocation(program, 'iResolution');
-            const timeLoc = gl.getUniformLocation(program, 'iTime');
-
-            function resize() {
-                const hero = canvas.parentElement;
-                canvas.width = hero.offsetWidth;
-                canvas.height = hero.offsetHeight * 0.6;
-                gl.viewport(0, 0, canvas.width, canvas.height);
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            const start = Date.now();
-            function render() {
-                const t = (Date.now() - start) / 1000;
-                gl.clearColor(0, 0, 0, 1);
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                gl.useProgram(program);
-                gl.uniform2f(resLoc, canvas.width, canvas.height);
-                gl.uniform1f(timeLoc, t);
-                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-                gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-                gl.enableVertexAttribArray(posLoc);
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-                requestAnimationFrame(render);
-            }
-            requestAnimationFrame(render);
-        })();
-
-        // Header scroll effect
-        const header = document.getElementById('header');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-
-
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                const isOpen = item.classList.contains('open');
-
-                // Close all
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-
-                // Open clicked (if it was closed)
-                if (!isOpen) {
-                    item.classList.add('open');
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Optional: stop observing once it has faded in
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Define elements that should animate on scroll
-        const animateSelectors = [
-            '.section-header',
-            '.bento-card',
-            '.price-card',
-            '.proof-card',
-            '.persona-card',
-            '.timeline-step',
-            '.faq-item',
-            '.hero-centered > h1',
-            '.hero-centered > p',
-            '.hero-ctas',
-            '.hero-pills',
-            '.guarantee-badge'
-        ];
-
-        // Apply fade-up class and observe
-        document.querySelectorAll(animateSelectors.join(', ')).forEach((el) => {
-            el.classList.add('fade-up');
-            observer.observe(el);
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = header.offsetHeight + 20;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+  <script src="script.js"></script>
 </body>
-
 </html>
