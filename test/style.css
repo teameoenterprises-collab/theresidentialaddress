@@ -500,6 +500,17 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 }
 .btn--white:hover { background: var(--slate-100); }
 
+.btn--gold-hover {
+  transition: transform var(--duration-base) var(--ease-premium), background var(--duration-base) ease,
+              color var(--duration-base) ease, box-shadow var(--duration-base) ease;
+}
+.btn--gold-hover:hover {
+  background: var(--gradient-gold);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 24px -6px rgba(201, 162, 75, 0.45);
+}
+
 .btn--sm { padding: 0.625rem 1.25rem; font-size: var(--text-sm); }
 .btn--block { width: 100%; }
 
@@ -1090,6 +1101,19 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
 
 .hero__title { margin-top: var(--space-6); }
 .hero__subtitle { margin-top: var(--space-6); max-width: 32rem; }
+.hero__subtitle--center { margin-inline: auto; }
+
+.price-highlight {
+  display: inline-block;
+  color: var(--color-gold-light);
+  font-weight: var(--font-weight-bold);
+  animation: pricePop 0.7s var(--ease-premium) 0.9s both;
+}
+@keyframes pricePop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); }
+}
 
 .hero__actions {
   margin-top: var(--space-9);
@@ -1473,6 +1497,7 @@ h1, h2, h3, h4, h5, h6, p { margin: 0; }
   html { scroll-behavior: auto; }
   .hero__glow { animation: none; }
   .marquee__track { animation: none; }
+  .price-highlight { animation: none; }
   .reveal,
   .reveal.is-visible,
   .btn,
@@ -1558,4 +1583,94 @@ textarea:focus-visible {
     text-align: left;
   }
   .compare-table__label { color: #fff; }
+}
+
+/* -------------------------------------------------------------------------
+   19. BLOG CARD (blog.html)
+   ------------------------------------------------------------------------- */
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.045);
+  transition: transform var(--duration-base) var(--ease-premium), border-color var(--duration-base) ease, box-shadow var(--duration-base) ease;
+}
+.blog-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 162, 75, 0.45);
+  box-shadow: 0 20px 40px -10px rgba(201, 162, 75, 0.22), 0 8px 16px -8px rgba(0, 0, 0, 0.40);
+}
+.blog-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-gold-light);
+}
+.blog-card__title { margin-top: var(--space-4); margin-bottom: 0; }
+.blog-card__desc { flex: 1; margin-top: var(--space-3); }
+.blog-card__more {
+  margin-top: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gold-light);
+  opacity: 0;
+  transition: opacity var(--duration-base) ease;
+}
+.blog-card:hover .blog-card__more { opacity: 1; }
+
+/* -------------------------------------------------------------------------
+   20. PRIVACY POLICY CONTENT (privacy.html)
+   ------------------------------------------------------------------------- */
+.policy-content > * + * { margin-top: var(--space-4); }
+.policy-content p {
+  color: var(--slate-300);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+.policy-content h2 {
+  margin-top: var(--space-10) !important;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-xl);
+  color: #fff;
+}
+.policy-content h2:first-child { margin-top: var(--space-4) !important; padding-top: 0; border-top: none; }
+.policy-content h3 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-base);
+  color: var(--color-gold-light);
+}
+.policy-content ul.policy-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.policy-content ul.policy-list li {
+  color: var(--slate-300);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+.policy-content ul.policy-list li::marker { color: var(--color-gold); }
+.policy-disclaimer {
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--slate-500) !important;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
