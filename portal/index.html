@@ -1070,7 +1070,7 @@
     .dh-card-doc-name    { font-size: 13px; font-weight: 500; color: var(--ink2); margin-bottom: 8px; }
     .dh-card-meta        { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
     .dh-card-date        { font-size: 11.5px; color: var(--muted); }
-    .dh-card-actions     { display: flex; gap: 8px; }e; }
+    .dh-card-actions     { display: flex; gap: 8px; }
 
     /* Sidebar user button — clickable for clients */
     #sb-user-btn {
@@ -2344,7 +2344,7 @@
     }
 
     /* Override .sb-badge for ticket nav — use number bubble */
-    #admin-tk-badge, #client-tk-badge {
+    #admin-tk-badge, #client-tk-badge, #admin-ship-badge, #admin-inquiry-badge, #ship-tk-badge, #rep-msg-badge {
       background: #ef4444 !important;
       color: #fff !important;
       font-size: 10px;
@@ -2548,6 +2548,84 @@
     .es-toggle-label { font-size:13.5px; font-weight:500; color:var(--ink); }
     .es-toggle-sub   { font-size:12px; color:var(--muted); margin-top:2px; }
 
+
+    /* ── Document folders & tile grid ──────────────────────────── */
+    .doc-folder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .doc-folder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 10px;
+      border-radius: var(--radius);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      text-align: center;
+    }
+    .doc-folder:hover { background: var(--parch2); border-color: var(--parch3); }
+    .doc-folder-icon  { font-size: 38px; line-height: 1; }
+    .doc-folder-name  { font-size: 13px; font-weight: 600; color: var(--ink); word-break: break-word; }
+    .doc-folder-count { font-size: 11.5px; color: var(--muted); }
+
+    .doc-tile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+      gap: 16px;
+    }
+    .doc-tile {
+      display: flex;
+      flex-direction: column;
+      border: 1.5px solid var(--parch3);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--white);
+      transition: box-shadow 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .doc-tile:hover { box-shadow: var(--shadow-m); border-color: var(--gold); }
+    .doc-tile-thumb {
+      width: 100%; height: 110px;
+      background: var(--parch2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; overflow: hidden; flex-shrink: 0;
+    }
+    .doc-tile-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .doc-tile-body  { padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .doc-tile-name  {
+      font-size: 12.5px; font-weight: 600; color: var(--ink);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; line-height: 1.35; min-height: 2.6em;
+    }
+    .doc-tile-meta  { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+    .doc-tile-date  { font-size: 11px; color: var(--muted); }
+    .doc-tile-actions { padding: 0 12px 12px; }
+    .doc-tile-checkbox {
+      position: absolute; top: 8px; left: 8px; z-index: 2;
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--gold);
+    }
+    .doc-breadcrumb {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      font-size: 13px; color: var(--muted); margin-bottom: 14px;
+    }
+    .doc-breadcrumb a { color: var(--gold); cursor: pointer; font-weight: 600; }
+    .doc-breadcrumb a:hover { text-decoration: underline; }
+    .doc-bulk-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 640px) {
+      .doc-folder-grid, .doc-tile-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+      .doc-tile-thumb { height: 90px; font-size: 32px; }
+    }
   </style>
 </head>
 <body>
@@ -2699,6 +2777,13 @@
           <div class="field">
             <label for="s-country">Country of Residence</label>
             <input type="text" id="s-country" placeholder="UAE, Malaysia, Canada…" />
+          </div>
+          <div class="field" id="referral-code-field">
+            <label for="s-referral">Referral Code <span style="color:var(--red);font-weight:700;">*</span></label>
+            <input type="text" id="s-referral" placeholder="Enter your referral code" autocomplete="off" oninput="this.value=this.value.trim()" />
+            <p id="referral-code-status" style="font-size:11.5px;margin-top:5px;color:var(--muted);">
+              Signups are by referral only. Enter the code provided by your referrer.
+            </p>
           </div>
           <button class="btn btn-primary" id="signup-next-btn" onclick="signupStep1Next()">Continue →</button>
         </div>
@@ -2938,6 +3023,15 @@
         </div>
       </div>
       <div class="card">
+        <!-- Bulk action toolbar (shown when docs load) -->
+        <div class="doc-bulk-bar" id="docs-bulk-bar">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;">
+            <input type="checkbox" id="docs-select-all" onchange="toggleAllDocs(this.checked)" style="width:16px;height:16px;cursor:pointer;" />
+            Select all
+          </label>
+          <span id="docs-selected-count" style="font-size:12.5px;color:var(--muted);">0 selected</span>
+          <button class="btn btn-gold btn-sm" id="docs-bulk-download-btn" onclick="bulkDownloadDocs()" disabled style="margin-left:auto;">⬇ Download Selected</button>
+        </div>
         <div id="docs-list">
           <div class="empty-state">
             <div class="empty-state-icon">⏳</div>
@@ -3133,18 +3227,20 @@
         <!-- ── Upload Form ── -->
         <div class="admin-docs-upload-col">
           <div class="card">
-            <div class="card-title">📄 Upload New Document</div>
+            <div class="card-title">📄 Upload Document(s)</div>
 
             <div class="field">
               <label>Client</label>
               <select id="doc-client" class="filter-select" style="width:100%; padding: 11px 14px;">
                 <option value="">Select a client…</option>
               </select>
+              <p style="font-size:11.5px;color:var(--muted);margin-top:5px;">Files are organized into a folder for this client automatically.</p>
             </div>
 
             <div class="field">
               <label>Document Name</label>
               <input type="text" id="doc-name" placeholder="e.g. Lease Agreement — 123 Maple St" />
+              <p style="font-size:11.5px;color:var(--muted);margin-top:5px;" id="doc-name-hint">For a single file. Multiple files are named after their filenames.</p>
             </div>
 
             <div class="field">
@@ -3157,42 +3253,40 @@
                 <option value="bank">Bank Document</option>
                 <option value="other">Other</option>
               </select>
+              <p style="font-size:11.5px;color:var(--muted);margin-top:5px;">Applied to all files in this upload.</p>
             </div>
 
             <div class="field">
-              <label>File</label>
-              <div class="upload-zone" onclick="document.getElementById('doc-file-input').click()">
+              <label>File(s) <span style="font-weight:400;color:var(--muted);text-transform:none;">— select one or more</span></label>
+              <div class="upload-zone" id="doc-drop-zone"
+                onclick="document.getElementById('doc-file-input').click()"
+                ondragover="event.preventDefault();this.classList.add('drag');"
+                ondragleave="this.classList.remove('drag');"
+                ondrop="handleDocDrop(event)">
                 <div class="upload-zone-icon">📁</div>
-                <p><strong>Click to select file</strong></p>
-                <small>PDF, PNG, JPG, DOCX</small>
+                <p><strong>Click to select file(s)</strong> or drag &amp; drop</p>
+                <small>PDF, PNG, JPG, DOCX — multiple files supported</small>
               </div>
-              <input type="file" id="doc-file-input" accept="*/*" class="hidden" onchange="setDocFile(this.files[0])" />
-              <div class="file-chip" id="doc-file-chip">
-                <div class="file-chip-thumb" id="doc-chip-thumb">📄</div>
-                <div style="flex:1; min-width:0;">
-                  <div class="file-chip-name" id="doc-chip-name">–</div>
-                  <div class="file-chip-size" id="doc-chip-size">–</div>
-                </div>
-                <span class="file-chip-remove" onclick="clearDocFile()">✕</span>
-              </div>
+              <input type="file" id="doc-file-input" accept="*/*" class="hidden" multiple onchange="setDocFiles(this.files)" />
+              <div id="doc-file-list" style="margin-top:10px;display:flex;flex-direction:column;gap:6px;"></div>
             </div>
 
             <button class="btn btn-gold btn-full" id="doc-upload-btn" onclick="submitDoc()">
-              📄 Upload Document
+              📄 Upload Document(s)
             </button>
           </div>
         </div>
 
-        <!-- ── Document History ── -->
+        <!-- ── Document Folders ── -->
         <div class="admin-docs-history-col">
           <div class="card" style="height:100%;">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
-              <div class="card-title" style="margin-bottom:0;">📋 Document History</div>
-              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                <select id="dh-filter-client" class="filter-select" style="font-size:12.5px; padding:7px 10px;" onchange="renderDocHistory()">
-                  <option value="">All clients</option>
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+              <div class="card-title" style="margin-bottom:0;">📁 Document Folders</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                <select id="dh-filter-client" class="filter-select" style="font-size:12.5px;padding:7px 10px;" onchange="dhJumpToClient(this.value)">
+                  <option value="">Jump to client…</option>
                 </select>
-                <select id="dh-filter-type" class="filter-select" style="font-size:12.5px; padding:7px 10px;" onchange="renderDocHistory()">
+                <select id="dh-filter-type" class="filter-select" style="font-size:12.5px;padding:7px 10px;" onchange="renderDocHistory()">
                   <option value="">All types</option>
                   <option value="lease">Lease</option>
                   <option value="utility">Utility</option>
@@ -3205,27 +3299,10 @@
               </div>
             </div>
 
-            <!-- Desktop table -->
-            <div class="dh-table-wrap">
-              <table class="data-table" id="dh-table">
-                <thead>
-                  <tr>
-                    <th>Client</th>
-                    <th>Document</th>
-                    <th>Type</th>
-                    <th>Uploaded</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="dh-tbody">
-                  <tr><td colspan="5" style="text-align:center; color:var(--muted); padding:24px;">Loading…</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="doc-breadcrumb" id="dh-breadcrumb"></div>
 
-            <!-- Mobile cards -->
-            <div class="dh-cards-wrap" id="dh-cards">
-              <div style="text-align:center; color:var(--muted); padding:24px; font-size:13px;">Loading…</div>
+            <div id="dh-content">
+              <div style="text-align:center;color:var(--muted);padding:24px;font-size:13px;">Loading…</div>
             </div>
 
           </div>
@@ -3366,7 +3443,170 @@
       </div>
     </div>
 
+
+    <!-- ── CLIENT: Ship Mail ──────────────────────────── -->
+    <div id="page-ship-mail" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Ship Mail</h2>
+          <p>Track requests to ship your physical mail</p>
+        </div>
+        <button class="btn btn-gold" onclick="openShipMailModal()">📦 Ship Your Mail</button>
+      </div>
+      <div id="ship-client-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <p>No shipping requests yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CLIENT: Message Your Rep ─────────────────── -->
+    <div id="page-mail-rep" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Message Your Rep</h2>
+          <p>Ask about mail you're expecting, missing items, or documents</p>
+        </div>
+      </div>
+      <div class="card" style="padding:0; display:flex; flex-direction:column; min-height:420px;">
+        <div class="tk-chat" id="rep-chat" style="max-height:480px;">
+          <div style="text-align:center;color:var(--muted);padding:30px 20px;font-size:13px;">Loading conversation…</div>
+        </div>
+        <div class="tk-reply-box" id="rep-reply-box">
+          <textarea class="tk-reply-textarea" id="rep-reply-text" placeholder="e.g. I'm expecting a card — can you check?" rows="3"></textarea>
+          <div class="tk-reply-footer">
+            <div class="tk-reply-attach">
+              <button class="tk-attach-btn" onclick="document.getElementById('rep-reply-file').click()">📎 Attach</button>
+              <input type="file" id="rep-reply-file" class="hidden" onchange="setRepReplyFile(this.files[0])" />
+              <span class="tk-attach-name hidden" id="rep-attach-name"></span>
+              <span class="tk-attach-remove hidden" id="rep-attach-remove" onclick="clearRepReplyFile()">✕</span>
+            </div>
+            <div class="tk-reply-actions">
+              <button class="btn btn-gold btn-sm" id="rep-reply-btn" onclick="submitRepMessage()">Send Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN: Ship Mail Requests ─────────────────── -->
+    <div id="page-admin-ship" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Ship Mail Requests</h2>
+          <p>Client requests to ship physical mail to their address</p>
+        </div>
+      </div>
+      <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="ship-admin-search" placeholder="Search by client name…" oninput="renderAdminShipMail()" />
+        </div>
+        <select class="filter-select" id="ship-admin-filter" onchange="renderAdminShipMail()">
+          <option value="">All statuses</option>
+          <option value="open">Open</option>
+          <option value="in_progress">In Progress</option>
+          <option value="replied">Replied</option>
+          <option value="completed">Completed</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminTickets()">↻ Refresh</button>
+      </div>
+      <div id="ship-admin-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <p>No shipping requests yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN: Mail Inquiries ──────────────────────── -->
+    <div id="page-admin-inquiries" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Mail Inquiries</h2>
+          <p>Client conversations from "Message Your Rep"</p>
+        </div>
+      </div>
+      <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="inquiry-admin-search" placeholder="Search by client name…" oninput="renderAdminInquiries()" />
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminTickets()">↻ Refresh</button>
+      </div>
+      <div id="inquiry-admin-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">💬</div>
+          <p>No mail inquiries yet.</p>
+        </div>
+      </div>
+    </div>
+
   </main>
+</div>
+
+<!-- ================================================================
+     SHIP YOUR MAIL MODAL
+================================================================ -->
+<div id="ship-mail-overlay" onclick="shipMailOverlayClick(event)" style="
+  position:fixed; inset:0;
+  background:rgba(12,15,10,0.55);
+  backdrop-filter:blur(4px);
+  z-index:420;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+">
+  <div class="modal" style="max-width:540px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">📦 Ship Your Mail</span>
+      <button class="modal-close" onclick="closeShipMailModal()">✕</button>
+    </div>
+
+    <div id="ship-mail-error" class="error-banner"></div>
+
+    <div style="background:var(--amber-bg);border:1.5px solid #f5d061;border-left:4px solid var(--gold);border-radius:9px;padding:12px 14px;font-size:12.5px;color:var(--amber);line-height:1.6;margin-bottom:16px;">
+      💰 A shipping fee applies per batch of mail/cards sent and will be billed separately by your account manager. The exact cost depends on destination and package weight.
+    </div>
+
+    <div class="field">
+      <label>Shipping Address <span style="color:var(--red);font-weight:700;">*</span></label>
+      <textarea id="ship-address" placeholder="Street address, City, State, Country, ZIP"
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;resize:vertical;min-height:80px;transition:border-color 0.18s;line-height:1.5;"
+        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'"></textarea>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:5px;">Pre-filled from your profile — edit if needed.</p>
+    </div>
+
+    <div class="field">
+      <label>Shipping Method</label>
+      <select id="ship-method" class="filter-select" style="width:100%;padding:11px 14px;" onchange="updateShipEstimate()">
+        <option value="standard">Standard (7–14 business days)</option>
+        <option value="express">Express (3–5 business days)</option>
+        <option value="priority">Priority (1–3 business days)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>What should be shipped? <span style="color:var(--red);font-weight:700;">*</span></label>
+      <textarea id="ship-contents" placeholder="e.g. All mail received this month, or specific items…"
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;resize:vertical;min-height:64px;transition:border-color 0.18s;line-height:1.5;"
+        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'"></textarea>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:9px;padding:12px 14px;margin-bottom:4px;">
+      <div style="font-size:22px;">🚚</div>
+      <div style="font-size:13px;color:var(--blue);line-height:1.6;">
+        <strong>Estimated delivery:</strong> <span id="ship-estimate-text">7–14 business days</span> after your rep processes and dispatches the package (typically 1–3 business days after approval).
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeShipMailModal()">Cancel</button>
+      <button class="btn btn-gold" id="ship-mail-submit-btn" onclick="submitShipMailRequest()">📦 Submit Request</button>
+    </div>
+  </div>
 </div>
 
 <!-- ================================================================
@@ -3826,7 +4066,8 @@ let allDocHistory = [];     // admin: all documents for history view
 let assignClientId = null;  // modal: which client we're assigning
 let assignSnapshot = {};    // modal: legacy (kept for compat)
 let uploadMailFile = null;  // selected file for mail upload
-let uploadDocFile  = null;  // selected file for doc upload
+let uploadDocFiles = [];    // selected files for doc upload (bulk)
+let dhCurrentClientId = null; // null=folder view, set=inside folder
 let currentMailId  = null;  // mail viewer: open mail id
 let pendingSignup  = null;  // signup data waiting for bootPortal
 let pendingReferralCode = null;  // referral partner slug, if this signup came from a referral link
@@ -4213,30 +4454,36 @@ function setupSidebar() {
   if (isAdmin) {
     nav.innerHTML = `
       ${sbLabel('Admin')}
-      ${sbItem('admin-dash',     '📊', 'Dashboard')}
-      ${sbItem('admin-clients',  '👥', 'Clients')}
-      ${sbItem('admin-upload',   '📤', 'Upload Mail')}
-      ${sbItem('admin-docs',     '📄', 'Upload Document')}
-      ${sbItem('admin-tickets',  '🎫', 'Client Tickets', 'admin-tk-badge')}
-      ${sbItem('admin-settings', '⚙️', 'Email Settings')}
+      ${sbItem('admin-dash',       '📊', 'Dashboard')}
+      ${sbItem('admin-clients',    '👥', 'Clients')}
+      ${sbItem('admin-upload',     '📤', 'Upload Mail')}
+      ${sbItem('admin-docs',       '📄', 'Upload Document')}
+      ${sbItem('admin-tickets',    '🎫', 'Client Tickets',       'admin-tk-badge')}
+      ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',   'admin-ship-badge')}
+      ${sbItem('admin-inquiries',  '💬', 'Mail Inquiries',       'admin-inquiry-badge')}
+      ${sbItem('admin-settings',   '⚙️', 'Email Settings')}
     `;
   } else if (isReferrer) {
     nav.innerHTML = `
       ${sbLabel('Referral Partner')}
-      ${sbItem('admin-dash',     '📊', 'Dashboard')}
-      ${sbItem('admin-clients',  '👥', 'Clients')}
-      ${sbItem('admin-upload',   '📤', 'Upload Mail')}
-      ${sbItem('admin-docs',     '📄', 'Upload Document')}
-      ${sbItem('admin-tickets',  '🎫', 'Client Tickets', 'admin-tk-badge')}
+      ${sbItem('admin-dash',       '📊', 'Dashboard')}
+      ${sbItem('admin-clients',    '👥', 'Clients')}
+      ${sbItem('admin-upload',     '📤', 'Upload Mail')}
+      ${sbItem('admin-docs',       '📄', 'Upload Document')}
+      ${sbItem('admin-tickets',    '🎫', 'Client Tickets',      'admin-tk-badge')}
+      ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',  'admin-ship-badge')}
+      ${sbItem('admin-inquiries',  '💬', 'Mail Inquiries',      'admin-inquiry-badge')}
     `;
   } else {
     nav.innerHTML = `
       ${sbLabel('Menu')}
-      ${sbItem('overview', '🏠', 'Overview')}
-      ${sbItem('proof',    '📋', 'Proof of Address')}
-      ${sbItem('mail',     '📬', 'My Mail', 'mail-nav-badge')}
-      ${sbItem('docs',     '📄', 'Documents')}
-      ${sbItem('tickets',  '🎫', 'My Tickets', 'client-tk-badge')}
+      ${sbItem('overview',  '🏠', 'Overview')}
+      ${sbItem('proof',     '📋', 'Proof of Address')}
+      ${sbItem('mail',      '📬', 'My Mail',            'mail-nav-badge')}
+      ${sbItem('docs',      '📄', 'Documents')}
+      ${sbItem('ship-mail', '📦', 'Ship Mail',           'ship-tk-badge')}
+      ${sbItem('tickets',   '🎫', 'My Tickets',          'client-tk-badge')}
+      ${sbItem('mail-rep',  '💬', 'Message Rep',         'rep-msg-badge')}
     `;
   }
 }
@@ -4271,8 +4518,20 @@ function navTo(pageId) {
   if (pageId === 'admin-tickets' && ['admin','referrer'].includes(currentProfile?.role)) {
     loadAdminTickets();
   }
-  if (pageId === 'tickets' && currentProfile?.role !== 'admin') {
+  if (pageId === 'admin-ship' && ['admin','referrer'].includes(currentProfile?.role)) {
+    loadAdminTickets();
+  }
+  if (pageId === 'admin-inquiries' && ['admin','referrer'].includes(currentProfile?.role)) {
+    loadAdminTickets();
+  }
+  if (pageId === 'tickets' && currentProfile?.role === 'client') {
     loadClientTickets();
+  }
+  if (pageId === 'ship-mail' && currentProfile?.role === 'client') {
+    loadClientTickets();
+  }
+  if (pageId === 'mail-rep' && currentProfile?.role === 'client') {
+    loadRepThread();
   }
   if (pageId === 'admin-clients' && ['admin','referrer'].includes(currentProfile?.role)) {
     loadClientDetailPage();
@@ -4533,6 +4792,7 @@ function signupStep1Next() {
   const pass    = document.getElementById('s-pass').value;
   const phone   = sanitize(document.getElementById('s-phone').value);
   const address = sanitize(document.getElementById('s-address').value);
+  const refCode = (document.getElementById('s-referral')?.value || '').trim().toLowerCase();
 
   if (!name || name.length < 2)    { showError('signup-error', 'Full name is required (at least 2 characters).'); return; }
   if (name.length > 100)           { showError('signup-error', 'Name is too long.'); return; }
@@ -4540,6 +4800,10 @@ function signupStep1Next() {
   if (!isStrongPassword(pass))     { showError('signup-error', 'Password must be at least 8 characters.'); return; }
   if (!phone || phone.length < 5)  { showError('signup-error', 'Phone / WhatsApp number is required.'); return; }
   if (!address || address.length < 5) { showError('signup-error', 'Foreign mailing address is required.'); return; }
+  // Referral code is required — signups are invite-only
+  if (!refCode) { showError('signup-error', 'A referral code is required. Please enter the code provided by your referrer.'); return; }
+  // Set pendingReferralCode from the field value (overrides URL-param value if different)
+  if (refCode) pendingReferralCode = refCode;
 
   // Move to step 2
   document.getElementById('signup-step-1').classList.remove('active');
@@ -4718,7 +4982,10 @@ async function doSignup() {
   pendingSignup = null;
   showToast('Account created! Welcome 🎉');
   notify('new_signup');
-  notify('welcome_client'); // Edge Function looks up the referral BCC itself
+  // Pass referral partner contact_email so Edge Function can BCC them
+  notify('welcome_client', {
+    bcc_email: referralPartner?.contact_email || null
+  });
   btn.disabled    = false;
   btn.textContent = 'Create Account →';
   // onAuthStateChange will fire and load the portal
@@ -5095,6 +5362,8 @@ function updateMailBadge(count) {
 // ================================================================
 // DOCUMENTS
 // ================================================================
+let clientDocsCache = [];
+
 async function loadClientDocs() {
   const { data, error } = await sb
     .from('documents')
@@ -5102,10 +5371,14 @@ async function loadClientDocs() {
     .eq('client_id', currentUser.id)
     .order('created_at', { ascending: false });
 
-  const el = document.getElementById('docs-list');
+  const el      = document.getElementById('docs-list');
+  const toolbar = document.getElementById('docs-bulk-bar');
   if (!el) return;
 
-  if (error || !data?.length) {
+  clientDocsCache = data || [];
+
+  if (error || !clientDocsCache.length) {
+    if (toolbar) toolbar.style.display = 'none';
     el.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">📭</div>
@@ -5114,30 +5387,76 @@ async function loadClientDocs() {
     return;
   }
 
-  el.innerHTML = `
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Type</th>
-          <th>Uploaded</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.map(d => `
-          <tr>
-            <td>${esc(d.name)}</td>
-            <td><span class="pill pill-${d.type}">${cap(d.type)}</span></td>
-            <td>${fmtDate(d.created_at)}</td>
-            <td>
-              ${d.file_url
-                ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" download>⬇ Download</a>`
-                : `<span style="font-size:13px; color:var(--muted)">No file</span>`}
-            </td>
-          </tr>`).join('')}
-      </tbody>
-    </table>`;
+  if (toolbar) toolbar.style.display = 'flex';
+  const selAll = document.getElementById('docs-select-all');
+  if (selAll) selAll.checked = false;
+
+  el.innerHTML = `<div class="doc-tile-grid">${clientDocsCache.map(d => `
+    <div class="doc-tile" onclick="${d.file_url ? `window.open('${esc(d.file_url)}','_blank')` : 'void(0)'}" style="${d.file_url?'cursor:pointer;':''}">
+      <input type="checkbox" class="doc-tile-checkbox doc-select-checkbox" data-doc-id="${d.id}" onchange="updateDocsSelectionState()" onclick="event.stopPropagation()" ${d.file_url?'':'disabled'} />
+      <div class="doc-tile-thumb">${docThumb(d)}</div>
+      <div class="doc-tile-body">
+        <div class="doc-tile-name" title="${esc(d.name)}">${esc(d.name)}</div>
+        <div class="doc-tile-meta">
+          <span class="pill pill-${d.type}" style="font-size:10.5px;">${cap(d.type)}</span>
+          <span class="doc-tile-date">${fmtDate(d.created_at)}</span>
+        </div>
+      </div>
+      ${d.file_url
+        ? `<div class="doc-tile-actions"><a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11.5px;width:100%;justify-content:center;" download onclick="event.stopPropagation()">⬇ Download</a></div>`
+        : `<div class="doc-tile-actions"><span style="font-size:12px;color:var(--muted);">No file</span></div>`}
+    </div>`).join('')}</div>`;
+
+  updateDocsSelectionState();
+}
+
+function toggleAllDocs(checked) {
+  document.querySelectorAll('.doc-select-checkbox:not(:disabled)').forEach(cb => { cb.checked = checked; });
+  updateDocsSelectionState();
+}
+
+function updateDocsSelectionState() {
+  const all    = document.querySelectorAll('.doc-select-checkbox:not(:disabled)');
+  const sel    = document.querySelectorAll('.doc-select-checkbox:checked');
+  const countEl = document.getElementById('docs-selected-count');
+  const btn     = document.getElementById('docs-bulk-download-btn');
+  const selAll  = document.getElementById('docs-select-all');
+  if (countEl) countEl.textContent = `${sel.length} selected`;
+  if (btn)     btn.disabled = sel.length === 0;
+  if (selAll)  selAll.checked = all.length > 0 && sel.length === all.length;
+}
+
+async function bulkDownloadDocs() {
+  const selected = [...document.querySelectorAll('.doc-select-checkbox:checked')].map(cb => cb.dataset.docId);
+  if (!selected.length) return;
+  const btn = document.getElementById('docs-bulk-download-btn');
+  btn.disabled = true; btn.textContent = 'Downloading…';
+  for (const id of selected) {
+    const doc = clientDocsCache.find(d => d.id === id);
+    if (!doc?.file_url) continue;
+    await triggerFileDownload(doc.file_url, doc.name);
+    await new Promise(r => setTimeout(r, 350));
+  }
+  btn.disabled = false; btn.textContent = '⬇ Download Selected';
+}
+
+// Force download via blob (works cross-origin for public storage URLs)
+async function triggerFileDownload(url, suggestedName) {
+  try {
+    const res  = await fetch(url);
+    const blob = await res.blob();
+    const ext  = (url.split('.').pop() || '').split('?')[0];
+    const safe = (suggestedName || 'document').replace(/[^a-zA-Z0-9 _.-]/g,'_');
+    const name = /\.[a-zA-Z0-9]{2,5}$/.test(safe) ? safe : `${safe}.${ext || 'file'}`;
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl; a.download = name;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  } catch {
+    window.open(url, '_blank');
+  }
 }
 
 function proofFileIconClient(url) {
@@ -5637,19 +5956,54 @@ async function submitMail() {
 // ================================================================
 // ADMIN — DOCUMENT UPLOAD
 // ================================================================
-function setDocFile(file) {
-  if (!validateFile(file, ALLOWED_DOC_TYPES)) return;
-  uploadDocFile = file;
-  document.getElementById('doc-file-chip').style.display = 'flex';
-  document.getElementById('doc-chip-name').textContent   = file.name;
-  document.getElementById('doc-chip-size').textContent   = formatBytes(file.size);
-  document.getElementById('doc-chip-thumb').innerHTML    = '📄';
+function setDocFiles(fileList) {
+  for (const file of Array.from(fileList || [])) {
+    if (!validateFile(file, ALLOWED_DOC_TYPES)) continue;
+    uploadDocFiles.push(file);
+  }
+  document.getElementById('doc-file-input').value = '';
+  renderDocFileList();
 }
 
-function clearDocFile() {
-  uploadDocFile = null;
-  document.getElementById('doc-file-chip').style.display = 'none';
+function removeDocFile(idx) {
+  uploadDocFiles.splice(idx, 1);
+  renderDocFileList();
+}
+
+function clearDocFiles() {
+  uploadDocFiles = [];
   document.getElementById('doc-file-input').value = '';
+  renderDocFileList();
+}
+
+function handleDocDrop(e) {
+  e.preventDefault();
+  document.getElementById('doc-drop-zone')?.classList.remove('drag');
+  if (e.dataTransfer?.files?.length) setDocFiles(e.dataTransfer.files);
+}
+
+function renderDocFileList() {
+  const el = document.getElementById('doc-file-list');
+  if (!el) return;
+  if (!uploadDocFiles.length) { el.innerHTML = ''; return; }
+  el.innerHTML = uploadDocFiles.map((f, i) => {
+    const ext  = (f.name.split('.').pop() || '').toLowerCase();
+    const icon = ext === 'pdf' ? '📄' : ['jpg','jpeg','png','webp'].includes(ext) ? '🖼️' : ['doc','docx'].includes(ext) ? '📝' : '📎';
+    return `<div class="file-chip" style="display:flex;">
+      <div class="file-chip-thumb">${icon}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="file-chip-name">${esc(f.name)}</div>
+        <div class="file-chip-size">${formatBytes(f.size)}</div>
+      </div>
+      <span class="file-chip-remove" onclick="removeDocFile(${i})">✕</span>
+    </div>`;
+  }).join('') + (uploadDocFiles.length > 1
+    ? `<button class="btn btn-ghost btn-sm" style="align-self:flex-start;margin-top:4px;" onclick="clearDocFiles()">✕ Clear all (${uploadDocFiles.length})</button>`
+    : '');
+  const hint = document.getElementById('doc-name-hint');
+  if (hint) hint.textContent = uploadDocFiles.length > 1
+    ? `${uploadDocFiles.length} files selected — each named after its filename.`
+    : 'For a single file. Multiple files are named after their filenames.';
 }
 
 // ================================================================
@@ -5665,155 +6019,228 @@ async function loadDocHistory() {
   renderDocHistory();
 }
 
+// Returns thumbnail HTML for a doc tile
+function docThumb(d) {
+  const url = (d.file_url || '').toLowerCase();
+  const ext = url.split('.').pop().split('?')[0];
+  if (['jpg','jpeg','png','webp','gif'].includes(ext) && d.file_url)
+    return `<img src="${esc(d.file_url)}" alt="${esc(d.name)}" loading="lazy" onerror="this.outerHTML='<span>📎</span>'">`;
+  if (ext === 'pdf')              return '<span>📄</span>';
+  if (ext === 'doc' || ext === 'docx') return '<span>📝</span>';
+  return '<span>📎</span>';
+}
+
+function dhDocTileHTML(d, withCheckbox) {
+  const cb = withCheckbox
+    ? `<input type="checkbox" class="doc-tile-checkbox dh-doc-checkbox" data-doc-id="${d.id}" onchange="updateDhSelectionState()" onclick="event.stopPropagation()" ${d.file_url?'':'disabled'} />`
+    : '';
+  return `
+    <div class="doc-tile" onclick="${d.file_url ? `window.open('${esc(d.file_url)}','_blank')` : 'void(0)'}" style="${d.file_url?'cursor:pointer;':''}">
+      ${cb}
+      <div class="doc-tile-thumb">${docThumb(d)}</div>
+      <div class="doc-tile-body">
+        <div class="doc-tile-name" title="${esc(d.name)}">${esc(d.name)}</div>
+        <div class="doc-tile-meta">
+          <span class="pill pill-${d.type}" style="font-size:10.5px;">${cap(d.type)}</span>
+          <span class="doc-tile-date">${fmtDate(d.created_at)}</span>
+        </div>
+      </div>
+      ${d.file_url ? `<div class="doc-tile-actions"><a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11.5px;width:100%;justify-content:center;" onclick="event.stopPropagation()">⬇ Open / Download</a></div>` : ''}
+    </div>`;
+}
+
+function dhJumpToClient(clientId) {
+  dhCurrentClientId = clientId || null;
+  renderDocHistory();
+}
+
+function dhOpenFolder(clientId) {
+  dhCurrentClientId = clientId;
+  const sel = document.getElementById('dh-filter-client');
+  if (sel) sel.value = clientId;
+  renderDocHistory();
+}
+
+function dhBackToFolders() {
+  dhCurrentClientId = null;
+  const sel = document.getElementById('dh-filter-client');
+  if (sel) sel.value = '';
+  renderDocHistory();
+}
+
 function renderDocHistory() {
-  const filterClient = document.getElementById('dh-filter-client')?.value || '';
-  const filterType   = document.getElementById('dh-filter-type')?.value   || '';
-  let items = allDocHistory;
-  if (filterClient) items = items.filter(d => d.client_id === filterClient);
-  if (filterType)   items = items.filter(d => d.type  === filterType);
+  const filterType = document.getElementById('dh-filter-type')?.value || '';
+  const content    = document.getElementById('dh-content');
+  const crumb      = document.getElementById('dh-breadcrumb');
+  if (!content) return;
 
-  // Desktop table
-  const tbody = document.getElementById('dh-tbody');
-  if (tbody) {
+  // Type filter active → flat tile view across all clients
+  if (filterType) {
+    const items = allDocHistory.filter(d => d.type === filterType);
+    if (crumb) crumb.innerHTML = `<a onclick="document.getElementById('dh-filter-type').value='';renderDocHistory();">📁 All Folders</a> <span>›</span> <span>${cap(filterType)}</span>`;
     if (!items.length) {
-      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px;">No documents found.</td></tr>`;
-    } else {
-      tbody.innerHTML = items.map(d => {
-        const client = d.profiles;
-        const name   = client?.full_name || '—';
-        const email  = client?.email     || '';
-        const color  = avatarColor(name);
-        const initl  = name[0]?.toUpperCase() || '?';
-        const ext    = (d.file_url || '').split('.').pop().toLowerCase().slice(0, 4);
-        const fileIcon = ext === 'pdf' ? '📄' : ['jpg','jpeg','png','webp'].includes(ext) ? '🖼️' : '📎';
-        return `<tr>
-          <td>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div style="width:28px;height:28px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">${initl}</div>
-              <div>
-                <div style="font-weight:500;font-size:13px;">${esc(name)}</div>
-                <div style="font-size:11px;color:var(--muted);">${esc(email)}</div>
-              </div>
-            </div>
-          </td>
-          <td><span style="font-size:14px;margin-right:5px;">${fileIcon}</span>${esc(d.name)}</td>
-          <td><span class="pill pill-${d.type}">${cap(d.type)}</span></td>
-          <td style="font-size:12.5px;color:var(--muted);white-space:nowrap;">${fmtDate(d.created_at)}</td>
-          <td>${d.file_url ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" style="font-size:12px;">⬇ Open</a>` : `<span style="font-size:12px;color:var(--muted);">No file</span>`}</td>
-        </tr>`;
-      }).join('');
+      content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No ${cap(filterType)} documents.</p></div>`;
+      return;
     }
+    content.innerHTML = `<div class="doc-tile-grid">${items.map(d => {
+      const cname = d.profiles?.full_name || '—';
+      return `<div>${dhDocTileHTML(d,false)}<div style="font-size:11px;color:var(--muted);margin-top:4px;text-align:center;">👤 ${esc(cname)}</div></div>`;
+    }).join('')}</div>`;
+    return;
   }
 
-  // Mobile cards
-  const cards = document.getElementById('dh-cards');
-  if (cards) {
-    if (!items.length) {
-      cards.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No documents found.</p></div>`;
-    } else {
-      cards.innerHTML = items.map(d => {
-        const client = d.profiles;
-        const name   = client?.full_name || '—';
-        const email  = client?.email     || '';
-        const color  = avatarColor(name);
-        const initl  = name[0]?.toUpperCase() || '?';
-        const ext    = (d.file_url || '').split('.').pop().toLowerCase().slice(0, 4);
-        const fileIcon = ext === 'pdf' ? '📄' : ['jpg','jpeg','png','webp'].includes(ext) ? '🖼️' : '📎';
-        return `
-          <div class="dh-card">
-            <div class="dh-card-header">
-              <div class="dh-card-avatar" style="background:${color};">${initl}</div>
-              <div>
-                <div class="dh-card-client-name">${esc(name)}</div>
-                <div class="dh-card-email">${esc(email)}</div>
-              </div>
-            </div>
-            <div class="dh-card-doc-name">${fileIcon} ${esc(d.name)}</div>
-            <div class="dh-card-meta">
-              <span class="pill pill-${d.type}">${cap(d.type)}</span>
-              <span class="dh-card-date">🕐 ${fmtDate(d.created_at)}</span>
-            </div>
-            <div class="dh-card-actions">
-              ${d.file_url ? `<a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" style="font-size:12px;">⬇ Open / Download</a>` : `<span style="font-size:12px;color:var(--muted);">No file attached</span>`}
-            </div>
-          </div>`;
-      }).join('');
+  if (!dhCurrentClientId) {
+    // ── FOLDER VIEW ──
+    if (crumb) crumb.innerHTML = `<span>📁 All Folders</span>`;
+    const counts = {};
+    allDocHistory.forEach(d => { counts[d.client_id] = (counts[d.client_id] || 0) + 1; });
+    const folderClients = allClients
+      .filter(c => counts[c.id])
+      .sort((a,b) => (a.full_name||'').localeCompare(b.full_name||''));
+    if (!folderClients.length) {
+      content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No documents uploaded yet.</p></div>`;
+      return;
     }
+    content.innerHTML = `<div class="doc-folder-grid">${folderClients.map(c => `
+      <div class="doc-folder" onclick="dhOpenFolder('${c.id}')">
+        <div class="doc-folder-icon">📁</div>
+        <div class="doc-folder-name">${esc(c.full_name)}</div>
+        <div class="doc-folder-count">${counts[c.id]} doc${counts[c.id]===1?'':'s'}</div>
+      </div>`).join('')}</div>`;
+    return;
   }
+
+  // ── TILE VIEW inside a folder ──
+  const client = allClients.find(c => c.id === dhCurrentClientId);
+  const items   = allDocHistory.filter(d => d.client_id === dhCurrentClientId);
+  if (crumb) crumb.innerHTML = `<a onclick="dhBackToFolders()">📁 All Folders</a> <span>›</span> <span>${esc(client?.full_name||'Client')}</span>`;
+  if (!items.length) {
+    content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No documents for this client.</p></div>`;
+    return;
+  }
+  content.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;">
+        <input type="checkbox" id="dh-select-all" onchange="toggleAllDhDocs(this.checked)" style="width:16px;height:16px;cursor:pointer;" />
+        Select all
+      </label>
+      <span id="dh-selected-count" style="font-size:12.5px;color:var(--muted);">0 selected</span>
+      <button class="btn btn-gold btn-sm" id="dh-bulk-download-btn" onclick="bulkDownloadDhDocs()" disabled style="margin-left:auto;">⬇ Download Selected</button>
+    </div>
+    <div class="doc-tile-grid">${items.map(d => dhDocTileHTML(d, true)).join('')}</div>`;
+  updateDhSelectionState();
+}
+
+function toggleAllDhDocs(checked) {
+  document.querySelectorAll('.dh-doc-checkbox:not(:disabled)').forEach(cb => { cb.checked = checked; });
+  updateDhSelectionState();
+}
+
+function updateDhSelectionState() {
+  const all = document.querySelectorAll('.dh-doc-checkbox:not(:disabled)');
+  const sel = document.querySelectorAll('.dh-doc-checkbox:checked');
+  const countEl = document.getElementById('dh-selected-count');
+  const btn = document.getElementById('dh-bulk-download-btn');
+  const selAll = document.getElementById('dh-select-all');
+  if (countEl) countEl.textContent = `${sel.length} selected`;
+  if (btn)     btn.disabled = sel.length === 0;
+  if (selAll)  selAll.checked = all.length > 0 && sel.length === all.length;
+}
+
+async function bulkDownloadDhDocs() {
+  const selected = [...document.querySelectorAll('.dh-doc-checkbox:checked')].map(cb => cb.dataset.docId);
+  if (!selected.length) return;
+  const btn = document.getElementById('dh-bulk-download-btn');
+  btn.disabled = true; btn.textContent = 'Downloading…';
+  for (const id of selected) {
+    const doc = allDocHistory.find(d => d.id === id);
+    if (!doc?.file_url) continue;
+    await triggerFileDownload(doc.file_url, doc.name);
+    await new Promise(r => setTimeout(r, 350));
+  }
+  btn.disabled = false; btn.textContent = '⬇ Download Selected';
 }
 
 function populateDocHistoryFilter() {
   const sel = document.getElementById('dh-filter-client');
   if (!sel) return;
-  sel.innerHTML = '<option value="">All clients</option>' +
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Jump to client…</option>' +
     allClients.map(c => `<option value="${c.id}">${esc(c.full_name)}</option>`).join('');
+  sel.value = current;
 }
 
 async function submitDoc() {
   if (!currentProfile || !['admin','referrer'].includes(currentProfile.role)) { showToast('Unauthorized.', true); return; }
 
-  const clientId = document.getElementById('doc-client').value;
-  const name     = sanitize(document.getElementById('doc-name').value);
-  // Allowlist document type to prevent injection via manipulated select value
-  const allowedDocTypes = ['contract','invoice','letter','certificate','other'];
+  const clientId   = document.getElementById('doc-client').value;
+  const name       = sanitize(document.getElementById('doc-name').value);
+  const allowedDocTypes = ['lease','utility','llc','itin','bank','other'];
   const docTypeRaw = document.getElementById('doc-type').value;
-  const docType  = allowedDocTypes.includes(docTypeRaw) ? docTypeRaw : 'other';
-  const btn      = document.getElementById('doc-upload-btn');
+  const docType    = allowedDocTypes.includes(docTypeRaw) ? docTypeRaw : 'other';
+  const btn        = document.getElementById('doc-upload-btn');
 
-  if (!clientId) { showToast('Please select a client.', true);       return; }
-  if (!name)     { showToast('Please enter a document name.', true);  return; }
-  if (!uploadDocFile) { showToast('Please select a file to upload.', true); return; }
+  if (!clientId)              { showToast('Please select a client.', true); return; }
+  if (!uploadDocFiles.length) { showToast('Please select at least one file to upload.', true); return; }
+  if (uploadDocFiles.length === 1 && !name) { showToast('Please enter a document name.', true); return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Uploading…';
+  // Build a readable folder name from the client name for storage
+  const client     = allClients.find(c => c.id === clientId);
+  const folderName = (client?.full_name || 'client').trim().replace(/[^a-zA-Z0-9 _-]/g,'').replace(/\s+/g,'_') || 'client';
 
-  // Derive extension from the validated MIME type (not raw filename) to
-  // prevent extension spoofing in the stored path.
-  const safeExts = MIME_EXTENSION_MAP[uploadDocFile.type] || [];
-  const ext = safeExts[0] || uploadDocFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'');
-  const safeName = uploadDocFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const path = `${clientId}/${Date.now()}_${docType}_${safeName}`;
-  const { error: storageErr } = await sb.storage
-    .from('documents')
-    .upload(path, uploadDocFile, { cacheControl: '3600', upsert: false });
+  const total = uploadDocFiles.length;
+  let uploaded = 0, failed = 0;
 
-  if (storageErr) {
-    showToast('File upload failed. Please try again.', true);
-    btn.disabled = false;
-    btn.textContent = '📄 Upload Document';
-    return;
+  for (let i = 0; i < uploadDocFiles.length; i++) {
+    const file = uploadDocFiles[i];
+    btn.disabled    = true;
+    btn.textContent = `Uploading ${i + 1} of ${total}…`;
+
+    if (!validateFile(file, ALLOWED_DOC_TYPES)) { failed++; continue; }
+
+    const safeExts = MIME_EXTENSION_MAP[file.type] || [];
+    const ext = safeExts[0] || file.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'');
+    const baseName = file.name.replace(/\.[^/.]+$/, '');
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `${clientId}_${folderName}/${Date.now()}_${i}_${docType}.${ext}`;
+
+    const { error: storageErr } = await sb.storage
+      .from('documents')
+      .upload(path, file, { cacheControl: '3600', upsert: false });
+
+    if (storageErr) { failed++; continue; }
+
+    const { data: urlData } = sb.storage.from('documents').getPublicUrl(path);
+    const docName = (total === 1 && name) ? name : baseName;
+
+    const { error: dbErr } = await sb.from('documents').insert({
+      client_id: clientId,
+      name:      docName,
+      type:      docType,
+      file_url:  urlData?.publicUrl || null,
+      file_size: file.size,
+    });
+
+    if (dbErr) { failed++; continue; }
+    uploaded++;
   }
 
-  const { data: urlData } = sb.storage.from('documents').getPublicUrl(path);
+  btn.disabled    = false;
+  btn.textContent = '📄 Upload Document(s)';
 
-  // Insert document row
-  const { error: dbErr } = await sb.from('documents').insert({
-    client_id: clientId,
-    name,
-    type:      docType,
-    file_url:  urlData?.publicUrl || null,
-    file_size: uploadDocFile.size,
-  });
-
-  if (dbErr) {
-    showToast('Could not save document record. Please try again.', true);
-    btn.disabled = false;
-    btn.textContent = '📄 Upload Document';
-    return;
+  if (uploaded && !failed) {
+    showToast(uploaded === 1 ? '✓ Document uploaded!' : `✓ ${uploaded} documents uploaded!`);
+    const cl = allClients.find(x => x.id === clientId);
+    if (cl?.email) notify('doc_uploaded', { client_id: cl.id, doc_name: name || `${uploaded} files` });
+  } else if (uploaded && failed) {
+    showToast(`Uploaded ${uploaded}, but ${failed} failed.`, true);
+  } else {
+    showToast('Upload failed. Please try again.', true);
   }
 
-  showToast('✓ Document uploaded successfully!');
-  (async () => {
-    const dcId  = document.getElementById('doc-client')?.value;
-    const dcNm  = name || 'New document';
-    const cl = allClients.find(x => x.id === dcId);
-    if (cl?.email) notify('doc_uploaded', { client_id: cl.id, doc_name: dcNm });
-  })();
   document.getElementById('doc-client').value = '';
   document.getElementById('doc-name').value   = '';
-  clearDocFile();
-  btn.disabled    = false;
-  btn.textContent = '📄 Upload Document';
+  clearDocFiles();
   loadDocHistory();
 }
 
@@ -6614,7 +7041,7 @@ let createTkFile    = null;
 
 const TK_STATUS_ORDER  = ['open','in_progress','replied','completed'];
 const TK_STATUS_LABELS = { open:'Open', in_progress:'In Progress', replied:'Replied', completed:'Completed' };
-const TK_TYPE_LABELS   = { card_update:'Card Update', mail_scan:'Mail Scan', support:'Support', other:'Other' };
+const TK_TYPE_LABELS   = { card_update:'Card Update', mail_scan:'Mail Scan', support:'Support', other:'Other', ship_mail:'Ship Mail Request', mail_inquiry:'Mail Inquiry' };
 const TK_PROGRESS_PCT  = { open:25, in_progress:50, replied:75, completed:100 };
 const TK_PROGRESS_CLR  = { open:'#f59e0b', in_progress:'#3b82f6', replied:'#8b5cf6', completed:'#22c55e' };
 
@@ -6698,15 +7125,24 @@ async function loadClientTickets() {
     .order('updated_at', { ascending: false });
   if (!error) clientTickets = data || [];
   renderClientTickets();
+  renderClientShipMail();
   updateClientTkBadge();
 }
 
 function updateClientTkBadge() {
   const el = document.getElementById('client-tk-badge');
-  if (!el) return;
-  const newCount = clientTickets.filter(t => isClientTicketNew(t)).length;
-  el.textContent = newCount;
-  el.classList.toggle('hidden', newCount === 0);
+  if (el) {
+    const newCount = clientTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isClientTicketNew(t)).length;
+    el.textContent = newCount;
+    el.classList.toggle('hidden', newCount === 0);
+  }
+  const shipEl = document.getElementById('ship-tk-badge');
+  if (shipEl) {
+    const shipCount = clientTickets.filter(t => t.type === 'ship_mail' && isClientTicketNew(t)).length;
+    shipEl.textContent = shipCount;
+    shipEl.classList.toggle('hidden', shipCount === 0);
+  }
+  updateRepMsgBadge();
 }
 
 function renderClientTickets() {
@@ -6715,6 +7151,7 @@ function renderClientTickets() {
   const search = (document.getElementById('tk-client-search')?.value || '').toLowerCase();
   const filter = document.getElementById('tk-client-filter')?.value || '';
   const list = clientTickets.filter(t => {
+    if (t.type === 'ship_mail' || t.type === 'mail_inquiry') return false;
     if (filter && t.status !== filter) return false;
     if (search && !t.title.toLowerCase().includes(search) && !(t.description||'').toLowerCase().includes(search)) return false;
     return true;
@@ -6754,15 +7191,30 @@ async function loadAdminTickets() {
 
   allTickets = rows;
   renderAdminTickets();
+  renderAdminShipMail();
+  renderAdminInquiries();
   updateAdminTkBadge();
 }
 
 function updateAdminTkBadge() {
   const el = document.getElementById('admin-tk-badge');
-  if (!el) return;
-  const newCount = allTickets.filter(t => isTicketNew(t)).length;
-  el.textContent = newCount;
-  el.classList.toggle('hidden', newCount === 0);
+  if (el) {
+    const newCount = allTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isTicketNew(t)).length;
+    el.textContent = newCount;
+    el.classList.toggle('hidden', newCount === 0);
+  }
+  const shipEl = document.getElementById('admin-ship-badge');
+  if (shipEl) {
+    const shipCount = allTickets.filter(t => t.type === 'ship_mail' && isTicketNew(t)).length;
+    shipEl.textContent = shipCount;
+    shipEl.classList.toggle('hidden', shipCount === 0);
+  }
+  const inqEl = document.getElementById('admin-inquiry-badge');
+  if (inqEl) {
+    const inqCount = allTickets.filter(t => t.type === 'mail_inquiry' && isTicketNew(t)).length;
+    inqEl.textContent = inqCount;
+    inqEl.classList.toggle('hidden', inqCount === 0);
+  }
 }
 
 function renderAdminTickets() {
@@ -6773,7 +7225,7 @@ function renderAdminTickets() {
   // Stats cards
   if (statsEl) {
     const cnt = { open:0, in_progress:0, replied:0, completed:0 };
-    allTickets.forEach(t => { if (cnt[t.status] !== undefined) cnt[t.status]++; });
+    allTickets.forEach(t => { if (t.type === 'ship_mail' || t.type === 'mail_inquiry') return; if (cnt[t.status] !== undefined) cnt[t.status]++; });
     statsEl.innerHTML = `
       <div class="stat-card">
         <div class="stat-card-icon">📬</div>
@@ -6800,6 +7252,7 @@ function renderAdminTickets() {
   const search = (document.getElementById('tk-admin-search')?.value || '').toLowerCase();
   const filter = document.getElementById('tk-admin-filter')?.value || '';
   const list = allTickets.filter(t => {
+    if (t.type === 'ship_mail' || t.type === 'mail_inquiry') return false;
     if (filter && t.status !== filter) return false;
     const cname = (t._profile?.full_name || '').toLowerCase();
     if (search && !t.title.toLowerCase().includes(search) && !cname.includes(search)) return false;
@@ -7481,6 +7934,344 @@ async function saveLeaseDetails() {
   if (document.getElementById('page-admin-clients')?.classList.contains('active')) renderClientDetail();
   if (document.getElementById('page-admin-dash')?.classList.contains('active')) loadAdminDash();
 }
+
+
+// ================================================================
+// SHIP YOUR MAIL
+// ================================================================
+const SHIP_ESTIMATES = { standard:'7–14 business days', express:'3–5 business days', priority:'1–3 business days' };
+
+function updateShipEstimate() {
+  const method = document.getElementById('ship-method')?.value;
+  const el = document.getElementById('ship-estimate-text');
+  if (el) el.textContent = SHIP_ESTIMATES[method] || SHIP_ESTIMATES.standard;
+}
+
+function openShipMailModal() {
+  const el = document.getElementById('ship-mail-error');
+  if (el) { el.style.display = 'none'; }
+  const addrEl = document.getElementById('ship-address');
+  if (addrEl && !addrEl.value && currentProfile?.mailing_address) {
+    addrEl.value = currentProfile.mailing_address;
+  }
+  const meth = document.getElementById('ship-method');
+  if (meth) meth.value = 'standard';
+  updateShipEstimate();
+  const overlay = document.getElementById('ship-mail-overlay');
+  if (overlay) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+}
+
+function closeShipMailModal() {
+  const overlay = document.getElementById('ship-mail-overlay');
+  if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function shipMailOverlayClick(e) {
+  if (e.target === document.getElementById('ship-mail-overlay')) closeShipMailModal();
+}
+
+async function submitShipMailRequest() {
+  const address  = sanitize(document.getElementById('ship-address')?.value || '');
+  const method   = document.getElementById('ship-method')?.value || 'standard';
+  const contents = sanitize(document.getElementById('ship-contents')?.value || '');
+  const errEl    = document.getElementById('ship-mail-error');
+  const btn      = document.getElementById('ship-mail-submit-btn');
+
+  if (errEl) errEl.style.display = 'none';
+  if (!address || address.length < 5) {
+    if (errEl) { errEl.textContent = 'Please enter a valid shipping address.'; errEl.style.display = 'block'; }
+    return;
+  }
+  if (!contents || contents.length < 3) {
+    if (errEl) { errEl.textContent = 'Please describe what should be shipped.'; errEl.style.display = 'block'; }
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+  const estimate   = SHIP_ESTIMATES[method] || SHIP_ESTIMATES.standard;
+  const methodLabels = { standard:'Standard', express:'Express', priority:'Priority' };
+  const description = `Shipping address:\n${address}\n\nShipping method: ${methodLabels[method]||'Standard'} (Est. ${estimate})\n\nItems to ship:\n${contents}\n\nNote: A shipping fee applies per batch and will be billed separately.`;
+
+  const { count } = await sb.from('tickets').select('*', { count:'exact', head:true });
+  const ticketNumber = (count || 0) + 1;
+
+  const { error } = await sb.from('tickets').insert({
+    user_id:       currentUser.id,
+    title:         'Ship My Mail Request',
+    description,
+    type:          'ship_mail',
+    status:        'open',
+    ticket_number: ticketNumber,
+    created_at:    new Date().toISOString(),
+    updated_at:    new Date().toISOString(),
+  });
+
+  if (btn) { btn.disabled = false; btn.textContent = '📦 Submit Request'; }
+
+  if (error) {
+    if (errEl) { errEl.textContent = 'Could not submit: ' + error.message; errEl.style.display = 'block'; }
+    return;
+  }
+
+  showToast('✓ Shipping request submitted!');
+  closeShipMailModal();
+  const contEl = document.getElementById('ship-contents');
+  if (contEl) contEl.value = '';
+  await loadClientTickets();
+}
+
+// ── Client: render ship-mail page ──────────────────────────
+function renderClientShipMail() {
+  const container = document.getElementById('ship-client-list');
+  if (!container) return;
+  const list = clientTickets.filter(t => t.type === 'ship_mail');
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No shipping requests yet. Use the "Ship Your Mail" button on My Mail page.</p></div>';
+    return;
+  }
+  container.innerHTML = list.map(t => tkRowHTML(t, false)).join('');
+}
+
+// ── Admin: render ship-mail requests page ────────────────────
+function renderAdminShipMail() {
+  const container = document.getElementById('ship-admin-list');
+  if (!container) return;
+  const search = (document.getElementById('ship-admin-search')?.value || '').toLowerCase();
+  const filter = document.getElementById('ship-admin-filter')?.value || '';
+  const list = allTickets.filter(t => {
+    if (t.type !== 'ship_mail') return false;
+    if (filter && t.status !== filter) return false;
+    const cname = (t._profile?.full_name || '').toLowerCase();
+    if (search && !cname.includes(search)) return false;
+    return true;
+  });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No shipping requests yet.</p></div>';
+    return;
+  }
+  container.innerHTML = list.map(t => tkRowHTML(t, true)).join('');
+}
+
+// ── Admin: render mail inquiries page ───────────────────────
+function renderAdminInquiries() {
+  const container = document.getElementById('inquiry-admin-list');
+  if (!container) return;
+  const search = (document.getElementById('inquiry-admin-search')?.value || '').toLowerCase();
+  const list = allTickets.filter(t => {
+    if (t.type !== 'mail_inquiry') return false;
+    const cname = (t._profile?.full_name || '').toLowerCase();
+    if (search && !cname.includes(search)) return false;
+    return true;
+  });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>No mail inquiries yet.</p></div>';
+    return;
+  }
+  container.innerHTML = list.map(t => tkRowHTML(t, true)).join('');
+}
+
+// ================================================================
+// MESSAGE YOUR REP (persistent mail_inquiry thread per client)
+// ================================================================
+let repThreadTicketId = null;
+let repThreadMessages = [];
+let repThreadFile     = null;
+
+async function ensureRepThread() {
+  if (repThreadTicketId) return repThreadTicketId;
+
+  const { data: existing } = await sb
+    .from('tickets')
+    .select('*')
+    .eq('user_id', currentUser.id)
+    .eq('type', 'mail_inquiry')
+    .order('created_at', { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  if (existing) { repThreadTicketId = existing.id; return repThreadTicketId; }
+
+  const { count } = await sb.from('tickets').select('*', { count:'exact', head:true });
+  const { data: created, error } = await sb.from('tickets').insert({
+    user_id:       currentUser.id,
+    title:         'Mail Inquiries',
+    description:   'Your private conversation thread with your rep.',
+    type:          'mail_inquiry',
+    status:        'open',
+    ticket_number: (count || 0) + 1,
+    created_at:    new Date().toISOString(),
+    updated_at:    new Date().toISOString(),
+  }).select('*').single();
+
+  if (error || !created) return null;
+  repThreadTicketId = created.id;
+  return repThreadTicketId;
+}
+
+async function loadRepThread() {
+  const chatEl = document.getElementById('rep-chat');
+  if (chatEl) chatEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;font-size:13px;">Loading…</div>';
+
+  const id = await ensureRepThread();
+  if (!id) {
+    if (chatEl) chatEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;">Could not load thread.</div>';
+    return;
+  }
+
+  const { data: msgs } = await sb
+    .from('ticket_messages')
+    .select('*')
+    .eq('ticket_id', id)
+    .order('created_at', { ascending: true });
+
+  repThreadMessages = msgs || [];
+  renderRepChat();
+
+  const map = _getSeenMap('client');
+  map[id] = new Date().toISOString();
+  _saveSeenMap('client', map);
+  updateRepMsgBadge();
+}
+
+function renderRepChat() {
+  const chatEl = document.getElementById('rep-chat');
+  if (!chatEl) return;
+  let html = `<div style="margin-bottom:4px;">
+    <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.07em;">💬 Message Your Rep</div>
+    <div class="tk-original-body">Use this thread to ask about mail you're expecting, missing items, or anything your rep should watch for.</div>
+  </div>`;
+  if (repThreadMessages.length) html += `<div style="border-top:1px solid var(--parch2);margin:4px 0 8px;"></div>`;
+  repThreadMessages.forEach(msg => {
+    const isMine = msg.sender_id === currentUser.id;
+    const side   = isMine ? 'client' : 'admin';
+    const label  = isMine ? 'You' : '🛡 Your Rep';
+    html += `<div class="tk-msg ${side}">
+      <div class="tk-msg-bubble">${esc(msg.body).replace(/\n/g,'<br>')}${msg.attachment_url ? `<br><a class="tk-msg-attachment" href="${msg.attachment_url}" target="_blank" rel="noopener noreferrer">📎 Attachment</a>` : ''}</div>
+      <div class="tk-msg-meta"><span>${label}</span>&nbsp;·&nbsp;${fmtDate(msg.created_at)}</div>
+    </div>`;
+  });
+  if (!repThreadMessages.length) html += `<div style="text-align:center;color:var(--muted);font-size:13px;padding:12px 0;">No messages yet — say hello!</div>`;
+  chatEl.innerHTML = html;
+  requestAnimationFrame(() => { chatEl.scrollTop = chatEl.scrollHeight; });
+}
+
+function setRepReplyFile(file) {
+  if (!file) return;
+  repThreadFile = file;
+  const n = document.getElementById('rep-attach-name');
+  const r = document.getElementById('rep-attach-remove');
+  if (n) { n.textContent = file.name; n.classList.remove('hidden'); }
+  if (r) r.classList.remove('hidden');
+}
+
+function clearRepReplyFile() {
+  repThreadFile = null;
+  const n = document.getElementById('rep-attach-name');
+  const r = document.getElementById('rep-attach-remove');
+  const i = document.getElementById('rep-reply-file');
+  if (n) { n.textContent = ''; n.classList.add('hidden'); }
+  if (r) r.classList.add('hidden');
+  if (i) i.value = '';
+}
+
+async function submitRepMessage() {
+  const textEl = document.getElementById('rep-reply-text');
+  const body   = sanitize(textEl?.value || '');
+  const btn    = document.getElementById('rep-reply-btn');
+
+  if (!body && !repThreadFile) { showToast('Please write a message or attach a file.', true); return; }
+
+  const id = await ensureRepThread();
+  if (!id) { showToast('Could not send message.', true); return; }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  let attachmentUrl = null;
+  if (repThreadFile) {
+    const safeName = repThreadFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `ticket-replies/${id}/${Date.now()}-${safeName}`;
+    const { data: up } = await sb.storage.from('ticket-attachments').upload(path, repThreadFile, { upsert:false });
+    if (up) {
+      const { data: pub } = sb.storage.from('ticket-attachments').getPublicUrl(path);
+      attachmentUrl = pub?.publicUrl || null;
+    }
+  }
+
+  const { error } = await sb.from('ticket_messages').insert({
+    ticket_id:      id,
+    sender_id:      currentUser.id,
+    sender_role:    'client',
+    sender_name:    currentProfile.full_name,
+    body:           body || '(attachment)',
+    attachment_url: attachmentUrl,
+  });
+
+  if (error) {
+    showToast('Could not send message.', true);
+    if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+    return;
+  }
+
+  const now = new Date().toISOString();
+  await sb.from('tickets').update({ updated_at: now }).eq('id', id);
+
+  const map = _getSeenMap('client');
+  map[id] = now;
+  _saveSeenMap('client', map);
+
+  const { data: msgs } = await sb.from('ticket_messages').select('*').eq('ticket_id', id).order('created_at', { ascending:true });
+  repThreadMessages = msgs || [];
+  renderRepChat();
+
+  if (textEl) textEl.value = '';
+  clearRepReplyFile();
+  if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+  showToast('Message sent!');
+}
+
+function updateRepMsgBadge() {
+  const el = document.getElementById('rep-msg-badge');
+  if (!el || !repThreadTicketId) { if (el) el.classList.add('hidden'); return; }
+  const map = _getSeenMap('client');
+  const seenAt = map[repThreadTicketId];
+  const lastMsg = repThreadMessages[repThreadMessages.length - 1];
+  const hasUnseen = lastMsg && lastMsg.sender_role === 'admin' &&
+    (!seenAt || new Date(lastMsg.created_at) > new Date(seenAt));
+  el.textContent = '1';
+  el.classList.toggle('hidden', !hasUnseen);
+}
+
+// ================================================================
+// REFERRAL CODE VALIDATION — display feedback while user types
+// ================================================================
+let referralValidateTimer = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const refInput = document.getElementById('s-referral');
+  if (!refInput) return;
+  refInput.addEventListener('input', () => {
+    clearTimeout(referralValidateTimer);
+    const val = refInput.value.trim().toLowerCase();
+    const status = document.getElementById('referral-code-status');
+    if (!val) {
+      if (status) status.textContent = 'Signups are by referral only. Enter the code provided by your referrer.';
+      if (status) status.style.color = 'var(--muted)';
+      return;
+    }
+    if (status) { status.textContent = 'Checking code…'; status.style.color = 'var(--muted)'; }
+    referralValidateTimer = setTimeout(async () => {
+      if (!sb) return;
+      const { data } = await sb.from('referral_partners').select('id, slug').eq('slug', val).maybeSingle();
+      if (data) {
+        pendingReferralCode = val;
+        if (status) { status.textContent = '✓ Valid referral code!'; status.style.color = 'var(--green)'; }
+      } else {
+        if (status) { status.textContent = '✗ Invalid code. Check with your referrer.'; status.style.color = 'var(--red)'; }
+      }
+    }, 700);
+  });
+});
 
 // ================================================================
 // EMAIL SYSTEM — Resend API
