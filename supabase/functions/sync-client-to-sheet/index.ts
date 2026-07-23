@@ -92,8 +92,11 @@ serve(async (req) => {
       redirect: "follow",
     });
 
-    if (!res.ok) {
-      throw new Error(`Apps Script relay failed: ${res.status} ${await res.text()}`);
+    // Apps Script web apps always answer with HTTP 200, even on internal
+    // failure — the real result is in the response TEXT, not the status.
+    const resultText = (await res.text()).trim();
+    if (!res.ok || resultText !== "OK") {
+      throw new Error(`Apps Script relay failed: ${res.status} ${resultText}`);
     }
   } catch (err) {
     console.error("sync-client-to-sheet error:", err);
