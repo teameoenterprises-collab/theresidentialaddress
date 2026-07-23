@@ -9,12 +9,11 @@
 // doesn't touch `profiles` or any table at all, it just relays the data
 // it's handed to a Google Apps Script Web App, which appends one row.
 //
-// Auth: deployed WITH --no-verify-jwt this time. Reason: when a function
-// requires the platform's automatic JWT check AND needs custom CORS
-// headers, Supabase checks the JWT before your code (and its CORS
-// headers) ever runs — which breaks the browser preflight. So instead we
-// disable the platform check and verify the caller's session ourselves,
-// inside the function, after CORS is already handled.
+// Auth: deployed WITH --no-verify-jwt. Reason: when a function requires
+// the platform's automatic JWT check AND needs custom CORS headers,
+// Supabase checks the JWT before your code (and its CORS headers) ever
+// run — which breaks the browser preflight. So we disable the platform
+// check and verify the caller's session ourselves, after CORS is handled.
 //
 // SUPABASE_URL and SUPABASE_ANON_KEY are provided automatically by
 // Supabase to every Edge Function — no need to set them as secrets.
@@ -85,12 +84,20 @@ serve(async (req) => {
 
   try {
     const url = `${APPS_SCRIPT_URL}?secret=${encodeURIComponent(APPS_SCRIPT_SECRET)}`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, created_at: createdAt, email, address, country, phone }),
-      redirect: "follow",
-    });
+    const postBody = JSON.stringify({ name, created_at: createdAt, email, address, country, phone });
+    const postHeaders = { "Content-Type": "application/json" };
+
+    // Apps Script's /exec URL always 302-redirects on the first hit. The
+    // fetch spec auto-converts POST -> GET when following a 301/302/303
+    // redirect, which lands on doGet (undefined) instead of doPost. So we
+    // catch the redirect manually and resend it as POST ourselves.
+    let res = await fetch(url, { method: "POST", headers: postHeaders, body: postBody, redirect: "manual" });
+
+    if (res.status === 302 || res.status === 301 || res.status === 303) {
+      const location = res.headers.get("location");
+      if (!location) throw new Error("Redirect from Apps Script had no Location header");
+      res = await fetch(location, { method: "POST", headers: postHeaders, body: postBody });
+    }
 
     // Apps Script web apps always answer with HTTP 200, even on internal
     // failure — the real result is in the response TEXT, not the status.
