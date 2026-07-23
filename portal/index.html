@@ -8326,6 +8326,23 @@ async function notify(action, payload = {}) {
   } catch (err) { devLog('notify() failed (non-critical):', err.message); }
 }
 
+//new claude code by SanyatShakya 
+async function syncSignupToSheet(data) {
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    await fetch(`${SUPABASE_URL}/functions/v1/sync-client-to-sheet`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+        'apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (err) { devLog('syncSignupToSheet() failed (non-critical):', err.message); }
+}
+
 async function loadEmailSettings() {
   if (!sb) return;
   const { data } = await sb.from('admin_settings').select('value').eq('key','email_settings').maybeSingle();
