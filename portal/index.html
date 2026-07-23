@@ -4156,6 +4156,20 @@ async function logReferralSignupEvent(partnerId, clientId) {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+  // ── Handle password recovery link ────────────────────────────
+  // Supabase embeds the recovery token in the URL hash:
+  //   index.html#access_token=...&type=recovery
+  // Since this portal uses detectSessionInUrl:false (to avoid
+  // auto-login races), we detect the recovery hash here and
+  // redirect to the dedicated reset-password.html page which
+  // uses detectSessionInUrl:true to consume the token correctly.
+  const _hash = window.location.hash;
+  if (_hash && _hash.includes('type=recovery') && _hash.includes('access_token=')) {
+    // Preserve the full hash so reset-password.html can read it
+    window.location.replace('./reset-password.html' + _hash);
+    return; // stop init — we're navigating away
+  }
+
   // ── Capture referral code, if any ────────────────────────────
   captureReferralCode();
 
@@ -4261,12 +4275,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ================================================================
 // SCREEN HELPERS
 // ================================================================
+let _authShownOnce = false; // guard: only auto-switch tab on first showAuth() call
+
 function showAuth() {
   document.getElementById('screen-auth').classList.remove('hidden');
   document.getElementById('screen-portal').classList.add('hidden');
   document.getElementById('screen-recovery').classList.add('hidden');
-  // A referral visitor should land on signup, not login
-  if (pendingReferralCode) switchAuthTab('signup');
+  // Auto-switch to signup tab only on first load if a referral code
+  // is present. Subsequent showAuth() calls (from INITIAL_SESSION,
+  // SIGNED_OUT, timeouts) must NOT reset the tab the user is on.
+  if (!_authShownOnce && pendingReferralCode) {
+    switchAuthTab('signup');
+  }
+  _authShownOnce = true;
 }
 
 function showRecovery() {
