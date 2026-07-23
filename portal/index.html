@@ -2778,13 +2778,6 @@
             <label for="s-country">Country of Residence</label>
             <input type="text" id="s-country" placeholder="UAE, Malaysia, Canada…" />
           </div>
-          <div class="field" id="referral-code-field">
-            <label for="s-referral">Referral Code <span style="color:var(--red);font-weight:700;">*</span></label>
-            <input type="text" id="s-referral" placeholder="Enter your referral code" autocomplete="off" oninput="this.value=this.value.trim()" />
-            <p id="referral-code-status" style="font-size:11.5px;margin-top:5px;color:var(--muted);">
-              Signups are by referral only. Enter the code provided by your referrer.
-            </p>
-          </div>
           <button class="btn btn-primary" id="signup-next-btn" onclick="signupStep1Next()">Continue →</button>
         </div>
 
@@ -4813,18 +4806,13 @@ function signupStep1Next() {
   const pass    = document.getElementById('s-pass').value;
   const phone   = sanitize(document.getElementById('s-phone').value);
   const address = sanitize(document.getElementById('s-address').value);
-  const refCode = (document.getElementById('s-referral')?.value || '').trim().toLowerCase();
-
   if (!name || name.length < 2)    { showError('signup-error', 'Full name is required (at least 2 characters).'); return; }
   if (name.length > 100)           { showError('signup-error', 'Name is too long.'); return; }
   if (!isValidEmail(email))        { showError('signup-error', 'Please enter a valid email address.'); return; }
   if (!isStrongPassword(pass))     { showError('signup-error', 'Password must be at least 8 characters.'); return; }
   if (!phone || phone.length < 5)  { showError('signup-error', 'Phone / WhatsApp number is required.'); return; }
   if (!address || address.length < 5) { showError('signup-error', 'Foreign mailing address is required.'); return; }
-  // Referral code is required — signups are invite-only
-  if (!refCode) { showError('signup-error', 'A referral code is required. Please enter the code provided by your referrer.'); return; }
-  // Set pendingReferralCode from the field value (overrides URL-param value if different)
-  if (refCode) pendingReferralCode = refCode;
+  // pendingReferralCode is already set automatically from the ?ref= URL param
 
   // Move to step 2
   document.getElementById('signup-step-1').classList.remove('active');
@@ -8263,36 +8251,6 @@ function updateRepMsgBadge() {
   el.textContent = '1';
   el.classList.toggle('hidden', !hasUnseen);
 }
-
-// ================================================================
-// REFERRAL CODE VALIDATION — display feedback while user types
-// ================================================================
-let referralValidateTimer = null;
-document.addEventListener('DOMContentLoaded', () => {
-  const refInput = document.getElementById('s-referral');
-  if (!refInput) return;
-  refInput.addEventListener('input', () => {
-    clearTimeout(referralValidateTimer);
-    const val = refInput.value.trim().toLowerCase();
-    const status = document.getElementById('referral-code-status');
-    if (!val) {
-      if (status) status.textContent = 'Signups are by referral only. Enter the code provided by your referrer.';
-      if (status) status.style.color = 'var(--muted)';
-      return;
-    }
-    if (status) { status.textContent = 'Checking code…'; status.style.color = 'var(--muted)'; }
-    referralValidateTimer = setTimeout(async () => {
-      if (!sb) return;
-      const { data } = await sb.from('referral_partners').select('id, slug').eq('slug', val).maybeSingle();
-      if (data) {
-        pendingReferralCode = val;
-        if (status) { status.textContent = '✓ Valid referral code!'; status.style.color = 'var(--green)'; }
-      } else {
-        if (status) { status.textContent = '✗ Invalid code. Check with your referrer.'; status.style.color = 'var(--red)'; }
-      }
-    }, 700);
-  });
-});
 
 // ================================================================
 // EMAIL SYSTEM — Resend API
