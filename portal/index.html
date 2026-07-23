@@ -4991,6 +4991,7 @@ async function doSignup() {
   pendingSignup = null;
   showToast('Account created! Welcome 🎉');
   notify('new_signup');
+  syncSignupToSheet({ name, email, phone, address, country, created_at: new Date().toISOString() });
   // Pass referral partner contact_email so Edge Function can BCC them
   notify('welcome_client', {
     bcc_email: referralPartner?.contact_email || null
@@ -8284,7 +8285,8 @@ async function notify(action, payload = {}) {
   } catch (err) { devLog('notify() failed (non-critical):', err.message); }
 }
 
-//new claude code by SanyatShakya 
+// Fire-and-forget: syncs a new client signup to Google Sheets via the
+// sync-client-to-sheet Edge Function. Never blocks or fails signup.
 async function syncSignupToSheet(data) {
   try {
     const { data: { session } } = await sb.auth.getSession();
