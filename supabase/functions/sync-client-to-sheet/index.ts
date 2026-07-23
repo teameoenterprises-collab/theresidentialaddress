@@ -93,10 +93,14 @@ serve(async (req) => {
     // catch the redirect manually and resend it as POST ourselves.
     let res = await fetch(url, { method: "POST", headers: postHeaders, body: postBody, redirect: "manual" });
 
+    // Apps Script's redirect chain is sometimes two hops deep. We
+    // manually repost as POST for the first hop (to actually trigger
+    // doPost), then let any further hop auto-follow normally to fetch
+    // the final human-readable output.
     if (res.status === 302 || res.status === 301 || res.status === 303) {
       const location = res.headers.get("location");
       if (!location) throw new Error("Redirect from Apps Script had no Location header");
-      res = await fetch(location, { method: "POST", headers: postHeaders, body: postBody });
+      res = await fetch(location, { method: "POST", headers: postHeaders, body: postBody, redirect: "follow" });
     }
 
     // Apps Script web apps always answer with HTTP 200, even on internal
