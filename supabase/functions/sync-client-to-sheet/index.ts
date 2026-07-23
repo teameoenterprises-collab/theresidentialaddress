@@ -9,18 +9,22 @@
 // doesn't touch `profiles` or any table at all, it just relays the data
 // it's handed to a Google Apps Script Web App, which appends one row.
 //
-// Auth: deployed WITH JWT verification (the default — do NOT use
-// --no-verify-jwt). Supabase checks the caller has a valid logged-in
-// session before this code runs, same as send-email already does.
+// Auth: deployed WITH --no-verify-jwt this time. Reason: when a function
+// requires the platform's automatic JWT check AND needs custom CORS
+// headers, Supabase checks the JWT before your code (and its CORS
+// headers) ever runs — which breaks the browser preflight. So instead we
+// disable the platform check and verify the caller's session ourselves,
+// inside the function, after CORS is already handled.
 //
-// CORS: browsers calling this from theresidentialaddress.com send a
-// preflight OPTIONS request first. We answer that with the right headers,
-// then include the same headers on the real response.
+// SUPABASE_URL and SUPABASE_ANON_KEY are provided automatically by
+// Supabase to every Edge Function — no need to set them as secrets.
 
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
 const APPS_SCRIPT_URL = Deno.env.get("APPS_SCRIPT_URL")!;
 const APPS_SCRIPT_SECRET = Deno.env.get("APPS_SCRIPT_SECRET")!;
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -28,14 +32,33 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+// Confirms the Authorization header is a real, currently-valid Supabase
+// login session (not just any string) by asking Supabase Auth directly.
+async function isLoggedIn(authHeader: string | null): Promise<boolean> {
+  if (!authHeader) return false;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { Authorization: authHeader, apikey: SUPABASE_ANON_KEY },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 serve(async (req) => {
-  // Browser preflight check — must answer this before the real POST works.
+  // Browser preflight check — answered immediately, before any auth check.
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+  }
+
+  const loggedIn = await isLoggedIn(req.headers.get("Authorization"));
+  if (!loggedIn) {
+    return new Response("Unauthorized", { status: 401, headers: corsHeaders });
   }
 
   let body: {
