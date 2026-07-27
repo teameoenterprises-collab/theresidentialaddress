@@ -2626,6 +2626,15 @@
       .doc-folder-grid, .doc-tile-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
       .doc-tile-thumb { height: 90px; font-size: 32px; }
     }
+
+    /* ── Pagination ──────────────────────────────────────────── */
+    .pagination { display:flex; align-items:center; justify-content:center; gap:4px; margin-top:20px; flex-wrap:wrap; }
+    .pagination .pg-btn { display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:34px; padding:0 10px; border:1.5px solid var(--parch3); border-radius:8px; font-size:13px; font-weight:500; color:var(--ink2); background:var(--white); cursor:pointer; transition:all 0.15s; font-family:'Outfit',sans-serif; }
+    .pagination .pg-btn:hover:not(:disabled) { border-color:var(--gold); color:var(--gold); background:var(--parch); }
+    .pagination .pg-btn.active { background:var(--gold); border-color:var(--gold); color:var(--white); font-weight:700; }
+    .pagination .pg-btn:disabled { opacity:0.35; cursor:not-allowed; }
+    .pagination .pg-ellipsis { color:var(--muted); font-size:13px; padding:0 4px; line-height:34px; }
+    .pg-info { font-size:12.5px; color:var(--muted); margin-top:8px; text-align:center; }
   </style>
 </head>
 <body>
@@ -2987,10 +2996,10 @@
             <input
               type="text"
               placeholder="Search by sender or subject…"
-              oninput="mailFilter.text = this.value.toLowerCase(); renderMailList();"
+              oninput="mailFilter.text = this.value.toLowerCase(); PG.reset('mail'); renderMailList();"
             />
           </div>
-          <select class="filter-select" onchange="mailFilter.cat = this.value; renderMailList();">
+          <select class="filter-select" onchange="mailFilter.cat = this.value; PG.reset('mail'); renderMailList();">
             <option value="">All categories</option>
             <option value="usps">USPS</option>
             <option value="bank">Bank</option>
@@ -3279,7 +3288,7 @@
                 <select id="dh-filter-client" class="filter-select" style="font-size:12.5px;padding:7px 10px;" onchange="dhJumpToClient(this.value)">
                   <option value="">Jump to client…</option>
                 </select>
-                <select id="dh-filter-type" class="filter-select" style="font-size:12.5px;padding:7px 10px;" onchange="renderDocHistory()">
+                <select id="dh-filter-type" class="filter-select" style="font-size:12.5px;padding:7px 10px;" onchange="PG.reset('docHistory'); renderDocHistory()">
                   <option value="">All types</option>
                   <option value="lease">Lease</option>
                   <option value="utility">Utility</option>
@@ -3318,9 +3327,9 @@
       <div class="mail-toolbar" style="margin-bottom:16px;">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" id="tk-client-search" placeholder="Search tickets…" oninput="renderClientTickets()" />
+          <input type="text" id="tk-client-search" placeholder="Search tickets…" oninput="PG.reset('clientTickets'); renderClientTickets()" />
         </div>
-        <select class="filter-select" id="tk-client-filter" onchange="renderClientTickets()">
+        <select class="filter-select" id="tk-client-filter" onchange="PG.reset('clientTickets'); renderClientTickets()">
           <option value="">All statuses</option>
           <option value="open">Open</option>
           <option value="in_progress">In Progress</option>
@@ -3349,11 +3358,11 @@
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
         <div class="search-wrap" style="flex:1;min-width:180px;">
           <span class="search-icon">🔍</span>
-          <input type="text" id="cd-search" placeholder="Search by name, email or address…" oninput="renderClientDetail()" />
+          <input type="text" id="cd-search" placeholder="Search by name, email or address…" oninput="PG.reset('clients'); renderClientDetail()" />
         </div>
         <button class="cd-sort-btn" id="cd-sort-start"  onclick="cdSetSort('start')">Start Date <span id="cd-arrow-start"  style="font-size:10px;opacity:0.55;">↕</span></button>
         <button class="cd-sort-btn" id="cd-sort-expiry" onclick="cdSetSort('expiry')">Expiry Date <span id="cd-arrow-expiry" style="font-size:10px;opacity:0.55;">↕</span></button>
-        <select class="filter-select" id="cd-referral-filter" onchange="renderClientDetail()">
+        <select class="filter-select" id="cd-referral-filter" onchange="PG.reset('clients'); renderClientDetail()">
           <option value="">All clients</option>
         </select>
       </div>
@@ -3372,7 +3381,6 @@
       <div style="max-width:580px;display:flex;flex-direction:column;gap:18px;">
         <div class="card">
           <div class="card-title">📧 Sending Configuration</div>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Emails are sent via a Supabase Edge Function using <strong>Resend</strong>. The API key is stored as a server-side secret — it's never loaded into this browser. To set or rotate it, run <code>supabase secrets set RESEND_API_KEY=...</code> from the CLI.</p>
           <div class="field"><label>From Email Address</label><input type="email" id="es-from-email" placeholder="noreply@theresidentialaddress.com" style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.18s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'" /><div style="font-size:12px;color:var(--muted);margin-top:5px;">Must be verified in Resend. Use <code>onboarding@resend.dev</code> for testing.</div></div>
           <div class="field" style="margin-top:14px;"><label>Payment Link</label><input type="url" id="es-payment-link" placeholder="https://buy.stripe.com/..." style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.18s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'" /><div style="font-size:12px;color:var(--muted);margin-top:5px;">Used as the "Complete Payment" button in the welcome email.</div></div>
         </div>
@@ -3411,9 +3419,9 @@
       <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" id="tk-admin-search" placeholder="Search by title or client…" oninput="renderAdminTickets()" />
+          <input type="text" id="tk-admin-search" placeholder="Search by title or client…" oninput="PG.reset('adminTickets'); renderAdminTickets()" />
         </div>
-        <select class="filter-select" id="tk-admin-filter" onchange="renderAdminTickets()">
+        <select class="filter-select" id="tk-admin-filter" onchange="PG.reset('adminTickets'); renderAdminTickets()">
           <option value="">All statuses</option>
           <option value="open">Open</option>
           <option value="in_progress">In Progress</option>
@@ -3494,9 +3502,9 @@
       <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" id="ship-admin-search" placeholder="Search by client name…" oninput="renderAdminShipMail()" />
+          <input type="text" id="ship-admin-search" placeholder="Search by client name…" oninput="PG.reset('adminShip'); renderAdminShipMail()" />
         </div>
-        <select class="filter-select" id="ship-admin-filter" onchange="renderAdminShipMail()">
+        <select class="filter-select" id="ship-admin-filter" onchange="PG.reset('adminShip'); renderAdminShipMail()">
           <option value="">All statuses</option>
           <option value="open">Open</option>
           <option value="in_progress">In Progress</option>
@@ -3524,7 +3532,7 @@
       <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" id="inquiry-admin-search" placeholder="Search by client name…" oninput="renderAdminInquiries()" />
+          <input type="text" id="inquiry-admin-search" placeholder="Search by client name…" oninput="PG.reset('adminInquiries'); renderAdminInquiries()" />
         </div>
         <button class="btn btn-ghost btn-sm" onclick="loadAdminTickets()">↻ Refresh</button>
       </div>
@@ -4991,7 +4999,6 @@ async function doSignup() {
   pendingSignup = null;
   showToast('Account created! Welcome 🎉');
   notify('new_signup');
-  syncSignupToSheet({ name, email, phone, address, country, created_at: new Date().toISOString() });
   // Pass referral partner contact_email so Edge Function can BCC them
   notify('welcome_client', {
     bcc_email: referralPartner?.contact_email || null
@@ -5159,7 +5166,21 @@ function renderMailList() {
   if (mailFilter.cat) {
     items = items.filter(m => m.category === mailFilter.cat);
   }
-  renderMailRows('mail-list-full', items, false);
+  const pg = PG.slice('mail', items);
+  renderMailRows('mail-list-full', pg.items, false);
+  // Append pagination after the list
+  const el = document.getElementById('mail-list-full');
+  if (el && pg.totalPages > 1) {
+    const pgDiv = document.createElement('div');
+    pgDiv.innerHTML = PG.build('mail', pg, 'pgMail');
+    el.appendChild(pgDiv);
+  }
+}
+
+function pgMail(page) {
+  PG.set('mail', page);
+  renderMailList();
+  document.getElementById('page-mail')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function mailThumb(m, inline) {
@@ -5586,127 +5607,12 @@ async function loadAdminDash() {
     unreadMap[row.client_id] = (unreadMap[row.client_id] || 0) + 1;
   });
 
-  // Client list
-  const listEl = document.getElementById('admin-client-list');
-  if (!allClients.length) {
-    listEl.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">👥</div>
-        <p>No clients yet. They'll appear here after signing up.</p>
-      </div>`;
-  } else {
-    // Desktop table
-    const tableHtml = `
-      <div class="admin-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Client</th>
-              <th>Country</th>
-              <th>Proof of Address</th>
-              <th>Unread</th>
-              <th>Paid</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${allClients.map(c => {
-              const proofs = proofMap[c.id] || [];
-              const unread = unreadMap[c.id] || 0;
-              const color  = avatarColor(c.full_name);
-              return `
-                <tr>
-                  <td>
-                    <div class="td-user">
-                      <div class="td-avatar" style="background:${color}">${c.full_name[0]}</div>
-                      <div>
-                        <div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}${c.referral_partners?.slug ? ` <span class="pill pill-referral" title="Referred by ${esc(c.referral_partners.slug)}">${esc(c.referral_partners.slug)}</span>` : ''}</div>
-                        <div class="td-sub">${esc(c.email || c.whatsapp || '–')}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="font-size:13px;">${esc(c.country || '–')}</td>
-                  <td>
-                    ${proofs.length
-                      ? proofs.map(p => `<span class="pill pill-active" style="margin:2px 3px 2px 0; font-size:11px; cursor:pointer;" onclick="openAssignFor('${c.id}')" title="Click to manage">${esc(p.name)}</span>`).join('')
-                      : `<span style="font-size:13px; color:var(--muted)">None</span>`}
-                  </td>
-                  <td>
-                    ${unread > 0
-                      ? `<span style="font-weight:600; color:var(--amber);">${unread} new</span>`
-                      : `<span style="color:var(--muted); font-size:13px;">–</span>`}
-                  </td>
-                  <td>
-                    ${isReferrerView
-                      ? `<span class="pay-pill ${c.paid ? 'pay-pill-paid' : 'pay-pill-unpaid'}">${c.paid ? '✅ Paid' : '⏳ Not Paid'}</span>`
-                      : `<label class="toggle-switch" onclick="event.stopPropagation()" title="${c.paid ? 'Paid' : 'Not paid'}">
-                           <input type="checkbox" ${c.paid ? 'checked' : ''} onchange="togglePaid('${c.id}', this.checked)">
-                           <span class="toggle-track"></span>
-                         </label>`}
-                  </td>
-                  <td>
-                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                      <button class="btn btn-gold btn-sm" onclick="goUploadFor('${c.id}')">📤 Mail</button>
-                      <button class="btn btn-ghost btn-sm" onclick="viewMailHistory('${c.id}', '${c.full_name.replace(/'/g, "\\'")}')">📋 History</button>
-                      <button class="btn btn-ghost btn-sm" onclick="openAssignFor('${c.id}')">🏠 Proof</button>
-                    </div>
-                  </td>
-                </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>`;
-
-    // Mobile cards
-    const cardsHtml = `
-      <div class="admin-cards-wrap">
-        ${allClients.map(c => {
-          const proofs = proofMap[c.id] || [];
-          const unread = unreadMap[c.id] || 0;
-          const color  = avatarColor(c.full_name);
-          return `
-            <div class="client-card">
-              <div class="client-card-header">
-                <div class="td-avatar" style="background:${color}; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0;">${c.full_name[0]}</div>
-                <div class="client-card-info">
-                  <div class="client-card-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup('${c.id}')">${esc(c.full_name)}${c.referral_partners?.slug ? ` <span class="pill pill-referral" style="font-size:9px;" title="Referred by ${esc(c.referral_partners.slug)}">${esc(c.referral_partners.slug)}</span>` : ''}</div>
-                  <div class="client-card-sub">${esc(c.email || c.whatsapp || '–')}</div>
-                </div>
-                ${unread > 0 ? `<span class="sb-badge">${unread}</span>` : ''}
-              </div>
-              <div class="client-card-meta">
-                <div class="client-card-meta-item">
-                  <span class="client-card-meta-label">Country</span>
-                  <span>${esc(c.country || '–')}</span>
-                </div>
-                <div class="client-card-meta-item" style="flex-wrap:wrap; gap:4px;">
-                  <span class="client-card-meta-label">Proof of Address</span>
-                  ${proofs.length
-                    ? proofs.map(p => `<span class="pill pill-active" style="font-size:10px;">${esc(p.name)}</span>`).join('')
-                    : '<span style="color:var(--muted)">None</span>'}
-                </div>
-                <div class="client-card-meta-item">
-                  <span class="client-card-meta-label">Paid</span>
-                  ${isReferrerView
-                    ? `<span class="pay-pill ${c.paid ? 'pay-pill-paid' : 'pay-pill-unpaid'}">${c.paid ? '✅ Paid' : '⏳ Not Paid'}</span>`
-                    : `<label class="toggle-switch" onclick="event.stopPropagation()">
-                         <input type="checkbox" ${c.paid ? 'checked' : ''} onchange="togglePaid('${c.id}', this.checked)">
-                         <span class="toggle-track"></span>
-                       </label>`}
-                </div>
-              </div>
-              <div class="client-card-actions">
-                <button class="btn btn-gold btn-sm" onclick="goUploadFor('${c.id}')">📤 Mail</button>
-                <button class="btn btn-ghost btn-sm" onclick="viewMailHistory('${c.id}', '${c.full_name.replace(/'/g, "\\'")}')">📋 History</button>
-                <button class="btn btn-ghost btn-sm" onclick="openAssignFor('${c.id}')">🏠 Proof</button>
-              </div>
-            </div>`;
-        }).join('')}
-      </div>`;
-
-    listEl.innerHTML = tableHtml + cardsHtml;
-  }
-
+  // Build proof/unread maps for paginated render helper
+  window._dashProofMap  = proofMap;
+  window._dashUnreadMap = unreadMap;
+  window._dashIsRef     = isReferrerView;
+  PG.reset('adminDash');
+  renderDashClientList();
   // Populate all client dropdowns
   populateClientDropdowns();
 }
@@ -6065,6 +5971,7 @@ function dhJumpToClient(clientId) {
 }
 
 function dhOpenFolder(clientId) {
+  PG.reset('docHistory');
   dhCurrentClientId = clientId;
   const sel = document.getElementById('dh-filter-client');
   if (sel) sel.value = clientId;
@@ -6072,6 +5979,7 @@ function dhOpenFolder(clientId) {
 }
 
 function dhBackToFolders() {
+  PG.reset('docHistory');
   dhCurrentClientId = null;
   const sel = document.getElementById('dh-filter-client');
   if (sel) sel.value = '';
@@ -6092,10 +6000,11 @@ function renderDocHistory() {
       content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No ${cap(filterType)} documents.</p></div>`;
       return;
     }
-    content.innerHTML = `<div class="doc-tile-grid">${items.map(d => {
+    const pgDT = PG.slice('docHistory', items);
+    content.innerHTML = `<div class="doc-tile-grid">${pgDT.items.map(d => {
       const cname = d.profiles?.full_name || '—';
       return `<div>${dhDocTileHTML(d,false)}<div style="font-size:11px;color:var(--muted);margin-top:4px;text-align:center;">👤 ${esc(cname)}</div></div>`;
-    }).join('')}</div>`;
+    }).join('')}</div>` + PG.build('docHistory', pgDT, 'pgDocType');
     return;
   }
 
@@ -6128,6 +6037,7 @@ function renderDocHistory() {
     content.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><p>No documents for this client.</p></div>`;
     return;
   }
+  const pgDF = PG.slice('docHistory', items);
   content.innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;">
@@ -6137,7 +6047,8 @@ function renderDocHistory() {
       <span id="dh-selected-count" style="font-size:12.5px;color:var(--muted);">0 selected</span>
       <button class="btn btn-gold btn-sm" id="dh-bulk-download-btn" onclick="bulkDownloadDhDocs()" disabled style="margin-left:auto;">⬇ Download Selected</button>
     </div>
-    <div class="doc-tile-grid">${items.map(d => dhDocTileHTML(d, true)).join('')}</div>`;
+    <div class="doc-tile-grid">${pgDF.items.map(d => dhDocTileHTML(d, true)).join('')}</div>
+    ${PG.build('docHistory', pgDF, 'pgDocFolder')}`;
   updateDhSelectionState();
 }
 
@@ -6171,6 +6082,9 @@ async function bulkDownloadDhDocs() {
   btn.disabled = false; btn.textContent = '⬇ Download Selected';
 }
 
+
+function pgDocType(page)   { PG.goTo('docHistory', page, renderDocHistory); }
+function pgDocFolder(page) { PG.goTo('docHistory', page, renderDocHistory); }
 function populateDocHistoryFilter() {
   const sel = document.getElementById('dh-filter-client');
   if (!sel) return;
@@ -6577,7 +6491,8 @@ async function viewMailHistory(clientId, clientName) {
     return;
   }
 
-  document.getElementById('history-list').innerHTML = mails.map((m, i) => {
+  const _mhPg = PG.slice('mailHistory', mails);
+  document.getElementById('history-list').innerHTML = _mhPg.items.map((m, i) => {
     const _url   = (m.scan_url || '').toLowerCase();
     const _isPdf = _url.includes('.pdf') || (m.file_path && m.file_path.toLowerCase().endsWith('.pdf'));
     const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
@@ -6628,7 +6543,66 @@ async function viewMailHistory(clientId, clientName) {
         '</div>' +
       '</div>'
     );
-  }).join('');
+  }).join('') + PG.build('mailHistory', _mhPg, '_pgMailHist');
+  window._pgMailHist_mails = mails;
+}
+
+function _pgMailHist(page) {
+  PG.set('mailHistory', page);
+  const mails = window._pgMailHist_mails || [];
+  const _mhPg = PG.slice('mailHistory', mails);
+  document.getElementById('history-list').innerHTML = _mhPg.items.map((m, i) => {
+    const _url   = (m.scan_url || '').toLowerCase();
+    const _isPdf = _url.includes('.pdf') || (m.file_path && m.file_path.toLowerCase().endsWith('.pdf'));
+    const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
+    const thumb  = !m.scan_url
+      ? catEmoji(m.category)
+      : _isPdf
+        ? '📄'
+        : _isImg
+          ? '<img src="' + esc(m.scan_url) + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:4px;" onerror="this.outerHTML=\'📬\'">'
+          : catEmoji(m.category);
+
+    const dot = m.is_read
+      ? 'width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;background:transparent;border:1.5px solid var(--parch3);'
+      : 'width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;background:var(--gold);';
+
+    const rowBorder = m.is_read ? 'transparent' : 'rgba(184,151,58,0.28)';
+    const rowBg     = m.is_read ? 'transparent' : '#fffdf4';
+    const fw        = m.is_read ? '400' : '600';
+    const descId    = 'hist-desc-' + m.id;
+    const btnId     = 'hist-desc-btn-' + m.id;
+
+    const rawHist = m.description || '';
+    const isHtmlHist = rawHist && /<[a-z]/.test(rawHist);
+    const histBody = rawHist ? (isHtmlHist ? sanitizeHtml(rawHist) : esc(rawHist).replace(/\n/g,'<br>')) : '';
+    const descHtml = histBody
+      ? '<div class="mail-body-content" style="margin-top:8px;font-size:13px;color:var(--ink2);background:var(--parch);border-radius:7px;padding:12px 14px;line-height:1.7;border-left:3px solid var(--gold);max-height:none;">' +
+          histBody +
+        '</div>'
+      : '';
+
+    const fileHtml = m.scan_url
+      ? '<a href="' + esc(m.scan_url) + '" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11.5px;padding:4px 10px;">⬇ File</a>'
+      : '<span style="font-size:11px;color:var(--muted);">No file</span>';
+
+    return (
+      '<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 12px;border-radius:9px;margin-bottom:4px;border:1.5px solid ' + rowBorder + ';background:' + rowBg + ';">' +
+        '<div style="' + dot + '"></div>' +
+        '<div style="width:40px;height:40px;border-radius:8px;background:var(--parch2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden;">' + thumb + '</div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="font-size:13.5px;font-weight:' + fw + ';color:var(--ink);">' + esc(m.sender) + '</div>' +
+          '<div style="font-size:12.5px;color:var(--muted);margin-top:2px;">' + esc(m.subject || '') + '</div>' +
+          descHtml +
+        '</div>' +
+        '<div style="text-align:right;flex-shrink:0;">' +
+          '<div style="font-size:11.5px;color:var(--muted);">' + fmtDate(m.created_at) + '</div>' +
+          '<span class="cat-pill cat-' + m.category + '" style="margin-top:4px;display:inline-block;">' + cap(m.category) + '</span>' +
+          '<div style="margin-top:6px;">' + fileHtml + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('') + PG.build('mailHistory', _mhPg, '_pgMailHist');
 }
 
 function toggleHistDesc(descId, btnId) {
@@ -7170,8 +7144,150 @@ function renderClientTickets() {
     container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎫</div><p>${filter || search ? 'No tickets match your search.' : 'No tickets yet. Create one above!'}</p></div>`;
     return;
   }
-  container.innerHTML = list.map(t => tkRowHTML(t, false)).join('');
+  const pgCTk = PG.slice('clientTickets', list);
+  container.innerHTML = pgCTk.items.map(t => tkRowHTML(t, false)).join('') + PG.build('clientTickets', pgCTk, 'pgClientTk');
 }
+
+function pgClientTk(page) { PG.goTo('clientTickets', page, renderClientTickets); }
+
+
+// ================================================================
+// PAGINATED RENDER FUNCTIONS
+// ================================================================
+
+// ── 1. Admin Dashboard: client list ─────────────────────────
+function renderDashClientList() {
+  const listEl = document.getElementById('admin-client-list');
+  if (!listEl) return;
+
+  const isReferrerView = window._dashIsRef || false;
+  const proofMap       = window._dashProofMap || {};
+  const unreadMap      = window._dashUnreadMap || {};
+
+  if (!allClients.length) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👥</div><p>No clients yet. They\'ll appear here after signing up.</p></div>';
+    return;
+  }
+
+  const pg = PG.slice('adminDash', allClients);
+
+  // ── Desktop table ─────────────────────────────────────────────
+  let tableRows = '';
+  pg.items.forEach(function(c) {
+    const proofs  = proofMap[c.id] || [];
+    const unread  = unreadMap[c.id] || 0;
+    const slug    = (c.referral_partners && c.referral_partners.slug) ? c.referral_partners.slug : '';
+
+    let paidCell;
+    if (isReferrerView) {
+      paidCell = c.paid
+        ? '<span class="pill pill-active">Paid</span>'
+        : '<span class="pill" style="background:#f3f4f6;color:#6b7280;">Not Paid</span>';
+    } else {
+      const chk = c.paid ? 'checked' : '';
+      paidCell = '<label class="toggle-switch" title="' + (c.paid ? 'Mark as unpaid' : 'Mark as paid') + '">' +
+                 '<input type="checkbox" ' + chk + ' onchange="togglePaid(\'' + c.id + '\',this.checked)" />' +
+                 '<span class="toggle-slider"></span>' +
+                 '</label>';
+    }
+
+    const proofHtml = proofs.length
+      ? proofs.map(function(p) { return '<span class="pill pill-active" style="font-size:11px;">' + esc(p.name || p) + '</span>'; }).join(' ')
+      : '<span style="font-size:12px;color:var(--muted);">None</span>';
+
+    const unreadHtml = unread > 0
+      ? '<span class="pill" style="background:var(--amber-bg);color:var(--amber);font-weight:700;">' + unread + '</span>'
+      : '<span style="color:var(--muted);font-size:13px;">—</span>';
+
+    const nameHtml = esc(c.full_name) +
+      (slug ? ' <span class="pill pill-referral" title="Referred by ' + esc(slug) + '">' + esc(slug) + '</span>' : '');
+
+    tableRows +=
+      '<tr>' +
+        '<td>' +
+          '<div class="td-name" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--parch3);" onclick="openClientPopup(\'' + c.id + '\')">' + nameHtml + '</div>' +
+          '<div class="td-sub">' + esc(c.email || '') + '</div>' +
+        '</td>' +
+        '<td>' + esc(c.country || '—') + '</td>' +
+        '<td>' + proofHtml + '</td>' +
+        '<td>' + unreadHtml + '</td>' +
+        '<td style="text-align:center;">' + paidCell + '</td>' +
+        '<td>' +
+          '<div style="display:flex;gap:5px;flex-wrap:wrap;">' +
+            '<button class="btn btn-gold btn-sm" onclick="openClientPopup(\'' + c.id + '\')">👁 View</button>' +
+            '<button class="btn btn-ghost btn-sm" onclick="viewMailHistory(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">📋 History</button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+  });
+
+  const tableHtml =
+    '<div class="admin-table-wrap">' +
+      '<table class="data-table">' +
+        '<thead><tr>' +
+          '<th>Client</th><th>Country</th><th>Proof of Address</th>' +
+          '<th>Unread Mail</th><th style="text-align:center;">Paid</th><th>Actions</th>' +
+        '</tr></thead>' +
+        '<tbody>' + tableRows + '</tbody>' +
+      '</table>' +
+    '</div>';
+
+  // ── Mobile cards ──────────────────────────────────────────────
+  let cardItems = '';
+  pg.items.forEach(function(c) {
+    const proofs = proofMap[c.id] || [];
+    const unread = unreadMap[c.id] || 0;
+    const slug   = (c.referral_partners && c.referral_partners.slug) ? c.referral_partners.slug : '';
+    const color  = avatarColor(c.full_name);
+    const initial = c.full_name[0].toUpperCase();
+
+    const nameHtml = esc(c.full_name) +
+      (slug ? ' <span class="pill pill-referral" style="font-size:9px;">' + esc(slug) + '</span>' : '');
+
+    const proofHtml = proofs.length
+      ? proofs.map(function(p) { return '<span class="pill pill-active" style="font-size:11px;">' + esc(p.name || p) + '</span>'; }).join(' ')
+      : '<span style="font-size:12px;color:var(--muted);">None</span>';
+
+    const unreadBadge = unread
+      ? '<div style="margin-top:6px;"><span class="pill" style="background:var(--amber-bg);color:var(--amber);font-weight:700;">' + unread + ' unread</span></div>'
+      : '';
+
+    cardItems +=
+      '<div class="client-card">' +
+        '<div class="client-card-header">' +
+          '<div class="client-card-avatar" style="background:' + color + ';">' + initial + '</div>' +
+          '<div class="client-card-info">' +
+            '<div class="client-card-name" style="cursor:pointer;text-decoration:underline;" onclick="openClientPopup(\'' + c.id + '\')">' + nameHtml + '</div>' +
+            '<div class="client-card-email">' + esc(c.email || '') + (c.country ? ' · ' + esc(c.country) : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="client-card-meta"><span class="client-card-meta-label">Proof</span> ' + proofHtml + '</div>' +
+        unreadBadge +
+        '<div class="client-card-actions" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">' +
+          '<button class="btn btn-gold btn-sm" onclick="openClientPopup(\'' + c.id + '\')">👁 View</button>' +
+          '<button class="btn btn-ghost btn-sm" onclick="viewMailHistory(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">📋 History</button>' +
+        '</div>' +
+      '</div>';
+  });
+
+  const cardsHtml = '<div class="admin-cards-wrap">' + cardItems + '</div>';
+
+  listEl.innerHTML = tableHtml + cardsHtml + PG.build('adminDash', pg, 'pgDash');
+}
+
+function pgDash(page) { PG.goTo('adminDash', page, renderDashClientList); }
+
+// ── 2. Admin Clients page (renderClientDetail) with pagination ─
+// Wrap existing renderClientDetail to add pagination after filtering
+
+// ── 3. Admin Tickets: paginated list ────────────────────────
+const _origRenderAdminTickets = typeof renderAdminTickets === 'function' ? renderAdminTickets : null;
+
+// ── 4. Client Mail: paginate renderMailList ──────────────────
+// Patched below via renderMailList override
+
+// ── 5. Mail History overlay: paginate mail list ──────────────
+// Patched in viewMailHistory
 
 // ── ADMIN: Load & render ─────────────────────────────────────
 async function loadAdminTickets() {
@@ -7273,8 +7389,11 @@ function renderAdminTickets() {
     container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><p>${filter || search ? 'No tickets match your search.' : 'No client tickets yet.'}</p></div>`;
     return;
   }
-  container.innerHTML = list.map(t => tkRowHTML(t, true)).join('');
+  const pgTk = PG.slice('adminTickets', list);
+  container.innerHTML = pgTk.items.map(t => tkRowHTML(t, true)).join('') + PG.build('adminTickets', pgTk, 'pgAdminTk');
 }
+
+function pgAdminTk(page) { PG.goTo('adminTickets', page, renderAdminTickets); }
 
 // ── Shared ticket row HTML ───────────────────────────────────
 function tkRowHTML(t, isAdmin) {
@@ -7848,7 +7967,9 @@ function renderClientDetail() {
     items.sort((a,b) => { const far = new Date('9999'); const aD = a.cs.lease_end ? new Date(a.cs.lease_end) : (cdSortDir==='asc'?far:new Date(0)); const bD = b.cs.lease_end ? new Date(b.cs.lease_end) : (cdSortDir==='asc'?far:new Date(0)); return cdSortDir==='asc'?aD-bD:bD-aD; });
   }
   if (!items.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No clients match your search.</p></div>'; return; }
-  el.innerHTML = items.map(c => {
+  const pgCl = PG.slice('clients', items);
+  const _renderItems = pgCl.items;
+  el.innerHTML = _renderItems.map(c => {
     const color = avatarColor(c.full_name);
     const cs = c.cs;
     const addrHtml  = cs.assigned_address ? esc(cs.assigned_address) : '<span class="cd-meta-value muted">Not assigned</span>';
@@ -7884,7 +8005,13 @@ function renderClientDetail() {
     else if (e.target.classList.contains('cd-proof-btn')) openAssignFor(cid);
     else openEditLease(cid);
   };
+  // Append pagination controls
+  const _pgClWrap = document.createElement('div');
+  _pgClWrap.innerHTML = PG.build('clients', pgCl, 'pgClients');
+  el.appendChild(_pgClWrap);
 }
+
+function pgClients(page) { PG.goTo('clients', page, renderClientDetail); }
 
 // ================================================================
 // ADMIN — EDIT LEASE / ADDRESS MODAL
@@ -8061,8 +8188,11 @@ function renderAdminShipMail() {
     container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No shipping requests yet.</p></div>';
     return;
   }
-  container.innerHTML = list.map(t => tkRowHTML(t, true)).join('');
+  const pgShip = PG.slice('adminShip', list);
+  container.innerHTML = pgShip.items.map(t => tkRowHTML(t, true)).join('') + PG.build('adminShip', pgShip, 'pgAdminShip');
 }
+
+function pgAdminShip(page) { PG.goTo('adminShip', page, renderAdminShipMail); }
 
 // ── Admin: render mail inquiries page ───────────────────────
 function renderAdminInquiries() {
@@ -8079,8 +8209,11 @@ function renderAdminInquiries() {
     container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>No mail inquiries yet.</p></div>';
     return;
   }
-  container.innerHTML = list.map(t => tkRowHTML(t, true)).join('');
+  const pgInq = PG.slice('adminInquiries', list);
+  container.innerHTML = pgInq.items.map(t => tkRowHTML(t, true)).join('') + PG.build('adminInquiries', pgInq, 'pgAdminInq');
 }
+
+function pgAdminInq(page) { PG.goTo('adminInquiries', page, renderAdminInquiries); }
 
 // ================================================================
 // MESSAGE YOUR REP (persistent mail_inquiry thread per client)
@@ -8253,6 +8386,55 @@ function updateRepMsgBadge() {
   el.classList.toggle('hidden', !hasUnseen);
 }
 
+
+// ================================================================
+// PAGINATION UTILITIES
+// ================================================================
+const PG = {
+  SIZES: { adminDash:10, clients:12, adminTickets:15, clientTickets:10, adminShip:15, adminInquiries:15, docHistory:20, mail:12, mailHistory:15 },
+  pages: {},
+  get(key)    { return this.pages[key] || 1; },
+  set(key, p) { this.pages[key] = p; },
+  reset(key)  { this.pages[key] = 1; },
+
+  slice(key, arr) {
+    const size = this.SIZES[key] || 10;
+    const total = arr.length;
+    const totalPages = Math.max(1, Math.ceil(total / size));
+    const page = Math.min(Math.max(1, this.get(key)), totalPages);
+    this.pages[key] = page;
+    const start = (page - 1) * size;
+    return { items: arr.slice(start, start + size), total, page, totalPages, start: start + 1, end: Math.min(start + size, total) };
+  },
+
+  build(key, result, gotoFn) {
+    const { total, page, totalPages, start, end } = result;
+    if (totalPages <= 1) return '';
+    const nums = this._nums(page, totalPages);
+    let btns = [`<button class="pg-btn" ${page===1?'disabled':`onclick="${gotoFn}(${page-1})"`}>‹</button>`];
+    let prev = null;
+    for (const p of nums) {
+      if (prev !== null && p - prev > 1) btns.push('<span class="pg-ellipsis">…</span>');
+      btns.push(`<button class="pg-btn${p===page?' active':''}" onclick="${gotoFn}(${p})">${p}</button>`);
+      prev = p;
+    }
+    btns.push(`<button class="pg-btn" ${page===totalPages?'disabled':`onclick="${gotoFn}(${page+1})"`}>›</button>`);
+    return `<div class="pagination">${btns.join('')}</div><div class="pg-info">${start}–${end} of ${total}</div>`;
+  },
+
+  _nums(cur, total) {
+    if (total <= 7) return Array.from({length:total},(_,i)=>i+1);
+    const s = new Set([1, total, cur]);
+    for (let d=1;d<=2;d++) { if(cur-d>=1)s.add(cur-d); if(cur+d<=total)s.add(cur+d); }
+    return [...s].sort((a,b)=>a-b);
+  },
+
+  goTo(key, page, renderFn) {
+    this.set(key, page);
+    renderFn();
+    window.scrollTo({top:0, behavior:'smooth'});
+  },
+};
 // ================================================================
 // EMAIL SYSTEM — Resend API
 // ================================================================
@@ -8283,24 +8465,6 @@ async function notify(action, payload = {}) {
       body: JSON.stringify({ action, payload }),
     });
   } catch (err) { devLog('notify() failed (non-critical):', err.message); }
-}
-
-// Fire-and-forget: syncs a new client signup to Google Sheets via the
-// sync-client-to-sheet Edge Function. Never blocks or fails signup.
-async function syncSignupToSheet(data) {
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) return;
-    await fetch(`${SUPABASE_URL}/functions/v1/sync-client-to-sheet`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-        'apikey': SUPABASE_ANON_KEY,
-      },
-      body: JSON.stringify(data),
-    });
-  } catch (err) { devLog('syncSignupToSheet() failed (non-critical):', err.message); }
 }
 
 async function loadEmailSettings() {
