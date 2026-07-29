@@ -999,30 +999,35 @@
     .toggle-svc-info { flex: 1; }
     .toggle-svc-name { font-size: 13.5px; font-weight: 500; color: var(--ink); }
     .toggle-svc-status { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .toggle-switch { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-switch { position: relative; display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
     .toggle-track {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: var(--parch3);
-      border-radius: 21px;
-      transition: background 0.2s;
+      position: relative;
+      width: 42px;
+      height: 24px;
+      flex-shrink: 0;
+      background: #c9c4bb;
+      border-radius: 24px;
+      transition: background 0.22s;
+      display: inline-block;
+      border: 1.5px solid rgba(0,0,0,0.10);
     }
     .toggle-track::before {
       content: '';
       position: absolute;
-      width: 15px;
-      height: 15px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
-      background: var(--white);
-      left: 3px;
-      top: 3px;
-      transition: transform 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+      background: #ffffff;
+      left: 2px;
+      top: 2px;
+      transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
     }
-    .toggle-switch input:checked + .toggle-track { background: var(--forest); }
-    .toggle-switch input:checked + .toggle-track::before { transform: translateX(17px); }
+    .toggle-switch input:checked + .toggle-track { background: #2a9d5c; border-color: #228a4f; }
+    .toggle-switch input:checked + .toggle-track::before { transform: translateX(18px); }
+    .toggle-label-off { font-size: 11.5px; color: #999; font-weight: 500; }
+    .toggle-label-on  { font-size: 11.5px; color: #2a9d5c; font-weight: 600; }
 
     /* Admin client list: table on desktop, cards on mobile */
     .admin-table-wrap { display: block; }
@@ -7187,7 +7192,8 @@ function renderDashClientList() {
       const chk = c.paid ? 'checked' : '';
       paidCell = '<label class="toggle-switch" title="' + (c.paid ? 'Mark as unpaid' : 'Mark as paid') + '">' +
                  '<input type="checkbox" ' + chk + ' onchange="togglePaid(\'' + c.id + '\',this.checked)" />' +
-                 '<span class="toggle-slider"></span>' +
+                 '<span class="toggle-track"></span>' +
+                 '<span class="' + (c.paid ? 'toggle-label-on' : 'toggle-label-off') + '">' + (c.paid ? 'Paid' : 'Unpaid') + '</span>' +
                  '</label>';
     }
 
