@@ -2640,6 +2640,121 @@
     .pagination .pg-btn:disabled { opacity:0.35; cursor:not-allowed; }
     .pagination .pg-ellipsis { color:var(--muted); font-size:13px; padding:0 4px; line-height:34px; }
     .pg-info { font-size:12.5px; color:var(--muted); margin-top:8px; text-align:center; }
+
+    /* ── Client Tags ─────────────────────────────────────────── */
+    .tag-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+      background: var(--parch2); color: var(--ink2);
+      border: 1.5px solid var(--parch3);
+    }
+    .tag-pill .tag-remove {
+      cursor: pointer; font-size: 10px; color: var(--muted);
+      line-height: 1; padding: 0 1px;
+      transition: color 0.15s;
+    }
+    .tag-pill .tag-remove:hover { color: var(--red); }
+    .tag-input-wrap {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      border: 1.5px solid var(--parch3); border-radius: 9px;
+      padding: 7px 10px; background: var(--white);
+      transition: border-color 0.18s; cursor: text;
+    }
+    .tag-input-wrap:focus-within { border-color: var(--gold); }
+    .tag-input-wrap input {
+      border: none; outline: none; font-size: 13px;
+      color: var(--ink); background: transparent;
+      font-family: 'Outfit', sans-serif; min-width: 80px; flex: 1;
+    }
+    /* Tag manager modal */
+    #tag-manager-overlay {
+      position: fixed; inset: 0;
+      background: rgba(12,15,10,0.50);
+      backdrop-filter: blur(4px);
+      z-index: 450; display: none;
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    #tag-manager-overlay.open { display: flex; }
+    .tag-manager-modal {
+      background: var(--white); border-radius: 16px;
+      padding: 26px 28px; width: 100%; max-width: 440px;
+      box-shadow: var(--shadow-l); animation: pageIn 0.2s ease;
+    }
+    @media(max-width:600px){
+      #tag-manager-overlay { padding:0; align-items:flex-end; }
+      .tag-manager-modal { border-radius:20px 20px 0 0; max-width:100%; }
+    }
+    /* Dashboard toolbar */
+    .dash-client-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .dash-client-toolbar .search-wrap { flex: 1; min-width: 160px; }
+
+    /* ── All Mail admin page ─────────────────────────────────── */
+    .aml-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--parch2);
+      border-radius: 11px; margin-bottom: 8px;
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .aml-row:hover  { border-color: var(--gold); box-shadow: var(--shadow-s); }
+    .aml-row.unread { border-color: rgba(184,151,58,0.35); background: #fffdf4; }
+    .aml-thumb {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: var(--parch2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0; overflow: hidden;
+    }
+    .aml-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .aml-main { flex: 1; min-width: 0; }
+    .aml-client { font-size: 11.5px; font-weight: 700; color: var(--gold); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .aml-subject { font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .aml-row.unread .aml-subject { font-weight: 700; }
+    .aml-meta { display: flex; align-items: center; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+    .aml-sender { font-size: 12.5px; color: var(--muted); }
+    .aml-date   { font-size: 12px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+    .aml-unread-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0; margin-top: 4px;
+    }
+    /* Mail detail panel */
+    .aml-detail-panel {
+      position: fixed; inset: 0;
+      background: rgba(12,15,10,0.50);
+      backdrop-filter: blur(4px);
+      z-index: 310; display: none;
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .aml-detail-panel.open { display: flex; }
+    .aml-detail-inner {
+      background: var(--white); border-radius: 16px;
+      width: 100%; max-width: 640px; max-height: 88vh;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-l); animation: pageIn 0.2s ease;
+    }
+    .aml-detail-header {
+      padding: 22px 26px 18px;
+      border-bottom: 1px solid var(--parch2); flex-shrink: 0;
+    }
+    .aml-detail-body { padding: 20px 26px; overflow-y: auto; flex: 1; }
+    .aml-detail-scan { width: 100%; border-radius: 10px; margin-top: 14px; max-height: 420px; object-fit: contain; }
+
+    /* Responsive ticket badges — wrap on small screens */
+    .tk-row-meta { flex-wrap: wrap; gap: 5px 10px; }
+    .tk-client-badge { cursor: pointer; }
+    .tk-client-badge:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .aml-detail-inner { border-radius: 20px 20px 0 0; max-width: 100%; max-height: 92vh; }
+      .aml-detail-panel { padding: 0; align-items: flex-end; }
+      .aml-thumb { width: 36px; height: 36px; font-size: 18px; }
+      .aml-date { margin-left: 0; }
+    }
   </style>
 </head>
 <body>
@@ -2974,11 +3089,7 @@
               <p>Loading mail…</p>
             </div>
           </div>
-          <div style="margin-top: 16px;">
-            <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="navTo('mail')">
-              View All Mail →
-            </button>
-          </div>
+
         </div>
       </div>
     
@@ -3079,7 +3190,22 @@
         <!-- Populated by JS -->
       </div>
       <div class="card">
-        <div class="card-title">👥 All Clients</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <div class="card-title" style="margin-bottom:0;">👥 All Clients</div>
+        </div>
+        <!-- Toolbar: search + tag filter -->
+        <div class="dash-client-toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="dash-client-search" placeholder="Search by name, email…"
+              oninput="PG.reset('adminDash'); renderDashClientList()" />
+          </div>
+          <select id="dash-tag-filter" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
+            onchange="PG.reset('adminDash'); renderDashClientList()">
+            <option value="">All tags</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" onclick="loadAdminDash()" title="Refresh">↻</button>
+        </div>
         <div id="admin-client-list">
           <div class="empty-state">
             <div class="empty-state-icon">⏳</div>
@@ -3358,7 +3484,10 @@
           <h2>All Clients</h2>
           <p id="clients-detail-sub">Assigned addresses, lease dates &amp; proof of address</p>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="navTo('admin-dash')">← Back</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn btn-ghost btn-sm" onclick="exportClientsCSV()">⬇ Export CSV</button>
+          <button class="btn btn-ghost btn-sm" onclick="navTo('admin-dash')">← Back</button>
+        </div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
         <div class="search-wrap" style="flex:1;min-width:180px;">
@@ -3546,6 +3675,49 @@
           <div class="empty-state-icon">💬</div>
           <p>No mail inquiries yet.</p>
         </div>
+      </div>
+    </div>
+
+
+    <!-- ── ADMIN: All Mail ───────────────────────────────────── -->
+    <div id="page-admin-all-mail" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>All Mail</h2>
+          <p id="aml-sub">All mail across all clients</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminAllMail()">↻ Refresh</button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+        <div class="search-wrap" style="flex:1; min-width:180px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="aml-search" placeholder="Search sender, subject, client…"
+            oninput="PG.reset('adminMail'); renderAdminAllMail()" />
+        </div>
+        <select id="aml-filter-client" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
+          onchange="PG.reset('adminMail'); renderAdminAllMail()">
+          <option value="">All clients</option>
+        </select>
+        <select id="aml-filter-cat" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
+          onchange="PG.reset('adminMail'); renderAdminAllMail()">
+          <option value="">All categories</option>
+          <option value="usps">USPS</option>
+          <option value="bank">Bank</option>
+          <option value="irs">IRS</option>
+          <option value="other">Other</option>
+        </select>
+        <select id="aml-filter-read" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
+          onchange="PG.reset('adminMail'); renderAdminAllMail()">
+          <option value="">All</option>
+          <option value="unread">Unread only</option>
+          <option value="read">Read only</option>
+        </select>
+      </div>
+
+      <div id="aml-list">
+        <div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>
       </div>
     </div>
 
@@ -4045,6 +4217,84 @@
 </div>
 
 <!-- ================================================================
+     TAG MANAGER MODAL
+================================================================ -->
+<div id="tag-manager-overlay" onclick="if(event.target===this)closeTagManager()">
+  <div class="tag-manager-modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div>
+        <div style="font-size:18px;font-weight:700;color:var(--ink);">🏷 Manage Tags</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px;" id="tag-manager-client-name">–</div>
+      </div>
+      <button onclick="closeTagManager()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;padding:4px;transition:color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">✕</button>
+    </div>
+
+    <!-- Current tags -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Current Tags</div>
+      <div id="tag-manager-current" style="display:flex;flex-wrap:wrap;gap:6px;min-height:32px;">
+        <span style="font-size:13px;color:var(--muted);">No tags yet</span>
+      </div>
+    </div>
+
+    <!-- Add new tag -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Add Tag</div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="tag-input-new" placeholder="e.g. VIP, Follow Up, Pending…"
+          style="flex:1;padding:10px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-size:13.5px;color:var(--ink);background:var(--white);outline:none;font-family:'Outfit',sans-serif;transition:border-color 0.18s;"
+          onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'"
+          onkeydown="if(event.key==='Enter')addClientTag()" maxlength="32" />
+        <button class="btn btn-gold" onclick="addClientTag()">+ Add</button>
+      </div>
+      <div id="tag-error" style="font-size:12px;color:var(--red);margin-top:6px;display:none;"></div>
+    </div>
+
+    <!-- Existing tags across all clients (quick-add) -->
+    <div>
+      <div style="font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">All Tags <span style="font-weight:400;text-transform:none;">(click to add)</span></div>
+      <div id="tag-manager-all" style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="font-size:12px;color:var(--muted);">Loading…</span>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;text-align:right;">
+      <button class="btn btn-ghost" onclick="closeTagManager()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     ADMIN MAIL DETAIL PANEL
+================================================================ -->
+<div class="aml-detail-panel" id="aml-detail-panel" onclick="if(event.target===this)closeAmlDetail()">
+  <div class="aml-detail-inner">
+    <div class="aml-detail-header">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+        <div style="min-width:0;flex:1;">
+          <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;" id="aml-detail-client">—</div>
+          <div style="font-size:20px;font-weight:700;color:var(--ink);line-height:1.25;word-break:break-word;" id="aml-detail-subject">—</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap;">
+            <span style="font-size:13px;color:var(--muted);">From: <strong id="aml-detail-sender" style="color:var(--ink);">—</strong></span>
+            <span style="font-size:12px;color:var(--muted);" id="aml-detail-date">—</span>
+            <span id="aml-detail-cat" class="pill" style="font-size:11px;">—</span>
+          </div>
+        </div>
+        <button onclick="closeAmlDetail()" style="background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;padding:4px;flex-shrink:0;line-height:1;transition:color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">✕</button>
+      </div>
+    </div>
+    <div class="aml-detail-body" id="aml-detail-body">
+      <!-- content injected by JS -->
+    </div>
+    <div style="padding:14px 26px;border-top:1px solid var(--parch2);flex-shrink:0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" id="aml-detail-scan-btn" style="display:none;" onclick="window.open(document.getElementById('aml-detail-scan-url').value,'_blank')">🔍 View Full Scan</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeAmlDetail()">Close</button>
+    </div>
+    <input type="hidden" id="aml-detail-scan-url" />
+  </div>
+</div>
+
+<!-- ================================================================
      TOAST
 ================================================================ -->
 <div id="toast">
@@ -4066,6 +4316,9 @@ let sb            = null;   // Supabase client
 let currentUser   = null;   // auth.users row
 let currentProfile= null;   // profiles row
 let allProofTypes = [];     // all proof type definitions
+let allClientTags = [];     // distinct tags across all clients { name, count }
+let clientTagsMap = {};     // clientId -> string[]
+let tagManagerClientId = null;
 let mailCache     = [];     // client's mail
 let allClients    = [];     // admin: all client profiles
 let allDocHistory = [];     // admin: all documents for history view
@@ -4484,6 +4737,7 @@ function setupSidebar() {
       ${sbItem('admin-dash',       '📊', 'Dashboard')}
       ${sbItem('admin-clients',    '👥', 'Clients')}
       ${sbItem('admin-upload',     '📤', 'Upload Mail')}
+      ${sbItem('admin-all-mail',   '📬', 'All Mail')}
       ${sbItem('admin-docs',       '📄', 'Upload Document')}
       ${sbItem('admin-tickets',    '🎫', 'Client Tickets',       'admin-tk-badge')}
       ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',   'admin-ship-badge')}
@@ -4496,6 +4750,7 @@ function setupSidebar() {
       ${sbItem('admin-dash',       '📊', 'Dashboard')}
       ${sbItem('admin-clients',    '👥', 'Clients')}
       ${sbItem('admin-upload',     '📤', 'Upload Mail')}
+      ${sbItem('admin-all-mail',   '📬', 'All Mail')}
       ${sbItem('admin-docs',       '📄', 'Upload Document')}
       ${sbItem('admin-tickets',    '🎫', 'Client Tickets',      'admin-tk-badge')}
       ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',  'admin-ship-badge')}
@@ -4541,6 +4796,9 @@ function navTo(pageId) {
   if (pageId === 'admin-docs' && ['admin','referrer'].includes(currentProfile?.role)) {
     loadDocHistory();
     populateDocHistoryFilter();
+  }
+  if (pageId === 'admin-all-mail' && ['admin','referrer'].includes(currentProfile?.role)) {
+    loadAdminAllMail();
   }
   if (pageId === 'admin-tickets' && ['admin','referrer'].includes(currentProfile?.role)) {
     loadAdminTickets();
@@ -5553,14 +5811,37 @@ async function loadAdminDash() {
   const isReferrerView = currentProfile.role === 'referrer';
 
   // Load clients, mail, proof_of_address, and payment status in parallel
-  const [{ data: profiles }, { data: unreadMail }, { data: allProofs }, { data: paymentRows }] = await Promise.all([
+  const [{ data: profiles }, { data: unreadMail }, { data: allProofs }, { data: paymentRows }, { data: tagRows }] = await Promise.all([
     sb.from('profiles').select('*, referral_partners!referral_partner_id(slug)').eq('role', 'client').order('created_at', { ascending: false }),
     sb.from('mail').select('id, client_id').eq('is_read', false),
     sb.from('proof_of_address').select('client_id, proof_types(name)'),
     sb.from('client_payment_status').select('client_id, paid'),
+    sb.from('client_tags').select('client_id, tag'),
   ]);
 
   const paidMap = Object.fromEntries((paymentRows || []).map(r => [r.client_id, r.paid]));
+
+  // Build tag maps
+  clientTagsMap = {};
+  const tagCount = {};
+  (tagRows || []).forEach(function(r) {
+    if (!clientTagsMap[r.client_id]) clientTagsMap[r.client_id] = [];
+    clientTagsMap[r.client_id].push(r.tag);
+    tagCount[r.tag] = (tagCount[r.tag] || 0) + 1;
+  });
+  allClientTags = Object.entries(tagCount)
+    .map(function(e) { return { name: e[0], count: e[1] }; })
+    .sort(function(a,b) { return a.name.localeCompare(b.name); });
+  window._dashTagMap = clientTagsMap;
+
+  // Populate tag filter dropdown
+  const tagSel = document.getElementById('dash-tag-filter');
+  if (tagSel) {
+    const cur = tagSel.value;
+    tagSel.innerHTML = '<option value="">All tags</option>' +
+      allClientTags.map(function(t) { return '<option value="' + esc(t.name) + '">' + esc(t.name) + ' (' + t.count + ')</option>'; }).join('');
+    tagSel.value = cur;
+  }
   allClients = (profiles || []).map(c => Object.assign({}, c, { paid: paidMap[c.id] ?? false }));
   populateDocHistoryFilter();
 
@@ -5614,6 +5895,7 @@ async function loadAdminDash() {
 
   // Build proof/unread maps for paginated render helper
   window._dashProofMap  = proofMap;
+  window._dashTagMap     = clientTagsMap;
   window._dashUnreadMap = unreadMap;
   window._dashIsRef     = isReferrerView;
   PG.reset('adminDash');
@@ -7168,13 +7450,37 @@ function renderDashClientList() {
   const isReferrerView = window._dashIsRef || false;
   const proofMap       = window._dashProofMap || {};
   const unreadMap      = window._dashUnreadMap || {};
+  const tagMap         = window._dashTagMap   || {};
 
   if (!allClients.length) {
     listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👥</div><p>No clients yet. They\'ll appear here after signing up.</p></div>';
     return;
   }
 
-  const pg = PG.slice('adminDash', allClients);
+  // Apply search + tag filter
+  const searchQ  = (document.getElementById('dash-client-search')?.value || '').toLowerCase().trim();
+  const tagFilter = (document.getElementById('dash-tag-filter')?.value || '').toLowerCase().trim();
+
+  let filtered = allClients;
+  if (searchQ) {
+    filtered = filtered.filter(function(c) {
+      return c.full_name.toLowerCase().includes(searchQ) ||
+             (c.email || '').toLowerCase().includes(searchQ);
+    });
+  }
+  if (tagFilter) {
+    filtered = filtered.filter(function(c) {
+      const ctags = (tagMap[c.id] || []).map(function(t){ return t.toLowerCase(); });
+      return ctags.includes(tagFilter);
+    });
+  }
+
+  if (!filtered.length) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No clients match your search.</p></div>';
+    return;
+  }
+
+  const pg = PG.slice('adminDash', filtered);
 
   // ── Desktop table ─────────────────────────────────────────────
   let tableRows = '';
@@ -7208,6 +7514,13 @@ function renderDashClientList() {
     const nameHtml = esc(c.full_name) +
       (slug ? ' <span class="pill pill-referral" title="Referred by ' + esc(slug) + '">' + esc(slug) + '</span>' : '');
 
+    const clientTags = tagMap[c.id] || [];
+    const tagsHtml = clientTags.length
+      ? clientTags.map(function(t) {
+          return '<span class="tag-pill">' + esc(t) + '</span>';
+        }).join(' ')
+      : '<span style="font-size:12px;color:var(--muted);">—</span>';
+
     tableRows +=
       '<tr>' +
         '<td>' +
@@ -7216,12 +7529,13 @@ function renderDashClientList() {
         '</td>' +
         '<td>' + esc(c.country || '—') + '</td>' +
         '<td>' + proofHtml + '</td>' +
+        '<td>' + tagsHtml + '</td>' +
         '<td>' + unreadHtml + '</td>' +
         '<td style="text-align:center;">' + paidCell + '</td>' +
         '<td>' +
           '<div style="display:flex;gap:5px;flex-wrap:wrap;">' +
-            '<button class="btn btn-gold btn-sm" onclick="openClientPopup(\'' + c.id + '\')">👁 View</button>' +
-            '<button class="btn btn-ghost btn-sm" onclick="viewMailHistory(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">📋 History</button>' +
+            '<button class="btn btn-gold btn-sm" onclick="openAssignFor(\'' + c.id + '\')">🏠 Proof</button>' +
+            '<button class="btn btn-ghost btn-sm" onclick="openTagManager(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">🏷 Tags</button>' +
           '</div>' +
         '</td>' +
       '</tr>';
@@ -7232,7 +7546,7 @@ function renderDashClientList() {
       '<table class="data-table">' +
         '<thead><tr>' +
           '<th>Client</th><th>Country</th><th>Proof of Address</th>' +
-          '<th>Unread Mail</th><th style="text-align:center;">Paid</th><th>Actions</th>' +
+          '<th>Tags</th><th>Unread Mail</th><th style="text-align:center;">Paid</th><th>Actions</th>' +
         '</tr></thead>' +
         '<tbody>' + tableRows + '</tbody>' +
       '</table>' +
@@ -7269,9 +7583,13 @@ function renderDashClientList() {
         '</div>' +
         '<div class="client-card-meta"><span class="client-card-meta-label">Proof</span> ' + proofHtml + '</div>' +
         unreadBadge +
+        '<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;" id="card-tags-' + c.id + '">' +
+          ((tagMap[c.id] || []).map(function(t){ return '<span class="tag-pill">' + esc(t) + '</span>'; }).join('') || '') +
+        '</div>' +
         '<div class="client-card-actions" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">' +
-          '<button class="btn btn-gold btn-sm" onclick="openClientPopup(\'' + c.id + '\')">👁 View</button>' +
-          '<button class="btn btn-ghost btn-sm" onclick="viewMailHistory(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">📋 History</button>' +
+          '<button class="btn btn-gold btn-sm" onclick="openClientPopup(\'' + c.id + '\')">👤 Profile</button>' +
+          '<button class="btn btn-ghost btn-sm" onclick="openAssignFor(\'' + c.id + '\')">🏠 Proof</button>' +
+          '<button class="btn btn-ghost btn-sm" onclick="openTagManager(\'' + c.id + '\',\'' + c.full_name.replace(/'/g, "\\'") + '\')">🏷 Tags</button>' +
         '</div>' +
       '</div>';
   });
@@ -7407,7 +7725,7 @@ function tkRowHTML(t, isAdmin) {
   const clr = TK_PROGRESS_CLR[t.status] || '#f59e0b';
 
   const clientBadge = isAdmin && t._profile?.full_name
-    ? `<span class="tk-client-badge">👤 ${esc(t._profile.full_name)}</span>`
+    ? `<span class="tk-client-badge" onclick="event.stopPropagation();openClientPopup('${t._profile.id}')" title="View client profile">👤 ${esc(t._profile.full_name)}</span>`
     : '';
 
   // NEW badge logic
@@ -8397,7 +8715,7 @@ function updateRepMsgBadge() {
 // PAGINATION UTILITIES
 // ================================================================
 const PG = {
-  SIZES: { adminDash:10, clients:12, adminTickets:15, clientTickets:10, adminShip:15, adminInquiries:15, docHistory:20, mail:12, mailHistory:15 },
+  SIZES: { adminDash:10, clients:12, adminTickets:15, clientTickets:10, adminShip:15, adminInquiries:15, docHistory:20, mail:12, mailHistory:15, adminMail:20 },
   pages: {},
   get(key)    { return this.pages[key] || 1; },
   set(key, p) { this.pages[key] = p; },
@@ -8441,6 +8759,452 @@ const PG = {
     window.scrollTo({top:0, behavior:'smooth'});
   },
 };
+
+// ================================================================
+// TAG MANAGER
+// ================================================================
+
+function openTagManager(clientId, clientName) {
+  tagManagerClientId = clientId;
+  const nameEl = document.getElementById('tag-manager-client-name');
+  if (nameEl) nameEl.textContent = clientName || '';
+  const inp = document.getElementById('tag-input-new');
+  if (inp) inp.value = '';
+  const errEl = document.getElementById('tag-error');
+  if (errEl) errEl.style.display = 'none';
+  renderTagManagerCurrent();
+  renderTagManagerAll();
+  document.getElementById('tag-manager-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTagManager() {
+  document.getElementById('tag-manager-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  tagManagerClientId = null;
+}
+
+function renderTagManagerCurrent() {
+  const el = document.getElementById('tag-manager-current');
+  if (!el || !tagManagerClientId) return;
+  const tags = clientTagsMap[tagManagerClientId] || [];
+  if (!tags.length) {
+    el.innerHTML = '<span style="font-size:13px;color:var(--muted);">No tags yet</span>';
+    return;
+  }
+  el.innerHTML = tags.map(function(t) {
+    return '<span class="tag-pill">' + esc(t) +
+      '<span class="tag-remove" onclick="removeClientTag(\'' + esc(t) + '\')" title="Remove">✕</span>' +
+      '</span>';
+  }).join('');
+}
+
+function renderTagManagerAll() {
+  const el = document.getElementById('tag-manager-all');
+  if (!el) return;
+  const current = clientTagsMap[tagManagerClientId] || [];
+  const others  = allClientTags.filter(function(t) {
+    return !current.includes(t.name);
+  });
+  if (!others.length) {
+    el.innerHTML = '<span style="font-size:12px;color:var(--muted);">No other tags yet</span>';
+    return;
+  }
+  el.innerHTML = others.map(function(t) {
+    return '<span class="tag-pill" style="cursor:pointer;border-style:dashed;" onclick="quickAddTag(\'' + esc(t.name) + '\')" title="Add this tag">' +
+      '+ ' + esc(t.name) + ' <span style="color:var(--muted);font-weight:400;">(' + t.count + ')</span>' +
+      '</span>';
+  }).join('');
+}
+
+async function addClientTag() {
+  if (!tagManagerClientId) return;
+  const inp    = document.getElementById('tag-input-new');
+  const errEl  = document.getElementById('tag-error');
+  const tag    = (inp?.value || '').trim();
+  if (errEl) errEl.style.display = 'none';
+
+  if (!tag || tag.length < 1) {
+    if (errEl) { errEl.textContent = 'Please enter a tag.'; errEl.style.display = 'block'; }
+    return;
+  }
+  if (tag.length > 32) {
+    if (errEl) { errEl.textContent = 'Tag must be 32 characters or less.'; errEl.style.display = 'block'; }
+    return;
+  }
+  const current = clientTagsMap[tagManagerClientId] || [];
+  if (current.map(function(t){ return t.toLowerCase(); }).includes(tag.toLowerCase())) {
+    if (errEl) { errEl.textContent = 'This tag is already added.'; errEl.style.display = 'block'; }
+    return;
+  }
+
+  const { error } = await sb.from('client_tags').insert({ client_id: tagManagerClientId, tag });
+  if (error) {
+    if (errEl) { errEl.textContent = 'Could not add tag: ' + error.message; errEl.style.display = 'block'; }
+    return;
+  }
+
+  // Update local state
+  if (!clientTagsMap[tagManagerClientId]) clientTagsMap[tagManagerClientId] = [];
+  clientTagsMap[tagManagerClientId].push(tag);
+  _rebuildAllClientTags();
+  if (inp) inp.value = '';
+  renderTagManagerCurrent();
+  renderTagManagerAll();
+  _refreshTagFilter();
+  renderDashClientList();
+  showToast('✓ Tag added!');
+}
+
+async function quickAddTag(tagName) {
+  if (!tagManagerClientId) return;
+  const current = clientTagsMap[tagManagerClientId] || [];
+  if (current.map(function(t){ return t.toLowerCase(); }).includes(tagName.toLowerCase())) return;
+
+  const { error } = await sb.from('client_tags').insert({ client_id: tagManagerClientId, tag: tagName });
+  if (error) { showToast('Could not add tag.', true); return; }
+
+  if (!clientTagsMap[tagManagerClientId]) clientTagsMap[tagManagerClientId] = [];
+  clientTagsMap[tagManagerClientId].push(tagName);
+  _rebuildAllClientTags();
+  renderTagManagerCurrent();
+  renderTagManagerAll();
+  _refreshTagFilter();
+  renderDashClientList();
+  showToast('✓ Tag added!');
+}
+
+async function removeClientTag(tag) {
+  if (!tagManagerClientId) return;
+  const { error } = await sb.from('client_tags')
+    .delete()
+    .eq('client_id', tagManagerClientId)
+    .eq('tag', tag);
+  if (error) { showToast('Could not remove tag.', true); return; }
+
+  clientTagsMap[tagManagerClientId] = (clientTagsMap[tagManagerClientId] || [])
+    .filter(function(t) { return t !== tag; });
+  _rebuildAllClientTags();
+  renderTagManagerCurrent();
+  renderTagManagerAll();
+  _refreshTagFilter();
+  renderDashClientList();
+  showToast('✓ Tag removed.');
+}
+
+function _rebuildAllClientTags() {
+  const tagCount = {};
+  Object.values(clientTagsMap).forEach(function(tags) {
+    (tags || []).forEach(function(t) {
+      tagCount[t] = (tagCount[t] || 0) + 1;
+    });
+  });
+  allClientTags = Object.entries(tagCount)
+    .map(function(e) { return { name: e[0], count: e[1] }; })
+    .sort(function(a,b) { return a.name.localeCompare(b.name); });
+  window._dashTagMap = clientTagsMap;
+}
+
+function _refreshTagFilter() {
+  const tagSel = document.getElementById('dash-tag-filter');
+  if (!tagSel) return;
+  const cur = tagSel.value;
+  tagSel.innerHTML = '<option value="">All tags</option>' +
+    allClientTags.map(function(t) {
+      return '<option value="' + esc(t.name) + '">' + esc(t.name) + ' (' + t.count + ')</option>';
+    }).join('');
+  if (allClientTags.some(function(t){ return t.name === cur; })) tagSel.value = cur;
+}
+
+
+// ================================================================
+// ADMIN — ALL MAIL PAGE
+// ================================================================
+let adminAllMail    = [];  // all mail rows with _clientName
+let adminAllMailMap = {};  // id -> mail row
+
+async function loadAdminAllMail() {
+  const el = document.getElementById('aml-list');
+  if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>';
+
+  // Fetch all mail across all clients, join profile for name
+  const { data: rows, error } = await sb
+    .from('mail')
+    .select('*, profiles!client_id(id, full_name, email)')
+    .order('created_at', { ascending: false });
+
+  if (error || !rows) {
+    if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Failed to load mail.</p></div>';
+    return;
+  }
+
+  adminAllMail = rows.map(function(m) {
+    m._clientName  = m.profiles?.full_name  || '—';
+    m._clientEmail = m.profiles?.email       || '';
+    m._clientId    = m.profiles?.id          || m.client_id;
+    return m;
+  });
+  adminAllMailMap = {};
+  adminAllMail.forEach(function(m) { adminAllMailMap[m.id] = m; });
+
+  // Populate client filter
+  const clientSel = document.getElementById('aml-filter-client');
+  if (clientSel) {
+    const seen = {}; const opts = ['<option value="">All clients</option>'];
+    adminAllMail.forEach(function(m) {
+      if (m._clientId && !seen[m._clientId]) {
+        seen[m._clientId] = true;
+        opts.push('<option value="' + m._clientId + '">' + esc(m._clientName) + '</option>');
+      }
+    });
+    const cur = clientSel.value;
+    clientSel.innerHTML = opts.join('');
+    clientSel.value = cur;
+  }
+
+  const total  = adminAllMail.length;
+  const unread = adminAllMail.filter(function(m){ return !m.is_read; }).length;
+  const sub = document.getElementById('aml-sub');
+  if (sub) sub.textContent = total + ' mails total · ' + unread + ' unread';
+
+  PG.reset('adminMail');
+  renderAdminAllMail();
+}
+
+function renderAdminAllMail() {
+  const el = document.getElementById('aml-list');
+  if (!el) return;
+
+  const search    = (document.getElementById('aml-search')?.value    || '').toLowerCase().trim();
+  const clientId  =  document.getElementById('aml-filter-client')?.value || '';
+  const cat       =  document.getElementById('aml-filter-cat')?.value    || '';
+  const readState =  document.getElementById('aml-filter-read')?.value   || '';
+
+  let items = adminAllMail;
+  if (search)   items = items.filter(function(m) {
+    return (m.sender||'').toLowerCase().includes(search) ||
+           (m.subject||'').toLowerCase().includes(search) ||
+           m._clientName.toLowerCase().includes(search);
+  });
+  if (clientId) items = items.filter(function(m) { return m._clientId === clientId; });
+  if (cat)      items = items.filter(function(m) { return m.category === cat; });
+  if (readState === 'unread') items = items.filter(function(m) { return !m.is_read; });
+  if (readState === 'read')   items = items.filter(function(m) { return  m.is_read; });
+
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No mail matches your filters.</p></div>';
+    return;
+  }
+
+  const pg = PG.slice('adminMail', items);
+
+  el.innerHTML = pg.items.map(function(m) {
+    const _url   = (m.scan_url || '').toLowerCase();
+    const _isPdf = _url.includes('.pdf');
+    const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
+
+    let thumbHtml;
+    if (m.scan_url && _isImg) {
+      thumbHtml = '<img src="' + esc(m.scan_url) + '" alt="" onerror="this.outerHTML=\'📬\'" />';
+    } else if (m.scan_url && _isPdf) {
+      thumbHtml = '📄';
+    } else {
+      thumbHtml = catEmoji(m.category || 'other');
+    }
+
+    const catLabels = { usps:'USPS', bank:'Bank', irs:'IRS', other:'Other' };
+    const catLabel  = catLabels[m.category] || m.category || 'Mail';
+    const subject   = m.subject || '(no subject)';
+
+    return '<div class="aml-row' + (m.is_read ? '' : ' unread') + '" onclick="openAmlDetail(\'' + m.id + '\')">' +
+      (m.is_read ? '' : '<div class="aml-unread-dot"></div>') +
+      '<div class="aml-thumb">' + thumbHtml + '</div>' +
+      '<div class="aml-main">' +
+        '<div class="aml-client" onclick="event.stopPropagation();openClientPopup(\'' + esc(m._clientId) + '\')" title="View client profile" style="cursor:pointer;">' +
+          '👤 ' + esc(m._clientName) + '</div>' +
+        '<div class="aml-subject">' + esc(subject) + '</div>' +
+        '<div class="aml-meta">' +
+          '<span class="aml-sender">From: ' + esc(m.sender || '—') + '</span>' +
+          '<span class="pill" style="font-size:10.5px;">' + catLabel + '</span>' +
+          '<span class="aml-date">' + fmtDate(m.created_at) + '</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('') + PG.build('adminMail', pg, 'pgAdminMail');
+}
+
+function pgAdminMail(page) { PG.goTo('adminMail', page, renderAdminAllMail); }
+
+function openAmlDetail(mailId) {
+  const m = adminAllMailMap[mailId];
+  if (!m) return;
+
+  const catLabels = { usps:'USPS', bank:'Bank', irs:'IRS', other:'Other' };
+
+  document.getElementById('aml-detail-client').textContent  = '👤 ' + (m._clientName || '—');
+  document.getElementById('aml-detail-subject').textContent = m.subject || '(no subject)';
+  document.getElementById('aml-detail-sender').textContent  = m.sender  || '—';
+  document.getElementById('aml-detail-date').textContent    = fmtDate(m.created_at);
+  document.getElementById('aml-detail-cat').textContent     = catLabels[m.category] || m.category || 'Mail';
+
+  // Make client name clickable
+  const clientEl = document.getElementById('aml-detail-client');
+  clientEl.style.cursor = 'pointer';
+  clientEl.onclick = function() { closeAmlDetail(); openClientPopup(m._clientId); };
+
+  // Build body
+  const _url   = (m.scan_url || '').toLowerCase();
+  const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
+  const _isPdf = _url.includes('.pdf');
+  const scanBtn = document.getElementById('aml-detail-scan-btn');
+  const scanUrl = document.getElementById('aml-detail-scan-url');
+
+  let bodyHtml = '';
+  if (m.description) {
+    const rawDesc  = m.description;
+    const isHtmlDesc = /<[a-z][\s\S]*>/i.test(rawDesc);
+    const safeDesc   = isHtmlDesc ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g, '<br>');
+    bodyHtml += '<div class="mail-body-content" style="font-size:14px;color:var(--ink);line-height:1.75;margin-bottom:16px;">' + safeDesc + '</div>';
+  }
+  if (m.scan_url && _isImg) {
+    bodyHtml += '<img src="' + esc(m.scan_url) + '" alt="Scan" class="aml-detail-scan" onerror="this.style.display=\'none\'" />';
+  }
+  if (!bodyHtml) {
+    bodyHtml = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">No preview available.</div>';
+  }
+  document.getElementById('aml-detail-body').innerHTML = bodyHtml;
+
+  if (scanBtn && scanUrl) {
+    if (m.scan_url && (_isPdf || _isImg)) {
+      scanBtn.style.display = '';
+      scanUrl.value = m.scan_url;
+    } else {
+      scanBtn.style.display = 'none';
+      scanUrl.value = '';
+    }
+  }
+
+  document.getElementById('aml-detail-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Mark as read
+  if (!m.is_read) {
+    sb.from('mail').update({ is_read: true }).eq('id', mailId).then(function() {
+      m.is_read = true;
+      renderAdminAllMail();
+    });
+  }
+}
+
+function closeAmlDetail() {
+  document.getElementById('aml-detail-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+// ================================================================
+// EXPORT CLIENTS CSV
+// ================================================================
+function exportClientsCSV() {
+  if (!cdAllClients || !cdAllClients.length) {
+    showToast('No clients to export.', true);
+    return;
+  }
+
+  // Respect current search + filter so export matches what's on screen
+  const searchQ   = (document.getElementById('cd-search')?.value      || '').toLowerCase().trim();
+  const refFilter = (document.getElementById('cd-referral-filter')?.value || '').toLowerCase();
+
+  let rows = cdAllClients;
+  if (searchQ)   rows = rows.filter(function(c) {
+    return c.full_name.toLowerCase().includes(searchQ) ||
+           (c.email || '').toLowerCase().includes(searchQ) ||
+           (c.cs?.assigned_address || '').toLowerCase().includes(searchQ);
+  });
+  if (refFilter) rows = rows.filter(function(c) {
+    return (c.referralSlug || '').toLowerCase() === refFilter;
+  });
+
+  if (!rows.length) { showToast('No clients match the current filter.', true); return; }
+
+  // Determine status
+  function clientStatus(cs) {
+    if (!cs || !cs.lease_end) return 'No Date Set';
+    const today = new Date(); today.setHours(0,0,0,0);
+    const expiry = new Date(cs.lease_end);
+    const days   = Math.ceil((expiry - today) / 86400000);
+    if (days < 0)   return 'Expired';
+    if (days <= 30) return 'Expiring Soon (' + days + 'd)';
+    return 'Active';
+  }
+
+  // CSV columns
+  const COLS = [
+    'Full Name',
+    'Email',
+    'Phone / WhatsApp',
+    'Country',
+    'Mailing Address',
+    'Assigned Address',
+    'Lease Start',
+    'Lease End',
+    'Status',
+    'Referral Partner',
+    'LLC Name',
+    'Proof of Address',
+    'Signed Up',
+  ];
+
+  function csvCell(v) {
+    const s = String(v === null || v === undefined ? '' : v);
+    // Escape quotes and wrap in quotes if needed
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  }
+
+  function fmtCsvDate(d) {
+    if (!d) return '';
+    try { return new Date(d).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }); }
+    catch(e) { return d; }
+  }
+
+  const lines = [COLS.map(csvCell).join(',')];
+
+  rows.forEach(function(c) {
+    const cs     = c.cs || {};
+    const proofs = (c.proofs || []).join('; ');
+    lines.push([
+      c.full_name        || '',
+      c.email            || '',
+      c.whatsapp || c.phone || '',
+      c.country          || '',
+      c.mailing_address  || '',
+      cs.assigned_address || '',
+      fmtCsvDate(cs.lease_start),
+      fmtCsvDate(cs.lease_end),
+      clientStatus(cs),
+      c.referralSlug     || '',
+      c.llc_name         || '',
+      proofs,
+      fmtCsvDate(c.created_at),
+    ].map(csvCell).join(','));
+  });
+
+  const csvContent = lines.join('\r\n');
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'tra-clients-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('✓ Exported ' + rows.length + ' client' + (rows.length !== 1 ? 's' : '') + ' to CSV!');
+}
+
 // ================================================================
 // EMAIL SYSTEM — Resend API
 // ================================================================
