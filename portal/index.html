@@ -2755,6 +2755,20 @@
       .aml-thumb { width: 36px; height: 36px; font-size: 18px; }
       .aml-date { margin-left: 0; }
     }
+
+    /* ── Mail action status pills ───────────────────────────── */
+    .mail-action-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+      border: 1.5px solid transparent;
+    }
+    .mail-action-pill.pending {
+      background: #fef9c3; color: #92400e; border-color: #fde68a;
+    }
+    .mail-action-pill.done {
+      background: #dcfce7; color: #166534; border-color: #bbf7d0;
+    }
   </style>
 </head>
 <body>
@@ -3097,14 +3111,40 @@
     <!-- ── Referral Banner (Client Overview only) ── -->
         </div>
 
-    <!-- ── CLIENT: Mail ────────────────────────────── -->
+    <!-- ── CLIENT: Manage My Mail ──────────────────── -->
     <div id="page-mail" class="page">
       <div class="page-header">
         <div class="page-header-left">
-          <h2>My Mail</h2>
-          <p>Scanned mail uploaded by your account manager</p>
+          <h2>Manage My Mail</h2>
+          <p>Physical mail received at your assigned address</p>
         </div>
       </div>
+
+      <!-- Status bar -->
+      <div class="mail-status-bar" style="display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        <div style="flex:1;min-width:200px;background:var(--parch2);border:1.5px solid var(--parch3);border-left:4px solid var(--gold);border-radius:11px;padding:13px 16px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:20px;flex-shrink:0;">📍</span>
+          <div>
+            <div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px;">Your Location</div>
+            <div style="font-size:13px;color:var(--ink);font-weight:500;" id="mail-last-check-text">Checked weekly on weekends</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-gold" onclick="openShipMailModal()" style="white-space:nowrap;">📦 Ship My Mail</button>
+          <button class="btn btn-ghost" onclick="navTo('mail-rep')" style="white-space:nowrap;">💬 Message Rep</button>
+        </div>
+      </div>
+
+      <!-- Bulk select toolbar -->
+      <div id="mail-bulk-bar" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:10px 14px;background:var(--parch2);border-radius:10px;border:1.5px solid var(--parch3);">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;">
+          <input type="checkbox" id="mail-select-all" onchange="toggleAllMailSelect(this.checked)" style="width:16px;height:16px;cursor:pointer;" />
+          Select all
+        </label>
+        <span id="mail-selected-count" style="font-size:12.5px;color:var(--muted);">0 selected</span>
+        <button class="btn btn-gold btn-sm" id="mail-bulk-ship-btn" onclick="openBulkShipModal()" disabled style="margin-left:auto;">📦 Ship Selected</button>
+      </div>
+
       <div class="card" style="padding: 18px 20px;">
         <div class="mail-toolbar">
           <div class="search-wrap">
@@ -3127,6 +3167,20 @@
           <div class="empty-state">
             <div class="empty-state-icon">📭</div>
             <p>No mail yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ship Mail History -->
+      <div style="margin-top:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <h3 style="font-size:16px;font-weight:700;color:var(--ink);margin:0;">📦 Shipping Requests</h3>
+          <button class="btn btn-gold btn-sm" onclick="openShipMailModal()">+ New Request</button>
+        </div>
+        <div id="ship-history-list">
+          <div class="empty-state" style="padding:20px;">
+            <div class="empty-state-icon" style="font-size:28px;">📦</div>
+            <p style="font-size:13px;">No shipping requests yet.</p>
           </div>
         </div>
       </div>
@@ -3451,7 +3505,7 @@
           <h2>My Tickets</h2>
           <p>Create requests and track their progress</p>
         </div>
-        <button class="btn btn-gold" onclick="openCreateTicket()">+ New Ticket</button>
+        <button class="btn btn-gold" onclick="navTo('mail-rep')">+ New Ticket</button>
       </div>
 
       <!-- Filter bar -->
@@ -3601,7 +3655,7 @@
       <div class="page-header">
         <div class="page-header-left">
           <h2>Message Your Rep</h2>
-          <p>Ask about mail you're expecting, missing items, or documents</p>
+          <p>Your direct line to your location rep — ask anything about your mail or address</p>
         </div>
       </div>
       <div class="card" style="padding:0; display:flex; flex-direction:column; min-height:420px;">
@@ -3609,7 +3663,29 @@
           <div style="text-align:center;color:var(--muted);padding:30px 20px;font-size:13px;">Loading conversation…</div>
         </div>
         <div class="tk-reply-box" id="rep-reply-box">
-          <textarea class="tk-reply-textarea" id="rep-reply-text" placeholder="e.g. I'm expecting a card — can you check?" rows="3"></textarea>
+          <!-- Quick prompts -->
+          <div style="padding:10px 14px 0;border-top:1px solid var(--parch2);">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px;">Quick messages</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+              <button onclick="_repQuickPrompt('I am expecting a physical package or letter at my address. Can you keep an eye out for it?')"
+                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
+                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">📬 I'm expecting mail</button>
+              <button onclick="_repQuickPrompt('My mail seems to be delayed. Can you check if anything has arrived for me recently?')"
+                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
+                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">⏳ My mail is delayed</button>
+              <button onclick="_repQuickPrompt('I would like to request shipment of my physical mail to my address. Can you help arrange that?')"
+                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
+                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">📦 I want to ship my mail</button>
+              <button onclick="_repQuickPrompt('I have a question about my assigned address.')"
+                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
+                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">🏠 Question about my address</button>
+            </div>
+          </div>
+          <textarea class="tk-reply-textarea" id="rep-reply-text" placeholder="Type your message here, or tap a quick message above…" rows="3" style="margin:0 14px 0;width:calc(100% - 28px);box-sizing:border-box;"></textarea>
           <div class="tk-reply-footer">
             <div class="tk-reply-attach">
               <button class="tk-attach-btn" onclick="document.getElementById('rep-reply-file').click()">📎 Attach</button>
@@ -4759,13 +4835,10 @@ function setupSidebar() {
   } else {
     nav.innerHTML = `
       ${sbLabel('Menu')}
-      ${sbItem('overview',  '🏠', 'Overview')}
-      ${sbItem('proof',     '📋', 'Proof of Address')}
-      ${sbItem('mail',      '📬', 'My Mail',            'mail-nav-badge')}
-      ${sbItem('docs',      '📄', 'Documents')}
-      ${sbItem('ship-mail', '📦', 'Ship Mail',           'ship-tk-badge')}
-      ${sbItem('tickets',   '🎫', 'My Tickets',          'client-tk-badge')}
-      ${sbItem('mail-rep',  '💬', 'Message Rep',         'rep-msg-badge')}
+      ${sbItem('overview', '🏠', 'Overview')}
+      ${sbItem('mail',     '📬', 'Manage My Mail', 'mail-nav-badge')}
+      ${sbItem('docs',     '📄', 'Documents')}
+      ${sbItem('mail-rep', '💬', 'Message Rep',    'rep-msg-badge')}
     `;
   }
 }
@@ -5350,7 +5423,7 @@ async function loadClientDash() {
   document.getElementById('overview-stats').innerHTML =
     '<div class="stat-card">' +
       '<div class="stat-card-icon">📬</div>' +
-      '<div class="stat-card-label">Unread Mail</div>' +
+      '<div class="stat-card-label">New Mail</div>' +
       '<div class="stat-card-value ' + (unreadCount > 0 ? 'amber' : '') + '">' + unreadCount + '</div>' +
       '<div class="stat-card-sub">pieces of mail</div>' +
     '</div>' +
@@ -5458,6 +5531,19 @@ function mailThumb(m, inline) {
     onerror="this.outerHTML='<span style=\\'font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\'>📬</span>';">`;
 }
 
+function mailStatusLabel(m) {
+  // Action statuses — what the client instructed + whether done
+  if (m.client_action === 'shred' && m.action_status === 'completed') return { label:'Shredded',          icon:'🗑', style:'background:#f3f4f6;color:#6b7280;' };
+  if (m.client_action === 'shred')                                     return { label:'Shred Requested',   icon:'🗑', style:'background:#fee2e2;color:#dc2626;font-weight:700;' };
+  if (m.client_action === 'open'  && m.action_status === 'completed') return { label:'Opened',             icon:'📂', style:'background:#dcfce7;color:#166534;' };
+  if (m.client_action === 'open')                                      return { label:'Open Requested',    icon:'📂', style:'background:#dbeafe;color:#1e40af;font-weight:700;' };
+  if (m.client_action === 'ship'  && m.action_status === 'completed') return { label:'Shipped',            icon:'✈️', style:'background:#dcfce7;color:#166534;' };
+  if (m.client_action === 'ship')                                      return { label:'Ship Requested',    icon:'📦', style:'background:#fef9c3;color:#92400e;font-weight:700;' };
+  // Default read/unread
+  if (m.is_read) return { label:'Viewed', icon:'👁', style:'background:#f3f4f6;color:#6b7280;' };
+  return               { label:'New',    icon:'🔵', style:'background:#dcfce7;color:#166534;font-weight:700;' };
+}
+
 function renderMailRows(containerId, items, compact) {
   const el = document.getElementById(containerId);
   if (!el) return;
@@ -5465,9 +5551,19 @@ function renderMailRows(containerId, items, compact) {
     el.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">📭</div>
-        <p>No mail yet.</p>
+        <p style="max-width:300px;margin:0 auto;line-height:1.6;">No mail has been uploaded yet. If you're expecting something, <a href="#" onclick="event.preventDefault();navTo('mail-rep')" style="color:var(--green);font-weight:600;">message your rep</a>.</p>
       </div>`;
+    const bb = document.getElementById('mail-bulk-bar');
+    if (bb && containerId === 'mail-list-full') bb.style.display = 'none';
     return;
+  }
+  if (containerId === 'mail-list-full') {
+    const bb = document.getElementById('mail-bulk-bar');
+    if (bb) bb.style.display = 'flex';
+    const sa = document.getElementById('mail-select-all');
+    if (sa) sa.checked = false;
+    _mailSelectedIds = new Set();
+    _updateMailBulkBtn();
   }
 
   if (compact) {
@@ -5492,12 +5588,51 @@ function renderMailRows(containerId, items, compact) {
       const isHtml = /<[a-z]/.test(rawDesc);
       const bodyHtml = isHtml ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g,'<br>');
       const descHtml = rawDesc ? `<div class="mail-accordion-desc mail-body-content">${bodyHtml}</div>` : '';
-      const fileBtn  = m.scan_url ? `<a href="${esc(m.scan_url)}" target="_blank" class="btn btn-gold btn-sm">⬇ View / Download</a>` : '';
-      const readBtn  = !m.is_read ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); markMailRead('${m.id}')">✓ Mark Read</button>` : '';
+      const st = mailStatusLabel(m);
+      const statusPill = `<span class="pill" style="font-size:10.5px;${st.style}">${st.icon} ${st.label}</span>`;
+      const action = m.client_action;
+      const done   = m.action_status === 'completed';
+
+      // ── Three client instruction buttons ─────────────────────
+      // Each is disabled/labelled once an action is already set
+
+      // 📂 Open — instruct rep to open envelope and scan contents to Documents
+      const openBtn = (action === 'open' && done)
+        ? `<span class="mail-action-pill done">📂 Opened</span>`
+        : action === 'open'
+          ? `<span class="mail-action-pill pending">📂 Open Requested</span>`
+          : action  // another action already chosen — grey it out
+          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">📂 Open</button>`
+          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','open')">📂 Open</button>`;
+
+      // 📦 Ship — instruct rep to ship the physical mail
+      const shipBtn = (action === 'ship' && done)
+        ? `<span class="mail-action-pill done">✈️ Shipped</span>`
+        : action === 'ship'
+          ? `<span class="mail-action-pill pending">📦 Ship Requested</span>`
+          : action
+          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">📦 Ship</button>`
+          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','ship')">📦 Ship</button>`;
+
+      // 🗑 Shred — instruct rep to shred the mail
+      const shredBtn = (action === 'shred' && done)
+        ? `<span class="mail-action-pill done">🗑 Shredded</span>`
+        : action === 'shred'
+          ? `<span class="mail-action-pill pending" style="color:#dc2626;">🗑 Shred Requested</span>`
+          : action
+          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">🗑 Shred</button>`
+          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','shred')" style="color:var(--red);">🗑 Shred</button>`;
+
+      const readBtn = !m.is_read
+        ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();markMailRead('${m.id}')">✓ Mark Read</button>`
+        : '';
+
       return `
         <div class="mail-accordion ${m.is_read ? '' : 'unread'}" id="accordion-${m.id}">
           <div class="mail-accordion-header" onclick="toggleAccordion('${m.id}')">
-            <div class="unread-dot ${m.is_read ? 'read' : ''}"></div>
+            <input type="checkbox" class="mail-select-cb" data-id="${m.id}"
+              onclick="event.stopPropagation();_toggleMailSelect('${m.id}',this.checked)"
+              style="width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--green);" />
             <div class="mail-thumb">${mailThumb(m, true)}</div>
             <div class="mail-body">
               <div class="mail-sender">${esc(m.sender)}</div>
@@ -5505,13 +5640,21 @@ function renderMailRows(containerId, items, compact) {
             </div>
             <div class="mail-meta" style="text-align:right; flex-shrink:0;">
               <div class="mail-date">${fmtDate(m.created_at)}</div>
-              <span class="cat-pill cat-${m.category}">${cap(m.category)}</span>
+              ${statusPill}
             </div>
             <div class="mail-accordion-chevron">▼</div>
           </div>
           <div class="mail-accordion-body">
             ${descHtml}
-            ${(fileBtn || readBtn) ? `<div class="mail-accordion-actions">${fileBtn}${readBtn}</div>` : ''}
+            <div style="margin-bottom:10px;font-size:12px;color:var(--muted);line-height:1.5;">
+              Tell your rep what to do with this mail item:
+            </div>
+            <div class="mail-accordion-actions" style="flex-wrap:wrap;gap:6px;align-items:center;">
+              ${openBtn}
+              ${shipBtn}
+              ${shredBtn}
+              ${readBtn}
+            </div>
           </div>
         </div>`;
     }).join('');
@@ -5862,7 +6005,7 @@ async function loadAdminDash() {
     </div>
     <div class="stat-card">
       <div class="stat-card-icon">📬</div>
-      <div class="stat-card-label">Unread Mail</div>
+      <div class="stat-card-label">New Mail</div>
       <div class="stat-card-value ${totalUnread > 0 ? 'amber' : ''}">${totalUnread}</div>
       <div class="stat-card-sub">across all clients</div>
     </div>
@@ -7397,6 +7540,7 @@ async function loadClientTickets() {
   if (!error) clientTickets = data || [];
   renderClientTickets();
   renderClientShipMail();
+  renderShipHistory();
   updateClientTkBadge();
 }
 
@@ -8397,6 +8541,194 @@ async function saveLeaseDetails() {
 }
 
 
+
+// ================================================================
+// SIMPLIFIED CLIENT MAIL — bulk select, ship single, quick prompts,
+// ship history, status labels
+// ================================================================
+let _mailSelectedIds = new Set();
+
+function _toggleMailSelect(id, checked) {
+  if (checked) _mailSelectedIds.add(id);
+  else         _mailSelectedIds.delete(id);
+  _updateMailBulkBtn();
+}
+
+function toggleAllMailSelect(checked) {
+  document.querySelectorAll('.mail-select-cb').forEach(function(cb) {
+    cb.checked = checked;
+    const id = cb.dataset.id;
+    if (checked) _mailSelectedIds.add(id);
+    else         _mailSelectedIds.delete(id);
+  });
+  _updateMailBulkBtn();
+}
+
+function _updateMailBulkBtn() {
+  const btn     = document.getElementById('mail-bulk-ship-btn');
+  const countEl = document.getElementById('mail-selected-count');
+  const n       = _mailSelectedIds.size;
+  if (btn)     btn.disabled = n === 0;
+  if (countEl) countEl.textContent = n + ' selected';
+  const all = document.querySelectorAll('.mail-select-cb');
+  const sa  = document.getElementById('mail-select-all');
+  if (sa && all.length) sa.checked = all.length > 0 && n === all.length;
+}
+
+function openBulkShipModal() {
+  if (!_mailSelectedIds.size) return;
+  const contentsEl = document.getElementById('ship-contents');
+  if (contentsEl) {
+    const selectedMails = mailCache.filter(function(m) { return _mailSelectedIds.has(m.id); });
+    if (selectedMails.length) {
+      contentsEl.value = selectedMails.map(function(m, i) {
+        return (i + 1) + '. From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + ' (' + fmtDate(m.created_at) + ')';
+      }).join('\n');
+    } else {
+      contentsEl.value = _mailSelectedIds.size + ' mail item' + (_mailSelectedIds.size > 1 ? 's' : '') + ' selected';
+    }
+  }
+  openShipMailModal();
+}
+
+function openShipSingleModal(mailId) {
+  const m = mailCache.find(function(x) { return x.id === mailId; });
+  const contentsEl = document.getElementById('ship-contents');
+  if (contentsEl && m) {
+    contentsEl.value = 'From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '');
+  }
+  openShipMailModal();
+}
+
+function _repQuickPrompt(text) {
+  const ta = document.getElementById('rep-reply-text');
+  if (ta) {
+    ta.value = text;
+    ta.focus();
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+  }
+}
+
+// ── Ship History on Manage My Mail page ──────────────────────
+function renderShipHistory() {
+  const el = document.getElementById('ship-history-list');
+  if (!el) return;
+  const list = (clientTickets || []).filter(function(t) { return t.type === 'ship_mail'; });
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state" style="padding:16px;"><div class="empty-state-icon" style="font-size:28px;">📦</div><p style="font-size:13px;">No shipping requests yet.</p></div>';
+    return;
+  }
+  const STATUS_STYLE = {
+    open:        { bg:'var(--amber-bg)',  color:'var(--amber)',  label:'Pending',    icon:'⏳' },
+    in_progress: { bg:'#dbeafe',          color:'#1e40af',       label:'Processing', icon:'🔄' },
+    replied:     { bg:'#ede9fe',          color:'#4c1d95',       label:'Update',     icon:'💬' },
+    completed:   { bg:'var(--green-bg)', color:'var(--green)', label:'Shipped',    icon:'✈️' },
+  };
+  el.innerHTML = list.map(function(t) {
+    const st = STATUS_STYLE[t.status] || STATUS_STYLE.open;
+    const desc = t.description || '';
+    const itemsIdx = desc.indexOf('Items to ship:');
+    const addrIdx  = desc.indexOf('Shipping address:');
+    let itemsHtml = '';
+    if (itemsIdx >= 0) {
+      const noteMarker = desc.indexOf('\n\nNote:');
+      const raw = desc.slice(itemsIdx + 14, noteMarker > 0 ? noteMarker : desc.length).trim();
+      itemsHtml = '<div style="font-size:12px;color:var(--ink2);line-height:1.6;margin-top:6px;white-space:pre-wrap;">' + esc(raw) + '</div>';
+    }
+    let addrHtml = '';
+    if (addrIdx >= 0) {
+      const methMarker = desc.indexOf('\n\nShipping method:');
+      const raw = desc.slice(addrIdx + 17, methMarker > 0 ? methMarker : desc.length).trim();
+      addrHtml = '<div style="font-size:11.5px;color:var(--muted);margin-top:4px;">To: ' + esc(raw) + '</div>';
+    }
+    return '<div style="padding:14px 16px;border:1.5px solid var(--parch3);border-radius:11px;margin-bottom:8px;cursor:pointer;transition:border-color 0.15s;" onclick="clientOpenTicket(\'' + t.id + '\')" onmouseover="this.style.borderColor=\'var(--gold)\'" onmouseout="this.style.borderColor=\'var(--parch3)\'">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<span style="font-size:18px;">' + st.icon + '</span>' +
+          '<div><div style="font-size:13.5px;font-weight:600;color:var(--ink);">' + esc(t.title) + '</div>' +
+          '<div style="font-size:11.5px;color:var(--muted);">Requested ' + fmtDate(t.created_at) + '</div></div>' +
+        '</div>' +
+        '<span style="font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:' + st.bg + ';color:' + st.color + ';">' + st.label + '</span>' +
+      '</div>' + itemsHtml + addrHtml + '</div>';
+  }).join('');
+}
+
+
+// ── Set client action on a mail item ─────────────────────────
+// action: 'open' | 'ship' | 'shred'
+// Saves to mail.client_action, notifies rep via mail_inquiry thread
+async function setMailAction(mailId, action) {
+  const m = mailCache.find(function(x) { return x.id === mailId; });
+  if (!m) return;
+
+  const labels = { open:'open the envelope and scan the contents', ship:'ship this item to your address', shred:'shred this item' };
+  const confirmMsgs = {
+    open:  'Ask your rep to open this envelope and upload the contents to your Documents?',
+    ship:  'Ask your rep to ship this mail item to your address?',
+    shred: 'Ask your rep to shred this mail item? This cannot be undone.',
+  };
+
+  if (!window.confirm(confirmMsgs[action] + '\n\n"' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + '"')) return;
+
+  // Save action to DB
+  const { error: dbErr } = await sb.from('mail').update({
+    client_action: action,
+    action_status: 'requested',
+  }).eq('id', mailId);
+
+  if (dbErr) { showToast('Could not save. Please try again.', true); return; }
+
+  // Update local cache
+  m.client_action = action;
+  m.action_status = 'requested';
+
+  // Send notification message to rep thread
+  const threadId = await ensureRepThread();
+  if (threadId) {
+    const actionLabels = { open:'📂 Open Request', ship:'📦 Ship Request', shred:'🗑 Shred Request' };
+    const body = actionLabels[action] + '\n\nPlease ' + labels[action] + ':\n\n' +
+      'From: ' + (m.sender || '—') + '\n' +
+      (m.subject ? 'Subject: ' + m.subject + '\n' : '') +
+      'Received: ' + fmtDate(m.created_at) + '\n\n' +
+      (action === 'open'  ? 'Please open the envelope, scan the contents, and upload to my Documents section.' : '') +
+      (action === 'ship'  ? 'Please ship this to my address on file. I\'ll receive a shipping request in the portal.' : '') +
+      (action === 'shred' ? 'Please shred this item and confirm once done.' : '');
+
+    await sb.from('ticket_messages').insert({
+      ticket_id:   threadId,
+      sender_id:   currentUser.id,
+      sender_role: 'client',
+      sender_name: currentProfile.full_name,
+      body,
+    });
+    await sb.from('tickets').update({ updated_at: new Date().toISOString() }).eq('id', threadId);
+  }
+
+  // If ship, also open the ship modal pre-filled
+  if (action === 'ship') {
+    const contentsEl = document.getElementById('ship-contents');
+    if (contentsEl) contentsEl.value = 'From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '');
+    openShipMailModal();
+  }
+
+  renderMailList();
+  const toastMsgs = { open:'✓ Open request sent to your rep!', ship:'✓ Ship request sent to your rep!', shred:'✓ Shred request sent to your rep!' };
+  showToast(toastMsgs[action]);
+}
+
+// ── Quick mark shipped from admin ship list ───────────────────
+async function quickMarkShipped(ticketId) {
+  const { error } = await sb.from('tickets').update({
+    status:     'completed',
+    updated_at: new Date().toISOString(),
+  }).eq('id', ticketId);
+  if (error) { showToast('Could not update status.', true); return; }
+  const t = allTickets.find(function(x) { return x.id === ticketId; });
+  if (t) t.status = 'completed';
+  renderAdminShipMail();
+  showToast('✓ Marked as shipped!');
+}
+
 // ================================================================
 // SHIP YOUR MAIL
 // ================================================================
@@ -8513,7 +8845,62 @@ function renderAdminShipMail() {
     return;
   }
   const pgShip = PG.slice('adminShip', list);
-  container.innerHTML = pgShip.items.map(t => tkRowHTML(t, true)).join('') + PG.build('adminShip', pgShip, 'pgAdminShip');
+  container.innerHTML = pgShip.items.map(t => {
+    const clientName  = t._profile?.full_name || '—';
+    const clientEmail = t._profile?.email     || '';
+    const color = avatarColor(clientName);
+    const initl = clientName[0]?.toUpperCase() || '?';
+    const desc  = t.description || '';
+    const itemsIdx = desc.indexOf('Items to ship:');
+    const addrIdx  = desc.indexOf('Shipping address:');
+    const methIdx  = desc.indexOf('Shipping method:');
+    let itemsHtml = '<span style="color:var(--muted);font-size:12px;">No items listed</span>';
+    if (itemsIdx >= 0) {
+      const noteMarker = desc.indexOf('\n\nNote:');
+      const raw = desc.slice(itemsIdx + 14, noteMarker > 0 ? noteMarker : desc.length).trim();
+      itemsHtml = `<div style="font-size:12.5px;color:var(--ink);line-height:1.7;white-space:pre-wrap;background:var(--parch);border-radius:8px;padding:8px 12px;margin-top:6px;">${esc(raw)}</div>`;
+    }
+    let addrText = '—';
+    if (addrIdx >= 0) {
+      const methMarker = desc.indexOf('\n\nShipping method:');
+      addrText = desc.slice(addrIdx + 17, methMarker > 0 ? methMarker : desc.length).trim();
+    }
+    let methText = '—';
+    if (methIdx >= 0) {
+      const itemsMarker = desc.indexOf('\n\nItems to ship:');
+      methText = desc.slice(methIdx + 16, itemsMarker > 0 ? itemsMarker : desc.length).trim();
+    }
+    const STATUS_STYLE = {
+      open:        { bg:'var(--amber-bg)', color:'var(--amber)',  label:'Pending'    },
+      in_progress: { bg:'#dbeafe',          color:'#1e40af',      label:'Processing' },
+      replied:     { bg:'#ede9fe',          color:'#4c1d95',      label:'Replied'    },
+      completed:   { bg:'var(--green-bg)', color:'var(--green)', label:'Shipped ✈️' },
+    };
+    const st = STATUS_STYLE[t.status] || STATUS_STYLE.open;
+    return `<div style="border:1.5px solid var(--parch3);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--white);">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--parch);border-bottom:1px solid var(--parch2);cursor:pointer;" onclick="adminOpenTicket('${t.id}')">
+        <div style="width:34px;height:34px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">${initl}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;font-size:14px;color:var(--ink);">📦 ${esc(clientName)}</div>
+          <div style="font-size:12px;color:var(--muted);">${esc(clientEmail)} · ${fmtDate(t.created_at)}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;">
+          <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:${st.bg};color:${st.color};">${st.label}</span>
+        </div>
+      </div>
+      <div style="padding:14px 16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;" class="ship-detail-grid">
+          <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Ship To</div><div style="font-size:13px;color:var(--ink);">${esc(addrText)}</div></div>
+          <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Method</div><div style="font-size:13px;color:var(--ink);">${esc(methText)}</div></div>
+        </div>
+        <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;">📬 Items to Ship</div>${itemsHtml}</div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-gold btn-sm" onclick="adminOpenTicket('${t.id}')">Open &amp; Reply</button>
+          ${t.status !== 'completed' ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();quickMarkShipped('${t.id}')">✈️ Mark Shipped</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('') + PG.build('adminShip', pgShip, 'pgAdminShip');
 }
 
 function pgAdminShip(page) { PG.goTo('adminShip', page, renderAdminShipMail); }
