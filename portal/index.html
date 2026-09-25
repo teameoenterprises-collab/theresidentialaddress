@@ -8310,6 +8310,16 @@ async function submitCreateTicket() {
     return;
   }
 
+  
+    //created by Sanyat
+    // NEW: send notification to our Vercel → n8n → Telegram flow
+  if (insertedTicket?.id) {
+  sendTicketTelegramNotification(insertedTicket.id);
+  }
+
+
+
+
   showToast('✓ Ticket submitted!');
   if (insertedTicket?.id) notify('new_ticket', { ticket_id: insertedTicket.id });
   closeCreateTicket();
@@ -9712,6 +9722,35 @@ function updateComposeCount() {
   const counter = document.getElementById('compose-charcount');
   if (counter) counter.textContent = len + ' chars';
 }
+
+
+
+//created by sanyat for ticket notification
+async function sendTicketTelegramNotification(ticketId) {
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+
+    if (!session) {
+      console.warn('No active session for ticket notification');
+      return;
+    }
+
+    await fetch('/api/ticket-notification', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
+        ticket_id: ticketId,
+      }),
+    });
+  } catch (error) {
+    console.warn('Telegram ticket notification failed:', error);
+  }
+}
+
+
 
 </script>
 </body>
