@@ -8312,10 +8312,6 @@ async function submitCreateTicket() {
 
   
     //created by Sanyat
-    // NEW: send notification to our Vercel → n8n → Telegram flow
-  if (insertedTicket?.id) {
-  sendTicketTelegramNotification(insertedTicket.id);
-  }
 
 
 
@@ -9063,20 +9059,33 @@ async function submitRepMessage() {
     }
   }
 
-  const { error } = await sb.from('ticket_messages').insert({
+  const { data: insertedMsg, error } = await sb
+  .from('ticket_messages')
+  .insert({
     ticket_id:      id,
     sender_id:      currentUser.id,
     sender_role:    'client',
     sender_name:    currentProfile.full_name,
     body:           body || '(attachment)',
     attachment_url: attachmentUrl,
-  });
+  })
+  .select('id')
+  .single();
+
 
   if (error) {
     showToast('Could not send message.', true);
     if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
     return;
   }
+
+
+  if (insertedMsg?.id) {
+  sendTelegramPortalEvent('rep_message', {
+    message_id: insertedMsg.id
+  });
+  } 
+
 
   const now = new Date().toISOString();
   await sb.from('tickets').update({ updated_at: now }).eq('id', id);
@@ -9726,27 +9735,37 @@ function updateComposeCount() {
 
 
 //created by sanyat for ticket notification
-async function sendTicketTelegramNotification(ticketId) {
+async function sendTelegramPortalEvent(event, data = {}) {
   try {
     const { data: { session } } = await sb.auth.getSession();
 
     if (!session) {
-      console.warn('No active session for ticket notification');
+      console.warn('No active session for Telegram notification');
       return;
     }
 
-    await fetch('/api/ticket-notification', {
+    const response = await fetch('/api/ticket-notification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${session.access_token}`,
       },
       body: JSON.stringify({
-        ticket_id: ticketId,
+        event,
+        ...data,
       }),
     });
+
+    if (!response.ok) {
+      console.warn(
+        'Telegram notification failed:',
+        response.status,
+        await response.text()
+      );
+    }
+
   } catch (error) {
-    console.warn('Telegram ticket notification failed:', error);
+    console.warn('Telegram notification error:', error);
   }
 }
 

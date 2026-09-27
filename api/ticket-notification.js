@@ -10,10 +10,14 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const { ticket_id } = req.body || {};
+    const {
+      event,
+      message_id,
+      ticket_id,
+    } = req.body || {};
 
-    if (!ticket_id) {
-      return res.status(400).json({ error: 'Missing ticket_id' });
+    if (!event) {
+      return res.status(400).json({ error: 'Missing event' });
     }
 
     const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -27,17 +31,20 @@ export default async function handler(req, res) {
       !N8N_WEBHOOK_URL ||
       !N8N_WEBHOOK_SECRET
     ) {
-      console.error('Missing server environment variables');
+      console.error('Missing environment variables');
       return res.status(500).json({ error: 'Server configuration error' });
     }
 
-    // Verify the currently logged-in Supabase user
-    const userResponse = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      headers: {
-        Authorization: authHeader,
-        apikey: SUPABASE_ANON_KEY,
-      },
-    });
+    const headers = {
+      Authorization: authHeader,
+      apikey: SUPABASE_ANON_KEY,
+    };
+
+    // Verify logged-in Supabase user
+    const userResponse = await fetch(
+      `${SUPABASE_URL}/auth/v1/user`,
+      { headers }
+    );
 
     if (!userResponse.ok) {
       return res.status(401).json({ error: 'Invalid session' });
@@ -45,43 +52,13 @@ export default async function handler(req, res) {
 
     const user = await userResponse.json();
 
-    // Load the ticket using the user's own Supabase session.
-    // Existing RLS still applies.
-    const ticketResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/tickets?id=eq.${encodeURIComponent(ticket_id)}&user_id=eq.${encodeURIComponent(user.id)}&select=id,ticket_number,title,type,description`,
-      {
-        headers: {
-          Authorization: authHeader,
-          apikey: SUPABASE_ANON_KEY,
-        },
-      }
-    );
+    // Get client name
+    let clientName = 'Client';
 
-    if (!ticketResponse.ok) {
-      console.error(await ticketResponse.text());
-      return res.status(500).json({ error: 'Could not load ticket' });
-    }
-
-    const tickets = await ticketResponse.json();
-
-    if (!tickets.length) {
-      return res.status(404).json({ error: 'Ticket not found' });
-    }
-
-    const ticket = tickets[0];
-
-    // Load client's display name
     const profileResponse = await fetch(
       `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(user.id)}&select=full_name`,
-      {
-        headers: {
-          Authorization: authHeader,
-          apikey: SUPABASE_ANON_KEY,
-        },
-      }
+      { headers }
     );
-
-    let clientName = 'Client';
 
     if (profileResponse.ok) {
       const profiles = await profileResponse.json();
@@ -90,25 +67,92 @@ export default async function handler(req, res) {
       }
     }
 
-    const portalUrl =
-      `https://www.theresidentialaddress.com/portal?ticket=${encodeURIComponent(ticket.id)}`;
+    let notification;
 
-    // Send trusted ticket data to n8n
+    // ---------------------------------------------------------
+    // MESSAGE YOUR REP
+    // ---------------------------------------------------------
+    if (event === 'rep_message') {
+      if (!message_id) {
+        return res.status(400).json({ error: 'Missing message_id' });
+      }
+
+      const msgResponse = await fetch(
+        `${SUPABASE_URL}/rest/v1/ticket_messages?id=eq.${encodeURIComponent(message_id)}&sender_id=eq.${encodeURIComponent(user.id)}&select=id,ticket_id,body`,
+        { headers }
+      );
+
+      if (!msgResponse.ok) {
+        return res.status(500).json({ error: 'Could not load message' });
+      }
+
+      const messages = await msgResponse.json();
+
+      if (!messages.length) {
+        return res.status(404).json({ error: 'Message not found' });
+      }
+
+      const message = messages[0];
+
+      notification = {
+        event: 'rep_message',
+        client_name: clientName,
+        title: 'Message Your Rep',
+        type: 'Mail Inquiry',
+        description: message.body,
+        ticket_id: message.ticket_id,
+        portal_url: 'https://www.theresidentialaddress.com/portal',
+      };
+    }
+
+    // ---------------------------------------------------------
+    // SHIP MAIL REQUEST
+    // ---------------------------------------------------------
+    else if (event === 'ship_request') {
+      if (!ticket_id) {
+        return res.status(400).json({ error: 'Missing ticket_id' });
+      }
+
+      const ticketResponse = await fetch(
+        `${SUPABASE_URL}/rest/v1/tickets?id=eq.${encodeURIComponent(ticket_id)}&user_id=eq.${encodeURIComponent(user.id)}&type=eq.ship_mail&select=id,ticket_number,title,type,description`,
+        { headers }
+      );
+
+      if (!ticketResponse.ok) {
+        return res.status(500).json({ error: 'Could not load ticket' });
+      }
+
+      const tickets = await ticketResponse.json();
+
+      if (!tickets.length) {
+        return res.status(404).json({ error: 'Ticket not found' });
+      }
+
+      const ticket = tickets[0];
+
+      notification = {
+        event: 'ship_request',
+        client_name: clientName,
+        title: ticket.title,
+        type: 'Ship Mail Request',
+        description: ticket.description,
+        ticket_id: ticket.id,
+        ticket_number: ticket.ticket_number,
+        portal_url: 'https://www.theresidentialaddress.com/portal',
+      };
+    }
+
+    else {
+      return res.status(400).json({ error: 'Unknown event' });
+    }
+
     const n8nResponse = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-webhook-secret': N8N_WEBHOOK_SECRET,
       },
-      body: JSON.stringify({
-        ticket_id: ticket.id,
-        ticket_number: ticket.ticket_number,
-        client_name: clientName,
-        title: ticket.title,
-        type: ticket.type,
-        description: ticket.description,
-        portal_url: portalUrl,
-      }),
+      body: JSON.stringify(notification),
     });
 
     if (!n8nResponse.ok) {
@@ -117,8 +161,10 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({ success: true });
+
   } catch (error) {
     console.error('Ticket notification error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
+
