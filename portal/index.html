@@ -8796,7 +8796,11 @@ async function submitShipMailRequest() {
   const { count } = await sb.from('tickets').select('*', { count:'exact', head:true });
   const ticketNumber = (count || 0) + 1;
 
-  const { error } = await sb.from('tickets').insert({
+
+  //Edited by sanyat
+  const { data: insertedTicket, error } = await sb
+  .from('tickets')
+  .insert({
     user_id:       currentUser.id,
     title:         'Ship My Mail Request',
     description,
@@ -8805,7 +8809,11 @@ async function submitShipMailRequest() {
     ticket_number: ticketNumber,
     created_at:    new Date().toISOString(),
     updated_at:    new Date().toISOString(),
-  });
+  })
+  .select('id')
+  .single();
+
+
 
   if (btn) { btn.disabled = false; btn.textContent = '📦 Submit Request'; }
 
@@ -8813,6 +8821,12 @@ async function submitShipMailRequest() {
     if (errEl) { errEl.textContent = 'Could not submit: ' + error.message; errEl.style.display = 'block'; }
     return;
   }
+//sanyat
+  if (insertedTicket?.id) {
+  sendTelegramPortalEvent('ship_request', {
+    ticket_id: insertedTicket.id
+  });
+}
 
   showToast('✓ Shipping request submitted!');
   closeShipMailModal();
