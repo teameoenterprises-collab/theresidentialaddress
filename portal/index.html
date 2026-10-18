@@ -1382,6 +1382,7 @@
       word-break: break-word;
     }
     .mail-body-content p { margin: 0 0 10px; }
+    .mail-body-content img { max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 8px 0; }
     .mail-body-content ul, .mail-body-content ol { padding-left: 22px; margin: 8px 0 12px; }
     .mail-body-content li { margin-bottom: 5px; }
     .mail-body-content hr { border: none; border-top: 1px solid var(--parch3); margin: 16px 0; }
@@ -5546,7 +5547,9 @@ async function loadClientDash() {
   ]);
 
   const clientProofs = proofs || [];
-  mailCache          = mail  || [];
+  // Keep ids as text so the buttons (which pass the id as text) always find the row,
+  // whether the mail id column is a uuid or a number.
+  mailCache          = (mail || []).map(m => Object.assign({}, m, { id: String(m.id) }));
   const cs           = svcRow || {};
 
   const unreadCount = mailCache.filter(m => !m.is_read).length;
@@ -7103,9 +7106,9 @@ function esc(s) {
 const _HTML_ALLOWLIST_TAGS = new Set([
   'b','i','u','strong','em','br','p','ul','ol','li',
   'hr','span','div','table','tr','td','th','thead','tbody',
-  'a','blockquote','pre','code','h1','h2','h3','h4','h5','h6'
+  'a','blockquote','pre','code','h1','h2','h3','h4','h5','h6','img'
 ]);
-const _HTML_ALLOWLIST_ATTRS = new Set(['href','style','target','class','rel']);
+const _HTML_ALLOWLIST_ATTRS = new Set(['href','style','target','class','rel','src','alt']);
 const _SAFE_STYLE_PROPS = /^(color|font-size|font-weight|font-family|text-align|margin|padding|background|background-color|border|border-radius|line-height|display|width|max-width|min-width|padding-top|padding-bottom|padding-left|padding-right|margin-top|margin-bottom)$/i;
 
 function sanitizeHtml(html) {
@@ -7136,6 +7139,11 @@ function sanitizeHtml(html) {
           if (v.startsWith('javascript:') || v.startsWith('data:') || v.startsWith('vbscript:')) {
             attrsToRemove.push(name);
           }
+        }
+        // Images: only https or inline image data
+        if (name === 'src') {
+          const v = attr.value.trim().toLowerCase();
+          if (tag !== 'img' || !(v.startsWith('https://') || v.startsWith('data:image/') || v.startsWith('blob:'))) attrsToRemove.push(name);
         }
         // Sanitize style — only allow safe CSS properties
         if (name === 'style') {
@@ -9274,18 +9282,23 @@ async function _saveMailAction(mailId, action) {
   const { error } = await sb.rpc('request_mail_action', { p_mail_id: String(mailId), p_action: action });
   if (!error) return null;
   if (isSchemaMissing(error)) {
-    const { error: e2 } = await sb.from('mail').update({
+    // Before the migration: try a direct update. If the database's security
+    // rules don't let clients edit mail, Supabase silently updates 0 rows,
+    // so we check that the row really changed.
+    const { data: upd, error: e2 } = await sb.from('mail').update({
       client_action: action, action_status: action ? 'requested' : null,
-    }).eq('id', mailId);
-    return e2;
+    }).eq('id', mailId).select('id');
+    if (e2) return e2;
+    if (!upd || !upd.length) return { message: 'Mail requests need the database update (portal-upgrade-migration.sql) to be run first.' };
+    return null;
   }
   return error;
 }
 
 // action: 'open' | 'ship' | 'shred' | null (cancel)
 async function setMailAction(mailId, action) {
-  const m = mailCache.find(x => x.id === mailId);
-  if (!m) return;
+  const m = mailCache.find(x => String(x.id) === String(mailId));
+  if (!m) { showToast('This mail item could not be found. Please refresh the page.', true); return; }
   if (action === 'ship') { openShipMailModal([mailId]); return; }
 
   const label = '“' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + '”';
@@ -9302,7 +9315,7 @@ async function setMailAction(mailId, action) {
   if (!ok) return;
 
   const err = await _saveMailAction(mailId, action);
-  if (err) { showToast('Could not save. Please try again.', true); devLog(err.message); return; }
+  if (err) { console.error('Mail request failed:', err); showToast('Could not save: ' + (err.message || 'unknown error'), true); return; }
 
   m.client_action = action;
   m.action_status = action ? 'requested' : null;
@@ -9325,15 +9338,16 @@ async function bulkMailAction(action) {
     confirmText: isShred ? 'Yes, shred them' : 'Yes, open them',
   });
   if (!ok) return;
-  let failed = 0;
+  let failed = 0, lastErr = null;
   for (const id of ids) {
     const err = await _saveMailAction(id, action);
-    if (err) { failed++; continue; }
+    if (err) { failed++; lastErr = err; continue; }
     const m = mailCache.find(x => x.id === id);
     if (m) { m.client_action = action; m.action_status = 'requested'; }
   }
   _refreshClientMailViews();
-  showToast(failed ? `${ids.length - failed} sent, ${failed} failed.` : '✓ Requests sent to your rep!', !!failed);
+  if (lastErr) console.error('Mail request failed:', lastErr);
+  showToast(failed ? `${ids.length - failed} sent, ${failed} failed` + (lastErr && lastErr.message ? ': ' + lastErr.message : '.') : '✓ Requests sent to your rep!', !!failed);
 }
 
 // Mail viewer (client) — letter, scans and the request buttons.
@@ -9346,7 +9360,7 @@ async function openMail(id, keepScroll) {
   document.getElementById('mv-date').textContent  = fmtDate(m.created_at);
   const dlBtn = document.getElementById('mv-download');
   const body  = document.getElementById('mv-body');
-  if (m.scan_url) { dlBtn.href = m.scan_url; dlBtn.classList.remove('hidden'); }
+  if (m.scan_url) { dlBtn.removeAttribute('data-sb-orig'); dlBtn.href = m.scan_url; hydrateStorageEl(dlBtn); dlBtn.classList.remove('hidden'); }
   else            { dlBtn.classList.add('hidden'); }
 
   const rawDesc  = m.description || '';
@@ -9517,14 +9531,17 @@ async function submitShipMailRequest() {
   if (error) return fail('Could not submit: ' + error.message);
 
   // Flag the picked mail items as "ship requested".
+  let shipMarkErr = null;
   for (const id of mailIds) {
     const m = mailCache.find(x => x.id === id);
     if (m && m.client_action === 'ship') continue;
     const err = await _saveMailAction(id, 'ship');
+    if (err) { shipMarkErr = err; console.error('Mail request failed:', err); }
     if (!err && m) { m.client_action = 'ship'; m.action_status = 'requested'; }
   }
 
-  showToast('✓ Shipping request submitted!');
+  if (shipMarkErr) showToast('Ship request sent to your rep, but the mail could not be marked: ' + (shipMarkErr.message || 'unknown error'), true);
+  else showToast('✓ Shipping request submitted!');
   closeShipMailModal();
   const contEl = document.getElementById('ship-contents');
   if (contEl) contEl.value = '';
@@ -10410,6 +10427,46 @@ async function deleteProofType(id, name) {
   populateProofTypeDropdown();
 }
 
+
+// ── Attachments: make stored files open even if the storage bucket is private ──
+// Files are saved with a "public" Supabase link. If the bucket isn't public,
+// that link fails for clients. We swap each such link for a short-lived
+// signed link (falls back to the original link if signing isn't allowed).
+const _SB_PUBLIC_RE = /\/storage\/v1\/object\/public\/([^/?#]+)\/([^?#]+)/;
+const _signedCache = {};
+function _signStorageUrl(url) {
+  const mm = (url || '').match(_SB_PUBLIC_RE);
+  if (!mm || typeof sb === 'undefined' || !sb.storage) return Promise.resolve(null);
+  const bucket = mm[1], path = decodeURIComponent(mm[2]);
+  const key = bucket + '/' + path;
+  const hit = _signedCache[key];
+  if (hit && (hit.exp > Date.now() || hit.pending)) return hit.p;
+  const p = sb.storage.from(bucket).createSignedUrl(path, 3600)
+    .then(({ data, error }) => (error || !data?.signedUrl) ? null : data.signedUrl)
+    .catch(() => null);
+  _signedCache[key] = { p, pending: true, exp: 0 };
+  p.then(u => { _signedCache[key] = { p, pending: false, exp: u ? Date.now() + 50 * 60 * 1000 : Date.now() + 5 * 60 * 1000 }; });
+  return p;
+}
+async function hydrateStorageEl(el) {
+  if (!el || !el.getAttribute) return;
+  const attr = el.tagName === 'IMG' ? 'src' : 'href';
+  const orig = el.getAttribute('data-sb-orig') || el.getAttribute(attr);
+  if (!orig || !_SB_PUBLIC_RE.test(orig)) return;
+  el.setAttribute('data-sb-orig', orig);
+  const signed = await _signStorageUrl(orig);
+  if (signed && el.getAttribute(attr) !== signed) el.setAttribute(attr, signed);
+}
+function hydrateStorageLinks(root) {
+  if (!root || !root.querySelectorAll) return;
+  if (root.matches && root.matches('img[src*="/storage/v1/object/public/"], a[href*="/storage/v1/object/public/"]')) hydrateStorageEl(root);
+  root.querySelectorAll('img[src*="/storage/v1/object/public/"], a[href*="/storage/v1/object/public/"]').forEach(hydrateStorageEl);
+}
+try {
+  new MutationObserver(muts => {
+    for (const mu of muts) mu.addedNodes.forEach(n => { if (n.nodeType === 1) hydrateStorageLinks(n); });
+  }).observe(document.body, { childList: true, subtree: true });
+} catch (e) {}
 </script>
 </body>
 </html>
