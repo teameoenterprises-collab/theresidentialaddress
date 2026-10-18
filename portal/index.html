@@ -2769,6 +2769,169 @@
     .mail-action-pill.done {
       background: #dcfce7; color: #166534; border-color: #bbf7d0;
     }
+
+    /* ============================================================
+       PORTAL V2 — new components (mail requests, inquiries, shipping,
+       bulk upload, confirm dialog, attention cards)
+    ============================================================ */
+    .hidden-important { display:none !important; }
+
+    /* Segmented tabs (status filters, inquiry categories) */
+    .seg-tabs { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 14px; }
+    .seg-tab {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 12px; border-radius:20px; border:1.5px solid var(--parch3);
+      background:var(--white); color:var(--ink2); font-size:12.5px; font-weight:500;
+      cursor:pointer; font-family:inherit; transition:all .15s;
+    }
+    .seg-tab:hover { border-color:var(--gold); }
+    .seg-tab.active { background:var(--forest); border-color:var(--forest); color:#fff; }
+    .seg-count { background:rgba(0,0,0,.08); border-radius:10px; padding:0 7px; font-size:11px; font-weight:700; }
+    .seg-tab.active .seg-count { background:rgba(255,255,255,.2); }
+    .seg-count.hot { background:var(--gold); color:var(--ink); }
+
+    /* Admin dashboard — needs attention */
+    .attn-title { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 8px; }
+    .attn-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; margin-bottom:18px; }
+    .attn-card {
+      background:var(--white); border:1.5px solid var(--parch2); border-radius:12px; padding:12px 14px;
+      cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:10px;
+    }
+    .attn-card:hover { border-color:var(--gold); box-shadow:var(--shadow-m); }
+    .attn-card.hot { border-color:rgba(184,151,58,.55); background:#fffdf4; }
+    .attn-icon { font-size:20px; }
+    .attn-num { font-size:22px; font-weight:600; color:var(--ink); line-height:1; }
+    .attn-card.hot .attn-num { color:var(--amber); }
+    .attn-label { font-size:12px; color:var(--muted); margin-top:2px; }
+
+    /* Client mail list */
+    .mx-howto { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+    .mx-howto > div {
+      flex:1; min-width:200px; background:var(--white); border:1.5px solid var(--parch2); border-radius:10px;
+      padding:9px 12px; font-size:12.5px; color:var(--ink2); line-height:1.5;
+    }
+    .mx-howto span { margin-right:4px; }
+    @media (max-width:600px) { .mx-howto { gap:4px; } .mx-howto > div { min-width:100%; padding:6px 10px; font-size:12px; } }
+    .mx-row {
+      display:flex; align-items:center; gap:12px; padding:12px 12px; border:1.5px solid var(--parch2);
+      border-radius:11px; margin-bottom:8px; background:var(--white); transition:border-color .15s;
+    }
+    .mx-row:hover { border-color:var(--parch3); }
+    .mx-row.unread { border-color:rgba(184,151,58,.35); background:#fffdf4; }
+    .mx-row .mail-thumb { cursor:pointer; }
+    .mx-main { flex:1; min-width:0; cursor:pointer; }
+    .mx-top { display:flex; align-items:baseline; gap:8px; }
+    .mx-top .mail-sender { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .mx-row.unread .mail-sender { font-weight:700; }
+    .mx-date { font-size:11.5px; color:var(--muted); flex-shrink:0; }
+    .mx-meta { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:5px; }
+    .mx-actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; flex-shrink:0; max-width:300px; }
+    .mx-act {
+      display:inline-flex; align-items:center; gap:5px; padding:6px 11px; border-radius:8px;
+      border:1.5px solid var(--parch3); background:var(--white); font-size:12.5px; font-weight:500;
+      color:var(--ink2); cursor:pointer; font-family:inherit; transition:all .15s; white-space:nowrap;
+    }
+    .mx-act:hover { border-color:var(--gold); color:var(--ink); }
+    .mx-act.shred:hover { border-color:#fca5a5; color:var(--red); }
+    .mx-status { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:8px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .mx-status.pending { background:var(--amber-bg); color:var(--amber); }
+    .mx-status.done { background:var(--green-bg); color:var(--green); }
+    .mx-link { background:none; border:none; color:var(--muted); font-size:11.5px; text-decoration:underline; cursor:pointer; font-family:inherit; padding:2px 4px; }
+    .mx-note { font-size:12px; color:var(--ink2); background:var(--parch); border-left:3px solid var(--gold); border-radius:6px; padding:6px 10px; margin-top:6px; }
+    @media (max-width:700px) {
+      .mx-row { flex-wrap:wrap; }
+      .mx-actions { max-width:none; width:100%; justify-content:flex-start; padding-left:28px; }
+    }
+
+    /* Mail viewer action panel + gallery */
+    .mv-panel { max-width:680px; margin:0 auto 20px; background:var(--white); border-radius:12px; box-shadow:var(--shadow-m); padding:18px 22px; }
+    .mv-panel-title { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+    .mv-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+    .mv-gallery a { display:block; border-radius:9px; overflow:hidden; border:1px solid var(--parch2); background:var(--parch); }
+    .mv-gallery img { width:100%; height:180px; object-fit:cover; display:block; }
+    .mv-file { display:flex; align-items:center; justify-content:center; height:180px; font-size:13px; color:var(--ink2); gap:6px; text-decoration:none; }
+
+    /* Message Your Rep — topic options */
+    .inq-options { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-bottom:12px; }
+    .inq-opt {
+      position:relative; text-align:left; background:var(--white); border:1.5px solid var(--parch2); border-radius:12px;
+      padding:13px 14px; cursor:pointer; font-family:inherit; transition:all .15s;
+    }
+    .inq-opt:hover { border-color:var(--gold); }
+    .inq-opt.active { border-color:var(--forest); box-shadow:0 0 0 2px rgba(26,58,42,.12); background:#fbfdf9; }
+    .inq-opt-icon { font-size:20px; }
+    .inq-opt-title { font-size:14px; font-weight:600; color:var(--ink); margin-top:4px; }
+    .inq-opt-desc { font-size:12px; color:var(--muted); line-height:1.5; margin-top:3px; }
+    .inq-opt-badge { position:absolute; top:10px; right:10px; background:var(--gold); color:var(--ink); font-size:10px; font-weight:700; border-radius:10px; padding:2px 7px; }
+    .inq-help { background:var(--blue-bg); color:var(--blue); border-radius:10px; padding:10px 14px; font-size:13px; line-height:1.55; margin-bottom:12px; }
+    .inq-help .btn { margin-top:8px; }
+    .inq-thread-head { padding:12px 18px; border-bottom:1px solid var(--parch2); font-weight:600; font-size:14px; color:var(--ink); }
+    .inq-extra-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; padding:10px 14px 0; }
+    .inq-extra-grid input { width:100%; padding:8px 10px; border:1.5px solid var(--parch3); border-radius:8px; font-size:13px; font-family:inherit; background:var(--white); outline:none; }
+    .inq-extra-grid label { font-size:10.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:3px; }
+    @media (max-width:600px) { .inq-extra-grid { grid-template-columns:1fr; } }
+    .inq-chat-intro { font-size:12.5px; color:var(--muted); background:var(--parch); border-radius:8px; padding:8px 12px; }
+    .inq-pill { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; background:var(--parch2); color:var(--ink2); }
+    .inq-wait { background:var(--amber-bg); color:var(--amber); }
+    .inq-ok { background:var(--green-bg); color:var(--green); }
+
+    /* Ship modal */
+    .ship-contact { background:var(--parch); border:1px solid var(--parch2); border-radius:9px; padding:10px 12px; font-size:13px; color:var(--ink2); margin-bottom:14px; line-height:1.6; }
+    .ship-contact small { color:var(--muted); display:block; font-size:11.5px; }
+    .ship-sec-title { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:6px 0 10px; }
+    .ship-sec-title .req, .field .req { color:var(--red); font-weight:700; }
+    .ship-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 12px; }
+    @media (max-width:520px) { .ship-grid { grid-template-columns:1fr; } }
+    .ship-mail-pick { max-height:190px; overflow-y:auto; border:1.5px solid var(--parch3); border-radius:9px; margin-bottom:12px; background:var(--white); }
+    .ship-mail-pick label { display:flex; align-items:center; gap:10px; padding:8px 12px; border-bottom:1px solid var(--parch2); font-size:13px; cursor:pointer; }
+    .ship-mail-pick label:last-child { border-bottom:none; }
+    .ship-mail-pick input { width:15px; height:15px; accent-color:var(--gold); flex-shrink:0; }
+    .ship-mail-pick .muted { color:var(--muted); font-size:11.5px; }
+    .ship-kv { font-size:10.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:3px; }
+    .ship-addr { font-size:13px; color:var(--ink); line-height:1.55; white-space:pre-line; }
+
+    /* Upload mail — bulk */
+    .up-default-hint { font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0; }
+    .up-mode { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
+    @media (max-width:600px) { .up-mode { grid-template-columns:1fr; } }
+    .up-mode-opt { display:flex; gap:9px; align-items:flex-start; border:1.5px solid var(--parch3); border-radius:9px; padding:10px 12px; cursor:pointer; background:var(--white); }
+    .up-mode-opt input { margin-top:3px; accent-color:var(--gold); }
+    .up-mode-opt strong { display:block; font-size:13px; color:var(--ink); }
+    .up-mode-opt small { display:block; font-size:11.5px; color:var(--muted); line-height:1.45; margin-top:2px; }
+    .up-file-list { display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+    .up-file { display:flex; align-items:center; gap:10px; border:1.5px solid var(--parch2); border-radius:9px; padding:8px 10px; background:var(--white); }
+    .up-file-thumb { width:44px; height:44px; border-radius:7px; background:var(--parch2); overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .up-file-thumb img { width:100%; height:100%; object-fit:cover; }
+    .up-file-main { flex:1; min-width:0; }
+    .up-file-name { font-size:12.5px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .up-file-size { font-size:11px; color:var(--muted); }
+    .up-file-inputs { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px; }
+    .up-file-inputs input { width:100%; padding:6px 9px; border:1.5px solid var(--parch3); border-radius:7px; font-size:12.5px; font-family:inherit; outline:none; background:var(--white); }
+    .up-file-inputs input:focus { border-color:var(--gold); }
+    .up-file-remove { cursor:pointer; color:var(--muted); font-size:15px; padding:4px 6px; }
+    .up-file-remove:hover { color:var(--red); }
+    .up-summary { font-size:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+
+    /* Admin All Mail — request chips + action panel */
+    .aml-req-chips { display:flex; gap:8px; flex-wrap:wrap; margin:-4px 0 14px; }
+    .aml-chip { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; border:1.5px solid var(--parch3); background:var(--white); font-size:12.5px; cursor:pointer; font-family:inherit; }
+    .aml-chip.hot { border-color:rgba(184,151,58,.6); background:#fffdf4; font-weight:600; }
+    .aml-chip:hover { border-color:var(--gold); }
+    .aml-req { margin-left:auto; flex-shrink:0; align-self:center; }
+    .aml-detail-action { padding:14px 26px; border-top:1px solid var(--parch2); flex-shrink:0; }
+    .aml-detail-action:empty { display:none; }
+    .aml-detail-action textarea { width:100%; padding:8px 10px; border:1.5px solid var(--parch3); border-radius:8px; font-family:inherit; font-size:13px; min-height:52px; resize:vertical; margin:8px 0; outline:none; }
+
+    /* Confirm / prompt dialog */
+    .ui-dialog-overlay { position:fixed; inset:0; background:rgba(12,15,10,.55); backdrop-filter:blur(3px); z-index:9000; display:none; align-items:center; justify-content:center; padding:20px; }
+    .ui-dialog-overlay.open { display:flex; }
+    .ui-dialog { background:var(--white); border-radius:16px; padding:24px 24px 18px; width:100%; max-width:420px; box-shadow:var(--shadow-l); text-align:center; animation:pageIn .18s ease; }
+    .ui-dialog-icon { font-size:30px; margin-bottom:6px; }
+    .ui-dialog-title { font-size:17px; font-weight:600; color:var(--ink); }
+    .ui-dialog-msg { font-size:13.5px; color:var(--ink2); line-height:1.6; margin-top:8px; white-space:pre-line; }
+    .ui-dialog-actions { display:flex; gap:10px; justify-content:center; margin-top:18px; }
+    .btn-danger { background:var(--red); color:#fff; border:1.5px solid var(--red); }
+    .btn-danger:hover:not(:disabled) { background:#7f1d1d; }
   </style>
 </head>
 <body>
@@ -3135,6 +3298,13 @@
         </div>
       </div>
 
+      <!-- How it works -->
+      <div class="mx-howto">
+        <div><span>📂</span><strong>Open</strong> — we open the envelope and upload the contents to your Documents.</div>
+        <div><span>📦</span><strong>Ship</strong> — we post the physical item to the address you enter.</div>
+        <div><span>🗑</span><strong>Shred</strong> — we securely destroy the item.</div>
+      </div>
+
       <!-- Bulk select toolbar -->
       <div id="mail-bulk-bar" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:10px 14px;background:var(--parch2);border-radius:10px;border:1.5px solid var(--parch3);">
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;">
@@ -3142,7 +3312,11 @@
           Select all
         </label>
         <span id="mail-selected-count" style="font-size:12.5px;color:var(--muted);">0 selected</span>
-        <button class="btn btn-gold btn-sm" id="mail-bulk-ship-btn" onclick="openBulkShipModal()" disabled style="margin-left:auto;">📦 Ship Selected</button>
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm mail-bulk-btn" onclick="bulkMailAction('open')" disabled>📂 Open selected</button>
+          <button class="btn btn-gold btn-sm mail-bulk-btn" id="mail-bulk-ship-btn" onclick="openBulkShipModal()" disabled>📦 Ship selected</button>
+          <button class="btn btn-ghost btn-sm mail-bulk-btn" onclick="bulkMailAction('shred')" disabled style="color:var(--red);">🗑 Shred selected</button>
+        </div>
       </div>
 
       <div class="card" style="padding: 18px 20px;">
@@ -3163,6 +3337,7 @@
             <option value="other">Other</option>
           </select>
         </div>
+        <div class="seg-tabs" id="mail-status-tabs"></div>
         <div id="mail-list-full">
           <div class="empty-state">
             <div class="empty-state-icon">📭</div>
@@ -3240,6 +3415,10 @@
         </div>
         <button class="btn btn-gold" id="manage-proof-types-btn" onclick="openProofTypesModal()">📋 Manage Proof Types</button>
       </div>
+      <div class="attn-title">Needs your attention</div>
+      <div class="attn-grid" id="admin-attention">
+        <!-- Populated by JS: pending mail requests, ship requests, unanswered messages -->
+      </div>
       <div class="stats-grid" id="admin-stats">
         <!-- Populated by JS -->
       </div>
@@ -3274,7 +3453,7 @@
       <div class="page-header">
         <div class="page-header-left">
           <h2>Upload Mail</h2>
-          <p>Upload a scanned mail item directly to a client's inbox</p>
+          <p>Upload one or many scanned mail items to a client's inbox</p>
         </div>
       </div>
       <div class="form-section">
@@ -3309,12 +3488,12 @@
           </div>
 
           <div class="field">
-            <label>Sender / From</label>
+            <label>Sender / From <span class="up-default-hint hidden">— default for all files</span></label>
             <input type="text" id="up-sender" placeholder="e.g. USPS, Bank of America, IRS" />
           </div>
 
           <div class="field">
-            <label>Subject</label>
+            <label>Subject <span class="up-default-hint hidden">— default for all files</span></label>
             <input type="text" id="up-subject" placeholder="e.g. Package delivery notification" />
           </div>
 
@@ -3366,8 +3545,8 @@
 
           <div class="field">
             <label>
-              Scan (Image or PDF)
-              <span style="font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">(optional)</span>
+              Scans (Images or PDFs)
+              <span style="font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">(optional — you can select many at once)</span>
             </label>
             <div
               class="upload-zone"
@@ -3379,17 +3558,16 @@
             >
               <div class="upload-zone-icon">📎</div>
               <p><strong>Click to upload</strong> or drag & drop</p>
-              <small>PNG, JPG, PDF — up to 20 MB — optional</small>
+              <small>PNG, JPG, PDF — up to 20 MB each — select several files for a bulk upload</small>
             </div>
-            <input type="file" id="mail-file-input" accept="image/*,application/pdf" class="hidden" onchange="setMailFile(this.files[0])" />
-            <div class="file-chip" id="mail-file-chip">
-              <div class="file-chip-thumb" id="mail-chip-thumb">📄</div>
-              <div style="flex:1; min-width:0;">
-                <div class="file-chip-name" id="mail-chip-name">–</div>
-                <div class="file-chip-size" id="mail-chip-size">–</div>
-              </div>
-              <span class="file-chip-remove" onclick="clearMailFile()">✕</span>
+            <input type="file" id="mail-file-input" accept="image/*,application/pdf" class="hidden" multiple onchange="addMailFiles(this.files); this.value='';" />
+            <div id="up-mode-wrap" class="up-mode hidden">
+              <label class="up-mode-opt"><input type="radio" name="up-mode" value="separate" checked onchange="setUploadMode(this.value)" />
+                <span><strong>One mail item per file</strong><small>Best for a stack of different envelopes. You can set the sender and subject for each file below.</small></span></label>
+              <label class="up-mode-opt"><input type="radio" name="up-mode" value="single" onchange="setUploadMode(this.value)" />
+                <span><strong>One mail item with all files</strong><small>Best for several pages or front/back photos of the same letter.</small></span></label>
             </div>
+            <div id="mail-file-list" class="up-file-list"></div>
           </div>
 
           <button class="btn btn-gold btn-full" id="mail-upload-btn" onclick="submitMail()">
@@ -3655,41 +3833,23 @@
       <div class="page-header">
         <div class="page-header-left">
           <h2>Message Your Rep</h2>
-          <p>Your direct line to your location rep — ask anything about your mail or address</p>
+          <p>Choose what your message is about. Each topic keeps its own conversation.</p>
         </div>
       </div>
+      <div class="inq-options" id="inq-options"><!-- JS --></div>
+      <div class="inq-help" id="inq-help"></div>
       <div class="card" style="padding:0; display:flex; flex-direction:column; min-height:420px;">
+        <div class="inq-thread-head" id="inq-thread-head">💬 Message to Rep</div>
         <div class="tk-chat" id="rep-chat" style="max-height:480px;">
           <div style="text-align:center;color:var(--muted);padding:30px 20px;font-size:13px;">Loading conversation…</div>
         </div>
         <div class="tk-reply-box" id="rep-reply-box">
-          <!-- Quick prompts -->
-          <div style="padding:10px 14px 0;border-top:1px solid var(--parch2);">
-            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px;">Quick messages</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-              <button onclick="_repQuickPrompt('I am expecting a physical package or letter at my address. Can you keep an eye out for it?')"
-                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
-                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
-                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">📬 I'm expecting mail</button>
-              <button onclick="_repQuickPrompt('My mail seems to be delayed. Can you check if anything has arrived for me recently?')"
-                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
-                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
-                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">⏳ My mail is delayed</button>
-              <button onclick="_repQuickPrompt('I would like to request shipment of my physical mail to my address. Can you help arrange that?')"
-                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
-                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
-                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">📦 I want to ship my mail</button>
-              <button onclick="_repQuickPrompt('I have a question about my assigned address.')"
-                style="background:var(--parch2);border:1.5px solid var(--parch3);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all 0.15s;font-family:inherit;"
-                onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
-                onmouseout="this.style.borderColor='var(--parch3)';this.style.color='var(--ink2)'">🏠 Question about my address</button>
-            </div>
-          </div>
-          <textarea class="tk-reply-textarea" id="rep-reply-text" placeholder="Type your message here, or tap a quick message above…" rows="3" style="margin:0 14px 0;width:calc(100% - 28px);box-sizing:border-box;"></textarea>
+          <div id="inq-extra"></div>
+          <textarea class="tk-reply-textarea" id="rep-reply-text" placeholder="Type your message here…" rows="3" style="margin:10px 14px 0;width:calc(100% - 28px);box-sizing:border-box;"></textarea>
           <div class="tk-reply-footer">
             <div class="tk-reply-attach">
               <button class="tk-attach-btn" onclick="document.getElementById('rep-reply-file').click()">📎 Attach</button>
-              <input type="file" id="rep-reply-file" class="hidden" onchange="setRepReplyFile(this.files[0])" />
+              <input type="file" id="rep-reply-file" class="hidden" accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onchange="setRepReplyFile(this.files[0])" />
               <span class="tk-attach-name hidden" id="rep-attach-name"></span>
               <span class="tk-attach-remove hidden" id="rep-attach-remove" onclick="clearRepReplyFile()">✕</span>
             </div>
@@ -3731,29 +3891,34 @@
       </div>
     </div>
 
-    <!-- ── ADMIN: Mail Inquiries ──────────────────────── -->
+    <!-- ── ADMIN: Client Messages (Message to Rep / Expecting Mail / Shipping Inquiries) ── -->
     <div id="page-admin-inquiries" class="page">
       <div class="page-header">
         <div class="page-header-left">
-          <h2>Mail Inquiries</h2>
-          <p>Client conversations from "Message Your Rep"</p>
+          <h2 id="inq-admin-title">Message to Rep</h2>
+          <p id="inq-admin-sub">Client conversations from "Message Your Rep"</p>
         </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminTickets()">↻ Refresh</button>
       </div>
+      <div class="seg-tabs" id="inq-admin-tabs"></div>
       <div class="mail-toolbar" style="margin-bottom:16px; flex-wrap:wrap;">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
           <input type="text" id="inquiry-admin-search" placeholder="Search by client name…" oninput="PG.reset('adminInquiries'); renderAdminInquiries()" />
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="loadAdminTickets()">↻ Refresh</button>
+        <select class="filter-select" id="inquiry-admin-filter" onchange="PG.reset('adminInquiries'); renderAdminInquiries()">
+          <option value="">All conversations</option>
+          <option value="waiting">Waiting for your reply</option>
+          <option value="answered">Answered</option>
+        </select>
       </div>
       <div id="inquiry-admin-list">
         <div class="empty-state">
           <div class="empty-state-icon">💬</div>
-          <p>No mail inquiries yet.</p>
+          <p>No messages yet.</p>
         </div>
       </div>
     </div>
-
 
     <!-- ── ADMIN: All Mail ───────────────────────────────────── -->
     <div id="page-admin-all-mail" class="page">
@@ -3784,13 +3949,24 @@
           <option value="irs">IRS</option>
           <option value="other">Other</option>
         </select>
+        <select id="aml-filter-action" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
+          onchange="PG.reset('adminMail'); renderAdminAllMail()">
+          <option value="">All client requests</option>
+          <option value="pending">⏳ Pending requests</option>
+          <option value="open">📂 Open requested</option>
+          <option value="ship">📦 Ship requested</option>
+          <option value="shred">🗑 Shred requested</option>
+          <option value="completed">✅ Completed</option>
+          <option value="none">No request yet</option>
+        </select>
         <select id="aml-filter-read" class="filter-select" style="font-size:12.5px;padding:7px 10px;"
           onchange="PG.reset('adminMail'); renderAdminAllMail()">
-          <option value="">All</option>
-          <option value="unread">Unread only</option>
-          <option value="read">Read only</option>
+          <option value="">Viewed or not</option>
+          <option value="unread">Not viewed by client</option>
+          <option value="read">Viewed by client</option>
         </select>
       </div>
+      <div class="aml-req-chips" id="aml-req-chips"></div>
 
       <div id="aml-list">
         <div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>
@@ -3813,7 +3989,7 @@
   justify-content:center;
   padding:24px;
 ">
-  <div class="modal" style="max-width:540px;" onclick="event.stopPropagation()">
+  <div class="modal" style="max-width:600px;max-height:92vh;overflow-y:auto;" onclick="event.stopPropagation()">
     <div class="modal-header">
       <span class="modal-title">📦 Ship Your Mail</span>
       <button class="modal-close" onclick="closeShipMailModal()">✕</button>
@@ -3825,12 +4001,38 @@
       💰 A shipping fee applies per batch of mail/cards sent and will be billed separately by your account manager. The exact cost depends on destination and package weight.
     </div>
 
+    <div class="ship-contact" id="ship-contact"><!-- email + phone from profile --></div>
+
+    <div class="ship-sec-title">Ship to</div>
     <div class="field">
-      <label>Shipping Address <span style="color:var(--red);font-weight:700;">*</span></label>
-      <textarea id="ship-address" placeholder="Street address, City, State, Country, ZIP"
-        style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;resize:vertical;min-height:80px;transition:border-color 0.18s;line-height:1.5;"
-        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'"></textarea>
-      <p style="font-size:11.5px;color:var(--muted);margin-top:5px;">Pre-filled from your profile — edit if needed.</p>
+      <label for="ship-addr1">Address line 1 <span class="req">*</span></label>
+      <input type="text" id="ship-addr1" placeholder="Street address, P.O. box" autocomplete="address-line1" />
+    </div>
+    <div class="field">
+      <label for="ship-addr2">Address line 2</label>
+      <input type="text" id="ship-addr2" placeholder="Apartment, suite, unit, building, floor" autocomplete="address-line2" />
+    </div>
+    <div class="field">
+      <label for="ship-addr3">Address line 3</label>
+      <input type="text" id="ship-addr3" placeholder="District, area, landmark (optional)" autocomplete="address-line3" />
+    </div>
+    <div class="ship-grid">
+      <div class="field">
+        <label for="ship-city">City <span class="req">*</span></label>
+        <input type="text" id="ship-city" autocomplete="address-level2" />
+      </div>
+      <div class="field">
+        <label for="ship-state">State / Province</label>
+        <input type="text" id="ship-state" autocomplete="address-level1" />
+      </div>
+      <div class="field">
+        <label for="ship-zip">ZIP / Postal code</label>
+        <input type="text" id="ship-zip" autocomplete="postal-code" />
+      </div>
+      <div class="field">
+        <label for="ship-country">Country <span class="req">*</span></label>
+        <input type="text" id="ship-country" autocomplete="country-name" />
+      </div>
     </div>
 
     <div class="field">
@@ -3842,10 +4044,12 @@
       </select>
     </div>
 
+    <div class="ship-sec-title">What should we ship? <span class="req">*</span></div>
+    <div class="ship-mail-pick" id="ship-mail-pick"><!-- checklist of the client's mail --></div>
     <div class="field">
-      <label>What should be shipped? <span style="color:var(--red);font-weight:700;">*</span></label>
-      <textarea id="ship-contents" placeholder="e.g. All mail received this month, or specific items…"
-        style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;resize:vertical;min-height:64px;transition:border-color 0.18s;line-height:1.5;"
+      <label for="ship-contents">Other items or notes</label>
+      <textarea id="ship-contents" placeholder="e.g. Also include any cards that arrive this week…"
+        style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;resize:vertical;min-height:56px;transition:border-color 0.18s;line-height:1.5;"
         onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--parch3)'"></textarea>
     </div>
 
@@ -4362,11 +4566,31 @@
     <div class="aml-detail-body" id="aml-detail-body">
       <!-- content injected by JS -->
     </div>
+    <div class="aml-detail-action" id="aml-detail-action"><!-- client request + admin buttons --></div>
     <div style="padding:14px 26px;border-top:1px solid var(--parch2);flex-shrink:0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;">
       <button class="btn btn-ghost btn-sm" id="aml-detail-scan-btn" style="display:none;" onclick="window.open(document.getElementById('aml-detail-scan-url').value,'_blank')">🔍 View Full Scan</button>
       <button class="btn btn-ghost btn-sm" onclick="closeAmlDetail()">Close</button>
     </div>
     <input type="hidden" id="aml-detail-scan-url" />
+  </div>
+</div>
+
+<!-- ================================================================
+     CONFIRM / PROMPT DIALOG (used for deletes and other confirmations)
+================================================================ -->
+<div id="ui-dialog-overlay" class="ui-dialog-overlay" onclick="if(event.target===this)_uiDialogClose(false)">
+  <div class="ui-dialog" role="dialog" aria-modal="true" aria-labelledby="ui-dialog-title">
+    <div class="ui-dialog-icon" id="ui-dialog-icon">⚠️</div>
+    <div class="ui-dialog-title" id="ui-dialog-title">Are you sure?</div>
+    <div class="ui-dialog-msg" id="ui-dialog-msg"></div>
+    <div class="field hidden" id="ui-dialog-field" style="margin:14px 0 0;text-align:left;">
+      <label id="ui-dialog-label" for="ui-dialog-input"></label>
+      <input type="text" id="ui-dialog-input" />
+    </div>
+    <div class="ui-dialog-actions">
+      <button class="btn btn-ghost" id="ui-dialog-cancel" onclick="_uiDialogClose(false)">Cancel</button>
+      <button class="btn btn-gold" id="ui-dialog-ok" onclick="_uiDialogClose(true)">Confirm</button>
+    </div>
   </div>
 </div>
 
@@ -4612,7 +4836,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ================================================================
 let _authShownOnce = false; // guard: only auto-switch tab on first showAuth() call
 
+// Re-enable the auth buttons. doLogin() disables the button while signing
+// in and (on success) never re-enabled it, so after a logout the Sign In
+// button stayed greyed out. Every time the login screen is shown we now
+// put the buttons back to their normal state.
+function resetAuthButtons() {
+  const lb = document.getElementById('login-btn');
+  if (lb) { lb.disabled = false; lb.textContent = 'Sign In →'; }
+  const sbtn = document.getElementById('signup-btn');
+  if (sbtn) { sbtn.disabled = false; sbtn.textContent = 'Create Account →'; }
+}
+
 function showAuth() {
+  resetAuthButtons();
   document.getElementById('screen-auth').classList.remove('hidden');
   document.getElementById('screen-portal').classList.add('hidden');
   document.getElementById('screen-recovery').classList.add('hidden');
@@ -4779,69 +5015,6 @@ function renderPaymentWarning(show) {
 // ================================================================
 // SIDEBAR
 // ================================================================
-function setupSidebar() {
-  const isAdmin    = currentProfile.role === 'admin';
-  const isReferrer = currentProfile.role === 'referrer';
-
-  // User info
-  document.getElementById('sb-avatar').textContent    = currentProfile.full_name[0].toUpperCase();
-  document.getElementById('sb-user-name').textContent = currentProfile.full_name;
-  document.getElementById('sb-user-role').textContent = isAdmin ? 'Admin' : isReferrer ? 'Referral Partner' : 'Client';
-
-  // Profile popup — clients only
-  const sbUserBtn = document.getElementById('sb-user-btn');
-  if (!isAdmin && !isReferrer) {
-    sbUserBtn.onclick = (e) => {
-      if (e.target.closest('.sb-logout')) return; // don't intercept logout
-      openProfileModal();
-    };
-    sbUserBtn.title = 'View / edit profile';
-  } else {
-    sbUserBtn.style.cursor = 'default';
-    sbUserBtn.onclick = null;
-  }
-
-  const nav = document.getElementById('sb-nav');
-  nav.innerHTML = '';
-
-  const proofTypesBtn = document.getElementById('manage-proof-types-btn');
-  if (proofTypesBtn) proofTypesBtn.style.display = isReferrer ? 'none' : '';
-
-  if (isAdmin) {
-    nav.innerHTML = `
-      ${sbLabel('Admin')}
-      ${sbItem('admin-dash',       '📊', 'Dashboard')}
-      ${sbItem('admin-clients',    '👥', 'Clients')}
-      ${sbItem('admin-upload',     '📤', 'Upload Mail')}
-      ${sbItem('admin-all-mail',   '📬', 'All Mail')}
-      ${sbItem('admin-docs',       '📄', 'Upload Document')}
-      ${sbItem('admin-tickets',    '🎫', 'Client Tickets',       'admin-tk-badge')}
-      ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',   'admin-ship-badge')}
-      ${sbItem('admin-inquiries',  '💬', 'Mail Inquiries',       'admin-inquiry-badge')}
-      ${sbItem('admin-settings',   '⚙️', 'Email Settings')}
-    `;
-  } else if (isReferrer) {
-    nav.innerHTML = `
-      ${sbLabel('Referral Partner')}
-      ${sbItem('admin-dash',       '📊', 'Dashboard')}
-      ${sbItem('admin-clients',    '👥', 'Clients')}
-      ${sbItem('admin-upload',     '📤', 'Upload Mail')}
-      ${sbItem('admin-all-mail',   '📬', 'All Mail')}
-      ${sbItem('admin-docs',       '📄', 'Upload Document')}
-      ${sbItem('admin-tickets',    '🎫', 'Client Tickets',      'admin-tk-badge')}
-      ${sbItem('admin-ship',       '📦', 'Ship Mail Requests',  'admin-ship-badge')}
-      ${sbItem('admin-inquiries',  '💬', 'Mail Inquiries',      'admin-inquiry-badge')}
-    `;
-  } else {
-    nav.innerHTML = `
-      ${sbLabel('Menu')}
-      ${sbItem('overview', '🏠', 'Overview')}
-      ${sbItem('mail',     '📬', 'Manage My Mail', 'mail-nav-badge')}
-      ${sbItem('docs',     '📄', 'Documents')}
-      ${sbItem('mail-rep', '💬', 'Message Rep',    'rep-msg-badge')}
-    `;
-  }
-}
 
 function sbLabel(text) {
   return `<div class="sb-section-label">${text}</div>`;
@@ -4858,47 +5031,6 @@ function sbItem(id, icon, label, badgeId = '') {
     </div>`;
 }
 
-function navTo(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + pageId)?.classList.add('active');
-  document.getElementById('sb-item-' + pageId)?.classList.add('active');
-  if (pageId === 'proof' && currentProfile?.role !== 'admin') {
-    loadClientProofs();
-  }
-  if (pageId === 'admin-docs' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadDocHistory();
-    populateDocHistoryFilter();
-  }
-  if (pageId === 'admin-all-mail' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadAdminAllMail();
-  }
-  if (pageId === 'admin-tickets' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadAdminTickets();
-  }
-  if (pageId === 'admin-ship' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadAdminTickets();
-  }
-  if (pageId === 'admin-inquiries' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadAdminTickets();
-  }
-  if (pageId === 'tickets' && currentProfile?.role === 'client') {
-    loadClientTickets();
-  }
-  if (pageId === 'ship-mail' && currentProfile?.role === 'client') {
-    loadClientTickets();
-  }
-  if (pageId === 'mail-rep' && currentProfile?.role === 'client') {
-    loadRepThread();
-  }
-  if (pageId === 'admin-clients' && ['admin','referrer'].includes(currentProfile?.role)) {
-    loadClientDetailPage();
-  }
-  if (pageId === 'admin-settings' && currentProfile?.role === 'admin') {
-    populateSettingsForm();
-  }
-  if (window.innerWidth <= 860) closeSidebar();
-}
 
 // ================================================================
 // SECURITY — Rate limiting & input sanitization
@@ -5133,7 +5265,12 @@ async function doLogin() {
   }
 
   clearLoginAttempts();
-  // On success, onAuthStateChange fires bootPortal automatically
+  // On success, onAuthStateChange fires bootPortal automatically.
+  // Safety net: if the portal hasn't opened after 8 seconds, give the
+  // user a working button back instead of leaving it disabled.
+  setTimeout(() => {
+    if (!document.getElementById('screen-auth').classList.contains('hidden')) resetAuthButtons();
+  }, 8000);
 }
 
 
@@ -5376,11 +5513,18 @@ async function doLogout() {
   clearTimeout(_inactivityTimer);
   clearTimeout(_inactivityDebounce);
   _inactivityDebounce = null;
-  if (sb) await sb.auth.signOut();
+  try { if (sb) await sb.auth.signOut(); } catch (e) { devLog('signOut failed:', e.message); }
   currentUser    = null;
   currentProfile = null;
   mailCache      = [];
   allClients     = [];
+  // Clear per-user state so the next person who signs in on this
+  // browser never sees (or posts into) the previous user's threads.
+  allTickets = []; clientTickets = [];
+  repThreads = {}; repThreadMessages = []; repThreadTicketId = null;
+  adminAllMail = []; adminAllMailMap = {};
+  const pw = document.getElementById('l-pass'); if (pw) pw.value = '';
+  updateMailBadge(0);
   showAuth();
 }
 
@@ -5491,27 +5635,6 @@ async function loadClientDash() {
 // ================================================================
 // MAIL
 // ================================================================
-function renderMailList() {
-  let items = [...mailCache];
-  if (mailFilter.text) {
-    items = items.filter(m =>
-      m.sender.toLowerCase().includes(mailFilter.text) ||
-      (m.subject || '').toLowerCase().includes(mailFilter.text)
-    );
-  }
-  if (mailFilter.cat) {
-    items = items.filter(m => m.category === mailFilter.cat);
-  }
-  const pg = PG.slice('mail', items);
-  renderMailRows('mail-list-full', pg.items, false);
-  // Append pagination after the list
-  const el = document.getElementById('mail-list-full');
-  if (el && pg.totalPages > 1) {
-    const pgDiv = document.createElement('div');
-    pgDiv.innerHTML = PG.build('mail', pg, 'pgMail');
-    el.appendChild(pgDiv);
-  }
-}
 
 function pgMail(page) {
   PG.set('mail', page);
@@ -5531,248 +5654,9 @@ function mailThumb(m, inline) {
     onerror="this.outerHTML='<span style=\\'font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\'>📬</span>';">`;
 }
 
-function mailStatusLabel(m) {
-  // Action statuses — what the client instructed + whether done
-  if (m.client_action === 'shred' && m.action_status === 'completed') return { label:'Shredded',          icon:'🗑', style:'background:#f3f4f6;color:#6b7280;' };
-  if (m.client_action === 'shred')                                     return { label:'Shred Requested',   icon:'🗑', style:'background:#fee2e2;color:#dc2626;font-weight:700;' };
-  if (m.client_action === 'open'  && m.action_status === 'completed') return { label:'Opened',             icon:'📂', style:'background:#dcfce7;color:#166534;' };
-  if (m.client_action === 'open')                                      return { label:'Open Requested',    icon:'📂', style:'background:#dbeafe;color:#1e40af;font-weight:700;' };
-  if (m.client_action === 'ship'  && m.action_status === 'completed') return { label:'Shipped',            icon:'✈️', style:'background:#dcfce7;color:#166534;' };
-  if (m.client_action === 'ship')                                      return { label:'Ship Requested',    icon:'📦', style:'background:#fef9c3;color:#92400e;font-weight:700;' };
-  // Default read/unread
-  if (m.is_read) return { label:'Viewed', icon:'👁', style:'background:#f3f4f6;color:#6b7280;' };
-  return               { label:'New',    icon:'🔵', style:'background:#dcfce7;color:#166534;font-weight:700;' };
-}
 
-function renderMailRows(containerId, items, compact) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  if (!items.length) {
-    el.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <p style="max-width:300px;margin:0 auto;line-height:1.6;">No mail has been uploaded yet. If you're expecting something, <a href="#" onclick="event.preventDefault();navTo('mail-rep')" style="color:var(--green);font-weight:600;">message your rep</a>.</p>
-      </div>`;
-    const bb = document.getElementById('mail-bulk-bar');
-    if (bb && containerId === 'mail-list-full') bb.style.display = 'none';
-    return;
-  }
-  if (containerId === 'mail-list-full') {
-    const bb = document.getElementById('mail-bulk-bar');
-    if (bb) bb.style.display = 'flex';
-    const sa = document.getElementById('mail-select-all');
-    if (sa) sa.checked = false;
-    _mailSelectedIds = new Set();
-    _updateMailBulkBtn();
-  }
 
-  if (compact) {
-    el.innerHTML = items.map(m => `
-        <div class="mail-row ${m.is_read ? '' : 'unread'}" onclick="openMail('${m.id}')">
-          <div class="unread-dot ${m.is_read ? 'read' : ''}"></div>
-          <div class="mail-thumb">${mailThumb(m, false)}</div>
-          <div class="mail-body">
-            <div class="mail-sender">${esc(m.sender)}</div>
-            <div class="mail-subject">${esc(m.subject || '')}</div>
-          </div>
-          <div class="mail-meta">
-            <div class="mail-date">${fmtDate(m.created_at)}</div>
-            <span class="cat-pill cat-${m.category}">${cap(m.category)}</span>
-          </div>
-        </div>`).join('');
-  } else {
-    el.innerHTML = items.map(m => {
-      const rawDesc = m.description || '';
-      // Sanitize rich-text content through the allowlist-based sanitizeHtml()
-      // to prevent XSS from admin-composed messages containing malicious tags.
-      const isHtml = /<[a-z]/.test(rawDesc);
-      const bodyHtml = isHtml ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g,'<br>');
-      const descHtml = rawDesc ? `<div class="mail-accordion-desc mail-body-content">${bodyHtml}</div>` : '';
-      const st = mailStatusLabel(m);
-      const statusPill = `<span class="pill" style="font-size:10.5px;${st.style}">${st.icon} ${st.label}</span>`;
-      const action = m.client_action;
-      const done   = m.action_status === 'completed';
 
-      // ── Three client instruction buttons ─────────────────────
-      // Each is disabled/labelled once an action is already set
-
-      // 📂 Open — instruct rep to open envelope and scan contents to Documents
-      const openBtn = (action === 'open' && done)
-        ? `<span class="mail-action-pill done">📂 Opened</span>`
-        : action === 'open'
-          ? `<span class="mail-action-pill pending">📂 Open Requested</span>`
-          : action  // another action already chosen — grey it out
-          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">📂 Open</button>`
-          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','open')">📂 Open</button>`;
-
-      // 📦 Ship — instruct rep to ship the physical mail
-      const shipBtn = (action === 'ship' && done)
-        ? `<span class="mail-action-pill done">✈️ Shipped</span>`
-        : action === 'ship'
-          ? `<span class="mail-action-pill pending">📦 Ship Requested</span>`
-          : action
-          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">📦 Ship</button>`
-          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','ship')">📦 Ship</button>`;
-
-      // 🗑 Shred — instruct rep to shred the mail
-      const shredBtn = (action === 'shred' && done)
-        ? `<span class="mail-action-pill done">🗑 Shredded</span>`
-        : action === 'shred'
-          ? `<span class="mail-action-pill pending" style="color:#dc2626;">🗑 Shred Requested</span>`
-          : action
-          ? `<button class="btn btn-ghost btn-sm" disabled style="opacity:0.35;cursor:default;">🗑 Shred</button>`
-          : `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();setMailAction('${m.id}','shred')" style="color:var(--red);">🗑 Shred</button>`;
-
-      const readBtn = !m.is_read
-        ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();markMailRead('${m.id}')">✓ Mark Read</button>`
-        : '';
-
-      return `
-        <div class="mail-accordion ${m.is_read ? '' : 'unread'}" id="accordion-${m.id}">
-          <div class="mail-accordion-header" onclick="toggleAccordion('${m.id}')">
-            <input type="checkbox" class="mail-select-cb" data-id="${m.id}"
-              onclick="event.stopPropagation();_toggleMailSelect('${m.id}',this.checked)"
-              style="width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--green);" />
-            <div class="mail-thumb">${mailThumb(m, true)}</div>
-            <div class="mail-body">
-              <div class="mail-sender">${esc(m.sender)}</div>
-              <div class="mail-subject">${esc(m.subject || 'No subject')}</div>
-            </div>
-            <div class="mail-meta" style="text-align:right; flex-shrink:0;">
-              <div class="mail-date">${fmtDate(m.created_at)}</div>
-              ${statusPill}
-            </div>
-            <div class="mail-accordion-chevron">▼</div>
-          </div>
-          <div class="mail-accordion-body">
-            ${descHtml}
-            <div style="margin-bottom:10px;font-size:12px;color:var(--muted);line-height:1.5;">
-              Tell your rep what to do with this mail item:
-            </div>
-            <div class="mail-accordion-actions" style="flex-wrap:wrap;gap:6px;align-items:center;">
-              ${openBtn}
-              ${shipBtn}
-              ${shredBtn}
-              ${readBtn}
-            </div>
-          </div>
-        </div>`;
-    }).join('');
-  }
-}
-
-function toggleAccordion(id) {
-  const el = document.getElementById('accordion-' + id);
-  if (!el) return;
-  const isOpen = el.classList.contains('open');
-  // Close all others
-  document.querySelectorAll('.mail-accordion.open').forEach(a => a.classList.remove('open'));
-  if (!isOpen) {
-    el.classList.add('open');
-    markMailRead(id);
-  }
-}
-
-async function openMail(id) {
-  const m = mailCache.find(x => x.id === id);
-  if (!m) return;
-  currentMailId = id;
-
-  document.getElementById('mv-title').textContent = `${m.sender} — ${m.subject || '(No subject)'}`;
-  document.getElementById('mv-date').textContent  = fmtDate(m.created_at);
-
-  const dlBtn = document.getElementById('mv-download');
-  const body  = document.getElementById('mv-body');
-
-  // Always show the Gmail-style letter body first
-  const rawDesc = m.description || '';
-  if (rawDesc) {
-    const isHtml = /<[a-z]/.test(rawDesc);
-    const bodyHtml = isHtml ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g,'<br>');
-    const catColor = { usps:'#dbeafe', bank:'#dcfce7', irs:'#fef9c3', other:'#f3f4f6' }[m.category] || '#f3f4f6';
-    const catText  = { usps:'#1e3a5f', bank:'#166534', irs:'#92400e', other:'#374151' }[m.category] || '#374151';
-    body.innerHTML = `
-      <div style="max-width:680px; margin:0 auto; padding-bottom:40px;">
-        <div style="background:var(--white); border-radius:12px; box-shadow:var(--shadow-m); overflow:hidden; margin-bottom:20px;">
-          <div style="background:var(--forest); padding:20px 28px 18px;">
-            <div style="font-size:11px; font-weight:600; letter-spacing:0.10em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:6px;">
-              <span style="background:${catColor}; color:${catText}; padding:2px 9px; border-radius:20px; letter-spacing:0.06em;">${cap(m.category)}</span>
-            </div>
-            <div style="font-size:18px; font-weight:600; color:var(--white); margin-bottom:4px;">${esc(m.subject || '(No subject)')}</div>
-            <div style="font-size:13px; color:rgba(255,255,255,0.5);">From: <strong style="color:rgba(255,255,255,0.8);">${esc(m.sender)}</strong> &nbsp;·&nbsp; ${fmtDate(m.created_at)}</div>
-          </div>
-          <div style="padding:28px 28px 24px;" class="mail-body-content">${bodyHtml}</div>
-          ${m.scan_url ? `<div style="padding:0 28px 24px;"><a href="${esc(m.scan_url)}" target="_blank" class="btn btn-gold" style="display:inline-flex; gap:8px;">📎 View Attachment</a></div>` : ''}
-        </div>
-      </div>`;
-    document.getElementById('mail-viewer').classList.add('open');
-    markMailRead(id);
-    return;
-  }
-
-  if (m.scan_url) {
-    dlBtn.href = m.scan_url;
-    dlBtn.classList.remove('hidden');
-
-    // Check if it's a PDF — show download prompt instead of broken image
-    const isPdf = m.scan_url.toLowerCase().includes('.pdf') ||
-                  (m.file_path && m.file_path.toLowerCase().endsWith('.pdf'));
-
-    if (isPdf) {
-      const descHtml = m.description
-        ? `<div style="margin:16px auto 20px;max-width:480px;text-align:left;background:var(--parch);border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.65;color:var(--ink2);border-left:3px solid var(--gold);">${esc(m.description)}</div>`
-        : '<div style="margin-bottom:20px;"></div>';
-      body.innerHTML = `
-        <div class="mv-no-scan">
-          <div class="mv-no-scan-icon">📄</div>
-          <h3>${esc(m.sender)}</h3>
-          <p>${esc(m.subject || '')}</p>
-          ${descHtml}
-          <a href="${esc(m.scan_url)}" target="_blank" class="btn btn-gold" style="display:inline-flex;">
-            ⬇ Open PDF
-          </a>
-        </div>`;
-    } else {
-      const isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(m.scan_url.toLowerCase());
-      if (isImg) {
-        body.innerHTML = `
-          <img
-            src="${esc(m.scan_url)}"
-            alt="Mail scan"
-            style="max-width:100%; max-height:72vh; border-radius:10px; box-shadow: var(--shadow-l);"
-            onerror="this.outerHTML='<div class=\'mv-no-scan\'><div class=\'mv-no-scan-icon\'>⚠️</div><h3>Could not load image</h3><p>Use the download button above.</p></div>';"
-          >`;
-      } else {
-        body.innerHTML = `
-          <div class="mv-no-scan">
-            <div class="mv-no-scan-icon">📎</div>
-            <h3>${esc(m.sender)}</h3>
-            <p>${esc(m.subject || '')}</p>
-            ${m.description ? `<div style="margin:16px auto 20px;max-width:480px;text-align:left;background:var(--parch);border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.65;color:var(--ink2);border-left:3px solid var(--gold);">${esc(m.description)}</div>` : ''}
-            <a href="${esc(m.scan_url)}" target="_blank" class="btn btn-gold" style="display:inline-flex;">
-              ⬇ Open / Download File
-            </a>
-          </div>`;
-      }
-    }
-  } else {
-    dlBtn.classList.add('hidden');
-    const noFileDesc = m.description
-      ? '<div style="margin:18px auto 0;max-width:480px;text-align:left;background:var(--parch);border-radius:9px;padding:14px 16px;font-size:14px;line-height:1.65;color:var(--ink2);border-left:3px solid var(--gold);">' + esc(m.description) + '</div>'
-      : '';
-    body.innerHTML =
-      '<div class="mv-no-scan">' +
-        '<div class="mv-no-scan-icon">' + catEmoji(m.category) + '</div>' +
-        '<h3>' + esc(m.sender) + '</h3>' +
-        '<p>' + esc(m.subject || '') + '</p>' +
-        noFileDesc +
-        '<p style="margin-top:18px;font-size:13px;color:var(--muted);">No scan attached yet — your account manager will upload it soon.</p>' +
-      '</div>';
-  }
-
-  document.getElementById('mail-viewer').classList.add('open');
-  markMailRead(id);
-}
 
 function closeMailViewer() {
   document.getElementById('mail-viewer').classList.remove('open');
@@ -6043,6 +5927,8 @@ async function loadAdminDash() {
   window._dashIsRef     = isReferrerView;
   PG.reset('adminDash');
   renderDashClientList();
+  renderAdminAttention();
+  refreshMailRequestCount();
   // Populate all client dropdowns
   populateClientDropdowns();
 }
@@ -6133,11 +6019,6 @@ function getSelectedClientIds() {
 // ================================================================
 // ADMIN — MAIL UPLOAD
 // ================================================================
-function handleMailDrop(e) {
-  e.preventDefault();
-  document.getElementById('mail-drop-zone').classList.remove('drag');
-  if (e.dataTransfer.files[0]) setMailFile(e.dataTransfer.files[0]);
-}
 
 const ALLOWED_MAIL_TYPES = ['image/jpeg','image/png','image/webp','image/gif','application/pdf'];
 const ALLOWED_DOC_TYPES  = ['image/jpeg','image/png','image/webp','application/pdf',
@@ -6180,27 +6061,7 @@ function validateFile(file, allowedTypes) {
   return true;
 }
 
-function setMailFile(file) {
-  if (!validateFile(file, ALLOWED_MAIL_TYPES)) return;
-  uploadMailFile = file;
-  document.getElementById('mail-file-chip').style.display = 'flex';
-  document.getElementById('mail-chip-name').textContent   = file.name;
-  document.getElementById('mail-chip-size').textContent   = formatBytes(file.size);
-  const thumb = document.getElementById('mail-chip-thumb');
-  if (file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = e => { thumb.innerHTML = `<img src="${e.target.result}" alt="">`; };
-    reader.readAsDataURL(file);
-  } else {
-    thumb.innerHTML = '📄';
-  }
-}
 
-function clearMailFile() {
-  uploadMailFile = null;
-  document.getElementById('mail-file-chip').style.display = 'none';
-  document.getElementById('mail-file-input').value = '';
-}
 
 // Substitute {{first_name}}, {{full_name}}, {{email}} in HTML content
 function applyVars(html, client) {
@@ -6211,93 +6072,6 @@ function applyVars(html, client) {
     .replace(/\{\{email\}\}/g, esc(client.email || ''));
 }
 
-async function submitMail() {
-  if (!currentProfile || !['admin','referrer'].includes(currentProfile.role)) { showToast('Unauthorized.', true); return; }
-
-  const clientIds   = getSelectedClientIds();
-  const sender      = sanitize(document.getElementById('up-sender').value);
-  const subject     = sanitize(document.getElementById('up-subject').value);
-  const descEl      = document.getElementById('up-description');
-  const rawDesc     = descEl.innerHTML.trim();
-  const category    = document.getElementById('up-cat').value;
-  const btn         = document.getElementById('mail-upload-btn');
-
-  const validCategories = ['usps', 'bank', 'irs', 'other'];
-  if (!validCategories.includes(category)) { showToast('Invalid category.', true); return; }
-  if (!clientIds.length) { showToast('Please select at least one client.', true); return; }
-  if (!sender)           { showToast('Please enter the sender name.', true);       return; }
-  if (!subject)          { showToast('Please enter a subject.', true);             return; }
-
-  btn.disabled    = true;
-  btn.textContent = `Sending to ${clientIds.length} client${clientIds.length>1?'s':''}…`;
-
-  // Upload attachment once (shared across all recipients)
-  let scan_url = null;
-  if (uploadMailFile) {
-    // Use MIME-derived extension, not raw filename extension
-    const safeExts = MIME_EXTENSION_MAP[uploadMailFile.type] || [];
-    const ext = safeExts[0] || 'bin';
-    const safeName = uploadMailFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const path = `shared/${Date.now()}_${safeName}`;
-    const { error: storageErr } = await sb.storage
-      .from('mail-scans')
-      .upload(path, uploadMailFile, { cacheControl: '3600', upsert: false });
-    if (storageErr) {
-      showToast('File upload failed. Please try again.', true);
-      btn.disabled = false; btn.textContent = '📤 Send to Selected Clients';
-      return;
-    }
-    const { data: urlData } = sb.storage.from('mail-scans').getPublicUrl(path);
-    scan_url = urlData?.publicUrl || null;
-  }
-
-  // Sanitize the rich-text description before storing it in the DB.
-  // This prevents stored XSS — if a malicious admin account is compromised
-  // and injects scripts here, they would execute for every client who views the mail.
-  const safeDesc = rawDesc ? sanitizeHtml(rawDesc) : null;
-
-  // Build rows — personalise per client
-  const rows = clientIds.map(cid => {
-    const client = allClients.find(x => x.id === cid) || { id: cid, full_name: '', email: '' };
-    const personalSubject = applyVars(subject, client);
-    const personalDesc    = safeDesc ? applyVars(safeDesc, client) : null;
-    return {
-      client_id:   cid,
-      sender,
-      subject:     personalSubject,
-      description: personalDesc,
-      category,
-      scan_url,
-      is_read:     false,
-    };
-  });
-
-  const { error: dbErr } = await sb.from('mail').insert(rows);
-  if (dbErr) {
-    showToast('Could not send mail. Please try again.', true);
-    btn.disabled = false; btn.textContent = '📤 Send to Selected Clients';
-    return;
-  }
-
-  showToast(`✓ Mail sent to ${clientIds.length} client${clientIds.length>1?'s':''}!`);
-  // Email each selected client
-  for (const cid of clientIds) {
-    const cl = allClients.find(x => x.id === cid);
-    if (cl?.email) {
-      const sdr = document.getElementById('up-sender')?.value || 'Your account manager';
-      const sbj = document.getElementById('up-subject')?.value || '';
-      notify('mail_uploaded', { client_id: cl.id, sender: sdr, subject: sbj });
-    }
-  }
-  toggleAllClients(false);
-  document.getElementById('up-client-search').value = '';
-  filterClientCheckboxes('');
-  document.getElementById('up-sender').value      = '';
-  document.getElementById('up-subject').value     = '';
-  document.getElementById('up-description').innerHTML = ''; updateComposeCount();
-  clearMailFile();
-  btn.disabled = false; btn.textContent = '📤 Send to Selected Clients';
-}
 
 // ================================================================
 // ADMIN — DOCUMENT UPLOAD
@@ -6666,15 +6440,6 @@ async function addProofType() {
   populateProofTypeDropdown();
 }
 
-async function deleteProofType(id, name) {
-  if (!confirm(`Remove "${name}"? Existing assigned proofs of this type will remain.`)) return;
-  const { error } = await sb.from('proof_types').delete().eq('id', id);
-  if (error) { showToast('Could not remove. Please try again.', true); return; }
-  await loadProofTypes();
-  renderProofTypesList();
-  showToast('Proof type removed.');
-  populateProofTypeDropdown();
-}
 
 function populateProofTypeDropdown() {
   const sel = document.getElementById('assign-proof-type');
@@ -6768,14 +6533,6 @@ function proofFileIcon(url) {
   return '📎';
 }
 
-async function deleteProofAssignment(proofId, clientId) {
-  if (!confirm('Remove this proof document?')) return;
-  const { error } = await sb.from('proof_of_address').delete().eq('id', proofId);
-  if (error) { showToast('Could not remove. Please try again.', true); return; }
-  showToast('Proof removed.');
-  loadAssignProofs(clientId);
-  loadAdminDash();
-}
 
 // Proof file handling
 function handleProofDrop(e) {
@@ -7482,53 +7239,11 @@ function _seenKey(role) {
   return `pc_tk_seen_${currentUser?.id}_${role}`;
 }
 
-function _getSeenMap(role) {
-  try {
-    return JSON.parse(sessionStorage.getItem(_seenKey(role)) || '{}');
-  } catch { return {}; }
-}
 
-function _saveSeenMap(role, map) {
-  try { sessionStorage.setItem(_seenKey(role), JSON.stringify(map)); } catch {}
-}
 
-function markAdminTicketSeen(ticketId) {
-  const map = _getSeenMap('admin');
-  const t   = allTickets.find(x => x.id === ticketId);
-  map[ticketId] = t?.updated_at || new Date().toISOString();
-  _saveSeenMap('admin', map);
-  renderAdminTickets();
-  updateAdminTkBadge();
-}
 
-function markClientTicketSeen(ticketId) {
-  const map = _getSeenMap('client');
-  const t   = clientTickets.find(x => x.id === ticketId);
-  map[ticketId] = t?.updated_at || new Date().toISOString();
-  _saveSeenMap('client', map);
-  renderClientTickets();
-  updateClientTkBadge();
-}
 
-function isTicketNew(t) {
-  // Admin sees NEW when: ticket is open (not yet touched) OR client has replied (no admin reply yet)
-  // specifically: status is 'open', or updated_at has changed since admin last saw it
-  if (!t || t.status === 'completed') return false;
-  const map      = _getSeenMap('admin');
-  const seenAt   = map[t.id];
-  if (!seenAt) return true; // never seen
-  // NEW if ticket was updated after we last saw it
-  return new Date(t.updated_at) > new Date(seenAt);
-}
 
-function isClientTicketNew(t) {
-  // Client sees NEW when status is 'replied' (admin responded) and they haven't seen the update
-  if (!t || t.status === 'open') return false;
-  const map    = _getSeenMap('client');
-  const seenAt = map[t.id];
-  if (!seenAt) return t.status === 'replied'; // unseen replied = new
-  return new Date(t.updated_at) > new Date(seenAt);
-}
 
 // ── CLIENT: Load & render ────────────────────────────────────
 async function loadClientTickets() {
@@ -7544,21 +7259,6 @@ async function loadClientTickets() {
   updateClientTkBadge();
 }
 
-function updateClientTkBadge() {
-  const el = document.getElementById('client-tk-badge');
-  if (el) {
-    const newCount = clientTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isClientTicketNew(t)).length;
-    el.textContent = newCount;
-    el.classList.toggle('hidden', newCount === 0);
-  }
-  const shipEl = document.getElementById('ship-tk-badge');
-  if (shipEl) {
-    const shipCount = clientTickets.filter(t => t.type === 'ship_mail' && isClientTicketNew(t)).length;
-    shipEl.textContent = shipCount;
-    shipEl.classList.toggle('hidden', shipCount === 0);
-  }
-  updateRepMsgBadge();
-}
 
 function renderClientTickets() {
   const container = document.getElementById('tk-client-list');
@@ -7758,58 +7458,7 @@ const _origRenderAdminTickets = typeof renderAdminTickets === 'function' ? rende
 // Patched in viewMailHistory
 
 // ── ADMIN: Load & render ─────────────────────────────────────
-async function loadAdminTickets() {
-  // Fetch all tickets
-  const { data: tickets, error } = await sb
-    .from('tickets')
-    .select('*')
-    .order('updated_at', { ascending: false });
 
-  if (error) { devLog('loadAdminTickets:', error.message); return; }
-
-  const rows = tickets || [];
-
-  // Fetch all client profiles in one query to join manually
-  const userIds = [...new Set(rows.map(t => t.user_id).filter(Boolean))];
-  let profileMap = {};
-  if (userIds.length) {
-    const { data: profiles } = await sb
-      .from('profiles')
-      .select('id, full_name')
-      .in('id', userIds);
-    (profiles || []).forEach(p => { profileMap[p.id] = p; });
-  }
-
-  // Attach profile data to each ticket
-  rows.forEach(t => { t._profile = profileMap[t.user_id] || null; });
-
-  allTickets = rows;
-  renderAdminTickets();
-  renderAdminShipMail();
-  renderAdminInquiries();
-  updateAdminTkBadge();
-}
-
-function updateAdminTkBadge() {
-  const el = document.getElementById('admin-tk-badge');
-  if (el) {
-    const newCount = allTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isTicketNew(t)).length;
-    el.textContent = newCount;
-    el.classList.toggle('hidden', newCount === 0);
-  }
-  const shipEl = document.getElementById('admin-ship-badge');
-  if (shipEl) {
-    const shipCount = allTickets.filter(t => t.type === 'ship_mail' && isTicketNew(t)).length;
-    shipEl.textContent = shipCount;
-    shipEl.classList.toggle('hidden', shipCount === 0);
-  }
-  const inqEl = document.getElementById('admin-inquiry-badge');
-  if (inqEl) {
-    const inqCount = allTickets.filter(t => t.type === 'mail_inquiry' && isTicketNew(t)).length;
-    inqEl.textContent = inqCount;
-    inqEl.classList.toggle('hidden', inqCount === 0);
-  }
-}
 
 function renderAdminTickets() {
   const statsEl   = document.getElementById('tk-admin-stats');
@@ -7901,14 +7550,6 @@ function tkRowHTML(t, isAdmin) {
 }
 
 // Separate open functions so we can mark-as-seen before loading detail
-function adminOpenTicket(id) {
-  markAdminTicketSeen(id);
-  openTicketDetail(id);
-}
-function clientOpenTicket(id) {
-  markClientTicketSeen(id);
-  openTicketDetail(id);
-}
 
 // ── Open ticket detail modal ─────────────────────────────────
 async function openTicketDetail(ticketId) {
@@ -7931,18 +7572,8 @@ async function openTicketDetail(ticketId) {
     return;
   }
 
-  // Mark as seen immediately (clears NEW badge)
-  if (isAdmin) {
-    const map = _getSeenMap('admin');
-    map[ticketId] = ticket.updated_at || new Date().toISOString();
-    _saveSeenMap('admin', map);
-    updateAdminTkBadge();
-  } else {
-    const map = _getSeenMap('client');
-    map[ticketId] = ticket.updated_at || new Date().toISOString();
-    _saveSeenMap('client', map);
-    updateClientTkBadge();
-  }
+  // Mark as seen immediately (clears NEW badge — saved in the database)
+  markTicketSeen(ticketId, isAdmin ? 'admin' : 'client');
 
   // Admin auto-advances open → in_progress on first view
   if (isAdmin && ticket.status === 'open') {
@@ -7975,7 +7606,9 @@ async function openTicketDetail(ticketId) {
 function populateDetailHeader(ticket, isAdmin) {
   document.getElementById('tkd-id').textContent     = tkIdLabel(ticket.ticket_number);
   document.getElementById('tkd-title').textContent  = ticket.title;
-  document.getElementById('tkd-type').textContent   = '🏷 ' + (TK_TYPE_LABELS[ticket.type] || ticket.type);
+  document.getElementById('tkd-type').textContent   = ticket.type === 'mail_inquiry'
+    ? INQ_CATS[inqCat(ticket)].icon + ' ' + INQ_CATS[inqCat(ticket)].label
+    : '🏷 ' + (TK_TYPE_LABELS[ticket.type] || ticket.type);
   document.getElementById('tkd-date').textContent   = '📅 ' + fmtDate(ticket.created_at);
 
   const pill = document.getElementById('tkd-status-pill');
@@ -8022,8 +7655,11 @@ function renderChat(ticket, isAdmin) {
   const chatEl = document.getElementById('tkd-chat');
   let html = '';
 
-  // First bubble: original ticket description
-  html += `
+  // First bubble: original ticket description (rep threads get a short intro instead)
+  if (ticket.type === 'mail_inquiry') {
+    const c = INQ_CATS[inqCat(ticket)];
+    html += `<div class="inq-chat-intro">${c.icon} <strong>${esc(c.label)}</strong> conversation</div>`;
+  } else html += `
     <div style="margin-bottom:4px;">
       <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.07em;">📋 Original Request</div>
       <div class="tk-original-body">${esc(ticket.description).replace(/\n/g,'<br>')}</div>
@@ -8151,6 +7787,7 @@ async function submitReply() {
   const cacheArr = isAdmin ? allTickets : clientTickets;
   const t = cacheArr.find(x => x.id === currentTicketId);
   if (t) { t.updated_at = now; if (newStatus) t.status = newStatus; }
+  if (t && hasSeenColumns(t)) { t.last_message_at = now; t.last_message_by = isAdmin ? 'admin' : 'client'; }
 
   // Mark as seen for the sender (so the reply they just sent isn't "new" to them)
   const senderRole = isAdmin ? 'admin' : 'client';
@@ -8160,8 +7797,8 @@ async function submitReply() {
 
   // Re-render header + lists
   if (t) populateDetailHeader(t, isAdmin);
-  if (isAdmin) { renderAdminTickets(); updateAdminTkBadge(); }
-  else         { renderClientTickets(); updateClientTkBadge(); }
+  if (isAdmin) { renderAdminTickets(); renderAdminShipMail(); renderAdminInquiries(); updateAdminTkBadge(); }
+  else         { renderClientTickets(); renderShipHistory(); updateClientTkBadge(); }
 
   // Reload messages
   const { data: msgs } = await sb
@@ -8564,170 +8201,18 @@ function toggleAllMailSelect(checked) {
   _updateMailBulkBtn();
 }
 
-function _updateMailBulkBtn() {
-  const btn     = document.getElementById('mail-bulk-ship-btn');
-  const countEl = document.getElementById('mail-selected-count');
-  const n       = _mailSelectedIds.size;
-  if (btn)     btn.disabled = n === 0;
-  if (countEl) countEl.textContent = n + ' selected';
-  const all = document.querySelectorAll('.mail-select-cb');
-  const sa  = document.getElementById('mail-select-all');
-  if (sa && all.length) sa.checked = all.length > 0 && n === all.length;
-}
 
-function openBulkShipModal() {
-  if (!_mailSelectedIds.size) return;
-  const contentsEl = document.getElementById('ship-contents');
-  if (contentsEl) {
-    const selectedMails = mailCache.filter(function(m) { return _mailSelectedIds.has(m.id); });
-    if (selectedMails.length) {
-      contentsEl.value = selectedMails.map(function(m, i) {
-        return (i + 1) + '. From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + ' (' + fmtDate(m.created_at) + ')';
-      }).join('\n');
-    } else {
-      contentsEl.value = _mailSelectedIds.size + ' mail item' + (_mailSelectedIds.size > 1 ? 's' : '') + ' selected';
-    }
-  }
-  openShipMailModal();
-}
 
-function openShipSingleModal(mailId) {
-  const m = mailCache.find(function(x) { return x.id === mailId; });
-  const contentsEl = document.getElementById('ship-contents');
-  if (contentsEl && m) {
-    contentsEl.value = 'From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '');
-  }
-  openShipMailModal();
-}
 
-function _repQuickPrompt(text) {
-  const ta = document.getElementById('rep-reply-text');
-  if (ta) {
-    ta.value = text;
-    ta.focus();
-    ta.setSelectionRange(ta.value.length, ta.value.length);
-  }
-}
 
 // ── Ship History on Manage My Mail page ──────────────────────
-function renderShipHistory() {
-  const el = document.getElementById('ship-history-list');
-  if (!el) return;
-  const list = (clientTickets || []).filter(function(t) { return t.type === 'ship_mail'; });
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state" style="padding:16px;"><div class="empty-state-icon" style="font-size:28px;">📦</div><p style="font-size:13px;">No shipping requests yet.</p></div>';
-    return;
-  }
-  const STATUS_STYLE = {
-    open:        { bg:'var(--amber-bg)',  color:'var(--amber)',  label:'Pending',    icon:'⏳' },
-    in_progress: { bg:'#dbeafe',          color:'#1e40af',       label:'Processing', icon:'🔄' },
-    replied:     { bg:'#ede9fe',          color:'#4c1d95',       label:'Update',     icon:'💬' },
-    completed:   { bg:'var(--green-bg)', color:'var(--green)', label:'Shipped',    icon:'✈️' },
-  };
-  el.innerHTML = list.map(function(t) {
-    const st = STATUS_STYLE[t.status] || STATUS_STYLE.open;
-    const desc = t.description || '';
-    const itemsIdx = desc.indexOf('Items to ship:');
-    const addrIdx  = desc.indexOf('Shipping address:');
-    let itemsHtml = '';
-    if (itemsIdx >= 0) {
-      const noteMarker = desc.indexOf('\n\nNote:');
-      const raw = desc.slice(itemsIdx + 14, noteMarker > 0 ? noteMarker : desc.length).trim();
-      itemsHtml = '<div style="font-size:12px;color:var(--ink2);line-height:1.6;margin-top:6px;white-space:pre-wrap;">' + esc(raw) + '</div>';
-    }
-    let addrHtml = '';
-    if (addrIdx >= 0) {
-      const methMarker = desc.indexOf('\n\nShipping method:');
-      const raw = desc.slice(addrIdx + 17, methMarker > 0 ? methMarker : desc.length).trim();
-      addrHtml = '<div style="font-size:11.5px;color:var(--muted);margin-top:4px;">To: ' + esc(raw) + '</div>';
-    }
-    return '<div style="padding:14px 16px;border:1.5px solid var(--parch3);border-radius:11px;margin-bottom:8px;cursor:pointer;transition:border-color 0.15s;" onclick="clientOpenTicket(\'' + t.id + '\')" onmouseover="this.style.borderColor=\'var(--gold)\'" onmouseout="this.style.borderColor=\'var(--parch3)\'">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">' +
-        '<div style="display:flex;align-items:center;gap:8px;">' +
-          '<span style="font-size:18px;">' + st.icon + '</span>' +
-          '<div><div style="font-size:13.5px;font-weight:600;color:var(--ink);">' + esc(t.title) + '</div>' +
-          '<div style="font-size:11.5px;color:var(--muted);">Requested ' + fmtDate(t.created_at) + '</div></div>' +
-        '</div>' +
-        '<span style="font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:' + st.bg + ';color:' + st.color + ';">' + st.label + '</span>' +
-      '</div>' + itemsHtml + addrHtml + '</div>';
-  }).join('');
-}
 
 
 // ── Set client action on a mail item ─────────────────────────
 // action: 'open' | 'ship' | 'shred'
 // Saves to mail.client_action, notifies rep via mail_inquiry thread
-async function setMailAction(mailId, action) {
-  const m = mailCache.find(function(x) { return x.id === mailId; });
-  if (!m) return;
-
-  const labels = { open:'open the envelope and scan the contents', ship:'ship this item to your address', shred:'shred this item' };
-  const confirmMsgs = {
-    open:  'Ask your rep to open this envelope and upload the contents to your Documents?',
-    ship:  'Ask your rep to ship this mail item to your address?',
-    shred: 'Ask your rep to shred this mail item? This cannot be undone.',
-  };
-
-  if (!window.confirm(confirmMsgs[action] + '\n\n"' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + '"')) return;
-
-  // Save action to DB
-  const { error: dbErr } = await sb.from('mail').update({
-    client_action: action,
-    action_status: 'requested',
-  }).eq('id', mailId);
-
-  if (dbErr) { showToast('Could not save. Please try again.', true); return; }
-
-  // Update local cache
-  m.client_action = action;
-  m.action_status = 'requested';
-
-  // Send notification message to rep thread
-  const threadId = await ensureRepThread();
-  if (threadId) {
-    const actionLabels = { open:'📂 Open Request', ship:'📦 Ship Request', shred:'🗑 Shred Request' };
-    const body = actionLabels[action] + '\n\nPlease ' + labels[action] + ':\n\n' +
-      'From: ' + (m.sender || '—') + '\n' +
-      (m.subject ? 'Subject: ' + m.subject + '\n' : '') +
-      'Received: ' + fmtDate(m.created_at) + '\n\n' +
-      (action === 'open'  ? 'Please open the envelope, scan the contents, and upload to my Documents section.' : '') +
-      (action === 'ship'  ? 'Please ship this to my address on file. I\'ll receive a shipping request in the portal.' : '') +
-      (action === 'shred' ? 'Please shred this item and confirm once done.' : '');
-
-    await sb.from('ticket_messages').insert({
-      ticket_id:   threadId,
-      sender_id:   currentUser.id,
-      sender_role: 'client',
-      sender_name: currentProfile.full_name,
-      body,
-    });
-    await sb.from('tickets').update({ updated_at: new Date().toISOString() }).eq('id', threadId);
-  }
-
-  // If ship, also open the ship modal pre-filled
-  if (action === 'ship') {
-    const contentsEl = document.getElementById('ship-contents');
-    if (contentsEl) contentsEl.value = 'From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '');
-    openShipMailModal();
-  }
-
-  renderMailList();
-  const toastMsgs = { open:'✓ Open request sent to your rep!', ship:'✓ Ship request sent to your rep!', shred:'✓ Shred request sent to your rep!' };
-  showToast(toastMsgs[action]);
-}
 
 // ── Quick mark shipped from admin ship list ───────────────────
-async function quickMarkShipped(ticketId) {
-  const { error } = await sb.from('tickets').update({
-    status:     'completed',
-    updated_at: new Date().toISOString(),
-  }).eq('id', ticketId);
-  if (error) { showToast('Could not update status.', true); return; }
-  const t = allTickets.find(function(x) { return x.id === ticketId; });
-  if (t) t.status = 'completed';
-  renderAdminShipMail();
-  showToast('✓ Marked as shipped!');
-}
 
 // ================================================================
 // SHIP YOUR MAIL
@@ -8740,19 +8225,6 @@ function updateShipEstimate() {
   if (el) el.textContent = SHIP_ESTIMATES[method] || SHIP_ESTIMATES.standard;
 }
 
-function openShipMailModal() {
-  const el = document.getElementById('ship-mail-error');
-  if (el) { el.style.display = 'none'; }
-  const addrEl = document.getElementById('ship-address');
-  if (addrEl && !addrEl.value && currentProfile?.mailing_address) {
-    addrEl.value = currentProfile.mailing_address;
-  }
-  const meth = document.getElementById('ship-method');
-  if (meth) meth.value = 'standard';
-  updateShipEstimate();
-  const overlay = document.getElementById('ship-mail-overlay');
-  if (overlay) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-}
 
 function closeShipMailModal() {
   const overlay = document.getElementById('ship-mail-overlay');
@@ -8764,56 +8236,6 @@ function shipMailOverlayClick(e) {
   if (e.target === document.getElementById('ship-mail-overlay')) closeShipMailModal();
 }
 
-async function submitShipMailRequest() {
-  const address  = sanitize(document.getElementById('ship-address')?.value || '');
-  const method   = document.getElementById('ship-method')?.value || 'standard';
-  const contents = sanitize(document.getElementById('ship-contents')?.value || '');
-  const errEl    = document.getElementById('ship-mail-error');
-  const btn      = document.getElementById('ship-mail-submit-btn');
-
-  if (errEl) errEl.style.display = 'none';
-  if (!address || address.length < 5) {
-    if (errEl) { errEl.textContent = 'Please enter a valid shipping address.'; errEl.style.display = 'block'; }
-    return;
-  }
-  if (!contents || contents.length < 3) {
-    if (errEl) { errEl.textContent = 'Please describe what should be shipped.'; errEl.style.display = 'block'; }
-    return;
-  }
-
-  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
-
-  const estimate   = SHIP_ESTIMATES[method] || SHIP_ESTIMATES.standard;
-  const methodLabels = { standard:'Standard', express:'Express', priority:'Priority' };
-  const description = `Shipping address:\n${address}\n\nShipping method: ${methodLabels[method]||'Standard'} (Est. ${estimate})\n\nItems to ship:\n${contents}\n\nNote: A shipping fee applies per batch and will be billed separately.`;
-
-  const { count } = await sb.from('tickets').select('*', { count:'exact', head:true });
-  const ticketNumber = (count || 0) + 1;
-
-  const { error } = await sb.from('tickets').insert({
-    user_id:       currentUser.id,
-    title:         'Ship My Mail Request',
-    description,
-    type:          'ship_mail',
-    status:        'open',
-    ticket_number: ticketNumber,
-    created_at:    new Date().toISOString(),
-    updated_at:    new Date().toISOString(),
-  });
-
-  if (btn) { btn.disabled = false; btn.textContent = '📦 Submit Request'; }
-
-  if (error) {
-    if (errEl) { errEl.textContent = 'Could not submit: ' + error.message; errEl.style.display = 'block'; }
-    return;
-  }
-
-  showToast('✓ Shipping request submitted!');
-  closeShipMailModal();
-  const contEl = document.getElementById('ship-contents');
-  if (contEl) contEl.value = '';
-  await loadClientTickets();
-}
 
 // ── Client: render ship-mail page ──────────────────────────
 function renderClientShipMail() {
@@ -8828,101 +8250,10 @@ function renderClientShipMail() {
 }
 
 // ── Admin: render ship-mail requests page ────────────────────
-function renderAdminShipMail() {
-  const container = document.getElementById('ship-admin-list');
-  if (!container) return;
-  const search = (document.getElementById('ship-admin-search')?.value || '').toLowerCase();
-  const filter = document.getElementById('ship-admin-filter')?.value || '';
-  const list = allTickets.filter(t => {
-    if (t.type !== 'ship_mail') return false;
-    if (filter && t.status !== filter) return false;
-    const cname = (t._profile?.full_name || '').toLowerCase();
-    if (search && !cname.includes(search)) return false;
-    return true;
-  });
-  if (!list.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No shipping requests yet.</p></div>';
-    return;
-  }
-  const pgShip = PG.slice('adminShip', list);
-  container.innerHTML = pgShip.items.map(t => {
-    const clientName  = t._profile?.full_name || '—';
-    const clientEmail = t._profile?.email     || '';
-    const color = avatarColor(clientName);
-    const initl = clientName[0]?.toUpperCase() || '?';
-    const desc  = t.description || '';
-    const itemsIdx = desc.indexOf('Items to ship:');
-    const addrIdx  = desc.indexOf('Shipping address:');
-    const methIdx  = desc.indexOf('Shipping method:');
-    let itemsHtml = '<span style="color:var(--muted);font-size:12px;">No items listed</span>';
-    if (itemsIdx >= 0) {
-      const noteMarker = desc.indexOf('\n\nNote:');
-      const raw = desc.slice(itemsIdx + 14, noteMarker > 0 ? noteMarker : desc.length).trim();
-      itemsHtml = `<div style="font-size:12.5px;color:var(--ink);line-height:1.7;white-space:pre-wrap;background:var(--parch);border-radius:8px;padding:8px 12px;margin-top:6px;">${esc(raw)}</div>`;
-    }
-    let addrText = '—';
-    if (addrIdx >= 0) {
-      const methMarker = desc.indexOf('\n\nShipping method:');
-      addrText = desc.slice(addrIdx + 17, methMarker > 0 ? methMarker : desc.length).trim();
-    }
-    let methText = '—';
-    if (methIdx >= 0) {
-      const itemsMarker = desc.indexOf('\n\nItems to ship:');
-      methText = desc.slice(methIdx + 16, itemsMarker > 0 ? itemsMarker : desc.length).trim();
-    }
-    const STATUS_STYLE = {
-      open:        { bg:'var(--amber-bg)', color:'var(--amber)',  label:'Pending'    },
-      in_progress: { bg:'#dbeafe',          color:'#1e40af',      label:'Processing' },
-      replied:     { bg:'#ede9fe',          color:'#4c1d95',      label:'Replied'    },
-      completed:   { bg:'var(--green-bg)', color:'var(--green)', label:'Shipped ✈️' },
-    };
-    const st = STATUS_STYLE[t.status] || STATUS_STYLE.open;
-    return `<div style="border:1.5px solid var(--parch3);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--white);">
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--parch);border-bottom:1px solid var(--parch2);cursor:pointer;" onclick="adminOpenTicket('${t.id}')">
-        <div style="width:34px;height:34px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">${initl}</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-weight:600;font-size:14px;color:var(--ink);">📦 ${esc(clientName)}</div>
-          <div style="font-size:12px;color:var(--muted);">${esc(clientEmail)} · ${fmtDate(t.created_at)}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;">
-          <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:${st.bg};color:${st.color};">${st.label}</span>
-        </div>
-      </div>
-      <div style="padding:14px 16px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;" class="ship-detail-grid">
-          <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Ship To</div><div style="font-size:13px;color:var(--ink);">${esc(addrText)}</div></div>
-          <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Method</div><div style="font-size:13px;color:var(--ink);">${esc(methText)}</div></div>
-        </div>
-        <div><div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;">📬 Items to Ship</div>${itemsHtml}</div>
-        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-gold btn-sm" onclick="adminOpenTicket('${t.id}')">Open &amp; Reply</button>
-          ${t.status !== 'completed' ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();quickMarkShipped('${t.id}')">✈️ Mark Shipped</button>` : ''}
-        </div>
-      </div>
-    </div>`;
-  }).join('') + PG.build('adminShip', pgShip, 'pgAdminShip');
-}
 
 function pgAdminShip(page) { PG.goTo('adminShip', page, renderAdminShipMail); }
 
 // ── Admin: render mail inquiries page ───────────────────────
-function renderAdminInquiries() {
-  const container = document.getElementById('inquiry-admin-list');
-  if (!container) return;
-  const search = (document.getElementById('inquiry-admin-search')?.value || '').toLowerCase();
-  const list = allTickets.filter(t => {
-    if (t.type !== 'mail_inquiry') return false;
-    const cname = (t._profile?.full_name || '').toLowerCase();
-    if (search && !cname.includes(search)) return false;
-    return true;
-  });
-  if (!list.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>No mail inquiries yet.</p></div>';
-    return;
-  }
-  const pgInq = PG.slice('adminInquiries', list);
-  container.innerHTML = pgInq.items.map(t => tkRowHTML(t, true)).join('') + PG.build('adminInquiries', pgInq, 'pgAdminInq');
-}
 
 function pgAdminInq(page) { PG.goTo('adminInquiries', page, renderAdminInquiries); }
 
@@ -8933,92 +8264,9 @@ let repThreadTicketId = null;
 let repThreadMessages = [];
 let repThreadFile     = null;
 
-async function ensureRepThread() {
-  if (repThreadTicketId) return repThreadTicketId;
 
-  const { data: existing } = await sb
-    .from('tickets')
-    .select('*')
-    .eq('user_id', currentUser.id)
-    .eq('type', 'mail_inquiry')
-    .order('created_at', { ascending: true })
-    .limit(1)
-    .maybeSingle();
 
-  if (existing) { repThreadTicketId = existing.id; return repThreadTicketId; }
 
-  const { count } = await sb.from('tickets').select('*', { count:'exact', head:true });
-  const { data: created, error } = await sb.from('tickets').insert({
-    user_id:       currentUser.id,
-    title:         'Mail Inquiries',
-    description:   'Your private conversation thread with your rep.',
-    type:          'mail_inquiry',
-    status:        'open',
-    ticket_number: (count || 0) + 1,
-    created_at:    new Date().toISOString(),
-    updated_at:    new Date().toISOString(),
-  }).select('*').single();
-
-  if (error || !created) return null;
-  repThreadTicketId = created.id;
-  return repThreadTicketId;
-}
-
-async function loadRepThread() {
-  const chatEl = document.getElementById('rep-chat');
-  if (chatEl) chatEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;font-size:13px;">Loading…</div>';
-
-  const id = await ensureRepThread();
-  if (!id) {
-    if (chatEl) chatEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;">Could not load thread.</div>';
-    return;
-  }
-
-  const { data: msgs } = await sb
-    .from('ticket_messages')
-    .select('*')
-    .eq('ticket_id', id)
-    .order('created_at', { ascending: true });
-
-  repThreadMessages = msgs || [];
-  renderRepChat();
-
-  const map = _getSeenMap('client');
-  map[id] = new Date().toISOString();
-  _saveSeenMap('client', map);
-  updateRepMsgBadge();
-}
-
-function renderRepChat() {
-  const chatEl = document.getElementById('rep-chat');
-  if (!chatEl) return;
-  let html = `<div style="margin-bottom:4px;">
-    <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.07em;">💬 Message Your Rep</div>
-    <div class="tk-original-body">Use this thread to ask about mail you're expecting, missing items, or anything your rep should watch for.</div>
-  </div>`;
-  if (repThreadMessages.length) html += `<div style="border-top:1px solid var(--parch2);margin:4px 0 8px;"></div>`;
-  repThreadMessages.forEach(msg => {
-    const isMine = msg.sender_id === currentUser.id;
-    const side   = isMine ? 'client' : 'admin';
-    const label  = isMine ? 'You' : '🛡 Your Rep';
-    html += `<div class="tk-msg ${side}">
-      <div class="tk-msg-bubble">${esc(msg.body).replace(/\n/g,'<br>')}${msg.attachment_url ? `<br><a class="tk-msg-attachment" href="${msg.attachment_url}" target="_blank" rel="noopener noreferrer">📎 Attachment</a>` : ''}</div>
-      <div class="tk-msg-meta"><span>${label}</span>&nbsp;·&nbsp;${fmtDate(msg.created_at)}</div>
-    </div>`;
-  });
-  if (!repThreadMessages.length) html += `<div style="text-align:center;color:var(--muted);font-size:13px;padding:12px 0;">No messages yet — say hello!</div>`;
-  chatEl.innerHTML = html;
-  requestAnimationFrame(() => { chatEl.scrollTop = chatEl.scrollHeight; });
-}
-
-function setRepReplyFile(file) {
-  if (!file) return;
-  repThreadFile = file;
-  const n = document.getElementById('rep-attach-name');
-  const r = document.getElementById('rep-attach-remove');
-  if (n) { n.textContent = file.name; n.classList.remove('hidden'); }
-  if (r) r.classList.remove('hidden');
-}
 
 function clearRepReplyFile() {
   repThreadFile = null;
@@ -9030,72 +8278,7 @@ function clearRepReplyFile() {
   if (i) i.value = '';
 }
 
-async function submitRepMessage() {
-  const textEl = document.getElementById('rep-reply-text');
-  const body   = sanitize(textEl?.value || '');
-  const btn    = document.getElementById('rep-reply-btn');
 
-  if (!body && !repThreadFile) { showToast('Please write a message or attach a file.', true); return; }
-
-  const id = await ensureRepThread();
-  if (!id) { showToast('Could not send message.', true); return; }
-
-  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-
-  let attachmentUrl = null;
-  if (repThreadFile) {
-    const safeName = repThreadFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const path = `ticket-replies/${id}/${Date.now()}-${safeName}`;
-    const { data: up } = await sb.storage.from('ticket-attachments').upload(path, repThreadFile, { upsert:false });
-    if (up) {
-      const { data: pub } = sb.storage.from('ticket-attachments').getPublicUrl(path);
-      attachmentUrl = pub?.publicUrl || null;
-    }
-  }
-
-  const { error } = await sb.from('ticket_messages').insert({
-    ticket_id:      id,
-    sender_id:      currentUser.id,
-    sender_role:    'client',
-    sender_name:    currentProfile.full_name,
-    body:           body || '(attachment)',
-    attachment_url: attachmentUrl,
-  });
-
-  if (error) {
-    showToast('Could not send message.', true);
-    if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
-    return;
-  }
-
-  const now = new Date().toISOString();
-  await sb.from('tickets').update({ updated_at: now }).eq('id', id);
-
-  const map = _getSeenMap('client');
-  map[id] = now;
-  _saveSeenMap('client', map);
-
-  const { data: msgs } = await sb.from('ticket_messages').select('*').eq('ticket_id', id).order('created_at', { ascending:true });
-  repThreadMessages = msgs || [];
-  renderRepChat();
-
-  if (textEl) textEl.value = '';
-  clearRepReplyFile();
-  if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
-  showToast('Message sent!');
-}
-
-function updateRepMsgBadge() {
-  const el = document.getElementById('rep-msg-badge');
-  if (!el || !repThreadTicketId) { if (el) el.classList.add('hidden'); return; }
-  const map = _getSeenMap('client');
-  const seenAt = map[repThreadTicketId];
-  const lastMsg = repThreadMessages[repThreadMessages.length - 1];
-  const hasUnseen = lastMsg && lastMsg.sender_role === 'admin' &&
-    (!seenAt || new Date(lastMsg.created_at) > new Date(seenAt));
-  el.textContent = '1';
-  el.classList.toggle('hidden', !hasUnseen);
-}
 
 
 // ================================================================
@@ -9310,178 +8493,10 @@ function _refreshTagFilter() {
 let adminAllMail    = [];  // all mail rows with _clientName
 let adminAllMailMap = {};  // id -> mail row
 
-async function loadAdminAllMail() {
-  const el = document.getElementById('aml-list');
-  if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>';
 
-  // Fetch all mail across all clients, join profile for name
-  const { data: rows, error } = await sb
-    .from('mail')
-    .select('*, profiles!client_id(id, full_name, email)')
-    .order('created_at', { ascending: false });
-
-  if (error || !rows) {
-    if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Failed to load mail.</p></div>';
-    return;
-  }
-
-  adminAllMail = rows.map(function(m) {
-    m._clientName  = m.profiles?.full_name  || '—';
-    m._clientEmail = m.profiles?.email       || '';
-    m._clientId    = m.profiles?.id          || m.client_id;
-    return m;
-  });
-  adminAllMailMap = {};
-  adminAllMail.forEach(function(m) { adminAllMailMap[m.id] = m; });
-
-  // Populate client filter
-  const clientSel = document.getElementById('aml-filter-client');
-  if (clientSel) {
-    const seen = {}; const opts = ['<option value="">All clients</option>'];
-    adminAllMail.forEach(function(m) {
-      if (m._clientId && !seen[m._clientId]) {
-        seen[m._clientId] = true;
-        opts.push('<option value="' + m._clientId + '">' + esc(m._clientName) + '</option>');
-      }
-    });
-    const cur = clientSel.value;
-    clientSel.innerHTML = opts.join('');
-    clientSel.value = cur;
-  }
-
-  const total  = adminAllMail.length;
-  const unread = adminAllMail.filter(function(m){ return !m.is_read; }).length;
-  const sub = document.getElementById('aml-sub');
-  if (sub) sub.textContent = total + ' mails total · ' + unread + ' unread';
-
-  PG.reset('adminMail');
-  renderAdminAllMail();
-}
-
-function renderAdminAllMail() {
-  const el = document.getElementById('aml-list');
-  if (!el) return;
-
-  const search    = (document.getElementById('aml-search')?.value    || '').toLowerCase().trim();
-  const clientId  =  document.getElementById('aml-filter-client')?.value || '';
-  const cat       =  document.getElementById('aml-filter-cat')?.value    || '';
-  const readState =  document.getElementById('aml-filter-read')?.value   || '';
-
-  let items = adminAllMail;
-  if (search)   items = items.filter(function(m) {
-    return (m.sender||'').toLowerCase().includes(search) ||
-           (m.subject||'').toLowerCase().includes(search) ||
-           m._clientName.toLowerCase().includes(search);
-  });
-  if (clientId) items = items.filter(function(m) { return m._clientId === clientId; });
-  if (cat)      items = items.filter(function(m) { return m.category === cat; });
-  if (readState === 'unread') items = items.filter(function(m) { return !m.is_read; });
-  if (readState === 'read')   items = items.filter(function(m) { return  m.is_read; });
-
-  if (!items.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No mail matches your filters.</p></div>';
-    return;
-  }
-
-  const pg = PG.slice('adminMail', items);
-
-  el.innerHTML = pg.items.map(function(m) {
-    const _url   = (m.scan_url || '').toLowerCase();
-    const _isPdf = _url.includes('.pdf');
-    const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
-
-    let thumbHtml;
-    if (m.scan_url && _isImg) {
-      thumbHtml = '<img src="' + esc(m.scan_url) + '" alt="" onerror="this.outerHTML=\'📬\'" />';
-    } else if (m.scan_url && _isPdf) {
-      thumbHtml = '📄';
-    } else {
-      thumbHtml = catEmoji(m.category || 'other');
-    }
-
-    const catLabels = { usps:'USPS', bank:'Bank', irs:'IRS', other:'Other' };
-    const catLabel  = catLabels[m.category] || m.category || 'Mail';
-    const subject   = m.subject || '(no subject)';
-
-    return '<div class="aml-row' + (m.is_read ? '' : ' unread') + '" onclick="openAmlDetail(\'' + m.id + '\')">' +
-      (m.is_read ? '' : '<div class="aml-unread-dot"></div>') +
-      '<div class="aml-thumb">' + thumbHtml + '</div>' +
-      '<div class="aml-main">' +
-        '<div class="aml-client" onclick="event.stopPropagation();openClientPopup(\'' + esc(m._clientId) + '\')" title="View client profile" style="cursor:pointer;">' +
-          '👤 ' + esc(m._clientName) + '</div>' +
-        '<div class="aml-subject">' + esc(subject) + '</div>' +
-        '<div class="aml-meta">' +
-          '<span class="aml-sender">From: ' + esc(m.sender || '—') + '</span>' +
-          '<span class="pill" style="font-size:10.5px;">' + catLabel + '</span>' +
-          '<span class="aml-date">' + fmtDate(m.created_at) + '</span>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('') + PG.build('adminMail', pg, 'pgAdminMail');
-}
 
 function pgAdminMail(page) { PG.goTo('adminMail', page, renderAdminAllMail); }
 
-function openAmlDetail(mailId) {
-  const m = adminAllMailMap[mailId];
-  if (!m) return;
-
-  const catLabels = { usps:'USPS', bank:'Bank', irs:'IRS', other:'Other' };
-
-  document.getElementById('aml-detail-client').textContent  = '👤 ' + (m._clientName || '—');
-  document.getElementById('aml-detail-subject').textContent = m.subject || '(no subject)';
-  document.getElementById('aml-detail-sender').textContent  = m.sender  || '—';
-  document.getElementById('aml-detail-date').textContent    = fmtDate(m.created_at);
-  document.getElementById('aml-detail-cat').textContent     = catLabels[m.category] || m.category || 'Mail';
-
-  // Make client name clickable
-  const clientEl = document.getElementById('aml-detail-client');
-  clientEl.style.cursor = 'pointer';
-  clientEl.onclick = function() { closeAmlDetail(); openClientPopup(m._clientId); };
-
-  // Build body
-  const _url   = (m.scan_url || '').toLowerCase();
-  const _isImg = /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url);
-  const _isPdf = _url.includes('.pdf');
-  const scanBtn = document.getElementById('aml-detail-scan-btn');
-  const scanUrl = document.getElementById('aml-detail-scan-url');
-
-  let bodyHtml = '';
-  if (m.description) {
-    const rawDesc  = m.description;
-    const isHtmlDesc = /<[a-z][\s\S]*>/i.test(rawDesc);
-    const safeDesc   = isHtmlDesc ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g, '<br>');
-    bodyHtml += '<div class="mail-body-content" style="font-size:14px;color:var(--ink);line-height:1.75;margin-bottom:16px;">' + safeDesc + '</div>';
-  }
-  if (m.scan_url && _isImg) {
-    bodyHtml += '<img src="' + esc(m.scan_url) + '" alt="Scan" class="aml-detail-scan" onerror="this.style.display=\'none\'" />';
-  }
-  if (!bodyHtml) {
-    bodyHtml = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">No preview available.</div>';
-  }
-  document.getElementById('aml-detail-body').innerHTML = bodyHtml;
-
-  if (scanBtn && scanUrl) {
-    if (m.scan_url && (_isPdf || _isImg)) {
-      scanBtn.style.display = '';
-      scanUrl.value = m.scan_url;
-    } else {
-      scanBtn.style.display = 'none';
-      scanUrl.value = '';
-    }
-  }
-
-  document.getElementById('aml-detail-panel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Mark as read
-  if (!m.is_read) {
-    sb.from('mail').update({ is_read: true }).eq('id', mailId).then(function() {
-      m.is_read = true;
-      renderAdminAllMail();
-    });
-  }
-}
 
 function closeAmlDetail() {
   document.getElementById('aml-detail-panel').classList.remove('open');
@@ -9711,6 +8726,1688 @@ function updateComposeCount() {
   const len = el.innerText.trim().length;
   const counter = document.getElementById('compose-charcount');
   if (counter) counter.textContent = len + ' chars';
+}
+
+</script>
+<script>
+// ================================================================
+// PORTAL V2
+//   • Organised admin menu (Mail / Client Messages / Records)
+//   • Client mail requests: Open / Ship / Shred, shown in Admin
+//   • Message Your Rep split into topics (Rep / Expecting / Shipping / Other)
+//   • Structured ship-mail form (address lines, city, state, zip, country)
+//   • Bulk mail upload
+//   • "NEW" badges remembered in the database (no more false alerts)
+//   • In-app confirm dialog for deletes
+// Needs portal-upgrade-migration.sql for the database parts. Without it
+// the page still works and falls back to the old behaviour.
+// ================================================================
+
+// ── Message topics ────────────────────────────────────────────
+const INQ_CATS = {
+  rep_message:      { label: 'Message to Rep',   icon: '💬', title: 'Message to Rep',
+                      desc: 'General questions for your rep.',
+                      help: 'Use this for anything about your account, your address or your mail that is not covered by the other topics.' },
+  expecting_mail:   { label: 'Expecting Mail',   icon: '📬', title: 'Expecting Mail',
+                      desc: 'Tell us about mail or a package on the way.',
+                      help: 'Let your rep know a letter, card or package is coming. Add who it is from and a tracking number if you have one, and we will tell you when it arrives.' },
+  shipping_inquiry: { label: 'Shipping Inquiry', icon: '🚚', title: 'Shipping Inquiry',
+                      desc: 'Questions about costs, timing or tracking.',
+                      help: 'Ask about shipping costs, delivery times or the tracking of a shipment. To actually send your mail, use “Ship My Mail” instead.' },
+  other:            { label: 'Other',            icon: '📝', title: 'Other',
+                      desc: 'Anything else.',
+                      help: 'Anything that does not fit the other topics.' },
+};
+const INQ_ORDER = ['rep_message', 'expecting_mail', 'shipping_inquiry', 'other'];
+
+// Works with and without the new `category` column: older threads are
+// matched by their title, and anything unknown counts as "Message to Rep".
+function inqCat(t) {
+  if (!t) return 'rep_message';
+  if (t.category && INQ_CATS[t.category]) return t.category;
+  const byTitle = INQ_ORDER.find(k => INQ_CATS[k].title === t.title);
+  return byTitle || 'rep_message';
+}
+
+// Admin menus for client messages. "Other" lives with Message to Rep.
+const ADMIN_INQ_VIEWS = {
+  'admin-inq-rep':    { cats: ['rep_message', 'other'], title: 'Message to Rep',     icon: '💬', badge: 'admin-inq-rep-badge',
+                        sub: 'General messages from clients (including “Other”)' },
+  'admin-inq-expect': { cats: ['expecting_mail'],       title: 'Expecting Mail',     icon: '📮', badge: 'admin-inq-expect-badge',
+                        sub: 'Clients telling you about mail or packages on the way' },
+  'admin-inq-shipq':  { cats: ['shipping_inquiry'],     title: 'Shipping Inquiries', icon: '🚚', badge: 'admin-inq-shipq-badge',
+                        sub: 'Questions about shipping costs, timing and tracking' },
+};
+let adminInqView = 'admin-inq-rep';
+
+const MAIL_ACTIONS = {
+  open:  { icon: '📂', verb: 'Open',  pending: 'Open requested',  done: 'Opened',   doneVerb: 'Mark as opened' },
+  ship:  { icon: '📦', verb: 'Ship',  pending: 'Ship requested',  done: 'Shipped',  doneVerb: 'Mark as shipped' },
+  shred: { icon: '🗑', verb: 'Shred', pending: 'Shred requested', done: 'Shredded', doneVerb: 'Mark as shredded' },
+};
+
+let repThreads  = {};              // client: category -> ticket
+let repCategory = 'rep_message';   // client: selected topic
+let uploadMailFiles = [];          // admin: files picked for upload
+let uploadMode = 'separate';       // admin: 'separate' | 'single'
+let _pendingMailReqCount = 0;      // admin: pending client mail requests
+let _shipPreselect = [];           // client: mail ids pre-ticked in ship form
+
+function isStaff() { return ['admin', 'referrer'].includes(currentProfile?.role); }
+
+// Missing column / function → the migration hasn't been run yet.
+function isSchemaMissing(error) {
+  if (!error) return false;
+  const msg = (error.message || '') + ' ' + (error.code || '');
+  return /PGRST20[0-9]|42703|42883|schema cache|does not exist|Could not find/i.test(msg);
+}
+
+// ================================================================
+// CONFIRM / PROMPT DIALOG
+// ================================================================
+let _uiDialogResolve = null;
+
+function uiDialog({ title = 'Are you sure?', message = '', icon = '⚠️', confirmText = 'Confirm',
+                    cancelText = 'Cancel', danger = false, input = null } = {}) {
+  return new Promise(resolve => {
+    _uiDialogResolve = resolve;
+    document.getElementById('ui-dialog-icon').textContent  = icon;
+    document.getElementById('ui-dialog-title').textContent = title;
+    document.getElementById('ui-dialog-msg').textContent   = message;
+    const ok = document.getElementById('ui-dialog-ok');
+    ok.textContent = confirmText;
+    ok.className   = 'btn ' + (danger ? 'btn-danger' : 'btn-gold');
+    document.getElementById('ui-dialog-cancel').textContent = cancelText;
+    const field = document.getElementById('ui-dialog-field');
+    const inp   = document.getElementById('ui-dialog-input');
+    if (input) {
+      field.classList.remove('hidden');
+      document.getElementById('ui-dialog-label').textContent = input.label || '';
+      inp.placeholder = input.placeholder || '';
+      inp.value = input.value || '';
+    } else {
+      field.classList.add('hidden');
+      inp.value = '';
+    }
+    document.getElementById('ui-dialog-overlay').classList.add('open');
+    setTimeout(() => (input ? inp : ok).focus(), 30);
+  });
+}
+
+function _uiDialogClose(ok) {
+  document.getElementById('ui-dialog-overlay').classList.remove('open');
+  const value = document.getElementById('ui-dialog-input').value.trim();
+  if (_uiDialogResolve) { const r = _uiDialogResolve; _uiDialogResolve = null; r({ ok, value }); }
+}
+
+async function uiConfirm(opts) { return (await uiDialog(opts)).ok; }
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('ui-dialog-overlay')?.classList.contains('open')) return;
+  if (e.key === 'Escape') _uiDialogClose(false);
+  if (e.key === 'Enter')  _uiDialogClose(true);
+});
+
+// ================================================================
+// SIDEBAR + NAVIGATION
+// ================================================================
+function setupSidebar() {
+  const isAdmin    = currentProfile.role === 'admin';
+  const isReferrer = currentProfile.role === 'referrer';
+
+  document.getElementById('sb-avatar').textContent    = (currentProfile.full_name || '?')[0].toUpperCase();
+  document.getElementById('sb-user-name').textContent = currentProfile.full_name;
+  document.getElementById('sb-user-role').textContent = isAdmin ? 'Admin' : isReferrer ? 'Referral Partner' : 'Client';
+
+  const sbUserBtn = document.getElementById('sb-user-btn');
+  if (!isAdmin && !isReferrer) {
+    sbUserBtn.onclick = (e) => {
+      if (e.target.closest('.sb-logout')) return;
+      openProfileModal();
+    };
+    sbUserBtn.title = 'View / edit profile';
+    sbUserBtn.style.cursor = '';
+  } else {
+    sbUserBtn.style.cursor = 'default';
+    sbUserBtn.onclick = null;
+  }
+
+  const proofTypesBtn = document.getElementById('manage-proof-types-btn');
+  if (proofTypesBtn) proofTypesBtn.style.display = isReferrer ? 'none' : '';
+
+  const nav = document.getElementById('sb-nav');
+  if (isAdmin || isReferrer) {
+    // "Client Tickets" is no longer in the menu. Its data is untouched.
+    nav.innerHTML = `
+      ${sbLabel(isReferrer ? 'Referral Partner' : 'Overview')}
+      ${sbItem('admin-dash',       '📊', 'Dashboard')}
+      ${sbItem('admin-clients',    '👥', 'Clients')}
+      ${sbLabel('Mail')}
+      ${sbItem('admin-upload',     '📤', 'Upload Mail')}
+      ${sbItem('admin-all-mail',   '📬', 'All Mail',           'admin-mailreq-badge')}
+      ${sbItem('admin-ship',       '📦', 'Ship Requests',      'admin-ship-badge')}
+      ${sbLabel('Client Messages')}
+      ${sbItem('admin-inq-rep',    '💬', 'Message to Rep',     'admin-inq-rep-badge')}
+      ${sbItem('admin-inq-expect', '📮', 'Expecting Mail',     'admin-inq-expect-badge')}
+      ${sbItem('admin-inq-shipq',  '🚚', 'Shipping Inquiries', 'admin-inq-shipq-badge')}
+      ${sbLabel('Records')}
+      ${sbItem('admin-docs',       '📄', 'Documents')}
+      ${isAdmin ? sbLabel('Settings') + sbItem('admin-settings', '⚙️', 'Email Settings') : ''}
+    `;
+  } else {
+    nav.innerHTML = `
+      ${sbLabel('Menu')}
+      ${sbItem('overview', '🏠', 'Overview')}
+      ${sbItem('mail',     '📬', 'Manage My Mail', 'mail-nav-badge')}
+      ${sbItem('docs',     '📄', 'Documents')}
+      ${sbItem('mail-rep', '💬', 'Message Rep',    'rep-msg-badge')}
+    `;
+  }
+}
+
+function navTo(pageId) {
+  const staff = isStaff();
+  const pageEl = ADMIN_INQ_VIEWS[pageId] ? 'admin-inquiries' : pageId;
+  if (ADMIN_INQ_VIEWS[pageId]) adminInqView = pageId;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + pageEl)?.classList.add('active');
+  document.getElementById('sb-item-' + pageId)?.classList.add('active');
+
+  if (staff) {
+    if (pageId === 'admin-dash')     renderAdminAttention();
+    if (pageId === 'admin-docs')     { loadDocHistory(); populateDocHistoryFilter(); }
+    if (pageId === 'admin-all-mail') loadAdminAllMail();
+    if (pageId === 'admin-tickets' || pageId === 'admin-ship') loadAdminTickets();
+    if (ADMIN_INQ_VIEWS[pageId])     { PG.reset('adminInquiries'); renderAdminInquiries(); loadAdminTickets(); }
+    if (pageId === 'admin-clients')  loadClientDetailPage();
+    if (pageId === 'admin-settings' && currentProfile?.role === 'admin') populateSettingsForm();
+  } else if (currentProfile) {
+    if (pageId === 'proof')    loadClientProofs();
+    if (pageId === 'tickets' || pageId === 'ship-mail' || pageId === 'mail') loadClientTickets();
+    if (pageId === 'mail-rep') loadRepThreads();
+  }
+  if (window.innerWidth <= 860) closeSidebar();
+  window.scrollTo({ top: 0 });
+}
+
+// ================================================================
+// "NEW" BADGES — remembered in the database
+// ================================================================
+// The old version kept "seen" in sessionStorage, which is wiped on every
+// login, so old conversations kept showing as NEW. Now:
+//   admin  → NEW only if the client wrote last and the admin hasn't opened it since
+//   client → NEW only if the rep wrote last and the client hasn't opened it since
+function _getSeenMap(role) {
+  try { return JSON.parse(localStorage.getItem(_seenKey(role)) || sessionStorage.getItem(_seenKey(role)) || '{}'); }
+  catch { return {}; }
+}
+function _saveSeenMap(role, map) {
+  try { localStorage.setItem(_seenKey(role), JSON.stringify(map)); } catch {}
+}
+function hasSeenColumns(t) {
+  return !!t && Object.prototype.hasOwnProperty.call(t, 'last_message_by');
+}
+
+function isTicketNew(t) {
+  if (!t) return false;
+  if (hasSeenColumns(t)) {
+    const seen = t.admin_seen_at ? new Date(t.admin_seen_at) : null;
+    if (t.last_message_by === 'client') return !seen || new Date(t.last_message_at) > seen;
+    if (!t.last_message_by) {
+      // No messages yet: a brand-new request is NEW until someone opens it.
+      // An empty Message Rep thread has nothing to read, so it never is.
+      if (t.type === 'mail_inquiry' || t.status === 'completed') return false;
+      return !seen;
+    }
+    return false; // admin wrote last
+  }
+  // Fallback before the migration: old rule, but remembered across logins.
+  if (t.status === 'completed') return false;
+  const seenAt = _getSeenMap('admin')[t.id];
+  if (!seenAt) return true;
+  return new Date(t.updated_at) > new Date(seenAt);
+}
+
+function isClientTicketNew(t) {
+  if (!t) return false;
+  if (hasSeenColumns(t)) {
+    if (t.last_message_by !== 'admin') return false;
+    const seen = t.client_seen_at ? new Date(t.client_seen_at) : null;
+    return !seen || new Date(t.last_message_at) > seen;
+  }
+  if (t.status === 'open') return false;
+  const seenAt = _getSeenMap('client')[t.id];
+  if (!seenAt) return t.status === 'replied';
+  return new Date(t.updated_at) > new Date(seenAt);
+}
+
+async function markTicketSeen(ticketId, role) {
+  const now  = new Date().toISOString();
+  const list = role === 'admin' ? allTickets : clientTickets;
+  const t    = list.find(x => x.id === ticketId);
+  if (t) {
+    if (role === 'admin') t.admin_seen_at = now; else t.client_seen_at = now;
+  }
+  const map = _getSeenMap(role);
+  map[ticketId] = (t && t.updated_at && t.updated_at > now) ? t.updated_at : now;
+  _saveSeenMap(role, map);
+  if (role === 'admin') updateAdminTkBadge(); else updateClientTkBadge();
+  try { await sb.rpc('mark_ticket_seen', { p_ticket_id: String(ticketId) }); } catch (e) { /* migration not run yet */ }
+}
+
+function markAdminTicketSeen(ticketId) {
+  markTicketSeen(ticketId, 'admin');
+  renderAdminTickets(); renderAdminShipMail(); renderAdminInquiries();
+}
+function markClientTicketSeen(ticketId) {
+  markTicketSeen(ticketId, 'client');
+  renderClientTickets(); renderShipHistory();
+}
+function adminOpenTicket(id)  { markAdminTicketSeen(id);  openTicketDetail(id); }
+function clientOpenTicket(id) { markClientTicketSeen(id); openTicketDetail(id); }
+
+function _setBadge(id, n) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = n;
+  el.classList.toggle('hidden', !n);
+}
+
+function updateAdminTkBadge() {
+  _setBadge('admin-tk-badge',   allTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isTicketNew(t)).length);
+  _setBadge('admin-ship-badge', allTickets.filter(t => t.type === 'ship_mail' && isTicketNew(t)).length);
+  Object.values(ADMIN_INQ_VIEWS).forEach(v => {
+    _setBadge(v.badge, allTickets.filter(t => t.type === 'mail_inquiry' && v.cats.includes(inqCat(t)) && isTicketNew(t)).length);
+  });
+  renderAdminAttention();
+}
+
+function updateClientTkBadge() {
+  _setBadge('client-tk-badge', clientTickets.filter(t => t.type !== 'ship_mail' && t.type !== 'mail_inquiry' && isClientTicketNew(t)).length);
+  _setBadge('ship-tk-badge',   clientTickets.filter(t => t.type === 'ship_mail' && isClientTicketNew(t)).length);
+  updateRepMsgBadge();
+}
+
+function updateRepMsgBadge() {
+  _setBadge('rep-msg-badge', clientTickets.filter(t => t.type === 'mail_inquiry' && isClientTicketNew(t)).length);
+  if (document.getElementById('page-mail-rep')?.classList.contains('active')) renderInqOptions();
+}
+
+// ================================================================
+// ADMIN — tickets loader (ship requests + client messages)
+// ================================================================
+async function loadAdminTickets() {
+  const { data: tickets, error } = await sb
+    .from('tickets')
+    .select('*')
+    .order('updated_at', { ascending: false });
+  if (error) { devLog('loadAdminTickets:', error.message); return; }
+
+  const rows = tickets || [];
+  const userIds = [...new Set(rows.map(t => t.user_id).filter(Boolean))];
+  const profileMap = {}, csMap = {};
+  if (userIds.length) {
+    const [{ data: profiles }, { data: csRows }] = await Promise.all([
+      sb.from('profiles').select('id, full_name, email, phone, whatsapp, country').in('id', userIds),
+      sb.from('client_services').select('client_id, assigned_address').in('client_id', userIds),
+    ]);
+    (profiles || []).forEach(p => { profileMap[p.id] = p; });
+    (csRows   || []).forEach(r => { csMap[r.client_id] = r; });
+  }
+  rows.forEach(t => {
+    t._profile  = profileMap[t.user_id] || null;
+    t._assigned = csMap[t.user_id]?.assigned_address || '';
+  });
+
+  allTickets = rows;
+  renderAdminTickets();
+  renderAdminShipMail();
+  renderAdminInquiries();
+  updateAdminTkBadge();
+}
+
+// ================================================================
+// ADMIN — dashboard "Needs your attention"
+// ================================================================
+async function refreshMailRequestCount() {
+  try {
+    const { count, error } = await sb.from('mail')
+      .select('id', { count: 'exact', head: true })
+      .eq('action_status', 'requested');
+    if (error) return;
+    _pendingMailReqCount = count || 0;
+    _setBadge('admin-mailreq-badge', _pendingMailReqCount);
+    renderAdminAttention();
+  } catch (e) { /* column missing before migration */ }
+}
+
+function renderAdminAttention() {
+  const el = document.getElementById('admin-attention');
+  if (!el) return;
+  const waiting = cats => allTickets.filter(t => t.type === 'mail_inquiry' && cats.includes(inqCat(t)) &&
+    (hasSeenColumns(t) ? t.last_message_by === 'client' && t.status !== 'completed' : isTicketNew(t))).length;
+  const cards = [
+    { n: _pendingMailReqCount, icon: '📬', label: 'Mail requests to do', go: "navTo('admin-all-mail');setTimeout(()=>{const s=document.getElementById('aml-filter-action');if(s){s.value='pending';PG.reset('adminMail');renderAdminAllMail();}},50)" },
+    { n: allTickets.filter(t => t.type === 'ship_mail' && t.status !== 'completed').length, icon: '📦', label: 'Ship requests open', go: "navTo('admin-ship')" },
+    ...Object.entries(ADMIN_INQ_VIEWS).map(([k, v]) => ({ n: waiting(v.cats), icon: v.icon, label: v.title + ' awaiting reply', go: `navTo('${k}')` })),
+  ];
+  el.innerHTML = cards.map(c => `
+    <div class="attn-card ${c.n ? 'hot' : ''}" onclick="${c.go}">
+      <div class="attn-icon">${c.icon}</div>
+      <div><div class="attn-num">${c.n}</div><div class="attn-label">${esc(c.label)}</div></div>
+    </div>`).join('');
+}
+
+// ================================================================
+// CLIENT — Manage My Mail
+// ================================================================
+mailFilter.status = '';
+
+function mailStatusKey(m) {
+  if (m.client_action && m.action_status === 'completed') return 'completed';
+  if (m.client_action) return 'pending';
+  if (!m.is_read) return 'new';
+  return 'none';
+}
+
+function renderMailStatusTabs() {
+  const el = document.getElementById('mail-status-tabs');
+  if (!el) return;
+  const counts = { '': mailCache.length, new: 0, pending: 0, completed: 0 };
+  mailCache.forEach(m => { const k = mailStatusKey(m); if (counts[k] !== undefined) counts[k]++; });
+  const tabs = [['', 'All'], ['new', 'New'], ['pending', 'Requested'], ['completed', 'Done']];
+  el.innerHTML = tabs.map(([k, label]) => `
+    <button class="seg-tab ${mailFilter.status === k ? 'active' : ''}" onclick="mailFilter.status='${k}';PG.reset('mail');renderMailList();">
+      ${label} <span class="seg-count ${k === 'new' && counts.new ? 'hot' : ''}">${counts[k]}</span>
+    </button>`).join('');
+}
+
+function renderMailList() {
+  let items = [...mailCache];
+  if (mailFilter.text) {
+    items = items.filter(m =>
+      (m.sender || '').toLowerCase().includes(mailFilter.text) ||
+      (m.subject || '').toLowerCase().includes(mailFilter.text));
+  }
+  if (mailFilter.cat)    items = items.filter(m => m.category === mailFilter.cat);
+  if (mailFilter.status) items = items.filter(m => mailStatusKey(m) === mailFilter.status);
+  renderMailStatusTabs();
+  const pg = PG.slice('mail', items);
+  renderMailRows('mail-list-full', pg.items, false);
+  const el = document.getElementById('mail-list-full');
+  if (el && pg.totalPages > 1) {
+    const pgDiv = document.createElement('div');
+    pgDiv.innerHTML = PG.build('mail', pg, 'pgMail');
+    el.appendChild(pgDiv);
+  }
+}
+
+function mailStatusLabel(m) {
+  const a = MAIL_ACTIONS[m.client_action];
+  if (a && m.action_status === 'completed') return { label: a.done,    icon: a.icon, style: 'background:var(--green-bg);color:var(--green);' };
+  if (a)                                    return { label: a.pending, icon: a.icon, style: 'background:var(--amber-bg);color:var(--amber);font-weight:700;' };
+  if (m.is_read) return { label: 'Viewed', icon: '👁', style: 'background:#f3f4f6;color:#6b7280;' };
+  return               { label: 'New',    icon: '🔵', style: 'background:#dcfce7;color:#166534;font-weight:700;' };
+}
+
+// The Open / Ship / Shred controls for one mail item (client side).
+function mailActionButtonsHTML(m) {
+  const a = MAIL_ACTIONS[m.client_action];
+  if (a && m.action_status === 'completed') {
+    return `<span class="mx-status done">${a.icon} ${a.done}</span>`;
+  }
+  if (a) {
+    // Open/Shred can be cancelled while still pending. A ship request has
+    // its own shipping request, so changes go through the rep.
+    const cancel = m.client_action !== 'ship'
+      ? `<button class="mx-link" onclick="event.stopPropagation();setMailAction('${m.id}', null)">Cancel</button>`
+      : '';
+    return `<span class="mx-status pending">⏳ ${a.pending}</span>${cancel}`;
+  }
+  return `
+    <button class="mx-act" onclick="event.stopPropagation();setMailAction('${m.id}','open')"  title="We open it and upload the contents to your Documents">📂 Open</button>
+    <button class="mx-act" onclick="event.stopPropagation();setMailAction('${m.id}','ship')"  title="We post the physical item to you">📦 Ship</button>
+    <button class="mx-act shred" onclick="event.stopPropagation();setMailAction('${m.id}','shred')" title="We securely destroy it">🗑 Shred</button>`;
+}
+
+function mailScanCount(m) {
+  const extra = Array.isArray(m.scan_urls) ? m.scan_urls.filter(u => u && u !== m.scan_url).length : 0;
+  return (m.scan_url ? 1 : 0) + extra;
+}
+
+function renderMailRows(containerId, items, compact) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const isFull = containerId === 'mail-list-full';
+  if (!items.length) {
+    const filtered = isFull && (mailFilter.text || mailFilter.cat || mailFilter.status);
+    el.innerHTML = filtered
+      ? `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No mail matches this filter.</p></div>`
+      : `<div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <p style="max-width:300px;margin:0 auto;line-height:1.6;">No mail has been uploaded yet. If you're expecting something, <a href="#" onclick="event.preventDefault();navTo('mail-rep');selectInqCategory('expecting_mail')" style="color:var(--green);font-weight:600;">let your rep know</a>.</p>
+        </div>`;
+    const bb = document.getElementById('mail-bulk-bar');
+    if (bb && isFull) bb.style.display = mailCache.length ? 'flex' : 'none';
+    return;
+  }
+  if (isFull) {
+    const bb = document.getElementById('mail-bulk-bar');
+    if (bb) bb.style.display = 'flex';
+    const sa = document.getElementById('mail-select-all');
+    if (sa) sa.checked = false;
+    _mailSelectedIds = new Set();
+    _updateMailBulkBtn();
+  }
+
+  if (compact) {
+    el.innerHTML = items.map(m => {
+      const st = mailStatusLabel(m);
+      return `
+        <div class="mail-row ${m.is_read ? '' : 'unread'}" onclick="openMail('${m.id}')">
+          <div class="unread-dot ${m.is_read ? 'read' : ''}"></div>
+          <div class="mail-thumb">${mailThumb(m, false)}</div>
+          <div class="mail-body">
+            <div class="mail-sender">${esc(m.sender)}</div>
+            <div class="mail-subject">${esc(m.subject || '')}</div>
+          </div>
+          <div class="mail-meta">
+            <div class="mail-date">${fmtDate(m.created_at)}</div>
+            <span class="pill" style="font-size:10.5px;${st.style}">${st.icon} ${st.label}</span>
+          </div>
+        </div>`;
+    }).join('');
+    return;
+  }
+
+  el.innerHTML = items.map(m => {
+    const st = mailStatusLabel(m);
+    const scans = mailScanCount(m);
+    const note = m.action_note && m.action_status === 'completed'
+      ? `<div class="mx-note">💬 ${esc(m.action_note)}</div>` : '';
+    return `
+      <div class="mx-row ${m.is_read ? '' : 'unread'}" id="mx-row-${m.id}">
+        <input type="checkbox" class="mail-select-cb" data-id="${m.id}"
+          onclick="event.stopPropagation();_toggleMailSelect('${m.id}',this.checked)"
+          style="width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--green);" />
+        <div class="mail-thumb" onclick="openMail('${m.id}')">${mailThumb(m, true)}</div>
+        <div class="mx-main" onclick="openMail('${m.id}')" title="Open to read">
+          <div class="mx-top">
+            <span class="mail-sender">${esc(m.sender)}</span>
+            <span class="mx-date">${fmtDate(m.created_at)}</span>
+          </div>
+          <div class="mail-subject">${esc(m.subject || 'No subject')}</div>
+          <div class="mx-meta">
+            <span class="cat-pill cat-${esc(m.category)}">${cap(m.category)}</span>
+            <span class="pill" style="font-size:10.5px;${st.style}">${st.icon} ${st.label}</span>
+            ${scans > 1 ? `<span class="pill" style="font-size:10.5px;">🖼 ${scans} scans</span>` : ''}
+          </div>
+          ${note}
+        </div>
+        <div class="mx-actions">${mailActionButtonsHTML(m)}</div>
+      </div>`;
+  }).join('');
+}
+
+function _updateMailBulkBtn() {
+  const n = _mailSelectedIds.size;
+  document.querySelectorAll('.mail-bulk-btn').forEach(b => { b.disabled = n === 0; });
+  const countEl = document.getElementById('mail-selected-count');
+  if (countEl) countEl.textContent = n + ' selected';
+  const all = document.querySelectorAll('.mail-select-cb');
+  const sa  = document.getElementById('mail-select-all');
+  if (sa && all.length) sa.checked = n === all.length;
+}
+
+function _refreshClientMailViews() {
+  renderMailList();
+  renderMailRows('overview-mail', mailCache.slice(0, 3), true);
+  updateMailBadge(mailCache.filter(x => !x.is_read).length);
+  if (currentMailId && document.getElementById('mail-viewer')?.classList.contains('open')) openMail(currentMailId, true);
+}
+
+// Save a request through the secure database function. Falls back to a
+// direct update if the migration hasn't been run yet (old behaviour).
+async function _saveMailAction(mailId, action) {
+  const { error } = await sb.rpc('request_mail_action', { p_mail_id: String(mailId), p_action: action });
+  if (!error) return null;
+  if (isSchemaMissing(error)) {
+    const { error: e2 } = await sb.from('mail').update({
+      client_action: action, action_status: action ? 'requested' : null,
+    }).eq('id', mailId);
+    return e2;
+  }
+  return error;
+}
+
+// action: 'open' | 'ship' | 'shred' | null (cancel)
+async function setMailAction(mailId, action) {
+  const m = mailCache.find(x => x.id === mailId);
+  if (!m) return;
+  if (action === 'ship') { openShipMailModal([mailId]); return; }
+
+  const label = '“' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + '”';
+  let ok;
+  if (action === null) {
+    ok = await uiConfirm({ icon: '↩️', title: 'Cancel this request?', message: label, confirmText: 'Cancel request', cancelText: 'Keep it' });
+  } else if (action === 'open') {
+    ok = await uiConfirm({ icon: '📂', title: 'Open this mail?', confirmText: 'Yes, open it',
+      message: 'Your rep will open the envelope, scan the contents and upload them to your Documents.\n\n' + label });
+  } else {
+    ok = await uiConfirm({ icon: '🗑', title: 'Shred this mail?', confirmText: 'Yes, shred it', danger: true,
+      message: 'Your rep will securely destroy this item. This cannot be undone once done.\n\n' + label });
+  }
+  if (!ok) return;
+
+  const err = await _saveMailAction(mailId, action);
+  if (err) { showToast('Could not save. Please try again.', true); devLog(err.message); return; }
+
+  m.client_action = action;
+  m.action_status = action ? 'requested' : null;
+  _refreshClientMailViews();
+  showToast(action === null ? 'Request cancelled.' : action === 'open' ? '✓ Open request sent to your rep!' : '✓ Shred request sent to your rep!');
+}
+
+async function bulkMailAction(action) {
+  const ids = [..._mailSelectedIds].filter(id => {
+    const m = mailCache.find(x => x.id === id);
+    return m && !m.client_action;
+  });
+  if (!ids.length) { showToast('The selected mail already has a request.', true); return; }
+  const isShred = action === 'shred';
+  const ok = await uiConfirm({
+    icon: isShred ? '🗑' : '📂', danger: isShred,
+    title: (isShred ? 'Shred ' : 'Open ') + ids.length + ' item' + (ids.length > 1 ? 's' : '') + '?',
+    message: isShred ? 'Your rep will securely destroy these items. This cannot be undone once done.'
+                     : 'Your rep will open these envelopes and upload the contents to your Documents.',
+    confirmText: isShred ? 'Yes, shred them' : 'Yes, open them',
+  });
+  if (!ok) return;
+  let failed = 0;
+  for (const id of ids) {
+    const err = await _saveMailAction(id, action);
+    if (err) { failed++; continue; }
+    const m = mailCache.find(x => x.id === id);
+    if (m) { m.client_action = action; m.action_status = 'requested'; }
+  }
+  _refreshClientMailViews();
+  showToast(failed ? `${ids.length - failed} sent, ${failed} failed.` : '✓ Requests sent to your rep!', !!failed);
+}
+
+// Mail viewer (client) — letter, scans and the request buttons.
+async function openMail(id, keepScroll) {
+  const m = mailCache.find(x => x.id === id);
+  if (!m) return;
+  currentMailId = id;
+
+  document.getElementById('mv-title').textContent = `${m.sender} — ${m.subject || '(No subject)'}`;
+  document.getElementById('mv-date').textContent  = fmtDate(m.created_at);
+  const dlBtn = document.getElementById('mv-download');
+  const body  = document.getElementById('mv-body');
+  if (m.scan_url) { dlBtn.href = m.scan_url; dlBtn.classList.remove('hidden'); }
+  else            { dlBtn.classList.add('hidden'); }
+
+  const rawDesc  = m.description || '';
+  const isHtml   = /<[a-z]/.test(rawDesc);
+  const bodyHtml = rawDesc ? (isHtml ? sanitizeHtml(rawDesc) : esc(rawDesc).replace(/\n/g, '<br>')) : '';
+  const catColor = { usps:'#dbeafe', bank:'#dcfce7', irs:'#fef9c3', other:'#f3f4f6' }[m.category] || '#f3f4f6';
+  const catText  = { usps:'#1e3a5f', bank:'#166534', irs:'#92400e', other:'#374151' }[m.category] || '#374151';
+
+  const urls = [m.scan_url, ...(Array.isArray(m.scan_urls) ? m.scan_urls : [])].filter(Boolean)
+    .filter((u, i, arr) => arr.indexOf(u) === i);
+  const gallery = urls.length ? `
+    <div class="mv-panel">
+      <div class="mv-panel-title">📎 Scan${urls.length > 1 ? 's (' + urls.length + ')' : ''}</div>
+      <div class="mv-gallery">
+        ${urls.map(u => /\.(jpe?g|png|webp|gif)(\?|$)/i.test(u)
+          ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer"><img src="${esc(u)}" alt="Mail scan" loading="lazy"></a>`
+          : `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="mv-file">📄 Open file</a>`).join('')}
+      </div>
+    </div>` : '';
+
+  const a = MAIL_ACTIONS[m.client_action];
+  const statusLine = a
+    ? (m.action_status === 'completed' ? 'Your rep has completed this request.' : 'Your rep has your request and will take care of it.')
+    : 'Choose what you would like us to do with this item.';
+  const actionPanel = `
+    <div class="mv-panel">
+      <div class="mv-panel-title">What should we do with it?</div>
+      <div style="font-size:13px;color:var(--ink2);margin-bottom:10px;">${statusLine}</div>
+      <div class="mx-actions" style="justify-content:flex-start;max-width:none;">${mailActionButtonsHTML(m)}</div>
+      ${m.action_note ? `<div class="mx-note">💬 ${esc(m.action_note)}</div>` : ''}
+    </div>`;
+
+  body.innerHTML = `
+    <div style="max-width:680px; margin:0 auto; padding-bottom:10px;">
+      <div style="background:var(--white); border-radius:12px; box-shadow:var(--shadow-m); overflow:hidden; margin-bottom:20px;">
+        <div style="background:var(--forest); padding:20px 28px 18px;">
+          <div style="font-size:11px; font-weight:600; letter-spacing:0.10em; text-transform:uppercase; margin-bottom:6px;">
+            <span style="background:${catColor}; color:${catText}; padding:2px 9px; border-radius:20px; letter-spacing:0.06em;">${cap(m.category)}</span>
+          </div>
+          <div style="font-size:18px; font-weight:600; color:var(--white); margin-bottom:4px;">${esc(m.subject || '(No subject)')}</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5);">From: <strong style="color:rgba(255,255,255,0.8);">${esc(m.sender)}</strong> &nbsp;·&nbsp; ${fmtDate(m.created_at)}</div>
+        </div>
+        ${bodyHtml
+          ? `<div style="padding:28px 28px 24px;" class="mail-body-content">${bodyHtml}</div>`
+          : `<div style="padding:20px 28px;color:var(--muted);font-size:13px;">${urls.length ? 'See the scan below.' : 'No scan attached yet — your account manager will upload it soon.'}</div>`}
+      </div>
+    </div>
+    ${actionPanel}
+    ${gallery}`;
+
+  const viewer = document.getElementById('mail-viewer');
+  viewer.classList.add('open');
+  if (!keepScroll) body.scrollTop = 0;
+  markMailRead(id);
+}
+
+// ================================================================
+// CLIENT — Ship My Mail (structured address form)
+// ================================================================
+const SHIP_METHOD_LABELS = { standard: 'Standard', express: 'Express', priority: 'Priority' };
+
+function openBulkShipModal() {
+  if (!_mailSelectedIds.size) return;
+  openShipMailModal([..._mailSelectedIds]);
+}
+function openShipSingleModal(mailId) { openShipMailModal([mailId]); }
+
+function _lastShipAddress() {
+  return (clientTickets || []).find(t => t.type === 'ship_mail' && t.ship_address_1) || null;
+}
+
+function renderShipMailPicker() {
+  const el = document.getElementById('ship-mail-pick');
+  if (!el) return;
+  // Items that can still be shipped: not shredded/shipped, not already requested for something else.
+  const items = mailCache.filter(m => !m.client_action || (m.client_action === 'ship' && m.action_status !== 'completed' && _shipPreselect.includes(m.id)));
+  if (!items.length) {
+    el.innerHTML = '<div style="padding:12px;font-size:12.5px;color:var(--muted);">No mail items available to pick. Describe what to ship in the notes below.</div>';
+    return;
+  }
+  el.innerHTML = items.map(m => `
+    <label>
+      <input type="checkbox" class="ship-mail-cb" value="${m.id}" ${_shipPreselect.includes(m.id) ? 'checked' : ''} />
+      <span style="flex:1;min-width:0;">${esc(m.sender || '—')}${m.subject ? ' — ' + esc(m.subject) : ''}</span>
+      <span class="muted">${fmtDate(m.created_at)}</span>
+    </label>`).join('');
+}
+
+function openShipMailModal(preselectIds) {
+  _shipPreselect = Array.isArray(preselectIds) ? preselectIds : [];
+  const errEl = document.getElementById('ship-mail-error');
+  if (errEl) errEl.style.display = 'none';
+
+  // Contact details come from the profile.
+  const p = currentProfile || {};
+  const phone = p.phone || p.whatsapp || '';
+  document.getElementById('ship-contact').innerHTML =
+    `📧 ${esc(p.email || currentUser?.email || '—')} &nbsp;·&nbsp; 📞 ${esc(phone || 'No phone on file')}` +
+    `<small>Taken from your profile and sent with this request.</small>`;
+
+  // Prefill from the last shipping address, else from the profile.
+  const last = _lastShipAddress();
+  const set = (id, v) => { const el = document.getElementById(id); if (el && !el.value) el.value = v || ''; };
+  if (last) {
+    set('ship-addr1', last.ship_address_1); set('ship-addr2', last.ship_address_2); set('ship-addr3', last.ship_address_3);
+    set('ship-city', last.ship_city); set('ship-state', last.ship_state); set('ship-zip', last.ship_zip); set('ship-country', last.ship_country);
+  } else {
+    set('ship-addr1', p.mailing_address); set('ship-country', p.country);
+  }
+  const meth = document.getElementById('ship-method');
+  if (meth) meth.value = (last && last.ship_method) || 'standard';
+  updateShipEstimate();
+  renderShipMailPicker();
+
+  const overlay = document.getElementById('ship-mail-overlay');
+  if (overlay) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+}
+
+async function submitShipMailRequest() {
+  const v = id => sanitize(document.getElementById(id)?.value || '');
+  const addr = {
+    ship_address_1: v('ship-addr1'), ship_address_2: v('ship-addr2'), ship_address_3: v('ship-addr3'),
+    ship_city: v('ship-city'), ship_state: v('ship-state'), ship_zip: v('ship-zip'), ship_country: v('ship-country'),
+  };
+  const method   = document.getElementById('ship-method')?.value || 'standard';
+  const notes    = v('ship-contents');
+  const mailIds  = [...document.querySelectorAll('.ship-mail-cb:checked')].map(cb => cb.value);
+  const errEl    = document.getElementById('ship-mail-error');
+  const btn      = document.getElementById('ship-mail-submit-btn');
+  const fail = msg => { if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; errEl.scrollIntoView({ block: 'nearest' }); } };
+
+  if (errEl) errEl.style.display = 'none';
+  if (addr.ship_address_1.length < 3) return fail('Please enter address line 1.');
+  if (!addr.ship_city)               return fail('Please enter the city.');
+  if (!addr.ship_country)            return fail('Please enter the country.');
+  if (!mailIds.length && notes.length < 3) return fail('Please tick the mail to ship, or describe it in the notes.');
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+  const p = currentProfile || {};
+  const email = p.email || currentUser?.email || '';
+  const phone = p.phone || p.whatsapp || '';
+  const picked = mailCache.filter(m => mailIds.includes(m.id));
+  const itemsText = [
+    ...picked.map((m, i) => (i + 1) + '. From: ' + (m.sender || '—') + (m.subject ? ' — ' + m.subject : '') + ' (' + fmtDate(m.created_at) + ')'),
+    ...(notes ? [(picked.length ? 'Notes: ' : '') + notes] : []),
+  ].join('\n');
+  const addrText = [addr.ship_address_1, addr.ship_address_2, addr.ship_address_3,
+    [addr.ship_city, addr.ship_state, addr.ship_zip].filter(Boolean).join(', '), addr.ship_country].filter(Boolean).join('\n');
+  const estimate = SHIP_ESTIMATES[method] || SHIP_ESTIMATES.standard;
+  // The plain-text description is kept so older screens still show everything.
+  const description = `Shipping address:\n${addrText}\n\nContact: ${email}${phone ? ' · ' + phone : ''}\n\nShipping method: ${SHIP_METHOD_LABELS[method] || 'Standard'} (Est. ${estimate})\n\nItems to ship:\n${itemsText}\n\nNote: A shipping fee applies per batch and will be billed separately.`;
+
+  const { count } = await sb.from('tickets').select('*', { count: 'exact', head: true });
+  const now = new Date().toISOString();
+  const base = {
+    user_id: currentUser.id, title: 'Ship My Mail Request', description, type: 'ship_mail',
+    status: 'open', ticket_number: (count || 0) + 1, created_at: now, updated_at: now,
+  };
+  const structured = Object.assign({}, addr, {
+    ship_email: email || null, ship_phone: phone || null, ship_method: method, ship_mail_ids: mailIds.length ? mailIds : null,
+  });
+
+  let { error } = await sb.from('tickets').insert(Object.assign({}, base, structured));
+  if (error && isSchemaMissing(error)) ({ error } = await sb.from('tickets').insert(base)); // before migration
+
+  if (btn) { btn.disabled = false; btn.textContent = '📦 Submit Request'; }
+  if (error) return fail('Could not submit: ' + error.message);
+
+  // Flag the picked mail items as "ship requested".
+  for (const id of mailIds) {
+    const m = mailCache.find(x => x.id === id);
+    if (m && m.client_action === 'ship') continue;
+    const err = await _saveMailAction(id, 'ship');
+    if (!err && m) { m.client_action = 'ship'; m.action_status = 'requested'; }
+  }
+
+  showToast('✓ Shipping request submitted!');
+  closeShipMailModal();
+  const contEl = document.getElementById('ship-contents');
+  if (contEl) contEl.value = '';
+  _refreshClientMailViews();
+  await loadClientTickets();
+}
+
+function shipAddressText(t) {
+  if (t.ship_address_1) {
+    return [t.ship_address_1, t.ship_address_2, t.ship_address_3,
+      [t.ship_city, t.ship_state, t.ship_zip].filter(Boolean).join(', '), t.ship_country].filter(Boolean).join('\n');
+  }
+  const desc = t.description || '';
+  const i = desc.indexOf('Shipping address:');
+  if (i < 0) return '—';
+  const rest = desc.slice(i + 17);
+  const stop = rest.search(/\n\n(Contact|Shipping method):/);
+  return (stop > 0 ? rest.slice(0, stop) : rest).trim();
+}
+function shipSection(t, label, nextLabels) {
+  const desc = t.description || '';
+  const i = desc.indexOf(label + ':');
+  if (i < 0) return '';
+  const rest = desc.slice(i + label.length + 1);
+  const re = new RegExp('\\n\\n(' + nextLabels.join('|') + '):');
+  const stop = rest.search(re);
+  return (stop >= 0 ? rest.slice(0, stop) : rest).trim();
+}
+
+const SHIP_STATUS_STYLE = {
+  open:        { bg: 'var(--amber-bg)', color: 'var(--amber)', label: 'Pending',    icon: '⏳' },
+  in_progress: { bg: '#dbeafe',         color: '#1e40af',      label: 'Processing', icon: '🔄' },
+  replied:     { bg: '#ede9fe',         color: '#4c1d95',      label: 'Update',     icon: '💬' },
+  completed:   { bg: 'var(--green-bg)', color: 'var(--green)', label: 'Shipped',    icon: '✈️' },
+};
+
+// Client: list of shipping requests on Manage My Mail
+function renderShipHistory() {
+  const el = document.getElementById('ship-history-list');
+  if (!el) return;
+  const list = (clientTickets || []).filter(t => t.type === 'ship_mail');
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state" style="padding:16px;"><div class="empty-state-icon" style="font-size:28px;">📦</div><p style="font-size:13px;">No shipping requests yet.</p></div>';
+    return;
+  }
+  el.innerHTML = list.map(t => {
+    const st = SHIP_STATUS_STYLE[t.status] || SHIP_STATUS_STYLE.open;
+    const items = shipSection(t, 'Items to ship', ['Note']);
+    const isNew = isClientTicketNew(t);
+    return `<div class="mx-row" style="cursor:pointer;display:block;" onclick="clientOpenTicket('${t.id}')">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:18px;">${st.icon}</span>
+          <div><div style="font-size:13.5px;font-weight:600;color:var(--ink);">${esc(t.title)} ${isNew ? '<span class="tk-new-badge">NEW</span>' : ''}</div>
+          <div style="font-size:11.5px;color:var(--muted);">Requested ${fmtDate(t.created_at)}</div></div>
+        </div>
+        <span style="font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:${st.bg};color:${st.color};">${st.label}</span>
+      </div>
+      ${items ? `<div style="font-size:12px;color:var(--ink2);line-height:1.6;margin-top:6px;white-space:pre-wrap;">${esc(items)}</div>` : ''}
+      <div style="font-size:11.5px;color:var(--muted);margin-top:4px;white-space:pre-line;">To: ${esc(shipAddressText(t).replace(/\n/g, ', '))}</div>
+      ${t.ship_tracking ? `<div style="font-size:12px;margin-top:4px;">🔎 Tracking: <strong>${esc(t.ship_tracking)}</strong></div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ================================================================
+// ADMIN — Ship Requests
+// ================================================================
+function renderAdminShipMail() {
+  const container = document.getElementById('ship-admin-list');
+  if (!container) return;
+  const search = (document.getElementById('ship-admin-search')?.value || '').toLowerCase();
+  const filter = document.getElementById('ship-admin-filter')?.value || '';
+  const list = allTickets.filter(t => {
+    if (t.type !== 'ship_mail') return false;
+    if (filter && t.status !== filter) return false;
+    const hay = ((t._profile?.full_name || '') + ' ' + (t._profile?.email || '') + ' ' + shipAddressText(t)).toLowerCase();
+    if (search && !hay.includes(search)) return false;
+    return true;
+  });
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No shipping requests match.</p></div>';
+    return;
+  }
+  const pgShip = PG.slice('adminShip', list);
+  container.innerHTML = pgShip.items.map(t => {
+    const clientName = t._profile?.full_name || '—';
+    const email = t.ship_email || t._profile?.email || '—';
+    const phone = t.ship_phone || t._profile?.phone || t._profile?.whatsapp || '—';
+    const color = avatarColor(clientName);
+    const initl = clientName[0]?.toUpperCase() || '?';
+    const items = shipSection(t, 'Items to ship', ['Note']);
+    const method = t.ship_method
+      ? (SHIP_METHOD_LABELS[t.ship_method] || t.ship_method) + ' (' + (SHIP_ESTIMATES[t.ship_method] || '') + ')'
+      : (shipSection(t, 'Shipping method', ['Items to ship']) || '—');
+    const st = SHIP_STATUS_STYLE[t.status] || SHIP_STATUS_STYLE.open;
+    const isNew = isTicketNew(t);
+    return `<div style="border:1.5px solid ${isNew ? 'rgba(184,151,58,.6)' : 'var(--parch3)'};border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--white);">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--parch);border-bottom:1px solid var(--parch2);cursor:pointer;" onclick="adminOpenTicket('${t.id}')">
+        <div style="width:34px;height:34px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink);flex-shrink:0;">${initl}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;font-size:14px;color:var(--ink);">📦 ${esc(clientName)} ${isNew ? '<span class="tk-new-badge">NEW</span>' : ''}</div>
+          <div style="font-size:12px;color:var(--muted);">Requested ${fmtDate(t.created_at)}</div>
+        </div>
+        <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:${st.bg};color:${st.color};">${st.label}</span>
+      </div>
+      <div style="padding:14px 16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:12px;">
+          <div><div class="ship-kv">Ship to</div><div class="ship-addr">${esc(shipAddressText(t))}</div></div>
+          <div><div class="ship-kv">Contact</div><div class="ship-addr">📧 ${esc(email)}\n📞 ${esc(phone)}</div></div>
+          <div><div class="ship-kv">Ships from (assigned address)</div><div class="ship-addr">${esc(t._assigned || 'Not assigned')}</div></div>
+          <div><div class="ship-kv">Method</div><div class="ship-addr">${esc(method)}</div>
+            ${t.ship_tracking ? `<div class="ship-kv" style="margin-top:8px;">Tracking</div><div class="ship-addr">${esc(t.ship_tracking)}</div>` : ''}</div>
+        </div>
+        <div><div class="ship-kv">📬 Items to ship</div>
+          ${items ? `<div style="font-size:12.5px;color:var(--ink);line-height:1.7;white-space:pre-wrap;background:var(--parch);border-radius:8px;padding:8px 12px;margin-top:4px;">${esc(items)}</div>` : '<span style="color:var(--muted);font-size:12px;">No items listed</span>'}
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-gold btn-sm" onclick="adminOpenTicket('${t.id}')">Open &amp; Reply</button>
+          ${t.status !== 'completed' ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();quickMarkShipped('${t.id}')">✈️ Mark Shipped</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('') + PG.build('adminShip', pgShip, 'pgAdminShip');
+}
+
+async function quickMarkShipped(ticketId) {
+  const t = allTickets.find(x => x.id === ticketId);
+  if (!t) return;
+  const res = await uiDialog({
+    icon: '✈️', title: 'Mark as shipped?', confirmText: 'Mark shipped',
+    message: 'The client will see this request as shipped' + (t.ship_mail_ids?.length ? ' and the linked mail items as shipped.' : '.'),
+    input: { label: 'Tracking number (optional)', placeholder: 'e.g. 1Z999AA10123456784' },
+  });
+  if (!res.ok) return;
+  const tracking = sanitize(res.value);
+  const now = new Date().toISOString();
+
+  let { error } = await sb.from('tickets').update({
+    status: 'completed', updated_at: now, ship_tracking: tracking || null, shipped_at: now,
+  }).eq('id', ticketId);
+  if (error && isSchemaMissing(error)) ({ error } = await sb.from('tickets').update({ status: 'completed', updated_at: now }).eq('id', ticketId));
+  if (error) { showToast('Could not update status.', true); return; }
+
+  t.status = 'completed'; t.updated_at = now;
+  if (tracking) t.ship_tracking = tracking;
+
+  // Mark the linked mail items as shipped.
+  if (Array.isArray(t.ship_mail_ids) && t.ship_mail_ids.length) {
+    let { error: mErr0 } = await sb.from('mail').update({ action_status: 'completed', action_completed_at: now })
+      .in('id', t.ship_mail_ids).eq('client_action', 'ship');
+    if (mErr0 && isSchemaMissing(mErr0)) await sb.from('mail').update({ action_status: 'completed' })
+      .in('id', t.ship_mail_ids).eq('client_action', 'ship');
+    t.ship_mail_ids.forEach(id => {
+      const m = adminAllMailMap[id];
+      if (m && m.client_action === 'ship') { m.action_status = 'completed'; m.action_completed_at = now; }
+    });
+    refreshMailRequestCount();
+  }
+
+  // Let the client know in the request's conversation (also emails them).
+  const msg = '✈️ Your mail has been shipped.' + (tracking ? '\nTracking number: ' + tracking : '');
+  const { error: mErr } = await sb.from('ticket_messages').insert({
+    ticket_id: ticketId, sender_id: currentUser.id, sender_role: 'admin', sender_name: currentProfile.full_name, body: msg,
+  });
+  if (!mErr) {
+    if (hasSeenColumns(t)) { t.last_message_at = now; t.last_message_by = 'admin'; }
+    if (t.user_id) notify('admin_reply', { client_id: t.user_id, ticket_title: t.title, reply_text: msg });
+  }
+  renderAdminShipMail();
+  updateAdminTkBadge();
+  showToast('✓ Marked as shipped!');
+}
+
+// ================================================================
+// ADMIN — Client Messages (Message to Rep / Expecting Mail / Shipping Inquiries)
+// ================================================================
+function renderAdminInquiries() {
+  const container = document.getElementById('inquiry-admin-list');
+  if (!container) return;
+  const view = ADMIN_INQ_VIEWS[adminInqView] || ADMIN_INQ_VIEWS['admin-inq-rep'];
+
+  const titleEl = document.getElementById('inq-admin-title');
+  const subEl   = document.getElementById('inq-admin-sub');
+  if (titleEl) titleEl.textContent = view.title;
+  if (subEl)   subEl.textContent   = view.sub;
+
+  // Quick tabs to jump between the three message menus.
+  const tabsEl = document.getElementById('inq-admin-tabs');
+  if (tabsEl) {
+    tabsEl.innerHTML = Object.entries(ADMIN_INQ_VIEWS).map(([k, v]) => {
+      const n = allTickets.filter(t => t.type === 'mail_inquiry' && v.cats.includes(inqCat(t)) && isTicketNew(t)).length;
+      return `<button class="seg-tab ${k === adminInqView ? 'active' : ''}" onclick="navTo('${k}')">${v.icon} ${esc(v.title)} ${n ? `<span class="seg-count hot">${n}</span>` : ''}</button>`;
+    }).join('');
+  }
+
+  const search = (document.getElementById('inquiry-admin-search')?.value || '').toLowerCase();
+  const filter = document.getElementById('inquiry-admin-filter')?.value || '';
+  const waitingFor = t => hasSeenColumns(t) ? t.last_message_by === 'client' : isTicketNew(t);
+  const list = allTickets.filter(t => {
+    if (t.type !== 'mail_inquiry' || !view.cats.includes(inqCat(t))) return false;
+    // An empty thread (client opened the page but never wrote) isn't a conversation.
+    if (hasSeenColumns(t) && !t.last_message_by) return false;
+    if (filter === 'waiting'  && !waitingFor(t)) return false;
+    if (filter === 'answered' &&  waitingFor(t)) return false;
+    const cname = ((t._profile?.full_name || '') + ' ' + (t._profile?.email || '')).toLowerCase();
+    if (search && !cname.includes(search)) return false;
+    return true;
+  }).sort((a, b) => new Date(b.last_message_at || b.updated_at) - new Date(a.last_message_at || a.updated_at));
+
+  if (!list.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">${view.icon}</div><p>${search || filter ? 'No conversations match.' : 'No messages here yet.'}</p></div>`;
+    return;
+  }
+  const pgInq = PG.slice('adminInquiries', list);
+  container.innerHTML = pgInq.items.map(t => {
+    const c = INQ_CATS[inqCat(t)];
+    const isNew = isTicketNew(t);
+    const waiting = waitingFor(t);
+    const name = t._profile?.full_name || 'Client';
+    return `
+      <div class="tk-row ${isNew ? 'tk-row-new' : ''}" onclick="adminOpenTicket('${t.id}')">
+        <div class="tk-row-left">
+          <div class="tk-row-id">${isNew ? '<span class="tk-new-badge">NEW</span>' : ''}</div>
+          <div class="tk-row-title">${esc(name)}</div>
+          <div class="tk-row-meta">
+            <span class="inq-pill">${c.icon} ${esc(c.label)}</span>
+            <span>🕐 ${fmtDate(t.last_message_at || t.updated_at || t.created_at)}</span>
+            ${t._profile?.email ? `<span>${esc(t._profile.email)}</span>` : ''}
+          </div>
+        </div>
+        <div class="tk-row-right">
+          <span class="inq-pill ${waiting ? 'inq-wait' : 'inq-ok'}">${waiting ? '⏳ Waiting for your reply' : '✓ Answered'}</span>
+        </div>
+      </div>`;
+  }).join('') + PG.build('adminInquiries', pgInq, 'pgAdminInq');
+}
+
+// ================================================================
+// CLIENT — Message Your Rep (one conversation per topic)
+// ================================================================
+function _indexRepThreads() {
+  repThreads = {};
+  (clientTickets || [])
+    .filter(t => t.type === 'mail_inquiry')
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+    .forEach(t => { const k = inqCat(t); if (!repThreads[k]) repThreads[k] = t; });
+}
+
+async function loadRepThreads() {
+  const { data } = await sb.from('tickets').select('*').eq('user_id', currentUser.id).order('updated_at', { ascending: false });
+  if (data) clientTickets = data;
+  _indexRepThreads();
+  renderInqOptions();
+  await selectInqCategory(repCategory);
+  updateClientTkBadge();
+}
+
+function renderInqOptions() {
+  const el = document.getElementById('inq-options');
+  if (!el) return;
+  el.innerHTML = INQ_ORDER.map(k => {
+    const c = INQ_CATS[k];
+    const t = repThreads[k];
+    const isNew = t && isClientTicketNew(t);
+    return `<button class="inq-opt ${k === repCategory ? 'active' : ''}" onclick="selectInqCategory('${k}')">
+      ${isNew ? '<span class="inq-opt-badge">New reply</span>' : ''}
+      <div class="inq-opt-icon">${c.icon}</div>
+      <div class="inq-opt-title">${esc(c.label)}</div>
+      <div class="inq-opt-desc">${esc(c.desc)}</div>
+    </button>`;
+  }).join('');
+}
+
+async function selectInqCategory(cat) {
+  if (!INQ_CATS[cat]) cat = 'rep_message';
+  repCategory = cat;
+  const c = INQ_CATS[cat];
+  renderInqOptions();
+
+  const help = document.getElementById('inq-help');
+  if (help) {
+    help.innerHTML = esc(c.help) + (cat === 'shipping_inquiry'
+      ? `<br><button class="btn btn-gold btn-sm" onclick="navTo('mail');openShipMailModal()">📦 Ship My Mail</button>` : '');
+  }
+  const head = document.getElementById('inq-thread-head');
+  if (head) head.textContent = c.icon + ' ' + c.label;
+
+  const extra = document.getElementById('inq-extra');
+  if (extra) {
+    extra.innerHTML = cat === 'expecting_mail' ? `
+      <div class="inq-extra-grid">
+        <div><label for="inq-exp-from">From (sender)</label><input id="inq-exp-from" placeholder="e.g. Bank of America" /></div>
+        <div><label for="inq-exp-track">Tracking number</label><input id="inq-exp-track" placeholder="Optional" /></div>
+        <div><label for="inq-exp-date">Expected around</label><input id="inq-exp-date" type="date" /></div>
+      </div>` : '';
+  }
+  const ta = document.getElementById('rep-reply-text');
+  if (ta) ta.placeholder = {
+    rep_message: 'Type your message to your rep…',
+    expecting_mail: 'Anything else we should know about this item? (optional)',
+    shipping_inquiry: 'Ask about shipping costs, timing or tracking…',
+    other: 'Type your message…',
+  }[cat];
+
+  const chatEl = document.getElementById('rep-chat');
+  const t = repThreads[cat];
+  repThreadTicketId = t ? t.id : null;
+  if (!t) { repThreadMessages = []; renderRepChat(); return; }
+
+  if (chatEl) chatEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;font-size:13px;">Loading…</div>';
+  const { data: msgs } = await sb.from('ticket_messages').select('*').eq('ticket_id', t.id).order('created_at', { ascending: true });
+  if (repCategory !== cat) return; // user switched topic meanwhile
+  repThreadMessages = msgs || [];
+  renderRepChat();
+  if (isClientTicketNew(t)) markTicketSeen(t.id, 'client').then(renderInqOptions);
+}
+
+function renderRepChat() {
+  const chatEl = document.getElementById('rep-chat');
+  if (!chatEl) return;
+  const c = INQ_CATS[repCategory];
+  let html = '';
+  if (!repThreadMessages.length) {
+    html = `<div style="text-align:center;color:var(--muted);font-size:13px;padding:30px 12px;">
+      <div style="font-size:28px;margin-bottom:6px;">${c.icon}</div>No messages about “${esc(c.label)}” yet.<br>Write below and your rep will reply here.</div>`;
+  }
+  repThreadMessages.forEach(msg => {
+    const isMine = msg.sender_id === currentUser.id;
+    html += `<div class="tk-msg ${isMine ? 'client' : 'admin'}">
+      <div class="tk-msg-bubble">${esc(msg.body).replace(/\n/g, '<br>')}${msg.attachment_url ? `<br><a class="tk-msg-attachment" href="${esc(msg.attachment_url)}" target="_blank" rel="noopener noreferrer">📎 Attachment</a>` : ''}</div>
+      <div class="tk-msg-meta"><span>${isMine ? 'You' : '🛡 Your Rep'}</span>&nbsp;·&nbsp;${fmtDate(msg.created_at)}</div>
+    </div>`;
+  });
+  chatEl.innerHTML = html;
+  requestAnimationFrame(() => { chatEl.scrollTop = chatEl.scrollHeight; });
+}
+
+// Creates the topic's conversation the first time the client writes in it
+// (the old version created an empty thread just by opening the page, which
+// showed up as a false "new" item for the admin).
+async function ensureRepThread(cat) {
+  cat = cat || repCategory;
+  if (repThreads[cat]) return repThreads[cat].id;
+  const c = INQ_CATS[cat];
+  const { count } = await sb.from('tickets').select('*', { count: 'exact', head: true });
+  const now = new Date().toISOString();
+  const base = {
+    user_id: currentUser.id, title: c.title, description: 'Conversation with your rep: ' + c.label + '.',
+    type: 'mail_inquiry', status: 'open', ticket_number: (count || 0) + 1, created_at: now, updated_at: now,
+  };
+  let { data: created, error } = await sb.from('tickets').insert(Object.assign({ category: cat }, base)).select('*').single();
+  if (error && isSchemaMissing(error)) ({ data: created, error } = await sb.from('tickets').insert(base).select('*').single());
+  if (error || !created) { devLog('ensureRepThread:', error?.message); return null; }
+  clientTickets.unshift(created);
+  repThreads[cat] = created;
+  return created.id;
+}
+
+async function submitRepMessage() {
+  const textEl = document.getElementById('rep-reply-text');
+  const btn    = document.getElementById('rep-reply-btn');
+  let body = sanitize(textEl?.value || '');
+
+  if (repCategory === 'expecting_mail') {
+    const from  = sanitize(document.getElementById('inq-exp-from')?.value || '');
+    const track = sanitize(document.getElementById('inq-exp-track')?.value || '');
+    const date  = sanitize(document.getElementById('inq-exp-date')?.value || '');
+    if (from || track || date) {
+      body = ['📬 Expecting mail',
+        from  ? 'From: ' + from : '',
+        track ? 'Tracking: ' + track : '',
+        date  ? 'Expected around: ' + fmtDate(date) : '',
+        body  ? '\n' + body : ''].filter(Boolean).join('\n');
+    }
+  }
+  if (!body && !repThreadFile) { showToast('Please write a message or attach a file.', true); return; }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  const done = () => { if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; } };
+
+  const id = await ensureRepThread(repCategory);
+  if (!id) { showToast('Could not send message.', true); done(); return; }
+  repThreadTicketId = id;
+
+  let attachmentUrl = null;
+  if (repThreadFile) {
+    const safeName = repThreadFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `ticket-replies/${id}/${Date.now()}-${safeName}`;
+    const { data: up } = await sb.storage.from('ticket-attachments').upload(path, repThreadFile, { upsert: false });
+    if (up) {
+      const { data: pub } = sb.storage.from('ticket-attachments').getPublicUrl(path);
+      attachmentUrl = pub?.publicUrl || null;
+    }
+  }
+
+  const { data: inserted, error } = await sb.from('ticket_messages').insert({
+    ticket_id: id, sender_id: currentUser.id, sender_role: 'client',
+    sender_name: currentProfile.full_name, body: body || '(attachment)', attachment_url: attachmentUrl,
+  }).select().single();
+  if (error) { showToast('Could not send message.', true); done(); return; }
+
+  const now = new Date().toISOString();
+  await sb.from('tickets').update({ updated_at: now }).eq('id', id);
+  const t = repThreads[repCategory];
+  if (t) { t.updated_at = now; if (hasSeenColumns(t)) { t.last_message_at = now; t.last_message_by = 'client'; } }
+
+  const { data: msgs } = await sb.from('ticket_messages').select('*').eq('ticket_id', id).order('created_at', { ascending: true });
+  repThreadMessages = msgs || [];
+  renderRepChat();
+
+  if (textEl) textEl.value = '';
+  ['inq-exp-from', 'inq-exp-track', 'inq-exp-date'].forEach(x => { const el = document.getElementById(x); if (el) el.value = ''; });
+  clearRepReplyFile();
+  done();
+  showToast('Message sent!');
+  if (inserted?.id) notify('client_ticket_reply', { message_id: inserted.id });
+}
+
+function setRepReplyFile(file) {
+  if (!file) return;
+  const allowed = ['image/jpeg','image/png','image/webp','image/gif','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','text/plain'];
+  if (!validateFile(file, allowed)) { clearRepReplyFile(); return; }
+  repThreadFile = file;
+  const n = document.getElementById('rep-attach-name');
+  const r = document.getElementById('rep-attach-remove');
+  if (n) { n.textContent = file.name; n.classList.remove('hidden'); }
+  if (r) r.classList.remove('hidden');
+}
+
+// ================================================================
+// ADMIN — All Mail (with client requests)
+// ================================================================
+function mailReqKey(m) {
+  if (!m.client_action) return 'none';
+  return m.action_status === 'completed' ? 'completed' : 'pending';
+}
+
+function mailReqPillHTML(m) {
+  const a = MAIL_ACTIONS[m.client_action];
+  if (!a) return '';
+  return m.action_status === 'completed'
+    ? `<span class="pill" style="font-size:11px;background:var(--green-bg);color:var(--green);">${a.icon} ${a.done}</span>`
+    : `<span class="pill" style="font-size:11px;background:var(--amber-bg);color:var(--amber);font-weight:700;">${a.icon} ${a.pending}</span>`;
+}
+
+async function loadAdminAllMail() {
+  const el = document.getElementById('aml-list');
+  if (el && !adminAllMail.length) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div>';
+
+  const { data: rows, error } = await sb
+    .from('mail')
+    .select('*, profiles!client_id(id, full_name, email)')
+    .order('created_at', { ascending: false });
+  if (error || !rows) {
+    if (el) el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Failed to load mail.</p></div>';
+    return;
+  }
+
+  adminAllMail = rows.map(m => {
+    m._clientName  = m.profiles?.full_name || '—';
+    m._clientEmail = m.profiles?.email     || '';
+    m._clientId    = m.profiles?.id        || m.client_id;
+    return m;
+  });
+  adminAllMailMap = {};
+  adminAllMail.forEach(m => { adminAllMailMap[m.id] = m; });
+
+  const clientSel = document.getElementById('aml-filter-client');
+  if (clientSel) {
+    const seen = {}; const opts = ['<option value="">All clients</option>'];
+    adminAllMail.forEach(m => {
+      if (m._clientId && !seen[m._clientId]) {
+        seen[m._clientId] = true;
+        opts.push('<option value="' + esc(m._clientId) + '">' + esc(m._clientName) + '</option>');
+      }
+    });
+    const cur = clientSel.value;
+    clientSel.innerHTML = opts.join('');
+    clientSel.value = cur;
+  }
+
+  _pendingMailReqCount = adminAllMail.filter(m => mailReqKey(m) === 'pending').length;
+  _setBadge('admin-mailreq-badge', _pendingMailReqCount);
+  renderAdminAttention();
+
+  const total = adminAllMail.length;
+  const sub = document.getElementById('aml-sub');
+  if (sub) sub.textContent = total + ' mail items · ' + _pendingMailReqCount + ' client request' + (_pendingMailReqCount !== 1 ? 's' : '') + ' to do';
+
+  renderAdminAllMail();
+}
+
+function setAmlActionFilter(v) {
+  const s = document.getElementById('aml-filter-action');
+  if (s) s.value = v;
+  PG.reset('adminMail');
+  renderAdminAllMail();
+}
+
+function renderAdminAllMail() {
+  const el = document.getElementById('aml-list');
+  if (!el) return;
+
+  // Request chips (pending per action)
+  const chips = document.getElementById('aml-req-chips');
+  if (chips) {
+    const pend = k => adminAllMail.filter(m => m.client_action === k && m.action_status !== 'completed').length;
+    chips.innerHTML = ['open', 'ship', 'shred'].map(k => {
+      const n = pend(k), a = MAIL_ACTIONS[k];
+      return `<button class="aml-chip ${n ? 'hot' : ''}" onclick="setAmlActionFilter('${k}')">${a.icon} ${a.pending}: <strong>${n}</strong></button>`;
+    }).join('');
+  }
+
+  const search    = (document.getElementById('aml-search')?.value || '').toLowerCase().trim();
+  const clientId  =  document.getElementById('aml-filter-client')?.value || '';
+  const cat       =  document.getElementById('aml-filter-cat')?.value    || '';
+  const readState =  document.getElementById('aml-filter-read')?.value   || '';
+  const actState  =  document.getElementById('aml-filter-action')?.value || '';
+
+  let items = adminAllMail;
+  if (search) items = items.filter(m =>
+    (m.sender || '').toLowerCase().includes(search) ||
+    (m.subject || '').toLowerCase().includes(search) ||
+    m._clientName.toLowerCase().includes(search));
+  if (clientId) items = items.filter(m => m._clientId === clientId);
+  if (cat)      items = items.filter(m => m.category === cat);
+  if (readState === 'unread') items = items.filter(m => !m.is_read);
+  if (readState === 'read')   items = items.filter(m =>  m.is_read);
+  if (actState === 'pending' || actState === 'completed' || actState === 'none') items = items.filter(m => mailReqKey(m) === actState);
+  else if (actState) items = items.filter(m => m.client_action === actState && m.action_status !== 'completed');
+
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No mail matches your filters.</p></div>';
+    return;
+  }
+
+  const pg = PG.slice('adminMail', items);
+  const catLabels = { usps: 'USPS', bank: 'Bank', irs: 'IRS', other: 'Other' };
+  el.innerHTML = pg.items.map(m => {
+    const _url = (m.scan_url || '').toLowerCase();
+    const thumbHtml = m.scan_url && /\.(jpe?g|png|webp|gif)(\?|$)/.test(_url)
+      ? '<img src="' + esc(m.scan_url) + '" alt="" onerror="this.outerHTML=\'📬\'" />'
+      : m.scan_url && _url.includes('.pdf') ? '📄' : catEmoji(m.category || 'other');
+    const pendingReq = mailReqKey(m) === 'pending';
+    return '<div class="aml-row' + (pendingReq ? ' unread' : '') + '" onclick="openAmlDetail(\'' + m.id + '\')">' +
+      '<div class="aml-thumb">' + thumbHtml + '</div>' +
+      '<div class="aml-main">' +
+        '<div class="aml-client" onclick="event.stopPropagation();openClientPopup(\'' + esc(m._clientId) + '\')" title="View client profile" style="cursor:pointer;">👤 ' + esc(m._clientName) + '</div>' +
+        '<div class="aml-subject">' + esc(m.subject || '(no subject)') + '</div>' +
+        '<div class="aml-meta">' +
+          '<span class="aml-sender">From: ' + esc(m.sender || '—') + '</span>' +
+          '<span class="pill" style="font-size:10.5px;">' + (catLabels[m.category] || esc(m.category) || 'Mail') + '</span>' +
+          '<span class="aml-date">' + fmtDate(m.created_at) + '</span>' +
+          '<span style="font-size:11px;color:var(--muted);">' + (m.is_read ? '👁 Client viewed' : '• Not viewed yet') + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="aml-req">' + mailReqPillHTML(m) + '</div>' +
+    '</div>';
+  }).join('') + PG.build('adminMail', pg, 'pgAdminMail');
+}
+
+function openAmlDetail(mailId) {
+  const m = adminAllMailMap[mailId];
+  if (!m) return;
+  const catLabels = { usps: 'USPS', bank: 'Bank', irs: 'IRS', other: 'Other' };
+
+  document.getElementById('aml-detail-client').textContent  = '👤 ' + (m._clientName || '—');
+  document.getElementById('aml-detail-subject').textContent = m.subject || '(no subject)';
+  document.getElementById('aml-detail-sender').textContent  = m.sender  || '—';
+  document.getElementById('aml-detail-date').textContent    = fmtDate(m.created_at) + (m.is_read ? ' · Client viewed' : ' · Not viewed yet');
+  document.getElementById('aml-detail-cat').textContent     = catLabels[m.category] || m.category || 'Mail';
+  const clientEl = document.getElementById('aml-detail-client');
+  clientEl.style.cursor = 'pointer';
+  clientEl.onclick = () => { closeAmlDetail(); openClientPopup(m._clientId); };
+
+  let bodyHtml = '';
+  if (m.description) {
+    const isHtmlDesc = /<[a-z][\s\S]*>/i.test(m.description);
+    const safeDesc = isHtmlDesc ? sanitizeHtml(m.description) : esc(m.description).replace(/\n/g, '<br>');
+    bodyHtml += '<div class="mail-body-content" style="font-size:14px;color:var(--ink);line-height:1.75;margin-bottom:16px;">' + safeDesc + '</div>';
+  }
+  const urls = [m.scan_url, ...(Array.isArray(m.scan_urls) ? m.scan_urls : [])].filter(Boolean)
+    .filter((u, i, arr) => arr.indexOf(u) === i);
+  if (urls.length) {
+    bodyHtml += '<div class="mv-gallery">' + urls.map(u => /\.(jpe?g|png|webp|gif)(\?|$)/i.test(u)
+      ? '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer"><img src="' + esc(u) + '" alt="Scan" loading="lazy"></a>'
+      : '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer" class="mv-file">📄 Open file</a>').join('') + '</div>';
+  }
+  if (!bodyHtml) bodyHtml = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">No preview available.</div>';
+  document.getElementById('aml-detail-body').innerHTML = bodyHtml;
+
+  const scanBtn = document.getElementById('aml-detail-scan-btn');
+  const scanUrl = document.getElementById('aml-detail-scan-url');
+  if (scanBtn && scanUrl) {
+    scanBtn.style.display = m.scan_url ? '' : 'none';
+    scanUrl.value = m.scan_url || '';
+  }
+
+  renderAmlActionPanel(m);
+  document.getElementById('aml-detail-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Note: the admin opening a mail no longer marks it as read for the client.
+}
+
+function renderAmlActionPanel(m) {
+  const el = document.getElementById('aml-detail-action');
+  if (!el) return;
+  const a = MAIL_ACTIONS[m.client_action];
+  if (!a) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--muted);">The client hasn\'t asked for anything yet (Open / Ship / Shred).</div>';
+    return;
+  }
+  if (m.action_status === 'completed') {
+    el.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        ${mailReqPillHTML(m)}
+        ${m.action_completed_at ? `<span style="font-size:12px;color:var(--muted);">on ${fmtDate(m.action_completed_at)}</span>` : ''}
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="adminSetMailRequest('${m.id}','reopen')">↩ Undo</button>
+      </div>
+      ${m.action_note ? `<div class="mx-note">💬 ${esc(m.action_note)}</div>` : ''}`;
+    return;
+  }
+  const shipHint = m.client_action === 'ship'
+    ? '<div style="font-size:12px;color:var(--muted);margin-top:6px;">This item is part of a shipping request. Marking the request shipped in <a href="#" onclick="event.preventDefault();closeAmlDetail();navTo(\'admin-ship\')">Ship Requests</a> updates it automatically.</div>' : '';
+  const openHint = m.client_action === 'open'
+    ? `<div style="font-size:12px;color:var(--muted);margin-top:6px;">Upload the scanned contents in <a href="#" onclick="event.preventDefault();goDocsFor('${esc(m._clientId)}')">Documents</a>, then mark it as opened.</div>` : '';
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <strong style="font-size:13.5px;">Client request:</strong> ${mailReqPillHTML(m)}
+      ${m.action_requested_at ? `<span style="font-size:12px;color:var(--muted);">since ${fmtDate(m.action_requested_at)}</span>` : ''}
+    </div>
+    ${openHint}${shipHint}
+    <textarea id="aml-action-note" placeholder="Optional note for the client (e.g. “Contents uploaded to Documents”)"></textarea>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="adminSetMailRequest('${m.id}','clear')">Clear request</button>
+      <button class="btn btn-gold btn-sm" onclick="adminSetMailRequest('${m.id}','complete')">✓ ${a.doneVerb}</button>
+    </div>`;
+}
+
+function goDocsFor(clientId) {
+  closeAmlDetail();
+  navTo('admin-docs');
+  setTimeout(() => { const s = document.getElementById('doc-client'); if (s) s.value = clientId; }, 60);
+}
+
+// op: 'complete' | 'clear' | 'reopen'
+async function adminSetMailRequest(mailId, op) {
+  const m = adminAllMailMap[mailId];
+  if (!m) return;
+  const a = MAIL_ACTIONS[m.client_action];
+  if (op === 'clear') {
+    const ok = await uiConfirm({ icon: '↩️', title: 'Clear this request?', confirmText: 'Clear request',
+      message: 'The client’s “' + (a ? a.pending : 'request') + '” will be removed and they can choose again.' });
+    if (!ok) return;
+  }
+  const now = new Date().toISOString();
+  const note = sanitize(document.getElementById('aml-action-note')?.value || '');
+  let upd;
+  if (op === 'complete') upd = { action_status: 'completed', action_completed_at: now, action_note: note || null };
+  else if (op === 'reopen') upd = { action_status: 'requested', action_completed_at: null };
+  else upd = { client_action: null, action_status: null, action_requested_at: null, action_completed_at: null, action_note: null };
+
+  let { error } = await sb.from('mail').update(upd).eq('id', mailId);
+  if (error && isSchemaMissing(error)) {
+    const basic = { action_status: upd.action_status };
+    if ('client_action' in upd) basic.client_action = null;
+    ({ error } = await sb.from('mail').update(basic).eq('id', mailId));
+  }
+  if (error) { showToast('Could not update. Please try again.', true); return; }
+  Object.assign(m, upd);
+  _pendingMailReqCount = adminAllMail.filter(x => mailReqKey(x) === 'pending').length;
+  _setBadge('admin-mailreq-badge', _pendingMailReqCount);
+  renderAmlActionPanel(m);
+  renderAdminAllMail();
+  renderAdminAttention();
+  showToast(op === 'complete' ? '✓ ' + (a ? a.done : 'Done') : op === 'clear' ? 'Request cleared.' : 'Request reopened.');
+}
+
+// ================================================================
+// ADMIN — Upload Mail (single or bulk)
+// ================================================================
+function handleMailDrop(e) {
+  e.preventDefault();
+  document.getElementById('mail-drop-zone').classList.remove('drag');
+  addMailFiles(e.dataTransfer.files);
+}
+
+function addMailFiles(fileList) {
+  for (const file of Array.from(fileList || [])) {
+    if (!validateFile(file, ALLOWED_MAIL_TYPES)) continue;
+    const item = { file, sender: '', subject: '', preview: '' };
+    uploadMailFiles.push(item);
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => { item.preview = e.target.result; renderMailFileList(); };
+      reader.readAsDataURL(file);
+    }
+  }
+  renderMailFileList();
+}
+// Kept for compatibility with anything still calling the old single-file API.
+function setMailFile(file) { addMailFiles(file ? [file] : []); }
+function clearMailFile() { uploadMailFiles = []; renderMailFileList(); }
+
+function removeMailFile(idx) { uploadMailFiles.splice(idx, 1); renderMailFileList(); }
+function setUploadMode(mode) { uploadMode = mode === 'single' ? 'single' : 'separate'; renderMailFileList(); }
+function _setMailFileField(idx, field, value) { if (uploadMailFiles[idx]) uploadMailFiles[idx][field] = value; }
+
+function renderMailFileList() {
+  const wrap = document.getElementById('mail-file-list');
+  const modeWrap = document.getElementById('up-mode-wrap');
+  if (!wrap) return;
+  const many = uploadMailFiles.length > 1;
+  modeWrap?.classList.toggle('hidden', !many);
+  const perFile = many && uploadMode === 'separate';
+  document.querySelectorAll('.up-default-hint').forEach(h => h.classList.toggle('hidden', !perFile));
+
+  if (!uploadMailFiles.length) { wrap.innerHTML = ''; _updateUploadBtnLabel(); return; }
+  const totalSize = uploadMailFiles.reduce((n, x) => n + x.file.size, 0);
+  wrap.innerHTML = `<div class="up-summary"><span>${uploadMailFiles.length} file${many ? 's' : ''} · ${formatBytes(totalSize)}</span>
+      <button type="button" class="mx-link" onclick="clearMailFile()">Remove all</button></div>` +
+    uploadMailFiles.map((x, i) => `
+      <div class="up-file">
+        <div class="up-file-thumb">${x.preview ? `<img src="${x.preview}" alt="">` : (x.file.type === 'application/pdf' ? '📄' : '🖼')}</div>
+        <div class="up-file-main">
+          <div class="up-file-name">${esc(x.file.name)}</div>
+          <div class="up-file-size">${formatBytes(x.file.size)}</div>
+          ${perFile ? `<div class="up-file-inputs">
+            <input type="text" placeholder="Sender (default above)" value="${esc(x.sender)}" oninput="_setMailFileField(${i},'sender',this.value)" />
+            <input type="text" placeholder="Subject (default above)" value="${esc(x.subject)}" oninput="_setMailFileField(${i},'subject',this.value)" />
+          </div>` : ''}
+        </div>
+        <span class="up-file-remove" title="Remove" onclick="removeMailFile(${i})">✕</span>
+      </div>`).join('');
+  _updateUploadBtnLabel();
+}
+
+function _updateUploadBtnLabel() {
+  const btn = document.getElementById('mail-upload-btn');
+  if (!btn || btn.disabled) return;
+  const n = uploadMailFiles.length;
+  btn.textContent = n > 1 && uploadMode === 'separate'
+    ? `📤 Upload ${n} Mail Items` : '📤 Upload Mail for Client';
+}
+
+async function _uploadMailScan(file, idx) {
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = `shared/${Date.now()}_${idx}_${safeName}`;
+  const { error } = await sb.storage.from('mail-scans').upload(path, file, { cacheControl: '3600', upsert: false });
+  if (error) throw error;
+  const { data } = sb.storage.from('mail-scans').getPublicUrl(path);
+  return data?.publicUrl || null;
+}
+
+async function submitMail() {
+  if (!isStaff()) { showToast('Unauthorized.', true); return; }
+
+  const clientIds = getSelectedClientIds();
+  const sender    = sanitize(document.getElementById('up-sender').value);
+  const subject   = sanitize(document.getElementById('up-subject').value);
+  const rawDesc   = document.getElementById('up-description').innerHTML.trim();
+  const category  = document.getElementById('up-cat').value;
+  const btn       = document.getElementById('mail-upload-btn');
+  const files     = uploadMailFiles.slice();
+  const perFile   = files.length > 1 && uploadMode === 'separate';
+
+  if (!['usps', 'bank', 'irs', 'other'].includes(category)) { showToast('Invalid category.', true); return; }
+  if (!clientIds.length) { showToast('Please select at least one client.', true); return; }
+
+  // Each mail item needs a sender and subject (per file, or the defaults above).
+  const items = perFile
+    ? files.map(x => ({ files: [x.file], sender: sanitize(x.sender) || sender, subject: sanitize(x.subject) || subject }))
+    : [{ files: files.map(x => x.file), sender, subject }];
+  const missing = items.findIndex(it => !it.sender || !it.subject);
+  if (missing >= 0) {
+    showToast(perFile ? `File ${missing + 1} needs a sender and subject (or fill in the defaults above).`
+                      : (!sender ? 'Please enter the sender name.' : 'Please enter a subject.'), true);
+    return;
+  }
+
+  btn.disabled = true;
+  const resetBtn = () => { btn.disabled = false; _updateUploadBtnLabel(); };
+
+  // Upload every file once (shared across all selected clients).
+  const urlByFile = new Map();
+  try {
+    for (let i = 0; i < files.length; i++) {
+      btn.textContent = `Uploading file ${i + 1} of ${files.length}…`;
+      urlByFile.set(files[i].file, await _uploadMailScan(files[i].file, i));
+    }
+  } catch (e) {
+    showToast('File upload failed. Please try again.', true);
+    resetBtn();
+    return;
+  }
+
+  const safeDesc = rawDesc ? sanitizeHtml(rawDesc) : null;
+  const rows = [];
+  for (const it of items) {
+    const urls = it.files.map(f => urlByFile.get(f)).filter(Boolean);
+    for (const cid of clientIds) {
+      const client = allClients.find(x => x.id === cid) || { id: cid, full_name: '', email: '' };
+      const row = {
+        client_id:   cid,
+        sender:      it.sender,
+        subject:     applyVars(it.subject, client),
+        description: safeDesc ? applyVars(safeDesc, client) : null,
+        category,
+        scan_url:    urls[0] || null,
+        is_read:     false,
+      };
+      if (urls.length > 1) row.scan_urls = urls;
+      rows.push(row);
+    }
+  }
+
+  btn.textContent = `Saving ${rows.length} mail item${rows.length > 1 ? 's' : ''}…`;
+  let { error: dbErr } = await sb.from('mail').insert(rows);
+  if (dbErr && isSchemaMissing(dbErr) && rows.some(r => r.scan_urls)) {
+    // Before the migration there is no scan_urls column: list the extra
+    // scans as links in the message body instead.
+    rows.forEach(r => {
+      if (!r.scan_urls) return;
+      const links = r.scan_urls.slice(1).map((u, i) => `<a href="${esc(u)}">Scan ${i + 2}</a>`).join(' · ');
+      r.description = (r.description || '') + `<p>Additional scans: ${links}</p>`;
+      delete r.scan_urls;
+    });
+    ({ error: dbErr } = await sb.from('mail').insert(rows));
+  }
+  if (dbErr) {
+    showToast('Could not save the mail. Please try again.', true);
+    resetBtn();
+    return;
+  }
+
+  const n = items.length;
+  showToast(`✓ ${n} mail item${n > 1 ? 's' : ''} sent to ${clientIds.length} client${clientIds.length > 1 ? 's' : ''}!`);
+  for (const cid of clientIds) {
+    const cl = allClients.find(x => x.id === cid);
+    if (cl?.email) notify('mail_uploaded', n > 1
+      ? { client_id: cl.id, sender: 'Your mailroom', subject: `${n} new mail items` }
+      : { client_id: cl.id, sender: items[0].sender, subject: items[0].subject });
+  }
+  toggleAllClients(false);
+  document.getElementById('up-client-search').value = '';
+  filterClientCheckboxes('');
+  document.getElementById('up-sender').value  = '';
+  document.getElementById('up-subject').value = '';
+  document.getElementById('up-description').innerHTML = ''; updateComposeCount();
+  clearMailFile();
+  resetBtn();
+  refreshMailRequestCount();
+}
+
+// ================================================================
+// PROOF OF ADDRESS — deletes now ask in a clear confirm dialog
+// ================================================================
+async function deleteProofAssignment(proofId, clientId) {
+  const ok = await uiConfirm({
+    icon: '🗑', title: 'Delete this proof of address?', danger: true, confirmText: 'Yes, delete it',
+    message: 'The client will no longer see this document in their portal. This cannot be undone.',
+  });
+  if (!ok) return;
+  const { error } = await sb.from('proof_of_address').delete().eq('id', proofId);
+  if (error) { showToast('Could not remove. Please try again.', true); return; }
+  showToast('Proof removed.');
+  loadAssignProofs(clientId);
+  loadAdminDash();
+}
+
+async function deleteProofType(id, name) {
+  const ok = await uiConfirm({
+    icon: '🗑', title: `Remove “${name}”?`, danger: true, confirmText: 'Remove',
+    message: 'It will no longer be offered when assigning proofs. Proofs already assigned with this type stay as they are.',
+  });
+  if (!ok) return;
+  const { error } = await sb.from('proof_types').delete().eq('id', id);
+  if (error) { showToast('Could not remove. Please try again.', true); return; }
+  await loadProofTypes();
+  renderProofTypesList();
+  showToast('Proof type removed.');
+  populateProofTypeDropdown();
 }
 
 </script>
