@@ -1,0 +1,28 @@
+{
+  "slug": "how-to-get-itin-non-resident",
+  "title": "How to Get an ITIN as a Non-Resident (2026 Guide)",
+  "h1": "How to Get an ITIN as a Non-Resident: Form W-7 Step by Step",
+  "description": "How non-US founders apply for an ITIN with Form W-7 in 2026: who qualifies, documents, Certifying Acceptance Agents, and the 7 to 11 week processing time.",
+  "category": "Blog • Tax IDs",
+  "emoji": "🪪📄🇺🇸",
+  "card_category": "US Business",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> You apply for an ITIN (Individual Taxpayer Identification Number) by sending IRS Form W-7 with proof of identity and foreign status, usually your passport, together with the federal tax return or exception document that shows why you need one. From abroad you either mail it to the IRS or go through a Certifying Acceptance Agent (CAA), who can verify your passport so you do not have to post the original. Processing usually takes 7 to 11 weeks.</p>\n<h2>Who can get an ITIN</h2>\n<p>The IRS issues ITINs to people who need a US tax ID but are not eligible for a Social Security Number. You must have a federal tax reason: most often a US tax return you are required to file, or one of the exceptions listed in the Form W-7 instructions. Owning an LLC by itself does not always qualify, so check your reason before applying.</p>\n<h2>Why non-US founders get one</h2>\n<ul>\n<li>Filing a US tax return (for example, Form 1040-NR) when your LLC has US-source income.</li>\n<li>Opening some personal US bank accounts and credit cards.</li>\n<li>Building a US credit history.</li>\n<li>Some payment processors and marketplaces ask for one.</li>\n</ul>\n<h2>Documents you need</h2>\n<ul>\n<li>A completed Form W-7.</li>\n<li>Your valid passport, which on its own proves both identity and foreign status. Without a CAA, you must send the original or a certified copy from the issuing agency.</li>\n<li>The federal tax return the ITIN is for, or the documents for the exception you are claiming.</li>\n</ul>\n<h2>Three ways to apply</h2>\n<ul>\n<li><strong>By mail to the IRS in Austin, Texas.</strong> Free, but you post your original passport and wait for it to come back.</li>\n<li><strong>Through a Certifying Acceptance Agent.</strong> A CAA is authorised by the IRS to review your W-7 and authenticate your passport, so the original stays with you. CAAs charge a fee and work in the US and abroad.</li>\n<li><strong>At an IRS Taxpayer Assistance Center</strong> in the US, by appointment.</li>\n</ul>\n<h2>How long it takes</h2>\n<p>Expect 7 to 11 weeks, and longer during tax season (January to April) or when applying from outside the US. Errors on the W-7 or missing documents restart the clock, which is the main reason people use a CAA.</p>\n<h2>Common reasons ITIN applications are rejected</h2>\n<ul>\n<li>No valid tax reason, or the supporting tax return is missing.</li>\n<li>An expired passport or an uncertified copy.</li>\n<li>Names or dates that do not match the passport exactly.</li>\n</ul>\n<p>The Residential Address prepares and files ITIN applications for non-US founders for $400. <a href=\"itin-application.html\">See ITIN application</a>.</p>\n",
+  "faqs": [
+    [
+      "How long does it take to get an ITIN?",
+      "Usually 7 to 11 weeks after the IRS receives a complete Form W-7, and longer in tax season or when applying from abroad."
+    ],
+    [
+      "Can I apply for an ITIN from outside the US?",
+      "Yes. You can mail Form W-7 to the IRS or apply through a Certifying Acceptance Agent, who can verify your passport so you keep the original."
+    ],
+    [
+      "What is a Certifying Acceptance Agent?",
+      "A person or firm authorised by the IRS to help complete Form W-7 and authenticate most supporting documents, such as your passport, so originals do not need to be mailed."
+    ],
+    [
+      "Do I need an ITIN to form a US LLC?",
+      "No. You can form an LLC and get an EIN without an ITIN. An ITIN is for your personal US tax obligations and helps with personal banking and credit."
+    ]
+  ]
+}

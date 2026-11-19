@@ -1,0 +1,28 @@
+{
+  "slug": "form-5472-foreign-owned-llc",
+  "title": "Form 5472 for Foreign-Owned LLCs: Who Files and the $25,000 Penalty",
+  "h1": "Form 5472 for Foreign-Owned Single-Member LLCs Explained",
+  "description": "Every foreign-owned single-member US LLC with related-party transactions must file Form 5472 with a pro forma Form 1120 each year. Deadline, penalty and how to file.",
+  "category": "Blog • Compliance",
+  "emoji": "📑⚖️📆",
+  "card_category": "US Business",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> If a non-US person owns a single-member US LLC, the LLC generally has to file IRS Form 5472, attached to a pro forma Form 1120, every year it has a reportable transaction with its owner. Putting money into the LLC or taking money out counts. The return is due April 15 for calendar-year LLCs, and the penalty for not filing is $25,000 per form, per year.</p>\n<h2>Who has to file</h2>\n<p>Since tax years beginning in 2017, a US single-member LLC wholly owned by a foreign person is treated as a corporation for Form 5472 purposes, even though it is otherwise a \"disregarded entity\" for income tax. That means most non-resident founders with a one-owner LLC have this filing every year, whether or not the LLC made money.</p>\n<h2>What counts as a reportable transaction</h2>\n<ul>\n<li>Money you put into the LLC, including the first deposit into its bank account.</li>\n<li>Money you take out (distributions).</li>\n<li>Loans between you and the LLC.</li>\n<li>Formation costs or expenses you paid personally on the LLC's behalf.</li>\n<li>Payments between the LLC and other companies you own.</li>\n</ul>\n<p>In practice almost every active foreign-owned LLC has at least one of these each year.</p>\n<h2>How it is filed</h2>\n<ul>\n<li>Fill in Form 5472 for each related party.</li>\n<li>Attach it to a pro forma Form 1120 with only the company's identifying details completed.</li>\n<li>Most filers fax or mail it to the IRS. It cannot be filed through ordinary e-file software in most cases.</li>\n<li>Deadline: April 15 for a calendar-year LLC. An extension (Form 7004) moves it to October 15.</li>\n</ul>\n<h2>The penalty</h2>\n<p>The penalty is $25,000 for each form not filed, or filed incomplete, plus further penalties if it is still not filed after the IRS sends a notice. There is no statutory cap. The IRS does not send reminders.</p>\n<h2>Form 5472 is separate from BOI reporting</h2>\n<p>US-formed LLCs no longer file FinCEN beneficial ownership (BOI) reports, but that change did not affect Form 5472. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting for non-resident LLCs in 2026</a>.</p>\n<p>Form 5472 is a specialist filing. The Residential Address works with a partner CPA for tax filings for foreign-owned LLCs. This article is general information, not tax advice.</p>\n",
+  "faqs": [
+    [
+      "Do I need to file Form 5472 if my LLC had no income?",
+      "Usually yes. The requirement depends on reportable transactions with related parties, such as funding the LLC or withdrawing money, not on income."
+    ],
+    [
+      "What is the penalty for not filing Form 5472?",
+      "$25,000 per form, per year, with additional penalties if it is still not filed after IRS notice."
+    ],
+    [
+      "When is Form 5472 due?",
+      "April 15 for a calendar-year foreign-owned single-member LLC, or October 15 with a Form 7004 extension."
+    ],
+    [
+      "Can I e-file Form 5472 for a single-member LLC?",
+      "Generally no. Foreign-owned single-member LLCs usually fax or mail Form 5472 with a pro forma Form 1120."
+    ]
+  ]
+}

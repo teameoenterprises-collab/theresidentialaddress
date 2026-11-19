@@ -1,0 +1,24 @@
+{
+  "slug": "what-is-a-cmra-address",
+  "title": "What Is a CMRA Address? Why Banks Flag Virtual Mailboxes",
+  "h1": "What Is a CMRA Address and Why Do Banks Flag It?",
+  "description": "A CMRA is a USPS Commercial Mail Receiving Agency, such as a virtual mailbox or UPS Store box. What it means, how banks detect it, and which addresses work for a US LLC.",
+  "category": "Blog • Addresses",
+  "emoji": "📮🔍🏦",
+  "card_category": "Address Services",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> A CMRA (Commercial Mail Receiving Agency) is a business registered with the USPS to receive mail for other people, such as a virtual mailbox, a UPS Store or a mailbox rental shop. The USPS marks these addresses in its database, so banks, fintechs and payment processors can see instantly that the address is a mail drop, not a place where the business operates. Many of them decline CMRA addresses as a company's address.</p>\n<h2>How CMRAs work</h2>\n<p>Anyone renting a box at a CMRA files USPS Form 1583, authorising the CMRA to accept mail for them. The CMRA's street address then serves many unrelated customers, each with a \"suite\" or \"PMB\" number.</p>\n<h2>How banks detect a CMRA address</h2>\n<p>Address verification tools check the USPS database, which flags each address as commercial or residential and whether it is a CMRA. This happens automatically during onboarding, before anyone at the bank reviews the application.</p>\n<h2>Which addresses are usually CMRAs</h2>\n<ul>\n<li>Virtual mailbox services that scan and forward mail.</li>\n<li>UPS Store and similar mailbox rental shops.</li>\n<li>Many \"virtual office\" packages.</li>\n</ul>\n<p>Registered agent addresses are not always CMRAs, but they are shared by thousands of companies, so banks treat them the same way for the company's address.</p>\n<h2>What to use instead</h2>\n<p>For the company's address, banks want a real place connected to the business: an office, a coworking membership with its own lease, or a residential property with a lease. Whatever you use, keep the documents that tie the LLC to it. For your personal address on the application, use your actual home address, which can be outside the US.</p>\n<p>Read more: <a href=\"why-virtual-mailboxes-cause-bank-rejections.html\">why virtual mailboxes cause bank rejections</a> and <a href=\"how-to-open-us-business-bank-account-non-resident.html\">how to open a US business bank account as a non-resident</a>.</p>\n",
+  "faqs": [
+    [
+      "What does CMRA stand for?",
+      "Commercial Mail Receiving Agency: a business registered with the USPS to receive mail on behalf of others, such as a virtual mailbox or UPS Store."
+    ],
+    [
+      "How can I check if an address is a CMRA?",
+      "USPS address verification tools and many address-validation services report whether an address is flagged as a CMRA. Banks run this check automatically."
+    ],
+    [
+      "Can I use a virtual mailbox for my LLC?",
+      "You can use one to receive mail, but many banks and payment processors decline it as the company's address because it is flagged as a CMRA."
+    ]
+  ]
+}
