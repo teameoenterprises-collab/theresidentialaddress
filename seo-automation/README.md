@@ -16,4 +16,8 @@ A scheduled task runs daily. Each run:
 6. **Publishes or holds.** If validation passes it commits to `main` (Vercel deploys it). If not, it opens a
    pull request for review instead.
 
+7. **Notifies search engines.** After the push and deploy, `python3 seo-automation/indexnow.py HEAD~1` sends
+   the changed URLs to IndexNow (Bing, which feeds ChatGPT search and Copilot, plus Yandex, Naver and Seznam).
+   The key file is the 32-character `<key>.txt` in the site root; do not delete it.
+
 Edit `keywords.json` to change what is tracked. Edit `rules.json` / `CONTENT_RULES.md` to change content limits.
