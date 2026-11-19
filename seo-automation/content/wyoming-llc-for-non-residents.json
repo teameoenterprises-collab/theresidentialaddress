@@ -1,0 +1,24 @@
+{
+  "slug": "wyoming-llc-for-non-residents",
+  "title": "Wyoming LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a Wyoming LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a Wyoming LLC in 2026: $100 state fee, $60 annual report, registered agent, EIN, bank account and yearly filings.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🏔️📝💵",
+  "card_category": "LLC Formation",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Anyone can form a Wyoming LLC from abroad, with no US citizenship, residency or visa. You file Articles of Organization with the Wyoming Secretary of State ($100, plus a small card fee online), appoint a Wyoming registered agent, then get an EIN from the IRS. Each year you pay a $60 minimum annual report license tax, renew the registered agent and file Form 5472 if you are the only owner.</p>\n<h2>Why non-residents choose Wyoming</h2>\n<ul>\n<li>Low cost: $100 to form and a $60 minimum each year.</li>\n<li>No state income tax.</li>\n<li>Owners' names are not required on the public formation filing.</li>\n<li>Simple online filing that is usually approved quickly.</li>\n</ul>\n<p>Delaware is the usual choice if you plan to raise US venture capital. Compare them in <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Choose a name</strong> that is available on the Wyoming business search and ends in \"LLC\".</li>\n<li><strong>Appoint a registered agent</strong> with a physical Wyoming address. This is required, and a P.O. box is not allowed.</li>\n<li><strong>File the Articles of Organization</strong> online through WyoBiz ($100 plus a 2.4% card fee, minimum $1).</li>\n<li><strong>Sign an operating agreement.</strong> It is not filed with the state, but banks often ask for it.</li>\n<li><strong>Get an EIN</strong> with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li><strong>Set up a US business address and bank account.</strong> See <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US bank account as a non-resident</a>.</li>\n</ol>\n<h2>What it costs</h2>\n<ul>\n<li>Articles of Organization: $100 (one time).</li>\n<li>Annual report license tax: $60, or $0.0002 per dollar of Wyoming assets if higher. Due on the first day of your formation anniversary month.</li>\n<li>Registered agent: typically $50 to $150 a year.</li>\n<li>EIN: free from the IRS.</li>\n</ul>\n<h2>Yearly obligations</h2>\n<ul>\n<li>Wyoming annual report and license tax.</li>\n<li>Registered agent renewal (missing it can lead to administrative dissolution).</li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a> with a pro forma 1120, due April 15, for single-member LLCs.</li>\n<li>No FinCEN BOI report. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI in 2026</a>.</li>\n</ul>\n<p>The Residential Address forms Wyoming LLCs for non-US founders, including the EIN. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a Wyoming LLC?",
+      "Yes. Wyoming has no citizenship or residency requirement for LLC owners. You need a Wyoming registered agent with a physical address."
+    ],
+    [
+      "How much does a Wyoming LLC cost per year?",
+      "The state minimum is a $60 annual report license tax, plus registered agent fees of typically $50 to $150 a year."
+    ],
+    [
+      "Does a Wyoming LLC pay state income tax?",
+      "No. Wyoming has no state income tax. Federal filing obligations, such as Form 5472 for foreign-owned single-member LLCs, still apply."
+    ]
+  ]
+}

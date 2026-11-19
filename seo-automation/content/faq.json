@@ -1,0 +1,53 @@
+{
+  "slug": "faq",
+  "title": "FAQ: US LLC, EIN, ITIN and Banking for Non-US Founders",
+  "h1": "US LLC, EIN, ITIN and Banking FAQ for Non-US Founders",
+  "description": "Straight answers for non-US founders: forming a US LLC, EIN without SSN, ITIN timelines, US bank accounts, CMRA addresses, BOI and Form 5472.",
+  "category": "FAQ",
+  "emoji": "❓🌍🇺🇸",
+  "card_category": "US Business",
+  "body_html": "<p class=\"answer\">Quick answers to the questions non-US founders ask most about forming a US LLC, getting tax IDs, banking and staying compliant. Each answer links to a full guide.</p>\n<h2>Full guides</h2>\n<ul>\n<li><a href=\"wyoming-llc-for-non-residents.html\">How to form a Wyoming LLC as a non-resident</a></li>\n<li><a href=\"how-to-get-ein-without-ssn.html\">How to get an EIN without an SSN</a></li>\n<li><a href=\"how-to-get-itin-non-resident.html\">How to get an ITIN as a non-resident</a></li>\n<li><a href=\"how-to-open-us-business-bank-account-non-resident.html\">How to open a US business bank account as a non-resident</a></li>\n<li><a href=\"what-is-a-cmra-address.html\">What a CMRA address is and why banks flag it</a></li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a></li>\n<li><a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a></li>\n<li><a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a></li>\n</ul>",
+  "faqs": [
+    [
+      "Can a non-US resident form a US LLC?",
+      "Yes. No US state requires LLC owners to be US citizens or residents. You need a registered agent with a physical address in the state where you form the LLC."
+    ],
+    [
+      "Which state is best for a non-resident's LLC?",
+      "Wyoming suits most non-resident founders: $100 to form, a $60 minimum annual report and no state income tax. Delaware is usually preferred if you plan to raise US venture capital."
+    ],
+    [
+      "Can I get an EIN without an SSN?",
+      "Yes. File Form SS-4 by fax (about 4 business days) or mail (about 4 weeks), writing “Foreign” on line 7b. The IRS online application requires an SSN or ITIN."
+    ],
+    [
+      "Do I need an ITIN to open a US business bank account?",
+      "Usually not. Most online business accounts need the company's EIN and the owners' passports. An ITIN helps with personal banking and building US credit."
+    ],
+    [
+      "How long does an ITIN take?",
+      "Usually 7 to 11 weeks after the IRS receives a complete Form W-7, and longer in tax season or when applying from abroad."
+    ],
+    [
+      "Why do banks reject virtual mailbox addresses?",
+      "Virtual mailboxes are registered with the USPS as Commercial Mail Receiving Agencies (CMRAs). Banks check this automatically and many decline CMRA addresses as a company's address."
+    ],
+    [
+      "What residential address should I give my bank?",
+      "The address where you actually live. For most non-resident founders this is their home address abroad, which online banks that accept non-residents expect."
+    ],
+    [
+      "Does my US LLC need to file a BOI report?",
+      "No. FinCEN permanently exempted US-formed companies from BOI reporting, effective August 14, 2026, regardless of where the owners live."
+    ],
+    [
+      "Does a foreign-owned single-member LLC have to file Form 5472?",
+      "Generally yes, every year it has a reportable transaction with its owner, such as funding the LLC. The penalty for not filing is $25,000 per form."
+    ],
+    [
+      "What does The Residential Address offer?",
+      "A US residential address with a signed lease and mail forwarding ($2,000 a year), ITIN applications ($400), US LLC formation, and help preparing US bank applications for non-US founders."
+    ]
+  ],
+  "llms_summary": "Short answers on US LLCs, EINs, ITINs, banking, BOI and Form 5472 for non-US founders."
+}

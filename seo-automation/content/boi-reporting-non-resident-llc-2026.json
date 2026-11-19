@@ -1,0 +1,24 @@
+{
+  "slug": "boi-reporting-non-resident-llc-2026",
+  "title": "Do Non-Resident Owned US LLCs Need to File BOI in 2026?",
+  "h1": "BOI Reporting for Non-Resident Owned US LLCs in 2026",
+  "description": "FinCEN permanently exempted US-formed companies from BOI reporting in August 2026, including LLCs owned by non-US founders. What changed and what you still file.",
+  "category": "Blog • Compliance",
+  "emoji": "🏛️✅📋",
+  "card_category": "US Business",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> No. An LLC formed in a US state does not have to file a FinCEN beneficial ownership information (BOI) report, even if all its owners live outside the US. FinCEN exempted US-formed companies in March 2025 and made that exemption permanent in a final rule effective August 14, 2026. Only companies formed outside the US and registered to do business in a state still report.</p>\n<h2>What changed</h2>\n<ul>\n<li><strong>January 2024:</strong> the Corporate Transparency Act required most US and foreign companies to file BOI reports.</li>\n<li><strong>March 2025:</strong> FinCEN's interim final rule removed US-formed (\"domestic\") companies from reporting.</li>\n<li><strong>August 2026:</strong> FinCEN's final rule made the exemption permanent. US-formed companies have nothing to file, update or correct.</li>\n</ul>\n<h2>Who still files BOI</h2>\n<p>Only \"foreign reporting companies\": entities formed under another country's law that have registered to do business in a US state. If you formed your LLC in Wyoming, Delaware, Florida or any other state, it is a US company and is exempt, regardless of your citizenship or where you live.</p>\n<h2>What you still have to file</h2>\n<ul>\n<li><strong>Form 5472 with a pro forma 1120</strong> each year for a foreign-owned single-member LLC. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 explained</a>.</li>\n<li><strong>Your state annual report</strong>, for example Wyoming's report and $60 minimum license tax.</li>\n<li><strong>Registered agent</strong> renewal in your formation state.</li>\n<li>Any US income tax returns that apply to your situation.</li>\n</ul>\n<h2>Watch out for BOI scams</h2>\n<p>Founders still receive letters and emails demanding BOI filings and fees. A US-formed LLC has no BOI obligation, and FinCEN never charges a filing fee.</p>\n",
+  "faqs": [
+    [
+      "Does my Wyoming LLC need to file BOI if I live outside the US?",
+      "No. US-formed LLCs are exempt from BOI reporting regardless of where the owners live."
+    ],
+    [
+      "When did BOI reporting end for US companies?",
+      "FinCEN exempted US-formed companies in March 2025 and made it permanent with a final rule effective August 14, 2026."
+    ],
+    [
+      "Is Form 5472 affected by the BOI exemption?",
+      "No. Form 5472 is an IRS filing and is still required annually for foreign-owned single-member LLCs with reportable transactions."
+    ]
+  ]
+}

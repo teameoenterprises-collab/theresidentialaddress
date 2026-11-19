@@ -1,0 +1,28 @@
+{
+  "slug": "how-to-get-ein-without-ssn",
+  "title": "How to Get an EIN Without an SSN as a Non-Resident (2026)",
+  "h1": "How to Get an EIN Without an SSN or ITIN (Non-Resident Guide)",
+  "description": "Non-US founders can get an EIN for a US LLC without an SSN or ITIN by filing Form SS-4 by fax, mail or phone. Steps, timelines and common mistakes.",
+  "category": "Blog • Tax IDs",
+  "emoji": "🧾🔢🌐",
+  "card_category": "US Business",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes, a non-resident can get an EIN for a US LLC without an SSN or ITIN. You cannot use the IRS online application, which requires an SSN or ITIN. Instead you complete Form SS-4, write \"Foreign\" on line 7b where the SSN/ITIN goes, and send it to the IRS by fax (about 4 business days) or mail (about 4 weeks). The IRS charges no fee.</p>\n<h2>What an EIN is used for</h2>\n<p>The Employer Identification Number is your company's federal tax ID. You need it to open a US business bank account, sign up for Stripe and most payment processors, file Form 5472 and other IRS returns, and work with US platforms such as Amazon or Shopify Payments.</p>\n<h2>How to fill out Form SS-4 as a foreign owner</h2>\n<ul>\n<li><strong>Line 1:</strong> the LLC's legal name exactly as on your state filing.</li>\n<li><strong>Lines 4a–4b:</strong> a mailing address where you can receive IRS letters. This can be a foreign address.</li>\n<li><strong>Line 7a:</strong> the responsible party, who must be an individual (usually you).</li>\n<li><strong>Line 7b:</strong> write \"Foreign\". Do not leave it blank and never invent a number.</li>\n<li><strong>Line 9a:</strong> entity type. A single-member LLC owned by a foreign person is usually a \"disregarded entity\", with the owner's name and country noted.</li>\n<li><strong>Line 10:</strong> reason for applying, usually \"Started new business\".</li>\n<li>Sign it, and include a fax number if you want the reply by fax.</li>\n</ul>\n<h2>Fax, mail or phone</h2>\n<ul>\n<li><strong>Fax:</strong> the IRS fax line for applicants outside the US is 304-707-9471. Expect the EIN in about 4 business days.</li>\n<li><strong>Mail:</strong> about 4 weeks. Use it only if fax is not an option.</li>\n<li><strong>Phone:</strong> the IRS international line is 267-941-1099 (Monday to Friday, 6 a.m. to 11 p.m. Eastern). When it works, the EIN is issued during the call, but wait times are long.</li>\n</ul>\n<h2>Common mistakes</h2>\n<ul>\n<li>Applying before the LLC is approved by the state.</li>\n<li>A company name on the SS-4 that does not match the state filing exactly.</li>\n<li>Choosing the wrong entity classification, which then causes problems with Form 5472.</li>\n<li>Losing the EIN confirmation letter (CP 575). Banks often ask for it. If you lose it, the IRS can issue a 147C letter.</li>\n</ul>\n<h2>EIN vs ITIN</h2>\n<p>An EIN identifies the company. An ITIN identifies you personally for US tax purposes. You do not need an ITIN to get an EIN, but you may want one later for personal banking or credit. See <a href=\"how-to-get-itin-non-resident.html\">how to get an ITIN as a non-resident</a>.</p>\n<p>The Residential Address handles EIN applications as part of <a href=\"llc-formation.html\">LLC formation for non-residents</a>.</p>\n",
+  "faqs": [
+    [
+      "Can I get an EIN online without an SSN?",
+      "No. The IRS online EIN application requires an SSN or ITIN. Non-residents without one apply with Form SS-4 by fax, mail or phone."
+    ],
+    [
+      "How long does it take to get an EIN as a foreigner?",
+      "About 4 business days by fax and about 4 weeks by mail. By phone, the EIN can be issued during the call."
+    ],
+    [
+      "Does it cost money to get an EIN?",
+      "No. The IRS does not charge a fee for an EIN. Service providers may charge to prepare and file Form SS-4 for you."
+    ],
+    [
+      "What do I write for SSN on Form SS-4 if I am not a US resident?",
+      "Write “Foreign” on line 7b. Do not leave it blank or enter a made-up number."
+    ]
+  ]
+}
