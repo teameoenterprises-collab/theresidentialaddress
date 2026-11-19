@@ -1,0 +1,17 @@
+# Keep private/internal files out of the public Vercel deployment.
+# Anything listed here is NOT served at www.theresidentialaddress.com.
+.agent
+.agents
+.vscode
+agents
+antigravity_browser
+antigravity_system
+banktest
+drafts
+residentalPortal
+supabase
+seo-automation
+*.tar.gz
+*.sql
+*.db
+.env*
