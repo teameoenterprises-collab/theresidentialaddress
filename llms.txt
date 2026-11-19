@@ -14,6 +14,7 @@ Operated by Everest Ventures Group LLC (Florida, USA). Contact: support@theresid
 
 ## Key guides
 
+- [Stripe Account for a Non-US LLC Owner: Requirements and Common Issues](https://www.theresidentialaddress.com/stripe-account-non-us-llc-owner.html): A non-US owner of a registered US LLC can usually open a US Stripe account. Stripe verifies the legal name, entity type, EIN, the representative's tax ID and a physical business address (no PO boxes). Without an SSN or ITIN, Stripe asks for a local non-US tax ID and proof the person is not a US taxpayer; owners may be asked for an SSN/ITIN after $500,000 lifetime volume.
 - [How to Form a Wyoming LLC as a Non-Resident (2026 Cost and Steps)](https://www.theresidentialaddress.com/wyoming-llc-for-non-residents.html): How non-US founders form a Wyoming LLC in 2026: $100 state fee, $60 annual report, registered agent, EIN, bank account and yearly filings.
 - [What Is a CMRA Address and Why Do Banks Flag It?](https://www.theresidentialaddress.com/what-is-a-cmra-address.html): A CMRA is a USPS Commercial Mail Receiving Agency, such as a virtual mailbox or UPS Store box. What it means, how banks detect it, and which addresses work for a US LLC.
 - [How to Open a US Business Bank Account as a Non-Resident (2026 Guide)](https://www.theresidentialaddress.com/how-to-open-us-business-bank-account-non-resident.html): What non-US founders need to open a US business bank account for their LLC in 2026: EIN, formation documents, passport, and the right addresses.
