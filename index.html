@@ -128,10 +128,34 @@
       "mainEntity": [
         {
           "@type": "Question",
+          "name": "Can I use a virtual mailbox to open a US bank account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Most U.S. banks (Capital One, Chase, Mercury, Alliant) scan your address against the USPS CMRA database. Virtual mailboxes are flagged as Commercial Mail Receiving Agencies and are automatically rejected. You need a real residential address with lease documentation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between a registered agent address and a residential address?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A registered agent address is only for receiving legal/state documents—it cannot be used as your address for banks or Stripe. A residential address is a real, physical address with a signed lease that passes bank verification (KYC/AML checks)."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Do I need an ITIN to open a U.S. bank account?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Not always for business accounts. Some banks accept EIN-only applications for LLCs. An ITIN expands your options and is required for personal banking, credit building and some payment processors. We offer ITIN applications for $400."
+            "text": "Not always for business accounts. Some banks (like Capital One) accept EIN-only applications for LLCs. However, having an ITIN significantly expands your options and is required for personal banking, credit building, and certain payment processors. We offer ITIN applications for $400."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this address for a Google Business Profile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Unlike virtual mailbox services that restrict Google Business Profile usage, our residential addresses fully support GBP listing. You'll receive mail verification postcards at your address, which we forward to you."
           }
         },
         {
@@ -139,7 +163,7 @@
           "name": "Which is better for my LLC: Wyoming or Delaware?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For most international founders, Wyoming: no state income tax, a $60/year annual report, strong privacy and no franchise tax. Delaware charges $300/year franchise tax and is preferred mainly if you plan to raise U.S. venture capital."
+            "text": "For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges $300/year in franchise tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred)."
           }
         },
         {
@@ -147,7 +171,55 @@
           "name": "How long does ITIN processing take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Standard IRS ITIN processing takes 7 to 11 weeks. We prepare and submit your W-7 application with supporting documents; the $700 fee covers preparation, review and filing."
+            "text": "Standard ITIN processing by the IRS takes 7–11 weeks. We prepare and submit your W-7 application with all supporting documentation. The $700 fee covers our preparation, review, and filing service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a non-US resident form a US LLC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. US states do not require LLC owners to be US citizens or residents. You need a registered agent in the state you form in, then an EIN from the IRS, a US address your bank will accept, and a US bank account. Most non-US founders choose Wyoming or Delaware."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get an EIN without an SSN or ITIN?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Non-residents cannot use the IRS online EIN application, but you can file Form SS-4 by fax (about 4 business days) or by mail (about 4 weeks), writing \"Foreign\" where the SSN/ITIN goes. The IRS charges no fee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a CMRA address and why do banks reject it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A CMRA (Commercial Mail Receiving Agency) is a USPS-registered mail drop, such as a virtual mailbox or UPS Store box. The USPS flags these addresses, so banks and payment processors can see the address is not where the business actually operates, and many decline it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a foreign-owned LLC have to file Form 5472?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes. A single-member US LLC owned by a non-US person must file Form 5472 with a pro forma Form 1120 for any year it has a reportable transaction with its owner, such as putting money in or taking it out. It is due April 15, and the penalty for not filing is $25,000."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I still need to file a BOI report for my US LLC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. LLCs formed in a US state no longer file FinCEN beneficial ownership (BOI) reports, even if every owner lives outside the US. FinCEN made this exemption permanent in a final rule effective August 14, 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does the US residential address cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "$2,000 per year (about $167 a month), billed annually, with no setup fee. It includes a residential address held under a signed lease, renter's insurance documentation and mail handling and forwarding."
           }
         }
       ]
@@ -892,6 +964,60 @@
             </button>
             <div class="faq-item__panel">
               <p class="faq-item__answer">Standard ITIN processing by the IRS takes 7–11 weeks. We prepare and submit your W-7 application with all supporting documentation. The $700 fee covers our preparation, review, and filing service.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can a non-US resident form a US LLC?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes. US states do not require LLC owners to be US citizens or residents. You need a registered agent in the state you form in, then an EIN from the IRS, a US address your bank will accept, and a US bank account. Most non-US founders choose Wyoming or Delaware. <a href="can-you-open-a-us-llc-without-living-in-america.html">How to open a US LLC from abroad</a>.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Can I get an EIN without an SSN or ITIN?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Yes. Non-residents cannot use the IRS online EIN application, but you can file Form SS-4 by fax (about 4 business days) or by mail (about 4 weeks), writing "Foreign" where the SSN/ITIN goes. The IRS charges no fee. <a href="how-to-get-ein-without-ssn.html">Step-by-step EIN guide</a>.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>What is a CMRA address and why do banks reject it?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">A CMRA (Commercial Mail Receiving Agency) is a USPS-registered mail drop, such as a virtual mailbox or UPS Store box. The USPS flags these addresses, so banks and payment processors can see the address is not where the business actually operates, and many decline it. <a href="what-is-a-cmra-address.html">What a CMRA address is</a>.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Does a foreign-owned LLC have to file Form 5472?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">Usually yes. A single-member US LLC owned by a non-US person must file Form 5472 with a pro forma Form 1120 for any year it has a reportable transaction with its owner, such as putting money in or taking it out. It is due April 15, and the penalty for not filing is $25,000. <a href="form-5472-foreign-owned-llc.html">Form 5472 explained</a>.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>Do I still need to file a BOI report for my US LLC?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">No. LLCs formed in a US state no longer file FinCEN beneficial ownership (BOI) reports, even if every owner lives outside the US. FinCEN made this exemption permanent in a final rule effective August 14, 2026. <a href="boi-reporting-non-resident-llc-2026.html">BOI rules for 2026</a>.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__trigger" aria-expanded="false">
+              <span>How much does the US residential address cost?</span>
+              <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">$2,000 per year (about $167 a month), billed annually, with no setup fee. It includes a residential address held under a signed lease, renter's insurance documentation and mail handling and forwarding. <a href="#pricing">See pricing</a>.</p>
             </div>
           </div>
         </div>
