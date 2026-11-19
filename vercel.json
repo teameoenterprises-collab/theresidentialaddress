@@ -1,5 +1,20 @@
 {
   "rewrites": [
-    { "source": "/r/:slug", "destination": "/refer.html" }
+    {
+      "source": "/r/:slug",
+      "destination": "/refer.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/blog-1.html",
+      "destination": "/why-virtual-mailboxes-cause-bank-rejections.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog-2.html",
+      "destination": "/wyoming-vs-delaware-llc.html",
+      "permanent": true
+    }
   ]
 }
