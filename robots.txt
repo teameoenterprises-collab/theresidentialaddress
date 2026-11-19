@@ -1,17 +1,38 @@
 User-agent: *
 Allow: /
 Disallow: /portal/
-Disallow: /residentalPortal/
-Disallow: /drafts/
-Disallow: /banktest/
-Disallow: /agents/
-Disallow: /supabase/
 Disallow: /api/
-Disallow: /seo-automation/
-Disallow: /antigravity_browser/
-Disallow: /antigravity_system/
 
-# AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, etc.)
-# are covered by the rules above and are allowed.
+# AI search and answer engines are explicitly welcome.
+User-agent: GPTBot
+Allow: /
+Disallow: /portal/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /portal/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /portal/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /portal/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /portal/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /portal/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Disallow: /portal/
 
 Sitemap: https://www.theresidentialaddress.com/sitemap.xml
