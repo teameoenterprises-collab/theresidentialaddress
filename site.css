@@ -1,0 +1,244 @@
+/* =========================================================================
+   Shared site chrome + theme for every public page: header, footer,
+   buttons, CTA cards, light theme for service and company pages.
+   Loaded after style.css (and before article.css on articles).
+   ========================================================================= */
+:root {
+  --tra-bg: #f7f6f2;
+  --tra-surface: #ffffff;
+  --tra-ink: #16181d;
+  --tra-body: #3b4048;
+  --tra-muted: #6b7280;
+  --tra-line: #e6e3db;
+  --tra-navy: #0f1b2d;
+  --tra-navy-2: #16243b;
+  --tra-gold: #9a6f1c;
+  --tra-gold-bright: #c9a24b;
+  --tra-gold-soft: #f6efdf;
+  --tra-radius: 14px;
+  --tra-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Old copies of the headers that the shared header replaced */
+#header, #siteHeader, .navbar { display: none !important; }
+
+/* ---- Header ------------------------------------------------------------ */
+.tra-hdr {
+  position: sticky; top: 0; z-index: 100;
+  background: #f7f6f2;
+  backdrop-filter: saturate(160%) blur(12px); -webkit-backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--tra-line);
+  font-family: var(--tra-font);
+}
+.tra-hdr.is-scrolled { box-shadow: 0 6px 20px -16px rgba(15, 27, 45, .45); }
+.tra-hdr__in {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 68px;
+  display: flex; align-items: center; gap: 28px;
+}
+.tra-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tra-ink); flex-shrink: 0; }
+.tra-brand__mark {
+  width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+  background: linear-gradient(135deg, #e3c46d, #b8892b); color: var(--tra-navy);
+}
+.tra-brand__name { font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; white-space: nowrap; }
+.tra-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.tra-nav__link {
+  font: 500 .925rem/1 var(--tra-font); color: var(--tra-ink); text-decoration: none;
+  padding: 10px 12px; border-radius: 8px; background: none; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.tra-nav__link:hover, .tra-nav__link[aria-expanded="true"] { background: #ece9e1; }
+.tra-nav__link[aria-current="page"] { color: var(--tra-gold); }
+.tra-dd { position: relative; }
+.tra-dd__menu {
+  position: absolute; top: calc(100% + 8px); left: -8px; width: 340px; padding: 8px;
+  background: var(--tra-surface); border: 1px solid var(--tra-line); border-radius: 14px;
+  box-shadow: 0 24px 48px -20px rgba(15, 27, 45, .35); display: none;
+}
+.tra-dd.is-open .tra-dd__menu { display: block; }
+.tra-dd__item { display: block; padding: 10px 12px; border-radius: 10px; text-decoration: none; }
+.tra-dd__item:hover { background: var(--tra-bg); }
+.tra-dd__item strong { display: flex; justify-content: space-between; gap: 8px; color: var(--tra-ink); font-size: .93rem; }
+.tra-dd__item strong em { font-style: normal; color: var(--tra-gold); font-weight: 600; }
+.tra-dd__item span { display: block; color: var(--tra-muted); font-size: .82rem; line-height: 1.4; margin-top: 2px; }
+.tra-dd__all { display: block; margin: 4px 4px 2px; padding: 10px 8px 4px; border-top: 1px solid var(--tra-line); font-size: .85rem; color: var(--tra-ink); }
+
+.tra-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 600 .925rem/1 var(--tra-font); text-decoration: none; cursor: pointer;
+  padding: 12px 18px; border-radius: 999px; border: 1px solid transparent; white-space: nowrap;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.tra-btn--dark { background: var(--tra-ink); color: #fff !important; }
+.tra-btn--dark:hover { background: #000; }
+.tra-btn--gold { background: linear-gradient(135deg, #e3c46d, #c9a24b); color: var(--tra-navy) !important; }
+.tra-btn--gold:hover { filter: brightness(1.05); }
+.tra-btn--ghost { background: transparent; color: var(--tra-ink) !important; border-color: #d6d1c4; }
+.tra-btn--ghost:hover { border-color: var(--tra-ink); }
+.tra-btn--light { background: #fff; color: var(--tra-ink) !important; }
+.tra-btn--onDark { background: transparent; color: #fff !important; border-color: rgba(255,255,255,.35); }
+.tra-btn--onDark:hover { border-color: #fff; }
+.tra-hdr .tra-btn { padding: 10px 16px; }
+
+.tra-burger { display: none; margin-left: auto; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--tra-line); background: #fff; cursor: pointer; color: var(--tra-ink); }
+.tra-mobile { display: none; border-top: 1px solid var(--tra-line); background: var(--tra-bg); padding: 12px 20px 20px; max-height: calc(100vh - 68px); overflow: auto; }
+.tra-mobile.is-open { display: block; }
+.tra-mobile a { display: block; padding: 12px 4px; color: var(--tra-ink); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--tra-line); }
+.tra-mobile small { display: block; color: var(--tra-muted); font-size: .8rem; font-weight: 400; }
+.tra-mobile__label { margin: 14px 4px 2px; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tra-muted); }
+.tra-mobile .tra-btn { display: flex; margin-top: 16px; width: 100%; border-bottom: 0; color: #fff; }
+
+@media (max-width: 960px) {
+  .tra-nav, .tra-hdr__in > .tra-btn { display: none; }
+  .tra-burger { display: grid; place-items: center; }
+  .tra-hdr__in { height: 60px; padding: 0 16px; }
+  .tra-brand__name { font-size: .95rem; }
+}
+
+/* ---- Footer ------------------------------------------------------------ */
+.tra-ftr { background: var(--tra-navy); color: #cbd2dc; font-family: var(--tra-font); padding: 64px 0 28px; }
+.tra-ftr a { color: #e5e9f0; text-decoration: none; }
+.tra-ftr a:hover { color: var(--tra-gold-bright); }
+.tra-ftr__in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.tra-ftr__grid { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 40px; }
+.tra-ftr .tra-brand { color: #fff; }
+.tra-ftr__desc { margin: 16px 0; font-size: .92rem; line-height: 1.6; max-width: 320px; }
+.tra-ftr h4 { color: #fff; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 14px; }
+.tra-ftr ul { list-style: none; margin: 0; padding: 0; }
+.tra-ftr li { margin: 0 0 10px; font-size: .92rem; }
+.tra-ftr__bottom { margin-top: 48px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: .8rem; color: #94a0b3; }
+@media (max-width: 960px) { .tra-ftr__grid { grid-template-columns: 1fr 1fr; } .tra-ftr__brandcol { grid-column: 1 / -1; } }
+
+/* ---- Informative CTA card ------------------------------------------------ */
+.tra-cta {
+  font-family: var(--tra-font); background: var(--tra-navy); color: #d7dde6;
+  border-radius: 18px; padding: 28px; margin: 40px 0; display: grid; gap: 22px;
+  grid-template-columns: 1.3fr 1fr; align-items: start;
+}
+.tra-cta__eyebrow { color: var(--tra-gold-bright); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; margin: 0 0 8px !important; }
+.tra-cta h3 { color: #fff !important; font-size: 1.35rem !important; line-height: 1.3; margin: 0 0 10px !important; }
+.tra-cta p { color: #d7dde6 !important; margin: 0 0 12px !important; font-size: .98rem; line-height: 1.6; }
+.tra-cta ul { list-style: none !important; padding: 0 !important; margin: 0 !important; display: grid; gap: 8px; }
+.tra-cta li { position: relative; padding-left: 26px !important; margin: 0 !important; color: #e5e9f0; font-size: .94rem; line-height: 1.5; }
+.tra-cta li::before { content: ""; position: absolute; left: 2px; top: .45em; width: 14px; height: 8px; border-left: 2px solid var(--tra-gold-bright); border-bottom: 2px solid var(--tra-gold-bright); transform: rotate(-45deg); }
+.tra-cta__side { background: var(--tra-navy-2); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 20px; display: grid; gap: 10px; }
+.tra-cta__price { color: #fff; font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+.tra-cta__price small { font-size: .85rem; font-weight: 500; color: #aab4c3; }
+.tra-cta__meta { font-size: .85rem; color: #aab4c3; margin: 0 !important; }
+.tra-cta .tra-btn { width: 100%; text-decoration: none !important; }
+@media (max-width: 760px) { .tra-cta { grid-template-columns: 1fr; padding: 22px; } }
+
+/* ---- Light theme for service + company pages ------------------------------ */
+body.tra-light { background: var(--tra-bg) !important; color: var(--tra-body); }
+body.tra-light main, body.tra-light section, body.tra-light .section, body.tra-light .section--bg-inverse,
+body.tra-light .container > div:not(.tra-cta):not(.tra-cta__side) { color: inherit; }
+.tra-pagehero {
+  background: radial-gradient(1200px 400px at 80% -20%, rgba(201,162,75,.18), transparent 60%), var(--tra-navy);
+  color: #d7dde6; font-family: var(--tra-font);
+}
+
+/* Focus + motion */
+.tra-hdr a:focus-visible, .tra-hdr button:focus-visible, .tra-ftr a:focus-visible, .tra-btn:focus-visible, .tra-mobile a:focus-visible {
+  outline: 2px solid var(--tra-gold-bright); outline-offset: 3px; border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) { .tra-btn { transition: none; } }
+
+/* ---- Service pages (llc-formation, itin-application, bank-assistance, us-address-service) ---- */
+body.tra-service { background: var(--tra-bg) !important; color: var(--tra-body); font-family: var(--tra-font); }
+body.tra-service .hero {
+  background: radial-gradient(1000px 420px at 85% -10%, rgba(201,162,75,.20), transparent 60%), var(--tra-navy);
+  padding-top: 72px; padding-bottom: 80px;
+}
+body.tra-service .hero h1 { color: #fff; letter-spacing: -0.02em; }
+body.tra-service .hero .hero-pricing-line { color: #e5e9f0; font-size: 1.05rem; margin: 18px 0 8px; }
+body.tra-service .hero .hero-pricing-line strong { color: var(--tra-gold-bright); }
+body.tra-service .hero .hero-description { color: #c4ccd8; max-width: 640px; margin-inline: auto; }
+body.tra-service .hero .hero-ctas { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* Everything below the hero: light theme. Legacy colour variables remapped. */
+body.tra-service main > section:not(.hero),
+body.tra-service main > div > section:not(.hero),
+body.tra-service .section, body.tra-service .section-alt, body.tra-service .bento-grid,
+body.tra-service .callout, body.tra-service .final-cta {
+  --gold: var(--tra-gold); --gold-dim: rgba(154,111,28,.12);
+  --surface: #ffffff; --bg-surface: #ffffff; --glass-border: var(--tra-line);
+  --text-main: var(--tra-ink); --text-light: var(--tra-ink);
+  --text-secondary: var(--tra-body); --text-muted: var(--tra-muted); --danger-red: #b42318;
+  color: var(--tra-body);
+}
+body.tra-service .section { background: transparent; padding-block: 72px; }
+body.tra-service .section-alt { background: #fffefb; border-block: 1px solid var(--tra-line); }
+body.tra-service .section h2, body.tra-service .section h3, body.tra-service .section h4,
+body.tra-service .section strong { color: var(--tra-ink); }
+body.tra-service .section .gradient-text { background: none; -webkit-text-fill-color: var(--tra-ink); color: var(--tra-ink); }
+body.tra-service .section-header { max-width: 760px; margin: 0 auto 8px; text-align: center; }
+body.tra-service .section-header h2 { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); letter-spacing: -0.02em; margin-bottom: 12px; }
+body.tra-service .section-header p { color: var(--tra-muted); font-size: 1.05rem; line-height: 1.65; }
+body.tra-service .section p, body.tra-service .section li { color: var(--tra-body); }
+
+/* Cards */
+body.tra-service .liquid-glass-card, body.tra-service .bento-card, body.tra-service .timeline-content,
+body.tra-service .faq-item, body.tra-service .testimonial-card {
+  background: #fff !important; border: 1px solid var(--tra-line) !important; border-radius: var(--tra-radius) !important;
+  box-shadow: 0 1px 0 rgba(22,24,29,.02); color: var(--tra-body);
+}
+body.tra-service .liquid-glass-card, body.tra-service .bento-card { padding: 24px; }
+body.tra-service .icon-wrap { background: var(--tra-gold-soft) !important; color: var(--tra-gold) !important; border: 0 !important; }
+body.tra-service .lucide-icon { color: var(--tra-gold) !important; stroke: currentColor; }
+body.tra-service .timeline-dot { background: var(--tra-gold) !important; box-shadow: 0 0 0 4px var(--tra-gold-soft); }
+body.tra-service .faq-item { margin-bottom: 10px; padding: 0 !important; overflow: hidden; }
+body.tra-service .faq-question { color: var(--tra-ink) !important; background: transparent !important; padding: 18px 20px !important; font-weight: 600; width: 100%; text-align: left; }
+body.tra-service .faq-answer { color: var(--tra-body) !important; padding: 0 20px; }
+body.tra-service .faq-item.open .faq-answer { padding-bottom: 18px; }
+body.tra-service .testimonial-quote { color: var(--tra-ink) !important; }
+body.tra-service .testimonial-author, body.tra-service .author-info { color: var(--tra-muted) !important; }
+
+/* Tables inside sections */
+body.tra-service .section table { background: #fff !important; border: 1px solid var(--tra-line) !important; box-shadow: 0 12px 30px -24px rgba(15,27,45,.35); }
+body.tra-service .section thead tr { background: #fbfaf7 !important; }
+body.tra-service .section th, body.tra-service .section td { border-color: var(--tra-line) !important; }
+body.tra-service .section tbody tr { border-color: var(--tra-line) !important; }
+
+/* Buttons */
+body.tra-service .btn-gold { background: linear-gradient(135deg, #e3c46d, #c9a24b) !important; color: var(--tra-navy) !important; box-shadow: none !important; border-radius: 999px !important; }
+body.tra-service .section .btn-gold { background: var(--tra-ink) !important; color: #fff !important; }
+
+/* Sticky "start on WhatsApp" pill that the old pages float at the bottom */
+body.tra-service .floating-cta, body.tra-service [class*="sticky-cta"] { display: none !important; }
+
+body.tra-service .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; background: none !important; border: 0 !important; }
+body.tra-service .testimonials-grid > * { opacity: 1 !important; transform: none !important; }
+body.tra-service .testimonial-author { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+body.tra-service .author-avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--tra-gold-soft); color: var(--tra-gold); font-weight: 700; }
+body.tra-service .author-info h4 { margin: 0; font-size: .95rem; color: var(--tra-ink) !important; }
+
+/* Timeline: numbered steps as clean cards */
+body.tra-service .timeline-step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; margin: 0 0 14px; opacity: 1 !important; transform: none !important; }
+body.tra-service .timeline-dot { width: 40px !important; height: 40px !important; border-radius: 50%; display: grid; place-items: center; color: #fff !important; font-weight: 700; font-size: .95rem; position: static !important; margin: 4px 0 0 !important; }
+body.tra-service .timeline-content { padding: 18px 20px !important; margin: 0 !important; }
+body.tra-service .timeline-content h3 { margin: 0 0 6px; font-size: 1.05rem; }
+body.tra-service .timeline-content h3 span { display: inline-block; background: var(--tra-gold-soft); color: var(--tra-gold) !important; border-radius: 999px; padding: 2px 10px; font-size: .75rem !important; font-weight: 600; margin-right: 8px !important; }
+body.tra-service .timeline-content p { margin: 0; }
+body.tra-service .timeline, body.tra-service [class*="timeline-"]::before { background: none; }
+
+/* FAQ question row */
+body.tra-service .faq-question { display: flex !important; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer; }
+body.tra-service .faq-question h3 { margin: 0; font-size: 1rem; color: var(--tra-ink); }
+body.tra-service .faq-toggle { color: var(--tra-gold) !important; font-size: 1.4rem; line-height: 1; }
+
+/* Final CTA band */
+body.tra-service .final-cta { background: var(--tra-navy) !important; padding: 64px 0 !important; text-align: center; }
+body.tra-service .final-cta h2, body.tra-service .final-cta .gradient-text { color: #fff !important; -webkit-text-fill-color: #fff; background: none; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); margin-bottom: 18px; }
+body.tra-service .final-cta .cta-buttons { display: flex; justify-content: center; }
+body.tra-service .fade-up { opacity: 1 !important; transform: none !important; }
+body.tra-service .icon-wrap { width: 44px !important; height: 44px !important; border-radius: 12px !important; display: grid !important; place-items: center; margin-bottom: 12px; }
+body.tra-service .icon-wrap svg { width: 22px; height: 22px; }
+
+/* Privacy policy and other long-form text on light sections */
+.section:not(.section--bg-inverse) .policy-content p,
+.section:not(.section--bg-inverse) .policy-content li { color: var(--tra-body) !important; }
+.section:not(.section--bg-inverse) .policy-content h2,
+.section:not(.section--bg-inverse) .policy-content h3 { color: var(--tra-ink) !important; border-top-color: var(--tra-line) !important; }
+.section:not(.section--bg-inverse) .policy-content a { color: var(--tra-navy); }
+.tra-cta li { color: #e5e9f0 !important; }
+.tra-cta h3, .tra-cta .tra-cta__price { color: #fff !important; }
