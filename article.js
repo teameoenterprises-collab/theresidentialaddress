@@ -101,12 +101,7 @@
       }
     }
 
-    // Closing call to action (before "Related guides" when present)
-    var cta = el("div", "rd-cta",
-      "<p><strong>Setting up the US side of your business?</strong> Ask us about a US residential address under a signed lease, LLC formation or your ITIN application.</p>" +
-      '<a href="https://wa.me/16474367072">Chat on WhatsApp</a>');
-    var rel = body.querySelector("h2[data-related]");
-    if (rel) body.insertBefore(cta, rel); else body.appendChild(cta);
+    // The topic-matched call to action is added by site.js
   }
 
   /* ---------------- Blog index ---------------- */
