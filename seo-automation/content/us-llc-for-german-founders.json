@@ -1,0 +1,39 @@
+{
+  "slug": "us-llc-for-german-founders",
+  "title": "US LLC for German Founders: Setup, Tax and Banking (2026)",
+  "h1": "How German Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "German residents can own a US LLC. How Germany classifies an LLC by type comparison, the US-Germany treaty, EIN, Form 5472 and banking.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇩🇪🇺🇸🏢",
+  "card_category": "US Business",
+  "llms_summary": "German residents can form a US LLC without US residency; Germany classifies a US LLC through a type comparison (Typenvergleich) based on a 2004 BMF letter rather than following the US tax election, so German founders need advice from a Steuerberater familiar with US entities and must still meet US filings such as Form 5472.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes. People resident in Germany can form and own a US LLC without US citizenship or residency, and the US and Germany have an income tax treaty in force. Germany does not simply follow the US tax treatment of an LLC. It classifies each LLC through a type comparison (Typenvergleich), so an LLC that the IRS disregards can still be treated like a German corporation. Talk to a Steuerberater who knows US entities before you start.</p>\n<h2>Can someone living in Germany own a US LLC?</h2>\n<p>Yes. US states do not ask LLC members for US citizenship, a visa or a US address of their own. You file online with the state, appoint a registered agent there and request an EIN from the IRS. Founders in Berlin, Munich or Hamburg typically go this route to invoice US clients in dollars, sell on US marketplaces or hold a US business account.</p>\n<h2>Is there a US-Germany tax treaty?</h2>\n<p>Yes. Germany is on the IRS list of countries with which the US has an income tax treaty. How the treaty applies to LLC income depends on how each country classifies the LLC, which is the core issue for German owners.</p>\n<h2>How Germany classifies a US LLC</h2>\n<p>German tax practice classifies a US LLC as either a partnership-like entity or a corporation-like entity by comparing its legal features with German company types. The features are set out in a Federal Ministry of Finance (BMF) letter of 19 March 2004.</p>\n<ul>\n<li>The test looks at the LLC's operating agreement and state law: how it is managed, liability, how profits are allocated, transfer of interests, capital contributions and how long it lasts.</li>\n<li>In a decision of 18 May 2021 (I B 75/20), the Federal Fiscal Court (BFH) confirmed this approach and found a Colorado LLC comparable to a German corporation, as summarised by PwC Germany.</li>\n<li>The US tax election (check-the-box) does not decide the German classification.</li>\n</ul>\n<p>The result matters because a disregarded single-member LLC in the US could be a corporation from the German side. Each country may then tax different persons at different times, which can lead to double tax or to relief being harder to claim. The way your operating agreement is drafted and where the LLC is managed from can also matter, so get German advice before signing it.</p>\n<h2>Your US filing checklist</h2>\n<ul>\n<li><strong>EIN:</strong> Without an SSN or ITIN you apply on Form SS-4 by fax or mail, or by phone as an international applicant. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li><strong>Form 5472 and pro forma 1120:</strong> A foreign-owned single-member LLC generally files these every year it has reportable transactions with its owner, including the first deposit you make. Missing the filing carries a $25,000 penalty. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a>.</li>\n<li><strong>BOI:</strong> Not required for LLCs formed in a US state since FinCEN's final rule took effect on August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n<li><strong>ITIN:</strong> Only needed in specific cases, for example a US personal return. See <a href=\"how-to-get-itin-non-resident.html\">how to get an ITIN</a>.</li>\n</ul>\n<h2>Banking and payments</h2>\n<p>Whether a US bank or fintech will open an account for an LLC owned from Germany depends on the provider, and policies change. Some open accounts online for foreign owners, some need an in-person visit, and some only serve US residents. Check each provider's eligibility page and read our guide to <a href=\"how-to-open-us-business-bank-account-non-resident.html\">US business bank accounts for non-residents</a>.</p>\n<p>Two points cause most delays:</p>\n<ul>\n<li>A business address that is a virtual mailbox or mail drop is often declined. See <a href=\"what-is-a-cmra-address.html\">what is a CMRA address</a>.</li>\n<li>Your personal residential address on the application should be your actual home address in Germany, matching your ID or proof of address.</li>\n</ul>\n<p>Stripe supports German businesses directly, so you can accept payments with a German setup. A US LLC can open its own US Stripe account for US dollar payouts. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</p>\n<h2>Which state to choose</h2>\n<p>Wyoming and Delaware are the states most non-resident founders use. Wyoming is chosen for its low yearly cost, and Delaware for investor familiarity. See <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a> for a side-by-side comparison.</p>\n<p>The Residential Address forms US LLCs for founders outside the US, including the EIN. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can I form a US LLC while living in Germany?",
+      "Yes. There is no US citizenship or residency requirement for LLC owners. You need a registered agent in the state of formation and an EIN."
+    ],
+    [
+      "Is a US LLC a partnership or a corporation for German tax?",
+      "It depends. Germany uses a type comparison (Typenvergleich) based on criteria in a BMF letter of 19 March 2004. The BFH has applied this test and found an LLC comparable to a German corporation."
+    ],
+    [
+      "Does the US check-the-box election decide German treatment?",
+      "No. German classification follows the type comparison of the LLC's legal features, not the US tax election."
+    ],
+    [
+      "Is there a US-Germany tax treaty?",
+      "Yes. Germany is on the IRS list of countries with a US income tax treaty in force."
+    ]
+  ],
+  "sources": [
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://blogs.pwc.de/de/steuern-und-recht/article/228702/qualifikation-einer-us-amerikanischen-llc-als-personen-oder-kapitalgesellschaft/",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/limited-liability-company-llc",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+    "https://www.irs.gov/forms-pubs/about-form-5472",
+    "https://www.irs.gov/individuals/individual-taxpayer-identification-number",
+    "https://www.fincen.gov/boi",
+    "https://stripe.com/global"
+  ]
+}

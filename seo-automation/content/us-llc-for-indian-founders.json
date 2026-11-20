@@ -1,0 +1,45 @@
+{
+  "slug": "us-llc-for-indian-founders",
+  "title": "US LLC for Indian Founders: Setup, Tax and Banking (2026)",
+  "h1": "How Indian Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "Indian residents can own a US LLC. What to know in 2026: FEMA overseas investment rules, Schedule FA, the US-India tax treaty, EIN, Form 5472 and banking.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇮🇳🇺🇸🏢",
+  "card_category": "US Business",
+  "llms_summary": "Indian residents can form and own a US LLC, but must follow India's FEMA overseas direct investment rules through an authorised dealer bank, report the holding in Schedule FA, and file US Form 5472 each year if the LLC is single-member.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes. An Indian resident can form and own a US LLC without US citizenship, residency or a visa. On the US side you need an EIN, a yearly Form 5472 with a pro forma 1120 if you are the sole owner, and a real US business address and bank account. On the Indian side, putting money into a foreign entity is overseas direct investment under FEMA, routed through your authorised dealer (AD) bank, and the LLC must be disclosed in Schedule FA of your income tax return.</p>\n<h2>Can an Indian resident own a US LLC?</h2>\n<p>US states do not require LLC members to be US citizens or residents, and India is not covered by any of the US Treasury's country-based sanctions programs. Indian SaaS founders, IT service exporters and D2C brands selling to US customers commonly use a US LLC to contract with US clients and accept US payments. If you have not decided where to form, <a href=\"wyoming-llc-for-non-residents.html\">Wyoming</a> is popular for its low yearly cost, and Delaware is the usual pick if you expect to raise US venture capital. See <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<h2>The India side: FEMA overseas investment rules</h2>\n<p>India's Foreign Exchange Management (Overseas Investment) Rules, 2022 govern resident individuals who invest in a foreign entity. Key points from Schedule III of those rules and the RBI's overseas investment directions:</p>\n<ul>\n<li>A resident individual may make overseas direct investment (ODI) in an <strong>operating</strong> foreign entity that is not engaged in financial services activity.</li>\n<li>Where the individual has control, the foreign entity should not have a subsidiary or step-down subsidiary.</li>\n<li>The investment counts toward your overall ceiling under the RBI's Liberalised Remittance Scheme (LRS).</li>\n<li>Remittances go through a designated AD bank, which handles the reporting to the RBI.</li>\n</ul>\n<p>In practice, talk to your bank before you send the first dollar to the LLC's account, and keep the formation documents, operating agreement and proof of the remittance. A chartered accountant who handles ODI filings can confirm which forms apply to your structure.</p>\n<h2>Indian income tax and Schedule FA</h2>\n<p>Residents of India who hold foreign assets, including a financial interest in a foreign entity, must disclose them in Schedule FA of the income tax return. Schedule FA is not available in ITR-1 or ITR-4, so founders with a US LLC usually file ITR-2 or ITR-3. Income the LLC earns may also be taxable in India in your hands, depending on how it is classified. Confirm the treatment with a local tax adviser.</p>\n<h2>Is there a US-India tax treaty?</h2>\n<p>Yes. The IRS lists an income tax treaty between the United States and India on its treaty A to Z page. A treaty can affect withholding on certain US-source income and how double taxation is relieved, but whether it helps you depends on your facts. Treaty claims usually need a US taxpayer identification number, such as an ITIN.</p>\n<h2>US filings for an Indian-owned LLC</h2>\n<ul>\n<li><strong>EIN:</strong> apply with Form SS-4. You do not need an SSN. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Form 5472:</strong> a foreign-owned single-member LLC files Form 5472 with a pro forma Form 1120 each year, even with no income. The IRS penalty for not filing is $25,000. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a>.</li>\n<li><strong>BOI:</strong> under FinCEN's final rule, effective August 14, 2026, companies created in the US are exempt from beneficial ownership reporting. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n<li><strong>ITIN:</strong> needed if you must file a personal US return or claim treaty benefits. It is not needed for the EIN. See <a href=\"how-to-get-itin-non-resident.html\">getting an ITIN as a non-resident</a>.</li>\n</ul>\n<h2>Banking and Stripe</h2>\n<p>Several US banks and fintechs open business accounts for non-resident owners, but each sets its own eligibility list and document checks. Expect to provide the LLC's formation documents, EIN letter, operating agreement, your passport and proof of your own home address in India. Read <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US business bank account as a non-resident</a>.</p>\n<p>Stripe lists India as a preview market, so many Indian founders apply through their US LLC instead, using the LLC's US bank account. Stripe reviews the business and its owners and can ask for more information. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</p>\n<p>For the LLC's business address, banks and processors often decline commercial mail receiving agency (CMRA) addresses and virtual mailboxes. Your personal address on the application should always be where you actually live. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</p>\n<h2>A simple order of steps</h2>\n<ol>\n<li>Speak to your AD bank and a chartered accountant about ODI before funding.</li>\n<li>Form the LLC and sign an operating agreement.</li>\n<li>Get the EIN, then open the US business account.</li>\n<li>Remit capital through your AD bank and keep the records.</li>\n<li>Diary the yearly Form 5472, state renewals and your Indian return with Schedule FA.</li>\n</ol>\n<p>The Residential Address forms US LLCs for non-US founders and helps with ITIN applications. See <a href=\"llc-formation.html\">LLC formation</a> and <a href=\"itin-application.html\">ITIN application</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can an Indian citizen living in India own a US LLC?",
+      "Yes. US states have no citizenship or residency rule for LLC members. Indian FEMA overseas investment rules apply to how you fund it."
+    ],
+    [
+      "Is investing in my own US LLC treated as ODI?",
+      "Investing in the equity of a foreign entity is generally overseas direct investment under India's Overseas Investment Rules, 2022. Route it through your AD bank and confirm with a chartered accountant."
+    ],
+    [
+      "Do I need to report my US LLC in my Indian tax return?",
+      "Residents must disclose foreign assets, including interests in foreign entities, in Schedule FA, which is in ITR-2 and ITR-3 but not ITR-1 or ITR-4."
+    ],
+    [
+      "Does the US have a tax treaty with India?",
+      "Yes. The IRS lists a US income tax treaty with India. Whether it reduces your tax depends on your facts."
+    ],
+    [
+      "Do I need an ITIN to get an EIN?",
+      "No. You can get an EIN with Form SS-4 without an SSN or ITIN."
+    ]
+  ],
+  "sources": [
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+    "https://www.irs.gov/forms-pubs/about-form-w-7",
+    "https://stripe.com/global",
+    "https://rbi.org.in/scripts/bs_viewcontent.aspx?Id=5087",
+    "https://www.rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=12381",
+    "https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-03/Step%20by%20Step%20Guide%20FA%20FSI.pdf"
+  ]
+}
