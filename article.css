@@ -240,3 +240,8 @@ body:has(.blog-grid) .hero__glow { display: none; }
     margin-left: 0 !important; padding: .45rem .85rem !important; font-size: .8rem !important; white-space: nowrap;
   }
 }
+
+/* Keep the blog-index wordmark dark on the light header, including when scrolled */
+body:has(.blog-grid) #siteHeader .logo-wordmark,
+body:has(.blog-grid) #siteHeader[class*="scrolled"] .logo-wordmark,
+body:has(.blog-grid) #siteHeader .brand { color: var(--rd-ink) !important; -webkit-text-fill-color: var(--rd-ink); background: none; }
