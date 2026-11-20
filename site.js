@@ -13,9 +13,15 @@
     [].forEach.call(hdr.querySelectorAll(".tra-dd"), function (dd) {
       var btn = dd.querySelector(".tra-dd__btn");
       var set = function (open) { dd.classList.toggle("is-open", open); btn.setAttribute("aria-expanded", String(open)); };
-      btn.addEventListener("click", function (e) { e.stopPropagation(); set(!dd.classList.contains("is-open")); });
+      var hoverable = window.matchMedia("(hover: hover)").matches, openedAt = 0;
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        // on hover devices the menu is already open from mouseenter; a click right after keeps it open
+        if (hoverable && Date.now() - openedAt < 600) return;
+        set(!dd.classList.contains("is-open"));
+      });
       if (window.matchMedia("(hover: hover)").matches) {
-        dd.addEventListener("mouseenter", function () { set(true); });
+        dd.addEventListener("mouseenter", function () { if (!dd.classList.contains("is-open")) openedAt = Date.now(); set(true); });
         dd.addEventListener("mouseleave", function () { set(false); });
       }
       document.addEventListener("click", function (e) { if (!dd.contains(e.target)) set(false); });
@@ -39,7 +45,8 @@
     // Mark the current page in the nav
     var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     [].forEach.call(document.querySelectorAll(".tra-nav a, .tra-dd__item"), function (a) {
-      var href = (a.getAttribute("href") || "").split("#")[0].toLowerCase();
+      var raw = a.getAttribute("href") || ""; if (raw.indexOf("#") !== -1) return;
+      var href = raw.toLowerCase();
       if (href && href === here) a.setAttribute("aria-current", "page");
     });
 
