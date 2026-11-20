@@ -1,0 +1,39 @@
+{
+  "slug": "us-llc-for-pakistani-founders",
+  "title": "US LLC for Pakistani Founders: Setup, Tax and Banking (2026)",
+  "h1": "How Pakistani Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "Pakistani residents can own a US LLC. 2026 guide to SBP investment-abroad rules, the US-Pakistan tax treaty, EIN, Form 5472, banking and Stripe access.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇵🇰🇺🇸💼",
+  "card_category": "US Business",
+  "llms_summary": "Pakistani residents can own a US LLC, but equity investment abroad is regulated by the State Bank of Pakistan's Foreign Exchange Manual, so founders should agree the funding route with an authorized dealer bank before capitalizing the LLC and then meet US Form 5472 and EIN requirements.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes. A Pakistani resident can form and own a US LLC, and the US imposes no citizenship or residency requirement. The harder part is usually at home: equity investment abroad by Pakistani residents is regulated by the State Bank of Pakistan (SBP), and its general permissions for individuals are narrow. Agree the funding route with an authorized dealer bank and an adviser first, then handle the US side: EIN, Form 5472 and a business bank account.</p>\n<h2>Why Pakistani founders form US LLCs</h2>\n<p>Pakistan has a large freelance and IT services sector that bills US and European clients. A US LLC lets you sign contracts in a US entity's name and receive payments through US rails. Pakistan is not covered by any of the US Treasury's country-based sanctions programs, so forming an LLC is open to Pakistani residents, though banks screen every owner individually.</p>\n<h2>The SBP rules on investment abroad</h2>\n<p>Chapter 20 of the SBP Foreign Exchange Manual (paragraph 13) sets out how residents may make equity investment abroad. Points worth knowing before you fund a US LLC:</p>\n<ul>\n<li>Investment abroad is allowed only in countries that allow repatriation of profits, dividends and capital. Funds must be legitimate and tax paid, and the investor should be on the active taxpayer list.</li>\n<li>The general permissions for <strong>resident individuals</strong> cover small investments in listed foreign shares (up to USD 25,000 a year through a designated bank), employee stock option plans, and sweat equity of up to 20% received for services.</li>\n<li>Separate routes exist for Pakistani companies, including IT sector companies setting up subsidiaries abroad.</li>\n<li>After investing, the investor must submit evidence and a return on Form V-100 through the bank within one month, and repatriate dividends and disinvestment proceeds to Pakistan.</li>\n</ul>\n<p>Funding a wholly owned US LLC as an individual does not fit neatly into the listed individual categories, so ask your bank and a Pakistani adviser how your case should be handled before sending money. Rules are revised from time to time, so check the current manual on the SBP website.</p>\n<h2>Is there a US-Pakistan tax treaty?</h2>\n<p>Yes. The IRS lists an income tax treaty between the United States and Pakistan. Whether it changes anything for you depends on the type of income and your facts. You will usually need a US tax identification number to claim treaty benefits.</p>\n<h2>Pakistani tax at home</h2>\n<p>Treat profits from your LLC as something to discuss with a Pakistani tax adviser. Residents are generally expected to declare foreign income and assets, and the SBP rules above expect investment returns to come back through the banking channel. Keep clean records of every transfer.</p>\n<h2>US filings you cannot skip</h2>\n<ul>\n<li><strong>EIN</strong> through Form SS-4, with no SSN required. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li><strong>Form 5472 and a pro forma 1120</strong> every year for a single-member foreign-owned LLC. The penalty for not filing is $25,000. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 explained</a>.</li>\n<li><strong>No BOI report</strong> for US-created LLCs under FinCEN's final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI in 2026</a>.</li>\n<li><strong>ITIN</strong> only if you need to file a personal US return or claim a treaty benefit. See <a href=\"how-to-get-itin-non-resident.html\">ITIN for non-residents</a>.</li>\n</ul>\n<h2>Banking, Stripe and addresses</h2>\n<p>Stripe does not list Pakistan among its supported countries, which is a common reason Pakistani founders look at a US LLC. Stripe accounts for US entities require a US bank account and pass through Stripe's own review of the business and its owners. Approval is never automatic. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</p>\n<p>US banks and fintechs that accept non-resident owners each publish their own eligibility rules, and some exclude certain countries of residence. Check the provider's current eligibility page before applying. Our guide to <a href=\"how-to-open-us-business-bank-account-non-resident.html\">US business bank accounts for non-residents</a> lists the documents usually requested.</p>\n<p>Give your real home address in Pakistan as your personal address. For the LLC, many banks reject virtual mailbox and CMRA addresses as the business address. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</p>\n<h2>Which state?</h2>\n<p>Most Pakistani founders without investor plans choose Wyoming for its $100 filing fee and $60 minimum annual report tax. Delaware suits those planning to raise US funding. See <a href=\"wyoming-llc-for-non-residents.html\">Wyoming LLC for non-residents</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders, including the EIN, and assists with ITIN applications. See <a href=\"llc-formation.html\">LLC formation</a> and <a href=\"itin-application.html\">ITIN application</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a Pakistani resident open a US LLC?",
+      "Yes. There is no US citizenship or residency requirement. Pakistani foreign exchange rules on investment abroad still apply to how you fund it."
+    ],
+    [
+      "Does SBP allow individuals to invest in a foreign company?",
+      "SBP general permissions for individuals cover listed shares up to USD 25,000 a year, ESOPs and sweat equity. Other cases need to be raised with your bank and may need SBP permission."
+    ],
+    [
+      "Is there a US tax treaty with Pakistan?",
+      "Yes. The IRS lists a US income tax treaty with Pakistan."
+    ],
+    [
+      "Is Stripe available in Pakistan?",
+      "Stripe does not list Pakistan as a supported country. A US LLC with a US bank account can apply for a US Stripe account, subject to Stripe's review."
+    ]
+  ],
+  "sources": [
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+    "https://www.irs.gov/forms-pubs/about-form-w-7",
+    "https://stripe.com/global",
+    "https://www.sbp.org.pk/assets/document/Chapter-20-foreign-exchange-manual.pdf"
+  ]
+}

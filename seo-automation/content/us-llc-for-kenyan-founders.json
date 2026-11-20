@@ -1,0 +1,40 @@
+{
+  "slug": "us-llc-for-kenyan-founders",
+  "title": "US LLC for Kenyan Founders: Setup, Tax and Banking (2026)",
+  "h1": "How Kenyan Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "A 2026 guide for founders in Kenya: forming a US LLC, no US-Kenya tax treaty, EIN, Form 5472, KRA reporting at home and US bank accounts.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇰🇪📈🏦",
+  "card_category": "US Business",
+  "llms_summary": "Kenyan residents can form a US LLC with no US residency requirement, but no US-Kenya income tax treaty is in force, the LLC must handle IRS filings such as the EIN and Form 5472, and owners should report to the Kenya Revenue Authority as their own situation requires.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes, founders who live in Kenya can set up a US LLC entirely from Nairobi, Mombasa or anywhere else, with no US visa or residency. The US and Kenya do not have an income tax treaty in force. After formation you need an EIN, an annual Form 5472 with a pro forma Form 1120 if you are the sole owner, and no FinCEN BOI report. In Kenya, your tax position is handled by the Kenya Revenue Authority (KRA), so plan your filings there too.</p>\n<h2>Who can form the LLC</h2>\n<p>Any adult can be the owner, or member, of a US LLC. State law does not ask about citizenship or where you live. Kenya is not the subject of a comprehensive US sanctions program on the <a href=\"https://ofac.treasury.gov/sanctions-programs-and-country-information\">OFAC sanctions programs page</a>, so the usual limits are practical ones: banks, payment processors and marketplaces each decide which countries they serve.</p>\n<p>What you need to get started:</p>\n<ul>\n<li>A valid passport.</li>\n<li>A registered agent with a physical address in your formation state.</li>\n<li>A company name that is available in that state.</li>\n<li>An operating agreement, which banks commonly ask to see.</li>\n</ul>\n<h2>Tax treaty status</h2>\n<p>Kenya is not on the <a href=\"https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z\">IRS list of US income tax treaties</a>, which means there is no treaty in force between the two countries. Two consequences matter for founders:</p>\n<ul>\n<li>Treaty-reduced withholding rates on US-source passive income are not available. The general nonresident withholding rules in <a href=\"https://www.irs.gov/publications/p515\">IRS Publication 515</a> apply instead.</li>\n<li>US income tax on the LLC's own profit turns on whether it is effectively connected with a US trade or business. A freelancer or agency in Kenya serving clients from Kenya often has a very different answer from a seller holding stock in a US warehouse. Ask a US tax adviser to look at your actual setup.</li>\n</ul>\n<h2>Your IRS checklist</h2>\n<ol>\n<li><strong>EIN.</strong> Fill in Form SS-4, write \"Foreign\" where it asks for an SSN or ITIN, and send it by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">getting an EIN without an SSN</a>.</li>\n<li><strong>Form 5472 each year.</strong> Required for a foreign-owned single-member LLC with reportable transactions, such as you funding the company or taking money out. It goes with a pro forma Form 1120, is due April 15 for calendar-year companies, and carries a $25,000 penalty if missed. Details in <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 explained</a>.</li>\n<li><strong>No BOI report.</strong> A FinCEN final rule effective August 14, 2026 made the exemption for US-formed companies permanent. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI for non-resident LLCs</a>.</li>\n<li><strong>ITIN only if needed.</strong> An ITIN is your personal US tax number. It is used when you must file a US personal return or claim certain benefits, and some providers request one. See <a href=\"how-to-get-itin-non-resident.html\">ITIN for non-residents</a>.</li>\n</ol>\n<h2>Kenyan tax obligations</h2>\n<p>The <a href=\"https://www.kra.go.ke/\">Kenya Revenue Authority</a> administers income tax in Kenya, and individual returns are filed through its iTax system. Owning a US LLC does not remove your Kenyan obligations. Whether the LLC's profit, the money you withdraw, or both need to appear on your Kenyan return depends on Kenya's Income Tax Act and your residence status, and the rules for foreign income are technical. Keep clean records of what the LLC earns and what you pay yourself, and confirm the treatment with a Kenyan tax adviser before your first filing season. Because there is no US-Kenya treaty, you cannot rely on a treaty to settle questions of double taxation.</p>\n<h2>Bank accounts, Stripe and addresses</h2>\n<p>US business accounts are available to many non-resident LLC owners, but supported countries differ by provider and change without notice. Read each provider's current eligibility rules and start with <a href=\"how-to-open-us-business-bank-account-non-resident.html\">our guide to US business banking for non-residents</a>.</p>\n<ul>\n<li>Your personal address on any application should be where you actually live in Kenya, with matching proof such as a utility bill or bank statement.</li>\n<li>Virtual mailbox addresses, known as CMRAs, are often flagged or declined as a business address by banks and processors. See <a href=\"what-is-a-cmra-address.html\">what is a CMRA address</a>.</li>\n<li>Stripe supports US-registered companies with foreign owners and verifies the LLC's EIN, legal name and representative. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for a non-US LLC owner</a>.</li>\n</ul>\n<h2>Picking a state</h2>\n<p>Most Kenyan founders running a lean online business look at Wyoming first: a $100 state filing fee, a $60 minimum annual report tax and no state income tax. Founders planning to raise from US venture investors usually choose Delaware. Read <a href=\"wyoming-llc-for-non-residents.html\">Wyoming LLC for non-residents</a> for the steps.</p>\n<p>The Residential Address offers <a href=\"llc-formation.html\">US LLC formation</a> for non-US founders, including the EIN, and <a href=\"itin-application.html\">ITIN applications</a> for $700.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can I form a US LLC while living in Kenya?",
+      "Yes. There is no US citizenship or residency requirement for LLC owners, and Kenya is not under comprehensive US sanctions."
+    ],
+    [
+      "Does the US have a tax treaty with Kenya?",
+      "No. Kenya is not on the IRS list of US income tax treaties, so no treaty is in force between the two countries."
+    ],
+    [
+      "Does my Kenyan-owned LLC have to file anything with the IRS if it made no money?",
+      "Usually yes. A foreign-owned single-member LLC generally files Form 5472 with a pro forma Form 1120 for any year with reportable transactions, such as funding the company, even with no income."
+    ],
+    [
+      "Do I need to tell KRA about my US LLC?",
+      "Your Kenyan obligations depend on your residence status and the Income Tax Act. Confirm with a Kenyan tax adviser how the LLC's profit and your withdrawals should be reported."
+    ]
+  ],
+  "sources": [
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://www.irs.gov/publications/p515",
+    "https://www.irs.gov/individuals/international-taxpayers/effectively-connected-income-eci",
+    "https://www.irs.gov/forms-pubs/about-form-ss-4",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/individuals/individual-taxpayer-identification-number",
+    "https://www.kra.go.ke/"
+  ]
+}

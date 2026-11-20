@@ -1,0 +1,35 @@
+{
+  "slug": "nevada-llc-for-non-residents",
+  "title": "Nevada LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a Nevada LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a Nevada LLC in 2026: $425 to start, $350 a year for the Annual List and business license, registered agent and EIN.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🏜️📝💵",
+  "card_category": "LLC Formation",
+  "llms_summary": "Non-US founders can form a Nevada LLC for $425 in state fees (Articles, Initial List and State Business License), then pay $350 a year for the Annual List and license renewal and file Form 5472 if foreign-owned and single-member.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> A non-US founder can form a Nevada LLC with no US citizenship, residency or visa. At formation you pay $75 for the Articles of Organization, $150 for the Initial List of managers or managing members and $200 for the State Business License, $425 in total, plus a Nevada registered agent. Each year after that the LLC files an Annual List ($150) and renews the business license ($200) by the end of its anniversary month.</p>\n<h2>What a Nevada LLC costs</h2>\n<ul>\n<li>Articles of Organization: $75.</li>\n<li>Initial List of managers or managing members: $150, filed with the Articles.</li>\n<li>State Business License: $200.</li>\n<li>Every year: Annual List $150 plus business license renewal $200, $350 in total, due by the last day of the month in which the LLC was formed.</li>\n<li>Late filing: a $75 penalty on the list and a $100 penalty on the business license.</li>\n<li>Registered agent: a private service charges an annual fee that varies by provider.</li>\n</ul>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Check the name</strong> with the Nevada Secretary of State.</li>\n<li><strong>Appoint a Nevada registered agent</strong> with a physical Nevada address.</li>\n<li><strong>File the Articles of Organization, Initial List and business license</strong> together online with the Nevada Secretary of State.</li>\n<li><strong>Sign an operating agreement.</strong> It is not filed, but banks often ask for it.</li>\n<li><strong>Get an EIN</strong> from the IRS. Without an SSN or ITIN you apply with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Set up a business address and bank account.</strong> See <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US bank account as a non-resident</a>.</li>\n</ol>\n<h2>Yearly obligations</h2>\n<ul>\n<li>Nevada Annual List and State Business License renewal, $350, by the end of the anniversary month.</li>\n<li>Registered agent renewal.</li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a> with a pro forma Form 1120 each year if the LLC is a single-member LLC owned by a non-US person, due April 15 for calendar-year filers. The IRS penalty for failing to file is $25,000.</li>\n<li>No FinCEN BOI report. US-formed LLCs are exempt under FinCEN's final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n</ul>\n<h2>Is your name public?</h2>\n<p>Yes. Nevada law requires the Articles of Organization and the Initial and Annual Lists to show the name and address of each manager, or each managing member if there is no manager. Using a manager company changes whose name appears, but someone's name is always on the list.</p>\n<h2>Registered agent address vs business address</h2>\n<p>The registered agent address is where the state and courts send legal papers. It is not automatically your business address. Banks, payment processors and the IRS will also ask for a business or mailing address, and many banks decline CMRA or virtual mailbox addresses for that purpose. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>, and <a href=\"nevada-llc-address-requirements.html\">Nevada LLC address requirements</a>. Always give a bank your real personal residential address, and check each bank's own eligibility page before applying.</p>\n<h2>When Nevada makes sense</h2>\n<p>Nevada has no personal or corporate state income tax, and it fits founders who will operate in Nevada. For a non-resident with no Nevada activity, it costs more than Wyoming: $350 a year in state fees against Wyoming's $60 minimum, and Wyoming does not require owner names on the formation filing. See <a href=\"wyoming-llc-for-non-residents.html\">Wyoming LLC for non-residents</a> and <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders, including Nevada where it fits, and handles the EIN application. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a Nevada LLC?",
+      "Yes. Nevada has no citizenship or residency requirement for LLC owners. You need a registered agent with a Nevada address."
+    ],
+    [
+      "How much does a Nevada LLC cost per year?",
+      "$350 in state fees: $150 for the Annual List and $200 for the State Business License renewal, plus registered agent fees."
+    ],
+    [
+      "When is the Nevada Annual List due?",
+      "By the last day of the month in which the LLC was formed, every year."
+    ],
+    [
+      "Are owner names public for a Nevada LLC?",
+      "Managers, or managing members if there is no manager, are listed by name and address on the Articles and the annual list."
+    ]
+  ],
+  "sources": [
+    "https://www.leg.state.nv.us/NRS/NRS-086.html",
+    "https://www.leg.state.nv.us/NRS/NRS-076.html",
+    "https://www.nvsos.gov/licensing/state-business-license/state-business-license-faq",
+    "https://www.federalregister.gov/documents/2026/08/14/2026-16576/beneficial-ownership-information-reporting-requirement-revision"
+  ]
+}

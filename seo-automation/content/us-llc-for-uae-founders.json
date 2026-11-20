@@ -1,0 +1,41 @@
+{
+  "slug": "us-llc-for-uae-founders",
+  "title": "US LLC for UAE Residents: Setup, Tax and Banking (2026)",
+  "h1": "How UAE-Based Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "UAE residents forming a US LLC in 2026: no US-UAE tax treaty, UAE corporate tax scope, EIN, Form 5472, BOI exemption and US bank accounts.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇦🇪🏙️📊",
+  "card_category": "US Business",
+  "llms_summary": "UAE residents of any nationality can form a US LLC, but there is no US-UAE income tax treaty in force, the LLC has US filings such as Form 5472, and the UAE corporate tax regime may be relevant if the business is run from the UAE.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes. Founders living in Dubai, Abu Dhabi or elsewhere in the UAE can form a US LLC whatever their nationality, with no US visa or residency. The US and the UAE do not have an income tax treaty in force. On the US side you need an EIN and, as a sole foreign owner, an annual Form 5472 with a pro forma Form 1120. On the UAE side, check how the federal corporate tax, in force for financial years beginning on or after June 1, 2023, applies to a business you run from the UAE.</p>\n<h2>Who can form a US LLC from the UAE</h2>\n<p>Many UAE-based founders are expatriates, so two countries can matter at home: the UAE, where you live, and your country of citizenship. The US side is simple: state LLC law does not restrict members by nationality or residence, and the UAE is not covered by a comprehensive US sanctions program on the <a href=\"https://ofac.treasury.gov/sanctions-programs-and-country-information\">OFAC sanctions programs list</a>. Your citizenship can still matter to banks and processors that screen owners, and to your home country's tax rules.</p>\n<h2>No US-UAE income tax treaty</h2>\n<p>The United Arab Emirates does not appear on the <a href=\"https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z\">IRS list of US income tax treaties</a>. Without a treaty:</p>\n<ul>\n<li>Reduced treaty rates on US-source dividends, interest or royalties paid to you are not available from a UAE treaty. If you are a citizen of a country that has a US treaty, residence rules usually decide who can claim it, so ask an adviser before assuming you qualify.</li>\n<li>US tax on the LLC's business profit depends on whether the income is effectively connected with a US trade or business, as the IRS explains on its <a href=\"https://www.irs.gov/individuals/international-taxpayers/effectively-connected-income-eci\">effectively connected income</a> page.</li>\n</ul>\n<h2>US filings</h2>\n<ul>\n<li><strong>EIN.</strong> Apply with Form SS-4 by fax or mail. No SSN or ITIN is needed. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li><strong>Form 5472 and pro forma 1120.</strong> Due April 15 each year for a calendar-year single-member LLC owned by a foreign person with reportable transactions. The penalty for not filing is $25,000. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a>.</li>\n<li><strong>BOI.</strong> Not required. FinCEN's final rule effective August 14, 2026 permanently exempts companies formed in a US state. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n<li><strong>ITIN.</strong> Only when you need a personal US tax number, for example to file a US return. See <a href=\"how-to-get-itin-non-resident.html\">how to get an ITIN</a>.</li>\n</ul>\n<h2>UAE corporate tax and your US LLC</h2>\n<p>The UAE introduced a federal corporate tax under Federal Decree-Law No. 47 of 2022. According to the <a href=\"https://mof.gov.ae/corporate-tax/\">UAE Ministry of Finance</a>, it applies to financial years beginning on or after June 1, 2023, and the Ministry has confirmed a 0% rate on taxable income up to AED 375,000 and <a href=\"https://mof.gov.ae/en/news/ministry-of-finance-confirms-applicable-taxable-income-threshold-for-corporate-tax-abu-dhabi-uae/\">9% above that threshold</a>. The Ministry lists as taxable persons:</p>\n<ul>\n<li>Companies and other juridical persons incorporated or effectively managed and controlled in the UAE.</li>\n<li>Natural persons who conduct a business or business activity in the UAE, as specified in a Cabinet Decision.</li>\n<li>Foreign legal entities with a permanent establishment in the UAE.</li>\n</ul>\n<p>If you run a US LLC day to day from the UAE, these rules may be relevant even though the company is registered in the US. How a US LLC is treated, and whether you or the LLC must register with the <a href=\"https://tax.gov.ae/en/\">Federal Tax Authority</a>, is a question for a UAE tax adviser. If your country of citizenship taxes its nationals abroad, check that too.</p>\n<h2>Banking and Stripe</h2>\n<p>Many US banks and fintechs open accounts for LLCs owned by people living abroad, but each sets its own supported countries and nationalities, and policies change. Start with <a href=\"how-to-open-us-business-bank-account-non-resident.html\">US business bank accounts for non-residents</a> and the provider's own eligibility page.</p>\n<ul>\n<li>Your personal address must be where you live in the UAE, backed by documents such as a tenancy contract or utility bill.</li>\n<li>Virtual mailbox (CMRA) addresses are commonly flagged or refused as a business address. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</li>\n<li>Stripe accepts US-registered businesses with foreign owners after verifying the company and its representative. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</li>\n</ul>\n<h2>Which state UAE founders choose</h2>\n<p>Wyoming is popular with owner-run online businesses for its $100 filing fee and $60 minimum annual report tax. Delaware is the usual pick for startups raising US capital. Read <a href=\"wyoming-llc-for-non-residents.html\">Wyoming LLC for non-residents</a> or <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address provides <a href=\"llc-formation.html\">US LLC formation</a> for non-US founders, including the EIN, and <a href=\"itin-application.html\">ITIN applications</a> for $700.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can an expatriate living in the UAE form a US LLC?",
+      "Yes. US LLC owners do not need to be US citizens or residents, and neither the UAE nor residence there blocks ownership. Banks may still review your nationality and residence."
+    ],
+    [
+      "Is there a US-UAE tax treaty?",
+      "No. The United Arab Emirates is not on the IRS list of US income tax treaties."
+    ],
+    [
+      "Does UAE corporate tax apply to my US LLC?",
+      "It may. The UAE Ministry of Finance lists juridical persons effectively managed and controlled in the UAE, and individuals doing business in the UAE as set by Cabinet Decision, as taxable persons. Ask a UAE tax adviser how this applies to you."
+    ],
+    [
+      "What is the UAE corporate tax rate?",
+      "The UAE Ministry of Finance states 0% on taxable income up to AED 375,000 and 9% above it, for financial years beginning on or after June 1, 2023."
+    ]
+  ],
+  "sources": [
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://www.irs.gov/individuals/international-taxpayers/effectively-connected-income-eci",
+    "https://www.irs.gov/forms-pubs/about-form-ss-4",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/individuals/individual-taxpayer-identification-number",
+    "https://mof.gov.ae/corporate-tax/",
+    "https://mof.gov.ae/en/news/ministry-of-finance-confirms-applicable-taxable-income-threshold-for-corporate-tax-abu-dhabi-uae/",
+    "https://tax.gov.ae/en/"
+  ]
+}
