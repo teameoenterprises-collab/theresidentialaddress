@@ -188,8 +188,9 @@ def apply(f):
             s = s[:h] + HEAD_TAGS + s[h:]
     if f in SERVICE_PAGES:
         s = re.sub(r'<body(?![^>]*tra-service)([^>]*)>', lambda mm: '<body class="tra-service"' + mm.group(1) + '>' if 'class=' not in mm.group(1) else mm.group(0), s, count=1)
-        s = s.replace("const header = document.getElementById('header');",
-                      "const header = document.getElementById('header') || document.createElement('div');")
+    # old inline scripts that expect the removed #header element
+    s = s.replace("const header = document.getElementById('header');",
+                  "const header = document.getElementById('header') || document.createElement('div');")
     if 'src="site.js"' not in s:
         s = s.replace("</body>", JS_TAG + "</body>", 1)
     s = social(s, f)
