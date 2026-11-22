@@ -1,0 +1,35 @@
+{
+  "slug": "delaware-llc-for-non-residents",
+  "title": "Delaware LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a Delaware LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a Delaware LLC in 2026: $110 filing fee, $400 annual tax due June 1, registered agent, EIN and yearly federal filings.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🏛️📝💵",
+  "card_category": "LLC Formation",
+  "llms_summary": "Non-US founders can form a Delaware LLC by filing a $110 Certificate of Formation with a Delaware registered agent, then pay a $400 annual LLC tax every June 1 and file Form 5472 if foreign-owned and single-member.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> A non-US founder can form a Delaware LLC from abroad, with no US citizenship, residency or visa. You file a Certificate of Formation with the Delaware Division of Corporations ($110 state fee), appoint a Delaware registered agent, then get an EIN from the IRS. Every year the LLC pays a flat $400 Delaware annual tax by June 1, and a foreign-owned single-member LLC also files Form 5472.</p>\n<h2>What a Delaware LLC costs</h2>\n<ul>\n<li>Certificate of Formation: $110 (one time, per the Division of Corporations fee schedule).</li>\n<li>Annual LLC tax: $400 a year, due on or before June 1 for the prior year. There is no annual report for LLCs.</li>\n<li>Late payment: a $200 penalty plus 1.5% interest per month on the tax and penalty.</li>\n<li>Registered agent: a private service charges an annual fee that varies by provider.</li>\n<li>EIN: free from the IRS.</li>\n</ul>\n<p>The tax is not prorated. An LLC that is active on the Delaware records at any time during a calendar year owes the full $400 for that year.</p>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Check the name</strong> on the Delaware entity search. It must include \"LLC\", \"L.L.C.\" or \"Limited Liability Company\".</li>\n<li><strong>Appoint a Delaware registered agent</strong> with a physical address in Delaware.</li>\n<li><strong>File the Certificate of Formation.</strong> It needs only the LLC name and the registered agent's name and address.</li>\n<li><strong>Sign an operating agreement.</strong> Delaware does not file it, but banks often ask for it.</li>\n<li><strong>Get an EIN</strong> from the IRS. Without an SSN or ITIN you apply with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Set up a business address and bank account.</strong> See <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US bank account as a non-resident</a>.</li>\n</ol>\n<h2>Yearly obligations</h2>\n<ul>\n<li>Delaware annual LLC tax of $400 by June 1.</li>\n<li>Registered agent renewal.</li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a> with a pro forma Form 1120 each year if the LLC is a single-member LLC owned by a non-US person, due April 15 for calendar-year filers. The IRS penalty for failing to file is $25,000.</li>\n<li>No FinCEN BOI report. US-formed LLCs are exempt under FinCEN's final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n</ul>\n<h2>Is your name public?</h2>\n<p>The Certificate of Formation does not ask for member or manager names, so the owner is not listed on the state filing. Your name still appears on federal filings such as the EIN application and Form 5472, which are not public.</p>\n<h2>Registered agent address vs business address</h2>\n<p>The registered agent address is where the state and courts send legal papers. It is not automatically your business address. Banks, payment processors and the IRS will also ask for a business or mailing address, and many banks decline CMRA or virtual mailbox addresses for that purpose. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>, and <a href=\"delaware-llc-address-requirements.html\">Delaware LLC address requirements</a>. Always give a bank your real personal residential address, and check each bank's own eligibility page before applying.</p>\n<h2>When Delaware makes sense</h2>\n<p>Delaware is the usual choice if you plan to raise money from US venture investors or want a well-known body of business case law. For a small online business that just needs a US entity, the $400 yearly tax is higher than Wyoming's $60 minimum annual report tax. Compare both in <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>. If you will have employees or an office in another state, that state may also require the LLC to register there.</p>\n<p>The Residential Address forms US LLCs for non-US founders, including Delaware where it fits, and handles the EIN application. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a Delaware LLC?",
+      "Yes. Delaware has no citizenship or residency requirement for LLC owners. You need a registered agent with a Delaware address."
+    ],
+    [
+      "How much is the Delaware LLC annual tax?",
+      "$400 a year, due on or before June 1. Late payment adds a $200 penalty plus 1.5% monthly interest."
+    ],
+    [
+      "Does a Delaware LLC file an annual report?",
+      "No. Delaware LLCs pay the annual tax but do not file an annual report."
+    ],
+    [
+      "Do I need to visit the US to form a Delaware LLC?",
+      "No. Formation, the EIN application and the annual tax can all be handled from abroad."
+    ]
+  ],
+  "sources": [
+    "https://corp.delaware.gov/fee/",
+    "https://corpfiles.delaware.gov/Fee_Schedule/AugustFee2026.pdf",
+    "https://corp.delaware.gov/alt-entitytaxinstructions/",
+    "https://www.federalregister.gov/documents/2026/08/14/2026-16576/beneficial-ownership-information-reporting-requirement-revision"
+  ]
+}

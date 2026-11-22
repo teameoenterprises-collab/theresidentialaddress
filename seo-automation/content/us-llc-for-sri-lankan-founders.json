@@ -1,0 +1,40 @@
+{
+  "slug": "us-llc-for-sri-lankan-founders",
+  "title": "US LLC for Sri Lankan Founders: Setup, Tax and Banking (2026)",
+  "h1": "How Sri Lankan Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "Sri Lankan residents can own a US LLC. 2026 guide to Outward Investment Accounts, the US-Sri Lanka tax treaty, EIN, Form 5472, banking and Stripe.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇱🇰🇺🇸🌐",
+  "card_category": "US Business",
+  "llms_summary": "Sri Lankan residents can own a US LLC, and outward investment under the Foreign Exchange Act No. 12 of 2017 is made through an Outward Investment Account with a licensed bank, within Central Bank of Sri Lanka limits, alongside US Form 5472 and EIN requirements.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes. A Sri Lankan resident can form and own a US LLC with no US citizenship or residency. Sri Lanka allows resident individuals to invest abroad within limits, but the money must go through an Outward Investment Account (OIA) at a licensed bank under the Foreign Exchange Act, No. 12 of 2017. The US also has an income tax treaty with Sri Lanka. On the US side, plan for an EIN, a yearly Form 5472 and a US business bank account.</p>\n<h2>Why Sri Lankan founders choose a US LLC</h2>\n<p>Colombo's software, design and BPO firms sell heavily to US and European clients. A US LLC gives a US contracting party and access to US payment processors that do not serve Sri Lanka directly. Sri Lanka is not covered by any of the US Treasury's country-based sanctions programs.</p>\n<h2>Sri Lanka's outward investment rules</h2>\n<p>The Department of Foreign Exchange of the Central Bank of Sri Lanka sets out how residents may invest overseas:</p>\n<ul>\n<li>Eligible residents, including individuals, may buy foreign currency from a licensed bank to invest abroad, such as in shares of foreign companies.</li>\n<li>Remittances must go through an <strong>Outward Investment Account</strong> opened with the bank. Income and sale proceeds come back through the same account.</li>\n<li>Each remittance needs a clearance letter from the Department of Foreign Exchange confirming no pending investigation under the relevant laws.</li>\n<li>Investments are subject to limits set by investor type. Larger amounts need special approval.</li>\n</ul>\n<p>Limits and procedures have been revised and, at times, temporarily restricted, and new outward investment regulations were issued in 2026. Check the current position on the Department of Foreign Exchange website and with your bank before funding the LLC.</p>\n<h2>The US-Sri Lanka tax treaty</h2>\n<p>The IRS lists an income tax treaty between the United States and Sri Lanka. A treaty can affect withholding on some US-source income and how double tax is relieved, but the effect depends on the income type and your facts. Claiming a treaty benefit usually requires a US taxpayer identification number.</p>\n<h2>Sri Lankan tax at home</h2>\n<p>Residents should expect to declare foreign income in Sri Lanka, and profits brought home through the OIA leave a clear record. How LLC profits are taxed in your hands depends on how the LLC is classified and how you receive the money. Confirm with a local tax adviser.</p>\n<h2>US filings checklist</h2>\n<ul>\n<li>EIN through Form SS-4, with no SSN required. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li>Form 5472 and a pro forma 1120 each year for single-member LLCs, with a $25,000 penalty if missed. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a>.</li>\n<li>No FinCEN BOI report, under the final rule effective August 14, 2026 that exempts US-created companies. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI in 2026</a>.</li>\n<li>An ITIN if you need to file a personal US return or claim treaty benefits. See <a href=\"how-to-get-itin-non-resident.html\">ITIN for non-residents</a>.</li>\n</ul>\n<h2>Banking and Stripe</h2>\n<p>Stripe does not list Sri Lanka as a supported country. Sri Lankan founders often apply for a US Stripe account through their US LLC, which needs a US bank account and goes through Stripe's own review. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</p>\n<p>US banks and fintechs that open accounts for non-resident owners set their own country lists and document rules. Check each eligibility page and read <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US business bank account as a non-resident</a>. Give your real Sri Lankan home address as your personal address. For the business address, note that banks often decline CMRA and virtual mailbox addresses. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</p>\n<h2>Which state</h2>\n<p>Wyoming is a common choice for small service businesses because of its $100 formation fee and $60 minimum annual report tax. Delaware is better known to US investors. Compare them in <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders and assists with ITIN applications. See <a href=\"llc-formation.html\">LLC formation</a> and <a href=\"itin-application.html\">ITIN application</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a Sri Lankan resident own a US LLC?",
+      "Yes. US states do not require owners to be US citizens or residents."
+    ],
+    [
+      "How do I send money from Sri Lanka to my US LLC?",
+      "Investment remittances go through an Outward Investment Account at a licensed bank, within Central Bank of Sri Lanka limits, with a clearance letter for each remittance."
+    ],
+    [
+      "Does the US have a tax treaty with Sri Lanka?",
+      "Yes. The IRS lists a US income tax treaty with Sri Lanka."
+    ],
+    [
+      "Is Stripe available in Sri Lanka?",
+      "Stripe does not list Sri Lanka as a supported country. A US LLC with a US bank account can apply for a US Stripe account, subject to review."
+    ]
+  ],
+  "sources": [
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+    "https://www.irs.gov/forms-pubs/about-form-w-7",
+    "https://stripe.com/global",
+    "https://www.dfe.lk/web/index.php?option=com_content&view=category&id=113&Itemid=704&lang=en",
+    "https://www.dfe.lk/web/index.php?option=com_rdevelopment&task=allgazettes&Itemid=483&lang=en"
+  ]
+}

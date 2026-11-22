@@ -1,0 +1,39 @@
+{
+  "slug": "south-dakota-llc-for-non-residents",
+  "title": "South Dakota LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a South Dakota LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a South Dakota LLC in 2026: $150 online filing, $55 annual report, no state income tax, registered agent, EIN and Form 5472.",
+  "llms_summary": "A non-resident can form a South Dakota LLC online for $150, pays a $55 online annual report each year and owes no South Dakota income tax, while federal filings such as Form 5472 still apply.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🌾📄💵",
+  "card_category": "LLC Formation",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Anyone can form a South Dakota LLC from abroad, with no US citizenship, residency or visa. You file Articles of Organization with the South Dakota Secretary of State ($150 online or $165 on paper), appoint a registered agent with a South Dakota street address, then get an EIN from the IRS. Each year you file an annual report ($55 online), and South Dakota has no corporate or personal income tax.</p>\n<h2>What South Dakota charges</h2>\n<ul>\n<li><strong>Articles of Organization:</strong> $150 online, $165 on paper.</li>\n<li><strong>Annual report:</strong> $55 online, $70 on paper.</li>\n<li><strong>Late annual report fee:</strong> $55.</li>\n<li><strong>EIN:</strong> free from the IRS.</li>\n</ul>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Check the name</strong> in the South Dakota business search.</li>\n<li><strong>Appoint a registered agent</strong> with a physical street address in South Dakota. The agent can be a commercial registered agent or a noncommercial agent, such as an individual.</li>\n<li><strong>File the Articles of Organization</strong> online with the Secretary of State.</li>\n<li><strong>Sign an operating agreement.</strong> It is not filed, but banks often ask for it.</li>\n<li><strong>Get an EIN</strong> with Form SS-4, then open a bank account.</li>\n</ol>\n<h2>The yearly annual report</h2>\n<p>The Secretary of State says annual reports are due every year on the first day of the anniversary month of the LLC's original filing. An LLC formed on June 11, 2026, for example, is due June 1, 2027. You can file up to two months early, and an LLC becomes delinquent two months after the due date. Continued delinquency can lead to administrative dissolution.</p>\n<p>A 2026 law, House Bill 1102, takes effect on January 1, 2027. It lets an entity choose either its anniversary month or January 31 as its yearly filing date, chosen on the formation document, and allows a later switch with a change-of-filing-date form.</p>\n<h2>Privacy and taxes</h2>\n<p>The Secretary of State says businesses may, but are not required to, list beneficial owners on formation documents or annual reports. The registered agent and principal office address do appear on public filings. South Dakota's Department of Revenue states that the state has no corporate, unitary or personal income tax, although other state taxes, such as sales tax, can still apply to some businesses.</p>\n<h2>Federal steps for non-resident owners</h2>\n<p>These apply to every US LLC, whatever the state.</p>\n<ul>\n<li><strong>EIN:</strong> without an SSN or ITIN you apply with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Form 5472:</strong> a single-member LLC owned by a non-US person files Form 5472 with a pro forma Form 1120 each year, due April 15, even with no income. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a>.</li>\n<li><strong>BOI:</strong> LLCs formed in the US, including South Dakota LLCs, are exempt from FinCEN beneficial ownership reporting under the final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n</ul>\n<h2>Registered agent address vs business address</h2>\n<p>The registered agent address is where the state and courts send legal notices. It must be a physical street address in South Dakota. It is not automatically your business or mailing address, and many agents do not forward everyday mail or let you use their address for banking.</p>\n<p>Banks and payment providers usually ask for a business address and for each owner's real personal residential address, which for most non-residents is their home abroad. Many banks decline CMRA or virtual mailbox addresses as a business address, so check the bank's eligibility page before you apply. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</p>\n<h2>South Dakota vs Wyoming or Delaware</h2>\n<p>South Dakota and Wyoming are close on the main points for a non-resident: no state income tax and no requirement to list owners on public filings. Wyoming costs less to form ($100 vs $150 online), while South Dakota's online annual report ($55) is slightly below Wyoming's $60 minimum. Either works for a remote online business. Delaware is usually chosen for venture-backed startups. Compare <a href=\"wyoming-llc-for-non-residents.html\">Wyoming</a> and <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms South Dakota LLCs for non-US founders, including the EIN application. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a South Dakota LLC?",
+      "Yes. South Dakota has no citizenship or residency requirement for LLC owners. You need a registered agent with a physical street address in South Dakota."
+    ],
+    [
+      "How much does a South Dakota LLC cost?",
+      "The state charges $150 to file Articles of Organization online and $55 for each online annual report. Paper filings cost more."
+    ],
+    [
+      "When is the South Dakota annual report due?",
+      "On the first day of the anniversary month of the original filing. From January 1, 2027, entities can choose January 31 instead."
+    ],
+    [
+      "Does South Dakota have a state income tax?",
+      "No. South Dakota has no corporate or personal income tax. Federal filings, such as Form 5472 for foreign-owned single-member LLCs, still apply."
+    ]
+  ],
+  "sources": [
+    "https://sdsos.gov/general-information/filing-fees.aspx",
+    "https://sdsos.gov/business-services/corporations/contact.aspx",
+    "https://sdsos.gov/business-services/corporations/corporate-forms/limited-liability-companies.aspx",
+    "https://mylrc.sdlegislature.gov/api/Documents/SessionLaw/306278.pdf?Year=2026",
+    "https://dor.sd.gov/businesses/taxes/",
+    "https://www.irs.gov/forms-pubs/about-form-ss-4",
+    "https://www.irs.gov/forms-pubs/about-form-5472",
+    "https://www.fincen.gov/boi"
+  ]
+}

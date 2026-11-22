@@ -1,0 +1,39 @@
+{
+  "slug": "us-llc-for-bangladeshi-founders",
+  "title": "US LLC for Bangladeshi Founders: Setup, Tax and Banking (2026)",
+  "h1": "How Bangladeshi Founders Can Form and Run a US LLC (2026 Guide)",
+  "description": "Bangladeshi residents can own a US LLC. 2026 guide to Bangladesh Bank rules on investing abroad, the US tax treaty, EIN, Form 5472 and banking.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🇧🇩🇺🇸📈",
+  "card_category": "US Business",
+  "llms_summary": "Bangladeshi residents can own a US LLC with no US residency requirement, but sending capital abroad is tightly controlled by Bangladesh Bank under the Foreign Exchange Regulation Act, 1947, so founders should confirm the permitted route with an authorized dealer bank before funding the LLC.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> Yes, a Bangladeshi resident can form a US LLC, and US law does not ask for US citizenship or residency. The constraint is capital outflow: investment abroad by Bangladeshi residents is controlled by Bangladesh Bank, and money can only leave through permitted routes. Confirm the route with your authorized dealer bank, then set up the US side: EIN, yearly Form 5472 and a US business bank account.</p>\n<h2>Who uses a US LLC from Bangladesh</h2>\n<p>Software teams, outsourcing firms and freelancers in Dhaka and Chattogram often sell to US clients. A US LLC gives them a US contracting entity and access to US payment processors. Bangladesh is not covered by any of the US Treasury's country-based sanctions programs, so forming an LLC is open to Bangladeshi residents.</p>\n<h2>Bangladesh Bank and money leaving the country</h2>\n<p>Outward capital transactions from Bangladesh are governed by the Foreign Exchange Regulation Act, 1947, administered by Bangladesh Bank. Equity investment abroad has generally needed prior Bangladesh Bank approval, with limited exceptions. One recent change matters to founders:</p>\n<ul>\n<li>Under FEID Circular No. 02 dated 27 March 2025, Bangladesh Bank granted a general authorization to establish legal entities abroad with investments up to USD 10,000 or equivalent, mainly to support Bangladeshi startups.</li>\n<li>Bangladesh Bank also said it will consider requests from resident companies to acquire shares in foreign entities through share swaps rather than cash.</li>\n</ul>\n<p>Who qualifies for the general authorization, and the documents required, are set by the circular and applied by your authorized dealer bank. Do not assume it covers you as an individual. Ask the bank and a Bangladeshi adviser before you form or fund the LLC, and keep copies of every approval.</p>\n<h2>Tax at home</h2>\n<p>Bangladeshi residents should expect to declare foreign income and assets in their Bangladesh return. How LLC profits are taxed in your hands depends on how the income is earned and brought home. Confirm the treatment with a local tax adviser.</p>\n<h2>Is there a US-Bangladesh tax treaty?</h2>\n<p>Yes. The IRS lists an income tax treaty between the United States and Bangladesh. Whether it changes withholding or relieves double tax in your situation depends on the income involved. A US tax identification number is usually needed to claim treaty benefits.</p>\n<h2>Your US compliance list</h2>\n<ul>\n<li>EIN via Form SS-4, available without an SSN. See <a href=\"how-to-get-ein-without-ssn.html\">EIN without an SSN</a>.</li>\n<li>Form 5472 with a pro forma 1120 every year if you are the only owner, even with no revenue. Missing it can bring a $25,000 IRS penalty. See <a href=\"form-5472-foreign-owned-llc.html\">Form 5472 for foreign-owned LLCs</a>.</li>\n<li>No FinCEN BOI report for US-created LLCs since FinCEN's final rule took effect on August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n<li>An ITIN if you must file a personal US return or claim treaty benefits. See <a href=\"how-to-get-itin-non-resident.html\">how to get an ITIN</a>.</li>\n<li>State renewals, such as Wyoming's annual report, and a registered agent.</li>\n</ul>\n<h2>Banking and payments</h2>\n<p>Stripe does not list Bangladesh as a supported country. A US LLC with a US bank account can apply for a US Stripe account, but Stripe reviews the business model, website and owners, and may decline or ask for more documents. See <a href=\"stripe-account-non-us-llc-owner.html\">Stripe for non-US LLC owners</a>.</p>\n<p>US banks and fintechs differ on which countries of residence they accept, and their lists change. Check each provider's eligibility page and read <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US business bank account as a non-resident</a>. Use your actual home address in Bangladesh as your personal address. For the LLC's business address, avoid CMRA and virtual mailbox addresses that banks often decline. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>.</p>\n<h2>Picking a state</h2>\n<p>Wyoming is a common default for its $100 formation fee and $60 minimum annual report tax. Delaware fits companies planning to raise US venture capital. Compare them in <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders and helps with ITIN applications. See <a href=\"llc-formation.html\">LLC formation</a> and <a href=\"itin-application.html\">ITIN application</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a Bangladeshi citizen living in Bangladesh form a US LLC?",
+      "Yes. US states do not require LLC owners to be US citizens or residents."
+    ],
+    [
+      "Can I send money from Bangladesh to fund my US LLC?",
+      "Only through routes Bangladesh Bank permits. A March 2025 circular allows establishing legal entities abroad with investments up to USD 10,000, mainly for startups. Confirm eligibility with your authorized dealer bank."
+    ],
+    [
+      "Does the US have a tax treaty with Bangladesh?",
+      "Yes. The IRS lists a US income tax treaty with Bangladesh."
+    ],
+    [
+      "Do I have to file anything with the IRS if my LLC has no income?",
+      "Yes. A foreign-owned single-member LLC files Form 5472 with a pro forma 1120 each year, even with no income."
+    ]
+  ],
+  "sources": [
+    "https://www.irs.gov/businesses/international-businesses/united-states-income-tax-treaties-a-to-z",
+    "https://ofac.treasury.gov/sanctions-programs-and-country-information",
+    "https://www.fincen.gov/boi",
+    "https://www.irs.gov/instructions/i5472",
+    "https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number",
+    "https://www.irs.gov/forms-pubs/about-form-w-7",
+    "https://stripe.com/global",
+    "https://www.bb.org.bd/pub/annual/fsr/financialstabilityreport2025.pdf"
+  ]
+}

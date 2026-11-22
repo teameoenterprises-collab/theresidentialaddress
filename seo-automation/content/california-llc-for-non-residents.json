@@ -1,0 +1,34 @@
+{
+  "slug": "california-llc-for-non-residents",
+  "title": "California LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a California LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a California LLC in 2026: $70 Form LLC-1, $20 Statement of Information, $800 annual tax, agent and EIN.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🌄📝💵",
+  "card_category": "LLC Formation",
+  "llms_summary": "Non-US founders can form a California LLC by filing a $70 Form LLC-1 and a $20 Statement of Information, but every California LLC pays an $800 annual tax to the Franchise Tax Board.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> A non-US founder can form a California LLC with no US citizenship, residency or visa. You file Articles of Organization (Form LLC-1) with the California Secretary of State for $70, file a Statement of Information within 90 days ($20) and appoint an agent for service of process. Every California LLC then pays an $800 annual tax to the Franchise Tax Board, first due by the 15th day of the 4th month after formation.</p>\n<h2>What a California LLC costs</h2>\n<ul>\n<li>Articles of Organization (Form LLC-1): $70.</li>\n<li>Statement of Information (Form LLC-12): $20, due within 90 days of formation and every two years after that.</li>\n<li>Annual tax: $800 a year, paid with Form FTB 3522. The first payment is due by the 15th day of the 4th month after you file with the Secretary of State. The first-year exemption only covered tax years beginning in 2021 through 2023.</li>\n<li>LLC fee: an additional fee if total income reaches $250,000 or more.</li>\n<li>EIN: free from the IRS.</li>\n</ul>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Check the name</strong> on bizfile Online.</li>\n<li><strong>Appoint an agent for service of process</strong> with a California street address.</li>\n<li><strong>File Form LLC-1</strong> online through bizfile Online.</li>\n<li><strong>File the Statement of Information</strong> within 90 days.</li>\n<li><strong>Sign an operating agreement.</strong></li>\n<li><strong>Get an EIN</strong> from the IRS. Without an SSN or ITIN you apply with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Set up a business address and bank account.</strong> See <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US bank account as a non-resident</a>.</li>\n</ol>\n<h2>Yearly obligations</h2>\n<ul>\n<li>$800 annual tax to the Franchise Tax Board and a California LLC return (Form 568).</li>\n<li>Statement of Information every two years ($20).</li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a> with a pro forma Form 1120 each year if the LLC is a single-member LLC owned by a non-US person, due April 15 for calendar-year filers. The IRS penalty for failing to file is $25,000.</li>\n<li>No FinCEN BOI report. US-formed LLCs are exempt under FinCEN's final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n</ul>\n<h2>Is your name public?</h2>\n<p>Usually. The Statement of Information lists the LLC's managers, or its members if there are no managers, and these filings are public on bizfile Online.</p>\n<h2>Registered agent address vs business address</h2>\n<p>The agent for service of process address is where the state and courts send legal papers. It is not automatically your business address. Banks, payment processors and the IRS will also ask for a business or mailing address, and many banks decline CMRA or virtual mailbox addresses for that purpose. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>, and <a href=\"registered-agent-vs-business-address-explained.html\">registered agent vs business address</a>. Always give a bank your real personal residential address, and check each bank's own eligibility page before applying.</p>\n<h2>When California makes sense</h2>\n<p>The $800 annual tax applies to every LLC that is organized in California or doing business there. That means a Wyoming or Delaware LLC that does business in California can owe the same $800 and must register in California too. If your business really operates in California, forming there can avoid paying two states. If it does not, a Wyoming LLC costs far less each year. See <a href=\"wyoming-llc-for-non-residents.html\">Wyoming LLC for non-residents</a> and <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders, including California where it fits, and handles the EIN application. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a California LLC?",
+      "Yes. California has no citizenship or residency requirement for LLC owners. You need an agent for service of process with a California address."
+    ],
+    [
+      "Does every California LLC pay $800 a year?",
+      "Yes. Every LLC organized in California or doing business there owes the $800 annual tax, even with no income."
+    ],
+    [
+      "Is there a first-year exemption from the $800 tax?",
+      "Not anymore. The exemption only applied to tax years beginning in 2021 through 2023."
+    ],
+    [
+      "When is the California Statement of Information due?",
+      "Within 90 days of formation, then every two years. The fee is $20."
+    ]
+  ],
+  "sources": [
+    "https://www.sos.ca.gov/business-programs/business-entities/forms/limited-liability-companies-california-domestic",
+    "https://www.ftb.ca.gov/file/business/types/limited-liability-company/index.html",
+    "https://www.federalregister.gov/documents/2026/08/14/2026-16576/beneficial-ownership-information-reporting-requirement-revision"
+  ]
+}

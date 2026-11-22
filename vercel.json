@@ -15,6 +15,11 @@
       "source": "/blog-2.html",
       "destination": "/wyoming-vs-delaware-llc.html",
       "permanent": true
+    },
+    {
+      "source": "/us-llc-for-uae-residents.html",
+      "destination": "/us-llc-for-uae-founders.html",
+      "permanent": true
     }
   ]
 }

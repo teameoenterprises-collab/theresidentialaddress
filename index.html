@@ -15,9 +15,6 @@
   <meta name="description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Residential Address | Compliant U.S. Business Addresses" />
-  <meta property="og:description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders." />
-  <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -163,7 +160,7 @@
           "name": "Which is better for my LLC: Wyoming or Delaware?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges $300/year in franchise tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred)."
+            "text": "For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges a $400/year annual LLC tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred)."
           }
         },
         {
@@ -227,8 +224,24 @@
   ]
 }
   </script>
+  <link rel="stylesheet" href="site.css">
+
+  <!-- tra:social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Residential Address">
+  <meta property="og:title" content="The Residential Address | Compliant U.S. Business Addresses">
+  <meta property="og:description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders.">
+  <meta property="og:url" content="https://www.theresidentialaddress.com/">
+  <meta property="og:image" content="https://www.theresidentialaddress.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Residential Address | Compliant U.S. Business Addresses">
+  <meta name="twitter:description" content="Real residential lease documents that U.S. banks accept. LLC formation, ITIN processing, and compliance for international founders.">
+  <meta name="twitter:image" content="https://www.theresidentialaddress.com/assets/og-image.png">
+  <!-- /tra:social -->
 </head>
-<body>
+<body class="tra-home">
 
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
@@ -336,47 +349,31 @@
   <!-- ==================================================================
        HEADER / NAVIGATION
        ================================================================== -->
-  <header class="navbar" id="siteHeader">
-    <nav class="container navbar__row" aria-label="Primary">
-      <a href="#top" class="brand">
-        <span class="logo-mark">
-          <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
-        </span>
-        <span class="logo-wordmark">The Residential Address</span>
-      </a>
-
-      <div class="nav-links" id="navLinks">
-        <a class="nav-links__link" href="about.html">About Us</a>
-        <a class="nav-links__link" href="blog.html">Blog</a>
-        <a class="nav-links__link" href="#pricing">Pricing</a>
-        <a class="nav-links__link" href="#faq">FAQ</a>
+  
+    <!-- tra:header -->
+<header class="tra-hdr" id="traHeader">
+  <div class="tra-hdr__in">
+    <a class="tra-brand" href="index.html" aria-label="The Residential Address home"><span class="tra-brand__mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="tra-brand__name">The Residential Address</span></a>
+    <nav class="tra-nav" aria-label="Primary">
+      <div class="tra-dd"><button class="tra-nav__link tra-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">Services <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="tra-dd__menu"><a class="tra-dd__item" href="index.html#pricing"><strong>US Residential Address<em>$2,000/yr</em></strong><span>A residential address held under a signed lease, with mail handling</span></a><a class="tra-dd__item" href="llc-formation.html"><strong>LLC Formation</strong><span>Wyoming or Delaware LLC for non-US founders</span></a><a class="tra-dd__item" href="itin-application.html"><strong>ITIN Application<em>$700</em></strong><span>Form W-7 preparation, review and filing</span></a><a class="tra-dd__item" href="bank-assistance.html"><strong>Bank Account Assistance</strong><span>Help preparing US business bank applications</span></a><a class="tra-dd__all" href="us-llc-guides-by-state-and-country.html">US LLC guides by state and country &rarr;</a></div>
       </div>
-
-      <div class="navbar__actions">
-        <a class="btn btn--dark btn--sm" href="https://wa.me/16474367072" target="_blank" rel="noopener" onclick="fbq('trackCustom', 'WhatsAppClick', {offer: 'residential_address', button_location: 'top_bar', page_path: window.location.pathname})">
-          💬 Chat on WhatsApp
-        </a>
-      </div>
-
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
-        <svg width="20" height="20" aria-hidden="true" id="navToggleIconMenu"><use href="#icon-menu"/></svg>
-        <svg width="20" height="20" aria-hidden="true" id="navToggleIconClose" class="visually-hidden"><use href="#icon-x"/></svg>
-      </button>
+      <a class="tra-nav__link" href="blog.html">Guides</a>
+      <a class="tra-nav__link" href="index.html#pricing">Pricing</a>
+      <a class="tra-nav__link" href="faq.html">FAQ</a>
+      <a class="tra-nav__link" href="about.html">About</a>
     </nav>
-
-    <div class="mobile-nav" id="mobileNav">
-      <ul class="mobile-nav__list">
-        <li><a class="mobile-nav__link" href="about.html">About Us</a></li>
-        <li><a class="mobile-nav__link" href="blog.html">Blog</a></li>
-        <li><a class="mobile-nav__link" href="#pricing">Pricing</a></li>
-        <li><a class="mobile-nav__link" href="#faq">FAQ</a></li>
-      </ul>
-      <div class="mobile-nav__cta">
-        <a class="btn btn--dark btn--block" href="https://wa.me/16474367072" target="_blank" rel="noopener" onclick="fbq('trackCustom', 'WhatsAppClick', {offer: 'residential_address', button_location: 'mobile_nav', page_path: window.location.pathname})">💬 Chat on WhatsApp</a>
-      </div>
-    </div>
-  </header>
-
+    <a class="tra-btn tra-btn--dark" href="https://wa.me/16474367072" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg> Chat on WhatsApp</a>
+    <button class="tra-burger" id="traBurger" type="button" aria-controls="traMobile" aria-expanded="false" aria-label="Open menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <div class="tra-mobile" id="traMobile">
+    <div class="tra-mobile__label">Services</div><a href="index.html#pricing">US Residential Address<small>A residential address held under a signed lease, with mail handling</small></a><a href="llc-formation.html">LLC Formation<small>Wyoming or Delaware LLC for non-US founders</small></a><a href="itin-application.html">ITIN Application<small>Form W-7 preparation, review and filing</small></a><a href="bank-assistance.html">Bank Account Assistance<small>Help preparing US business bank applications</small></a>
+    <div class="tra-mobile__label">Learn</div>
+    <a href="blog.html">All guides</a><a href="us-llc-guides-by-state-and-country.html">Guides by state and country</a><a href="faq.html">FAQ</a><a href="index.html#pricing">Pricing</a><a href="about.html">About us</a>
+    <a class="tra-btn tra-btn--dark" href="https://wa.me/16474367072" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg> Chat on WhatsApp</a>
+  </div>
+</header>
+<!-- /tra:header -->
   <main id="main-content">
 
     <!-- ================================================================
@@ -524,7 +521,7 @@
     <!-- ================================================================
          FEATURES SECTION — "The Problem"
          ================================================================ -->
-    <section class="section section--bg-inverse" id="services">
+    <section class="section" id="services">
       <div class="container">
         <div class="reveal section-head" data-reveal>
           <span class="eyebrow">THE PROBLEM</span>
@@ -625,7 +622,7 @@
     <!-- ================================================================
          SERVICES GRID — "Built for Global Founders"
          ================================================================ -->
-    <section class="section section--bg-inverse">
+    <section class="section">
       <div class="container">
         <div class="reveal section-head" data-reveal>
           <span class="eyebrow">FOR YOU</span>
@@ -673,7 +670,7 @@
     <!-- ================================================================
          HOW IT WORKS — "Process"
          ================================================================ -->
-    <section class="section section--bg-inverse" id="how-it-works">
+    <section class="section section--bg-alt" id="how-it-works">
       <div class="container">
         <div class="reveal section-head section-head--center" data-reveal>
           <span class="eyebrow">PROCESS</span>
@@ -713,7 +710,7 @@
     <!-- ================================================================
          PERSONAL BANKING, UNLOCKED
          ================================================================ -->
-    <section class="section section--bg-inverse">
+    <section class="section">
       <div class="container container--md">
         <div class="reveal section-head section-head--center" data-reveal>
           <span class="eyebrow">✔</span>
@@ -790,7 +787,7 @@
     <!-- ================================================================
          TESTIMONIALS — "Proof"
          ================================================================ -->
-    <section class="section section--bg-inverse">
+    <section class="section section--bg-alt">
       <div class="container">
         <div class="reveal section-head" data-reveal>
           <span class="eyebrow">PROOF</span>
@@ -867,7 +864,7 @@
     <!-- ================================================================
          FAQ — "Compliance FAQ"
          ================================================================ -->
-    <section class="section section--bg-inverse" id="faq">
+    <section class="section" id="faq">
       <div class="container container--sm">
         <div class="reveal section-head section-head--center" data-reveal>
           <span class="eyebrow">FAQ</span>
@@ -954,7 +951,7 @@
               <svg class="faq-item__chevron" width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
             </button>
             <div class="faq-item__panel">
-              <p class="faq-item__answer">For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges $300/year in franchise tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred).</p>
+              <p class="faq-item__answer">For most international founders, Wyoming is better: $0 state income tax, a $60/year annual report, strong privacy laws, and no franchise tax. Delaware charges a $400/year annual LLC tax and has more complex compliance. We recommend Wyoming unless you plan to seek U.S. venture capital funding (in which case, Delaware is preferred).</p>
             </div>
           </div>
           <div class="faq-item">
@@ -1027,7 +1024,7 @@
     <!-- ================================================================
          GUARANTEE
          ================================================================ -->
-    <section class="section section--tight section--bg-inverse">
+    <section class="section section--bg-alt section--tight">
       <div class="container container--lg">
         <div class="reveal guarantee-card" data-reveal>
           <span class="guarantee-card__icon" aria-hidden="true">
@@ -1073,68 +1070,55 @@
     </section>
 
   </main>
+<!-- tra:footer -->
+<footer class="tra-ftr">
+  <div class="tra-ftr__in">
+    <div class="tra-ftr__grid">
+      <div class="tra-ftr__brandcol">
+        <a class="tra-brand" href="index.html"><span class="tra-brand__mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="tra-brand__name">The Residential Address</span></a>
+        <p class="tra-ftr__desc">The US side of your business, set up properly: a residential address under a signed lease, US LLC formation, ITIN applications and bank account guidance for founders in 40+ countries.</p>
+        <a class="tra-btn tra-btn--gold" href="https://wa.me/16474367072" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg> Chat on WhatsApp</a>
+      </div>
+      <div><h4>Services</h4><ul>
+        <li><a href="index.html#pricing">US residential address</a></li>
+        <li><a href="llc-formation.html">LLC formation</a></li>
+        <li><a href="itin-application.html">ITIN application</a></li>
+        <li><a href="bank-assistance.html">Bank account assistance</a></li>
+      </ul></div>
+      <div><h4>Popular guides</h4><ul>
+        <li><a href="us-llc-guides-by-state-and-country.html">LLC guides by state and country</a></li>
+        <li><a href="how-to-get-ein-without-ssn.html">EIN without an SSN</a></li>
+        <li><a href="how-to-open-us-business-bank-account-non-resident.html">US bank account as a non-resident</a></li>
+        <li><a href="form-5472-foreign-owned-llc.html">Form 5472 explained</a></li>
+        <li><a href="what-is-a-cmra-address.html">What is a CMRA address</a></li>
+      </ul></div>
+      <div><h4>Company</h4><ul>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="blog.html">All guides</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:support@theresidentialaddress.com">support@theresidentialaddress.com</a></li>
+        <li><a href="https://wa.me/16474367072" target="_blank" rel="noopener">WhatsApp +1 647 436 7072</a></li>
+        <li>Signed residential lease</li>
+        <li>Money-back guarantee</li>
+      </ul></div>
+    </div>
+    <div class="tra-ftr__bottom">
+      <span>&copy; <span id="traYear">2026</span> The Residential Address (Everest Ventures Group LLC). Registered in Florida, USA.</span>
+      <span>General information only, not tax or legal advice.</span>
+    </div>
+  </div>
+</footer>
+<!-- /tra:footer -->
 
   <!-- ==================================================================
        FOOTER
        ================================================================== -->
-  <footer class="footer" id="contact">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <a href="#top" class="brand">
-            <span class="logo-mark">
-              <svg width="20" height="20" aria-hidden="true"><use href="#icon-map-pin"/></svg>
-            </span>
-            <span class="logo-wordmark">The Residential Address</span>
-          </a>
-          <p class="body-sm footer__desc">
-            The US infrastructure layer for global founders. Banking,
-            addresses, and LLCs made compliant.
-          </p>
-          <div class="mt-6">
-            <a class="btn btn--dark btn--sm" href="mailto:support@theresidentialaddress.com">📧 @support@theresidentialaddress.com</a>
-          </div>
-        </div>
-
-        <div class="footer__links">
-          <div>
-            <h4 class="footer__col-title">SERVICES</h4>
-            <ul class="footer__col-list">
-              <li><a class="footer__link" href="#services">US Residential Address</a></li>
-              <li><a class="footer__link" href="https://www.theresidentialaddress.com/llc-formation.html" target="_blank" rel="noopener">LLC Formation</a></li>
-              <li><a class="footer__link" href="https://www.theresidentialaddress.com/itin-application.html" target="_blank" rel="noopener">ITIN Application</a></li>
-              <li><a class="footer__link" href="https://www.theresidentialaddress.com/bank-assistance.html" target="_blank" rel="noopener">Bank Assistance</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="footer__col-title">COMPANY</h4>
-            <ul class="footer__col-list">
-              <li><a class="footer__link" href="about.html">About Us</a></li>
-              <li><a class="footer__link" href="blog.html">Blog</a></li>
-              <li><a class="footer__link" href="#pricing">Pricing</a></li>
-              <li><a class="footer__link" href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="footer__col-title">TRUST</h4>
-            <ul class="footer__col-list">
-              <li><span class="footer__link">IRS Certified</span></li>
-              <li><span class="footer__link">100% Compliant</span></li>
-              <li><span class="footer__link">Money-Back Guarantee</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer__bottom">
-        <p class="body-xs">© <span id="currentYear">2026</span> The Residential Address (Everest Ventures Group LLC). All rights reserved. Registered in Florida, USA.</p>
-        <div class="footer__legal">
-          <a class="footer__link body-xs" href="privacy.html">Privacy Policy</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
+  
   <script src="script.js"></script>
+  <script src="site.js" defer></script>
 </body>
 </html>

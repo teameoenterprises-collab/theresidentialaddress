@@ -1,0 +1,247 @@
+/* =========================================================================
+   Clean reading theme for articles (.blog-article pages) and the blog index.
+   Loaded after style.css; everything is scoped with :has() so service pages
+   and the homepage keep their own look.
+   ========================================================================= */
+:root {
+  --rd-bg: #f7f6f2;
+  --rd-surface: #ffffff;
+  --rd-ink: #16181d;
+  --rd-body: #3b4048;
+  --rd-muted: #6b7280;
+  --rd-line: #e6e3db;
+  --rd-accent: #0f2a4a;
+  --rd-gold: #9a6f1c;
+  --rd-gold-soft: #f6efdf;
+}
+
+/* ---- Page + header ---------------------------------------------------- */
+body:has(.blog-article),
+body:has(.blog-grid) { background: var(--rd-bg); color: var(--rd-body); }
+
+body:has(.blog-article) #header,
+body:has(.blog-article) #header.scrolled,
+body:has(.blog-grid) #siteHeader,
+body:has(.blog-grid) #siteHeader.scrolled {
+  background: rgba(247, 246, 242, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--rd-line);
+}
+body:has(.blog-article) #header .logo img { filter: brightness(0); }
+body:has(.blog-article) #header .nav-links > a,
+body:has(.blog-article) #header.scrolled .nav-links > a { color: var(--rd-ink); }
+body:has(.blog-article) #header .nav-links > a:hover { color: var(--rd-gold); }
+body:has(.blog-article) #header .btn-whatsapp {
+  background: var(--rd-ink); color: #fff; border-radius: 999px; border: 0;
+}
+
+/* ---- Article header --------------------------------------------------- */
+body:has(.blog-article) main { background: var(--rd-bg); }
+body:has(.blog-article) .article-header {
+  max-width: 1180px; margin: 0 auto; padding: 2rem 24px 1.5rem; text-align: left;
+}
+.rd-crumbs { font-size: .875rem; color: var(--rd-muted); margin-bottom: 1.75rem; }
+.rd-crumbs a { color: var(--rd-muted); text-decoration: underline; text-underline-offset: 3px; }
+.rd-crumbs a:hover { color: var(--rd-ink); }
+.rd-crumbs span { margin: 0 .45rem; }
+body:has(.blog-article) .article-meta {
+  order: 2; color: var(--rd-muted); font-size: .9rem; font-weight: 500;
+  text-transform: none; letter-spacing: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: center;
+}
+.rd-pill {
+  display: inline-block; padding: .2rem .7rem; border-radius: 999px;
+  background: var(--rd-gold-soft); color: var(--rd-gold); font-weight: 600; font-size: .8rem;
+}
+body:has(.blog-article) .article-title {
+  color: var(--rd-ink); font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.9rem);
+  line-height: 1.15; letter-spacing: -0.02em; font-weight: 700;
+  max-width: 860px; margin: 0 0 1rem;
+}
+body:has(.blog-article) .article-image { display: none; }
+
+/* ---- Two-column layout: article + "On this page" ------------------------ */
+.rd-layout {
+  max-width: 1180px; margin: 0 auto; padding: 1rem 24px 4rem;
+  display: grid; grid-template-columns: minmax(0, 720px) 260px;
+  justify-content: space-between; gap: 64px; align-items: start;
+}
+@media (max-width: 1080px) { .rd-layout { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+body:has(.blog-article) .blog-article {
+  max-width: 720px; margin: 0; padding: 0;
+  color: var(--rd-body); font-size: 1.0625rem; line-height: 1.75;
+}
+body:has(.blog-article) .blog-article p { margin: 0 0 1.25rem; }
+body:has(.blog-article) .blog-article h2 {
+  color: var(--rd-ink); font-size: 1.6rem; line-height: 1.25; letter-spacing: -0.01em;
+  margin: 2.75rem 0 1rem; scroll-margin-top: 96px;
+}
+body:has(.blog-article) .blog-article h3 {
+  color: var(--rd-ink); font-size: 1.2rem; line-height: 1.35;
+  margin: 2rem 0 .6rem; scroll-margin-top: 96px;
+}
+body:has(.blog-article) .blog-article strong { color: var(--rd-ink); }
+body:has(.blog-article) .blog-article a {
+  color: var(--rd-accent); text-decoration: underline; text-decoration-color: rgba(15,42,74,.35);
+  text-underline-offset: 3px;
+}
+body:has(.blog-article) .blog-article a:hover { text-decoration-color: var(--rd-accent); }
+body:has(.blog-article) .blog-article ul,
+body:has(.blog-article) .blog-article ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+body:has(.blog-article) .blog-article li { margin: .35rem 0; }
+body:has(.blog-article) .blog-article li::marker { color: var(--rd-gold); }
+body:has(.blog-article) .blog-article table {
+  width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .95rem;
+  background: var(--rd-surface); border: 1px solid var(--rd-line); border-radius: 12px; overflow: hidden;
+}
+body:has(.blog-article) .blog-article th,
+body:has(.blog-article) .blog-article td { padding: .7rem .9rem; border-bottom: 1px solid var(--rd-line); text-align: left; color: var(--rd-body); }
+body:has(.blog-article) .blog-article th { color: var(--rd-ink); background: #fbfaf7; }
+body:has(.blog-article) .article-updated { color: var(--rd-muted) !important; opacity: 1 !important; }
+
+/* Short answer + callouts */
+body:has(.blog-article) .blog-article .answer {
+  background: var(--rd-surface); border: 1px solid var(--rd-line); border-left: 4px solid var(--rd-gold);
+  border-radius: 12px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; color: var(--rd-ink);
+}
+body:has(.blog-article) .callout {
+  background: var(--rd-gold-soft); border-left: 4px solid var(--rd-gold); color: var(--rd-ink);
+}
+
+/* Related guides block */
+body:has(.blog-article) .blog-article h2[data-related] {
+  font-size: 1.15rem; text-transform: uppercase; letter-spacing: .06em; color: var(--rd-muted);
+  border-top: 1px solid var(--rd-line); padding-top: 2rem;
+}
+body:has(.blog-article) h2[data-related] + ul { list-style: none; padding: 0; display: grid; gap: .6rem; }
+body:has(.blog-article) h2[data-related] + ul a {
+  display: block; padding: .85rem 1rem; background: var(--rd-surface); border: 1px solid var(--rd-line);
+  border-radius: 10px; text-decoration: none; color: var(--rd-ink); font-weight: 500;
+}
+body:has(.blog-article) h2[data-related] + ul a:hover { border-color: var(--rd-gold); }
+
+/* ---- Table of contents -------------------------------------------------- */
+.rd-toc { position: sticky; top: 96px; max-height: calc(100vh - 120px); overflow: auto; font-size: .9rem; }
+.rd-toc__title { font-weight: 700; color: var(--rd-ink); margin-bottom: .75rem; font-size: .95rem; }
+.rd-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--rd-line); }
+.rd-toc li { margin: 0; }
+.rd-toc a {
+  display: block; padding: .32rem 0 .32rem .9rem; margin-left: -1px; border-left: 2px solid transparent;
+  color: var(--rd-muted); text-decoration: none; line-height: 1.4;
+}
+.rd-toc li.is-sub a { padding-left: 1.7rem; font-size: .85rem; }
+.rd-toc a:hover { color: var(--rd-ink); }
+.rd-toc a.is-active { color: var(--rd-ink); border-left-color: var(--rd-gold); font-weight: 600; }
+.rd-toc-mobile { display: none; }
+@media (max-width: 1080px) {
+  .rd-toc { display: none; }
+  .rd-toc-mobile {
+    display: block; margin: 0 0 2rem; background: var(--rd-surface);
+    border: 1px solid var(--rd-line); border-radius: 12px; padding: .9rem 1.1rem;
+  }
+  .rd-toc-mobile summary { cursor: pointer; font-weight: 700; color: var(--rd-ink); }
+  .rd-toc-mobile ol { margin: .75rem 0 0; padding-left: 1.1rem; }
+  .rd-toc-mobile li { margin: .35rem 0; }
+  .rd-toc-mobile a { color: var(--rd-accent); text-decoration: none; }
+}
+
+/* ---- CTA card at the end of articles ----------------------------------- */
+.rd-cta {
+  margin-top: 2.5rem; padding: 1.5rem; border-radius: 14px; background: var(--rd-ink); color: #e5e7eb;
+  display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
+}
+.rd-cta p { margin: 0 !important; color: #e5e7eb; max-width: 440px; }
+.rd-cta strong { color: #fff !important; }
+.rd-cta a {
+  background: #fff; color: var(--rd-ink) !important; text-decoration: none !important;
+  padding: .7rem 1.2rem; border-radius: 999px; font-weight: 600; white-space: nowrap;
+}
+
+/* ---- Blog index ---------------------------------------------------------- */
+body:has(.blog-grid) .hero,
+body:has(.blog-grid) .section--bg-inverse { background: var(--rd-bg) !important; }
+body:has(.blog-grid) .hero::before,
+body:has(.blog-grid) .hero::after { display: none !important; }
+body:has(.blog-grid) .hero { padding-bottom: 1rem; }
+body:has(.blog-grid) .hero .h1 { color: var(--rd-ink); }
+body:has(.blog-grid) .hero .text-gradient { background: none; -webkit-text-fill-color: var(--rd-gold); color: var(--rd-gold); }
+body:has(.blog-grid) .hero__subtitle { color: var(--rd-muted); }
+body:has(.blog-grid) #siteHeader a { color: var(--rd-ink); }
+
+.rd-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 2rem; }
+.rd-filters button {
+  font: inherit; font-size: .9rem; padding: .45rem .95rem; border-radius: 999px; cursor: pointer;
+  background: #ece9e1; color: var(--rd-ink); border: 0;
+}
+.rd-filters button.is-active { background: var(--rd-ink); color: #fff; }
+.rd-search {
+  width: 100%; max-width: 420px; font: inherit; padding: .7rem 1rem; margin-bottom: 1rem;
+  border: 1px solid var(--rd-line); border-radius: 10px; background: var(--rd-surface); color: var(--rd-ink);
+}
+
+body:has(.blog-grid) .blog-grid { gap: 1.25rem; }
+body:has(.blog-grid) .blog-card {
+  background: var(--rd-surface); border: 1px solid var(--rd-line); border-radius: 14px; box-shadow: none;
+}
+body:has(.blog-grid) .blog-card:hover {
+  transform: translateY(-2px); border-color: #d6cfbf; box-shadow: 0 10px 24px -14px rgba(22,24,29,.25);
+}
+body:has(.blog-grid) .blog-meta { font-family: inherit; letter-spacing: 0; color: var(--rd-muted); font-weight: 500; font-size: .8rem; }
+body:has(.blog-grid) .blog-category { background: var(--rd-gold-soft); color: var(--rd-gold); padding: .15rem .6rem; border-radius: 999px; font-weight: 600; }
+body:has(.blog-grid) .blog-card h3 { color: var(--rd-ink); font-size: 1.1rem; line-height: 1.35; }
+body:has(.blog-grid) .blog-card p { color: var(--rd-muted); }
+body:has(.blog-grid) .read-more { opacity: 1; color: var(--rd-accent); }
+body:has(.blog-grid) .blog-card.is-featured { grid-column: 1 / -1; padding: 2rem; }
+body:has(.blog-grid) .blog-card.is-featured h3 { font-size: clamp(1.4rem, 1rem + 1.4vw, 2rem); }
+body:has(.blog-grid) .blog-card.is-featured p { font-size: 1rem; max-width: 760px; }
+body:has(.blog-grid) .blog-card[hidden] { display: none; }
+
+/* ---- Accessibility + responsive details (ui-ux-pro-max checklist) ------- */
+body:has(.blog-article) a:focus-visible,
+body:has(.blog-grid) a:focus-visible,
+.rd-filters button:focus-visible,
+.rd-search:focus-visible,
+.rd-toc-mobile summary:focus-visible {
+  outline: 2px solid var(--rd-gold); outline-offset: 3px; border-radius: 4px;
+}
+.rd-toc a, .rd-filters button, body:has(.blog-grid) .blog-card, .rd-cta a {
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+@media (max-width: 720px) {
+  body:has(.blog-article) .blog-article table { display: block; overflow-x: auto; white-space: nowrap; }
+  body:has(.blog-article) .article-header { padding-top: 1.25rem; }
+  .rd-layout { padding-inline: 18px; }
+  body:has(.blog-article) .article-header { padding-inline: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .rd-toc a, .rd-filters button, body:has(.blog-grid) .blog-card, .rd-cta a { transition: none; }
+  body:has(.blog-grid) .blog-card:hover { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) { html:has(.blog-article) { scroll-behavior: smooth; } }
+
+/* ---- Header fixes: WhatsApp button contrast, mobile header, blog glow ---- */
+body:has(.blog-article) #header .nav-links > a.btn-whatsapp,
+body:has(.blog-article) #header.scrolled .nav-links > a.btn-whatsapp,
+body:has(.blog-grid) #siteHeader a.btn--dark { color: #fff; }
+body:has(.blog-article) #header .nav-links > a.btn-whatsapp:hover,
+body:has(.blog-grid) #siteHeader a.btn--dark:hover { color: #fff; background: #000; }
+body:has(.blog-grid) .hero__glow { display: none; }
+
+@media (max-width: 720px) {
+  body:has(.blog-article) #header .nav-content { flex-wrap: nowrap; padding-block: .7rem; }
+  body:has(.blog-article) #header .logo img { height: 22px !important; }
+  body:has(.blog-article) #header .nav-links { flex-wrap: nowrap; gap: .9rem; }
+  body:has(.blog-article) #header .nav-links > a[href="about.html"],
+  body:has(.blog-article) #header .nav-links > a[href$="#pricing"] { display: none; }
+  body:has(.blog-article) #header .nav-links > a.btn-whatsapp {
+    margin-left: 0 !important; padding: .45rem .85rem !important; font-size: .8rem !important; white-space: nowrap;
+  }
+}
+
+/* Keep the blog-index wordmark dark on the light header, including when scrolled */
+body:has(.blog-grid) #siteHeader .logo-wordmark,
+body:has(.blog-grid) #siteHeader[class*="scrolled"] .logo-wordmark,
+body:has(.blog-grid) #siteHeader .brand { color: var(--rd-ink) !important; -webkit-text-fill-color: var(--rd-ink); background: none; }

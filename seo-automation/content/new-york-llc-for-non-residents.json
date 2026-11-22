@@ -1,0 +1,37 @@
+{
+  "slug": "new-york-llc-for-non-residents",
+  "title": "New York LLC for Non-Residents: Cost and Steps (2026)",
+  "h1": "How to Form a New York LLC as a Non-Resident (2026 Cost and Steps)",
+  "description": "How non-US founders form a New York LLC in 2026: $200 Articles, newspaper publication within 120 days, $50 certificate, $9 biennial statement.",
+  "category": "Blog • LLC Formation",
+  "emoji": "🗽📝💵",
+  "card_category": "LLC Formation",
+  "llms_summary": "Non-US founders can form a New York LLC by filing $200 Articles of Organization, publishing notice in two newspapers within 120 days and filing a $50 Certificate of Publication, then a $9 Biennial Statement every two years.",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> A non-US founder can form a New York LLC with no US citizenship, residency or visa, but it costs more than most states. You file Articles of Organization with the New York Department of State ($200), then within 120 days publish a notice in two newspapers for six consecutive weeks and file a Certificate of Publication ($50). After that the LLC files a Biennial Statement every two years ($9).</p>\n<h2>What a New York LLC costs</h2>\n<ul>\n<li>Articles of Organization: $200.</li>\n<li>Certificate of Publication: $50, plus the newspapers' own charges for running the notice, which vary by county.</li>\n<li>Biennial Statement: $9 every two years, filed in the calendar month the LLC was formed.</li>\n<li>State LLC filing fee: a disregarded single-member LLC with New York source income pays $25 a year with Form IT-204-LL.</li>\n<li>EIN: free from the IRS.</li>\n</ul>\n<h2>The publication requirement</h2>\n<p>Within 120 days after the Articles take effect, the LLC must publish a copy of the Articles or a notice of formation in two newspapers designated by the county clerk of the county where the LLC's office is located, once a week for six consecutive weeks. You then file the newspapers' affidavits with a Certificate of Publication. If you miss the 120-day deadline, the LLC's authority to carry on business is suspended until it complies.</p>\n<h2>Step by step</h2>\n<ol>\n<li><strong>Check the name.</strong> It must include \"Limited Liability Company\", \"LLC\" or \"L.L.C.\"</li>\n<li><strong>File the Articles of Organization.</strong> New York designates the Secretary of State as the LLC's agent for service of process, and you give an address where legal papers will be forwarded.</li>\n<li><strong>Complete publication</strong> and file the Certificate of Publication within 120 days.</li>\n<li><strong>Sign an operating agreement.</strong></li>\n<li><strong>Get an EIN</strong> from the IRS. Without an SSN or ITIN you apply with Form SS-4 by fax or mail. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li><strong>Set up a business address and bank account.</strong> See <a href=\"how-to-open-us-business-bank-account-non-resident.html\">opening a US bank account as a non-resident</a>.</li>\n</ol>\n<h2>Yearly obligations</h2>\n<ul>\n<li>Biennial Statement every two years ($9).</li>\n<li>Form IT-204-LL and fee if the LLC has New York source income.</li>\n<li><a href=\"form-5472-foreign-owned-llc.html\">Form 5472</a> with a pro forma Form 1120 each year if the LLC is a single-member LLC owned by a non-US person, due April 15 for calendar-year filers. The IRS penalty for failing to file is $25,000.</li>\n<li>No FinCEN BOI report. US-formed LLCs are exempt under FinCEN's final rule effective August 14, 2026. See <a href=\"boi-reporting-non-resident-llc-2026.html\">BOI reporting in 2026</a>.</li>\n</ul>\n<h2>Registered agent address vs business address</h2>\n<p>The service of process forwarding address is where the state and courts send legal papers. It is not automatically your business address. Banks, payment processors and the IRS will also ask for a business or mailing address, and many banks decline CMRA or virtual mailbox addresses for that purpose. See <a href=\"what-is-a-cmra-address.html\">what a CMRA address is</a>, and <a href=\"registered-agent-vs-business-address-explained.html\">registered agent vs business address</a>. Always give a bank your real personal residential address, and check each bank's own eligibility page before applying.</p>\n<h2>When New York makes sense</h2>\n<p>New York makes sense if you will actually do business there, for example with an office, staff or a lease in New York. A Wyoming or Delaware LLC doing business in New York would also have to register and publish in New York. For an online business with no New York presence, the publication cost and state tax filings usually make Wyoming or Delaware simpler. See <a href=\"wyoming-vs-delaware-llc.html\">Wyoming vs Delaware</a>.</p>\n<p>The Residential Address forms US LLCs for non-US founders, including New York where it fits, and handles the EIN application. <a href=\"llc-formation.html\">See LLC formation</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "Can a non-US citizen form a New York LLC?",
+      "Yes. New York has no citizenship or residency requirement for LLC owners."
+    ],
+    [
+      "What is the New York LLC publication requirement?",
+      "Within 120 days of formation, publish a notice in two county-designated newspapers for six consecutive weeks, then file a Certificate of Publication with a $50 fee."
+    ],
+    [
+      "What happens if I skip publication?",
+      "The LLC's authority to carry on business is suspended until it publishes and files the Certificate of Publication."
+    ],
+    [
+      "Does a New York LLC file an annual report?",
+      "No. It files a Biennial Statement every two years for $9."
+    ]
+  ],
+  "sources": [
+    "https://dos.ny.gov/forming-limited-liability-company-new-york",
+    "https://dos.ny.gov/articles-organization-domestic-limited-liability-company-0",
+    "https://dos.ny.gov/certificate-publication-domestic-limited-liability-company-0",
+    "https://dos.ny.gov/biennial-statements-business-corporations-and-limited-liability-companies",
+    "https://www.tax.ny.gov/pit/efile/annual_filing_fee.htm",
+    "https://www.federalregister.gov/documents/2026/08/14/2026-16576/beneficial-ownership-information-reporting-requirement-revision"
+  ]
+}

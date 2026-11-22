@@ -10,6 +10,8 @@ A scheduled task runs daily. Each run:
 4. **Builds.** `python3 seo-automation/build_page.py seo-automation/content/<slug>.json` builds the page from the
    existing article template (header, footer and styles are copied unchanged), and adds it to the blog index,
    sitemap and llms.txt.
+   Then run `python3 seo-automation/apply_chrome.py` so the page gets the shared header, footer,
+   topic-matched call to action and its own social preview tags (safe to run any time; it only rewrites marked blocks).
 5. **Validates.** `python3 seo-automation/validate.py origin/main` blocks the publish if the header, footer,
    styles or scripts changed, if locked files (homepage, CSS, portal...) changed, if JSON-LD is invalid, if a link is
    broken, or if a banned claim appears.
