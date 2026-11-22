@@ -28,6 +28,9 @@
     "US LLC for UK residents",
     "US LLC for Canadian residents",
     "US LLC for Bangladeshi founders",
-    "US LLC for Nepali founders"
+    "US LLC for Nepali founders",
+    "US address for bank account non-resident",
+    "non-CMRA address for banking",
+    "residential address for Mercury bank application"
   ]
 }

@@ -23,7 +23,7 @@ CHAT = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="cur
         'aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>')
 
 SERVICES = [
-    ("index.html#pricing", "US Residential Address", "$2,000/yr", "A residential address held under a signed lease, with mail handling"),
+    ("us-address-for-banking.html", "US Address for Banking", "$2,000/yr", "A residential address with a signed lease, for bank and Stripe applications"),
     ("llc-formation.html", "LLC Formation", "", "Wyoming or Delaware LLC for non-US founders"),
     ("itin-application.html", "ITIN Application", "$700", "Form W-7 preparation, review and filing"),
     ("bank-assistance.html", "Bank Account Assistance", "", "Help preparing US business bank applications"),
@@ -42,6 +42,7 @@ def header():
       <div class="tra-dd"><button class="tra-nav__link tra-dd__btn" type="button" aria-expanded="false" aria-haspopup="true">Services {CHEV}</button>
         <div class="tra-dd__menu">{items}<a class="tra-dd__all" href="us-llc-guides-by-state-and-country.html">US LLC guides by state and country &rarr;</a></div>
       </div>
+      <a class="tra-nav__link" href="us-address-for-banking.html">Address for Banking</a>
       <a class="tra-nav__link" href="blog.html">Guides</a>
       <a class="tra-nav__link" href="index.html#pricing">Pricing</a>
       <a class="tra-nav__link" href="faq.html">FAQ</a>
@@ -70,7 +71,7 @@ def footer():
         <a class="tra-btn tra-btn--gold" href="{WA}" target="_blank" rel="noopener">{CHAT} Chat on WhatsApp</a>
       </div>
       <div><h4>Services</h4><ul>
-        <li><a href="index.html#pricing">US residential address</a></li>
+        <li><a href="us-address-for-banking.html">US address for banking</a></li>
         <li><a href="llc-formation.html">LLC formation</a></li>
         <li><a href="itin-application.html">ITIN application</a></li>
         <li><a href="bank-assistance.html">Bank account assistance</a></li>

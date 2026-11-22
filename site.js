@@ -62,7 +62,7 @@
       text: "For founders whose bank, payment processor or IRS paperwork needs a real US residential address rather than a mailbox service.",
       points: ["Residential unit address with a signed lease in your name", "Renter's insurance documentation", "Mail received, scanned and forwarded on request", "Not a PO box or a commercial mail receiving agency (CMRA)"],
       price: "$2,000", per: "/ year", meta: "Billed annually, no setup fee. Usually set up within 1 to 2 business days.",
-      link: "index.html#pricing", linkText: "See what's included", wa: "Hi, I'd like a US residential address."
+      link: "us-address-for-banking.html", linkText: "How the address works for banking", wa: "Hi, I'd like a US residential address."
     },
     itin: {
       eyebrow: "ITIN application",
@@ -110,8 +110,7 @@
       '<div><p class="tra-cta__eyebrow">' + o.eyebrow + "</p><h3>" + o.title + "</h3><p>" + o.text + "</p><ul>" +
       o.points.map(function (p) { return "<li>" + p + "</li>"; }).join("") + "</ul></div>" +
       '<div class="tra-cta__side">' +
-      (key === "address" && /us-address-service\.html$/.test(location.pathname) ? "" :
-        '<div class="tra-cta__price">' + o.price + " <small>" + o.per + "</small></div>") +
+      ('<div class="tra-cta__price">' + o.price + " <small>" + o.per + "</small></div>") +
       '<p class="tra-cta__meta">' + o.meta + "</p>" +
       '<a class="tra-btn tra-btn--gold" href="' + wa + '" target="_blank" rel="noopener">Chat on WhatsApp</a>' +
       '<a class="tra-btn tra-btn--onDark" href="' + o.link + '">' + o.linkText + "</a></div>";
