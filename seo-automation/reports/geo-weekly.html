@@ -1,0 +1,156 @@
+<title>TRA GEO Weekly</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+  /* Layout: one column of weekly entries, newest first; each entry = Saturday results + Sunday plan */
+  :root {
+    --bg: #f6f5f1; --surface: #ffffff; --ink: #14181f; --body: #3a404a; --muted: #6b7280;
+    --line: #e5e1d7; --navy: #0f1b2d; --gold: #946a19; --gold-soft: #f4ecd9;
+    --good: #1f7a4d; --good-soft: #e3f3ea; --warn: #9a5b00; --warn-soft: #fbefd9; --bad: #a33a2c; --bad-soft: #f8e3df;
+    --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #0d131d; --surface: #141c29; --ink: #eef1f5; --body: #c3cad5; --muted: #8b95a5;
+    --line: #253144; --navy: #0a111c; --gold: #d9b45c; --gold-soft: #2a2414;
+    --good: #5fcf96; --good-soft: #12291f; --warn: #f0b45a; --warn-soft: #2c2210; --bad: #f08a7b; --bad-soft: #2d1714; color-scheme: dark } }
+  :root[data-theme="dark"] {
+    --bg: #0d131d; --surface: #141c29; --ink: #eef1f5; --body: #c3cad5; --muted: #8b95a5;
+    --line: #253144; --navy: #0a111c; --gold: #d9b45c; --gold-soft: #2a2414;
+    --good: #5fcf96; --good-soft: #12291f; --warn: #f0b45a; --warn-soft: #2c2210; --bad: #f08a7b; --bad-soft: #2d1714; color-scheme: dark }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--body); font: 15px/1.6 var(--text); }
+  .wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  h1 { font: 700 1.9rem/1.1 var(--display); color: var(--ink); margin: 0; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin: 6px 0 0; }
+  .site { font-size: .85rem; color: var(--muted); }
+  h2 { font: 600 1.35rem/1.25 var(--display); color: var(--ink); margin: 0; text-wrap: balance; }
+  h3 { font: 600 .78rem/1.2 var(--text); text-transform: uppercase; letter-spacing: .09em; color: var(--gold); margin: 26px 0 10px; }
+  article.week { margin-top: 28px; }
+  .weekhead { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+  .tag { font-size: .75rem; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: var(--gold); }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+  .kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .kpi b { display: block; font: 700 1.6rem/1.1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .kpi span { font-size: .82rem; color: var(--muted); }
+  .kpi small { display: block; margin-top: 4px; font-size: .75rem; color: var(--muted); }
+  .note { background: var(--warn-soft); color: var(--warn); border-radius: 10px; padding: 10px 14px; font-size: .9rem; margin-top: 12px; }
+  ul.done, ul.plan { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  ul.done li, ul.plan li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px 10px 40px; position: relative; }
+  ul.done li::before { content: ""; position: absolute; left: 16px; top: 16px; width: 10px; height: 6px; border-left: 2px solid var(--good); border-bottom: 2px solid var(--good); transform: rotate(-45deg); }
+  ul.plan li::before { content: ""; position: absolute; left: 15px; top: 15px; width: 10px; height: 10px; border: 2px solid var(--gold); border-radius: 50%; }
+  li strong { color: var(--ink); }
+  .who { font-size: .78rem; font-weight: 600; color: var(--muted); margin-left: 6px; }
+  .tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 560px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+  tr:last-child td { border-bottom: 0; }
+  td.q { color: var(--ink); }
+  .pill { display: inline-block; font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+  .pill.none { background: var(--bad-soft); color: var(--bad); }
+  .pill.new { background: var(--gold-soft); color: var(--gold); }
+  .pill.up { background: var(--good-soft); color: var(--good); }
+  .src { font-size: .82rem; color: var(--muted); margin-top: 10px; }
+  details.method { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); font-size: .88rem; }
+  details.method summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+  a { color: var(--gold); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+  @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: 1.55rem; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>TRA GEO Weekly</h1>
+      <p class="sub">Search and AI-answer visibility for theresidentialaddress.com. Plan every Sunday, results every Saturday.</p>
+    </div>
+    <div class="site">Times in Nepal time (NPT)</div>
+  </header>
+
+  <!-- WEEKS: newest first. Each weekly run inserts its entry directly below this line. -->
+
+  <article class="week" id="w2026-11-23">
+    <div class="weekhead"><h2>Week of Nov 23 to 29, 2026</h2><span class="tag">Plan · Sunday</span></div>
+
+    <h3>Where we start</h3>
+    <div class="kpis">
+      <div class="kpi"><b>0 / 31</b><span>tracked searches we appear in</span><small>Last good check Nov 21 (18 searches)</small></div>
+      <div class="kpi"><b>96</b><span>pages live</span><small>Up from 49 on Nov 16</small></div>
+      <div class="kpi"><b>~45</b><span>new guides this week</span><small>1 to 4 days old, not yet ranked</small></div>
+      <div class="kpi"><b>97</b><span>URLs sent to Bing</span><small>IndexNow, accepted Nov 22</small></div>
+    </div>
+    <p class="note">Zero rankings is expected this early. Google usually takes 1 to 4 weeks to index and rank new pages, and AI answers follow the search index. The first real movement should show in the Nov 29 or Dec 6 report.</p>
+
+    <h3>This week's plan</h3>
+    <ul class="plan">
+      <li><strong>Publish up to 3 fact-checked guides a day</strong> (daily task): the remaining 34 US states first, then more founder countries and refreshes.<span class="who">Automatic</span></li>
+      <li><strong>Track 31 searches daily</strong> and flag the first pages that reach page 1.<span class="who">Automatic</span></li>
+      <li><strong>Send every new page to Bing</strong> for ChatGPT search and Copilot.<span class="who">Automatic</span></li>
+      <li><strong>Reword the risky claims on the service pages</strong> ("guaranteed approvals", "less than 1%") so Google and AI tools trust them.<span class="who">Needs your OK</span></li>
+      <li><strong>Check Google Search Console</strong>: Pages report (indexed count) and Performance (impressions). Send a screenshot for next Saturday's report.<span class="who">You, 5 minutes</span></li>
+      <li><strong>Start authority signals</strong>: ask 5 clients for Trustpilot or Google reviews, claim Bing Places, answer 2 Reddit or Quora questions about US bank addresses.<span class="who">You or your team</span></li>
+    </ul>
+  </article>
+
+  <article class="week" id="w2026-11-22">
+    <div class="weekhead"><h2>Week of Nov 16 to 22, 2026</h2><span class="tag">Results · Saturday</span></div>
+
+    <h3>Where we are</h3>
+    <div class="kpis">
+      <div class="kpi"><b>0 / 18</b><span>tracked searches we appear in</span><small>Baseline, first week</small></div>
+      <div class="kpi"><b>+47</b><span>pages added</span><small>49 to 96 pages</small></div>
+      <div class="kpi"><b>5</b><span>updates shipped</span><small>PRs #2, #3, #4, #6, #7</small></div>
+      <div class="kpi"><b>0</b><span>pages exposing private files</span><small>Was 6+ on Nov 16</small></div>
+    </div>
+    <p class="note">The Nov 22 daily check could not reach its sources and logged the same results as Nov 21, so Nov 21 is the last reliable ranking check this week.</p>
+
+    <h3>What we did this week</h3>
+    <ul class="done">
+      <li><strong>Stopped a data leak.</strong> Bot keys, a browser profile and database files were downloadable from the live site. They now return 404.</li>
+      <li><strong>Set up measurement.</strong> Google Search Console, Bing Webmaster Tools and Google Analytics (GA4) on every page.</li>
+      <li><strong>Built the AI-search foundation.</strong> Structured data on every page, llms.txt for AI assistants, a complete sitemap, AI crawlers allowed, IndexNow for Bing.</li>
+      <li><strong>Published about 45 new guides.</strong> 8 answer-first guides (EIN, ITIN, Form 5472, BOI, CMRA, Stripe, Mercury), 16 state guides, 20 founder-country guides and a hub page.</li>
+      <li><strong>Fixed facts.</strong> ITIN price set to $700, address price set to $2,000 a year everywhere, Delaware annual tax updated to $400.</li>
+      <li><strong>Redesigned the site.</strong> One header, footer and theme on every page; readable articles with a table of contents; service pages that were half invisible now render properly.</li>
+      <li><strong>Added the banking hook.</strong> New homepage headline and a US Address for Banking page, linked in the top menu.</li>
+      <li><strong>Automated the work.</strong> A daily task publishes up to 3 checked guides, logs rankings and notifies Bing.</li>
+    </ul>
+
+    <h3>Tracked searches (last reliable check, Nov 21)</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Search</th><th>Our position</th><th>Who is #1</th></tr></thead>
+        <tbody>
+          <tr><td class="q">US residential address for non-residents</td><td><span class="pill none">Not yet</span></td><td>zenbusiness.com</td></tr>
+          <tr><td class="q">US address for non-resident LLC owner</td><td><span class="pill none">Not yet</span></td><td>zenbusiness.com</td></tr>
+          <tr><td class="q">open US business bank account as non-resident</td><td><span class="pill none">Not yet</span></td><td>veem.com</td></tr>
+          <tr><td class="q">Mercury bank non-resident LLC address requirements</td><td><span class="pill none">Not yet</span></td><td>llcuniversity.com</td></tr>
+          <tr><td class="q">why do banks reject virtual mailbox address</td><td><span class="pill none">Not yet</span></td><td>businessanywhere.io</td></tr>
+          <tr><td class="q">what is a CMRA address</td><td><span class="pill none">Not yet</span></td><td>smarty.com</td></tr>
+          <tr><td class="q">how to get an EIN without SSN</td><td><span class="pill none">Not yet</span></td><td>zenbusiness.com</td></tr>
+          <tr><td class="q">how to get an ITIN as a non-resident</td><td><span class="pill none">Not yet</span></td><td>sprintax.com</td></tr>
+          <tr><td class="q">ITIN processing time 2026</td><td><span class="pill none">Not yet</span></td><td>irs.gov</td></tr>
+          <tr><td class="q">Wyoming LLC for non-residents</td><td><span class="pill none">Not yet</span></td><td>wise.com</td></tr>
+          <tr><td class="q">Wyoming vs Delaware LLC for foreigners</td><td><span class="pill none">Not yet</span></td><td>wboc.com</td></tr>
+          <tr><td class="q">Form 5472 foreign-owned single member LLC</td><td><span class="pill none">Not yet</span></td><td>wikipedia.org</td></tr>
+          <tr><td class="q">BOI reporting non-resident LLC 2026</td><td><span class="pill none">Not yet</span></td><td>federalregister.gov</td></tr>
+          <tr><td class="q">best US address service for international founders</td><td><span class="pill none">Not yet</span></td><td>anytimemailbox.com</td></tr>
+          <tr><td class="q">US LLC for Indian founders</td><td><span class="pill none">Not yet</span></td><td>outlookindia.com</td></tr>
+          <tr><td class="q">US LLC for UAE residents</td><td><span class="pill none">Not yet</span></td><td>gulfnews.com</td></tr>
+          <tr><td class="q">Stripe account for non-US LLC owner</td><td><span class="pill none">Not yet</span></td><td>medium.com</td></tr>
+          <tr><td class="q">registered agent vs business address non-resident</td><td><span class="pill none">Not yet</span></td><td>corpnet.com</td></tr>
+          <tr><td class="q">13 new searches added Nov 20 to 22 (states, countries, banking address)</td><td><span class="pill new">First check next week</span></td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Source: seo-automation/visibility-log.csv (daily web-search checks of the top results).</p>
+  </article>
+
+  <details class="method">
+    <summary>How these numbers are measured</summary>
+    <p>Rankings come from a daily web search for each tracked phrase, recording whether theresidentialaddress.com appears in the top results and who ranks first. The search runs from the US, so it is a sample, not every country's results. Indexing and impressions come from Google Search Console and Bing Webmaster Tools, which only the owner can open; screenshots shared with Claude are added to the next report. Page counts and work done come from the site's commit history.</p>
+  </details>
+</div>
