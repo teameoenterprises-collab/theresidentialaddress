@@ -150,6 +150,22 @@ def social(s, f):
     s = re.sub(r'\n\s*<meta (?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>', "", s)
     return s.replace("</head>", block + "\n</head>", 1)
 
+ICON_BLOCK = ('\n  <!-- tra:icons -->\n'
+              '  <link rel="icon" href="/favicon.ico" sizes="48x48">\n'
+              '  <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+              '  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">\n'
+              '  <link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
+              '  <link rel="manifest" href="/site.webmanifest">\n'
+              '  <meta name="theme-color" content="#0f1b2d">\n'
+              '  <!-- /tra:icons -->')
+
+def icons(s):
+    """One set of real favicon files (Google needs a crawlable icon file, not a data: URI)."""
+    s = re.sub(r"\s*<!-- tra:icons -->.*?<!-- /tra:icons -->", "", s, flags=re.S)
+    s = re.sub(r'\n?[ \t]*<link[^>]*rel="(?:shortcut icon|icon|apple-touch-icon|manifest)"[^>]*>', "", s)
+    s = re.sub(r'\n?[ \t]*<meta name="theme-color"[^>]*>', "", s)
+    return s.replace("</title>", "</title>" + ICON_BLOCK, 1)
+
 HEAD_TAGS = '  <link rel="stylesheet" href="site.css">\n'
 JS_TAG = '  <script src="site.js" defer></script>\n'
 
@@ -195,6 +211,7 @@ def apply(f):
     if 'src="site.js"' not in s:
         s = s.replace("</body>", JS_TAG + "</body>", 1)
     s = social(s, f)
+    s = icons(s)
     if s != o:
         open(f, "w", encoding="utf-8").write(s)
         return True
@@ -203,4 +220,7 @@ def apply(f):
 if __name__ == "__main__":
     pages = [f for f in sorted(glob.glob("*.html")) if f not in SKIP]
     changed = [f for f in pages if apply(f)]
+    for f in SKIP:  # skipped pages still get the favicon set
+        t = open(f, encoding="utf-8").read(); n = icons(t)
+        if n != t: open(f, "w", encoding="utf-8").write(n); changed.append(f)
     print(f"updated {len(changed)} of {len(pages)} pages")
