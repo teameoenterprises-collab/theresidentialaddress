@@ -1,0 +1,38 @@
+{
+  "slug": "itin-processing-time",
+  "title": "ITIN Processing Time in 2026: How Long Form W-7 Takes",
+  "h1": "How Long Does an ITIN Take in 2026? IRS Processing Times Explained",
+  "description": "IRS ITIN processing time in 2026: 7 weeks normally, 9 to 11 weeks in tax season or from abroad, how to check status, CP565 and when documents come back.",
+  "category": "Blog • Tax IDs",
+  "emoji": "⏳🪪📬",
+  "card_category": "US Business",
+  "body_html": "\n<p class=\"answer\"><strong>Short answer:</strong> The IRS says to allow 7 weeks to hear back about an ITIN application filed on Form W-7. It can take 9 to 11 weeks if you apply during tax season (January 15 to April 30) or if you apply from outside the US. When the ITIN is assigned, the IRS mails a CP565 notice with your number.</p>\n<h2>The official IRS timeframes</h2>\n<ul>\n<li><strong>Normal processing:</strong> allow 7 weeks for the IRS to notify you of your application status.</li>\n<li><strong>Tax season, January 15 to April 30:</strong> 9 to 11 weeks.</li>\n<li><strong>Applying from overseas:</strong> 9 to 11 weeks.</li>\n</ul>\n<p>The clock starts when the IRS receives a complete application, not when you post it. International mail time comes on top of these figures, so a founder mailing Form W-7 from abroad in February should plan for three months or more.</p>\n<h2>What usually adds delay</h2>\n<ul>\n<li><strong>Missing tax reason.</strong> Form W-7 must be attached to a federal tax return or include proof that you meet one of the exceptions in the W-7 instructions. Without it, the application is suspended or rejected.</li>\n<li><strong>Document problems.</strong> The IRS needs original identity documents or copies certified by the issuing agency. A passport is the only document that proves both identity and foreign status on its own.</li>\n<li><strong>Requests for more information.</strong> If the IRS sends a CP566 notice, it needs more information, and your file waits until you reply.</li>\n<li><strong>Peak season.</strong> Applying between January 15 and April 30 moves you into the longer window.</li>\n</ul>\n<h2>The notices you may receive</h2>\n<ul>\n<li><strong>CP565:</strong> your ITIN has been assigned. No further action is needed. Keep this letter safe.</li>\n<li><strong>CP566:</strong> the IRS needs more information to process the application.</li>\n<li><strong>CP567:</strong> the application was rejected and you must resubmit it.</li>\n</ul>\n<h2>How to check your ITIN status</h2>\n<p>If you have not heard from the IRS by the end of the processing window, call to ask about your application:</p>\n<ul>\n<li><strong>From outside the US:</strong> 267-941-1000 (not toll free).</li>\n<li><strong>From inside the US:</strong> 800-829-1040, 7 a.m. to 7 p.m. local time.</li>\n</ul>\n<h2>When your passport comes back</h2>\n<p>If you mail original documents, the IRS returns them to the mailing address on line 2 of your Form W-7, and says to contact it if they have not arrived within 60 days. You can include a prepaid express or courier envelope to speed up the return. This is why many non-residents prefer a Certifying Acceptance Agent: a CAA can authenticate a passport so the original stays with you. Acceptance Agents and CAAs work both in the US and abroad.</p>\n<h2>How to plan around the wait</h2>\n<ul>\n<li>You do not need an ITIN to form an LLC or get an EIN. Apply for the EIN first so the business can start. See <a href=\"how-to-get-ein-without-ssn.html\">how to get an EIN without an SSN</a>.</li>\n<li>If you need the ITIN for a tax return, apply outside the January to April peak when you can.</li>\n<li>Make sure the mailing address on line 2 is one where you reliably receive post, because both the CP565 and your returned documents go there.</li>\n</ul>\n<h2>Keeping the ITIN active</h2>\n<p>An ITIN that has not been used on a US federal tax return for 3 consecutive tax years expires on December 31 of the third year. You renew it with a new Form W-7 before using it on a return again. If the ITIN only appears on information returns, the IRS says you do not need to renew it yet.</p>\n<p>For the full application steps, see <a href=\"how-to-get-itin-non-resident.html\">how to get an ITIN as a non-resident</a>. The Residential Address prepares ITIN applications for non-US founders for $700. <a href=\"itin-application.html\">See the ITIN application service</a>.</p>\n<p>This article is general information, not tax or legal advice.</p>\n",
+  "faqs": [
+    [
+      "How long does it take to get an ITIN in 2026?",
+      "The IRS says to allow 7 weeks. It can take 9 to 11 weeks during tax season, January 15 to April 30, or if you apply from overseas."
+    ],
+    [
+      "How do I check my ITIN application status from abroad?",
+      "Call the IRS on 267-941-1000, which is not toll free. From inside the US the number is 800-829-1040."
+    ],
+    [
+      "What is the CP565 notice?",
+      "It is the IRS letter confirming that your ITIN has been assigned. No further action is needed."
+    ],
+    [
+      "When will the IRS return my passport?",
+      "The IRS mails original documents back to the address on line 2 of Form W-7 and says to contact it if they have not arrived within 60 days."
+    ],
+    [
+      "Does an ITIN expire?",
+      "Yes. If it is not used on a federal tax return for 3 consecutive tax years, it expires on December 31 of the third year and must be renewed with Form W-7."
+    ]
+  ],
+  "llms_summary": "The IRS says to allow 7 weeks for an ITIN (Form W-7) decision, or 9 to 11 weeks in tax season (Jan 15 to Apr 30) or when applying from overseas; status line from abroad is 267-941-1000.",
+  "sources": [
+    "https://www.irs.gov/tin/itin/how-to-apply-for-an-itin",
+    "https://www.irs.gov/tin/itin/individual-taxpayer-identification-number-itin",
+    "https://www.irs.gov/pub/irs-pdf/iw7.pdf"
+  ]
+}

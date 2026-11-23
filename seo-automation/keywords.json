@@ -31,6 +31,7 @@
     "US LLC for Nepali founders",
     "US address for bank account non-resident",
     "non-CMRA address for banking",
-    "residential address for Mercury bank application"
+    "residential address for Mercury bank application",
+    "W-8BEN or W-9 for foreign-owned LLC"
   ]
 }
