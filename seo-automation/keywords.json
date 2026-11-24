@@ -32,6 +32,7 @@
     "US address for bank account non-resident",
     "non-CMRA address for banking",
     "residential address for Mercury bank application",
-    "W-8BEN or W-9 for foreign-owned LLC"
+    "W-8BEN or W-9 for foreign-owned LLC",
+    "EIN verification letter 147C non-resident"
   ]
 }
