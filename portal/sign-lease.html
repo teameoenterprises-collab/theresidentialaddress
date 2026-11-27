@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com data:;
+    img-src 'self' data: blob:;
+    connect-src https://*.supabase.co https://*.supabase.in;
+    base-uri 'self'; form-action 'self'; object-src 'none';
+  " />
+  <title>Sign Your Lease — The Residential Address</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBkMWIyZSIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNjOGE5NmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlA8L3RleHQ+Cjwvc3ZnPg==" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <!-- Same Supabase project as the portal (public URL + anon key only) -->
+  <script>
+    const _cfg = [
+      'aHR0cHM6Ly9pdWx1aHh2cXludHh0cnhldnFiYi5zdXBhYmFzZS5jbw==',
+      'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1sMWJIVm9lSFp4ZVc1MGVIUnllR1YyY1dKaUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpJMk9USTROVFlzSW1WNGNDSTZNakE0T0RJMk9EZzFObjAuS2RucHdRal9jbjZmV3QtSnhMRDFSRVFxbnY4UXQydlBtOF9GZHZVQ205TQ=='
+    ].map(s => atob(s));
+    const SUPABASE_URL = _cfg[0], SUPABASE_ANON_KEY = _cfg[1];
+  </script>
+  <style>
+    :root { --forest:#1a3a2a; --gold:#b8973a; --gold2:#d4af55; --ink:#0c0f0a; --muted:#7a7060; --parch:#f5f0e8; --parch2:#ece6d8; --parch3:#ddd5c5; --red:#991b1b; --red-bg:#fee2e2; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--parch2); font-family:Outfit,Arial,sans-serif; color:var(--ink); }
+    header { background:var(--forest); padding:16px 20px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:5; }
+    header .brand { font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; color:#fff; font-size:20px; } header .brand { color:#d4af55; }
+    header .sub { color:#9a9ba0; font-size:12.5px; }
+    main { max-width:820px; margin:0 auto; padding:20px 16px 60px; }
+    .card { background:#fff; border-radius:14px; box-shadow:0 4px 16px rgba(10,14,23,.08); padding:22px; margin-bottom:18px; }
+    .doc { padding:36px 40px; }
+    @media (max-width:600px){ .doc { padding:22px 16px; } }
+    h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:19px; margin:0 0 6px; }
+    .muted { color:var(--muted); font-size:13.5px; line-height:1.6; }
+    .tabs { display:flex; gap:8px; margin:16px 0 12px; }
+    .tab { flex:1; padding:10px; border:1.5px solid var(--parch3); background:#fff; border-radius:9px; font:600 14px Outfit,sans-serif; cursor:pointer; color:var(--ink); }
+    .tab.on { border-color:var(--gold); background:#f7f1e5; color:var(--forest); }
+    .pad-wrap { position:relative; border:1.5px dashed var(--parch3); border-radius:10px; background:#fff; }
+    canvas#pad { display:block; width:100%; height:170px; touch-action:none; cursor:crosshair; }
+    .pad-hint { position:absolute; left:14px; bottom:10px; font-size:12px; color:#aaa; pointer-events:none; }
+    .clear { position:absolute; right:10px; top:8px; background:none; border:none; color:var(--muted); font-size:13px; cursor:pointer; text-decoration:underline; }
+    input[type=text] { width:100%; padding:12px 14px; border:1.5px solid var(--parch3); border-radius:9px; font:15px Outfit,sans-serif; }
+    .typed-preview { font-family:'Dancing Script',cursive; font-size:42px; min-height:70px; padding:8px 14px; border-bottom:1px solid #333; margin-top:10px; color:#111; }
+    label.consent { display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.55; margin:18px 0; cursor:pointer; }
+    label.consent input { margin-top:3px; width:18px; height:18px; accent-color:var(--gold); flex-shrink:0; }
+    .btn { width:100%; padding:14px; border:none; border-radius:10px; background:var(--gold); color:#fff; font:700 15px Outfit,sans-serif; cursor:pointer; }
+    .btn:disabled { opacity:.55; cursor:not-allowed; }
+    .err { display:none; background:var(--red-bg); color:var(--red); border-radius:9px; padding:10px 14px; font-size:13.5px; margin-top:12px; }
+    .center { text-align:center; padding:50px 22px; }
+    .big { font-size:46px; }
+    .hidden { display:none !important; }
+  </style>
+  <style id="lease-css"></style>
+</head>
+<body>
+  <header><span class="brand">The Residential Address</span><span class="sub">Secure lease signing</span></header>
+  <main>
+    <div id="state-loading" class="card center"><div class="big">⏳</div><p class="muted">Loading your lease…</p></div>
+    <div id="state-error" class="card center hidden"><div class="big">⚠️</div><h2>We couldn't open this lease</h2><p class="muted" id="error-text"></p></div>
+    <div id="state-done" class="card center hidden"><div class="big">✅</div><h2>Thank you, you've signed</h2><p class="muted" id="done-text"></p></div>
+
+    <div id="state-sign" class="hidden">
+      <div class="card">
+        <h2 id="hello"></h2>
+        <p class="muted">Please read the whole lease below. The details filled in for you are highlighted. When you're ready, sign at the bottom of the page.</p>
+      </div>
+      <div class="card doc" id="lease"></div>
+      <div class="card" id="sign-card">
+        <h2>Your signature</h2>
+        <p class="muted">Draw your signature, or type your full name. It will be placed on every <span id="role-word">signature</span> line of the lease.</p>
+        <div class="tabs">
+          <button class="tab on" id="tab-draw" type="button" onclick="setMode('drawn')">✍️ Draw</button>
+          <button class="tab" id="tab-type" type="button" onclick="setMode('typed')">⌨️ Type my name</button>
+        </div>
+        <div id="mode-draw" class="pad-wrap">
+          <canvas id="pad"></canvas>
+          <span class="pad-hint" id="pad-hint">Sign here with your mouse or finger</span>
+          <button class="clear" type="button" onclick="clearPad()">Clear</button>
+        </div>
+        <div id="mode-type" class="hidden">
+          <input type="text" id="typed" maxlength="80" placeholder="Your full legal name" autocomplete="name" oninput="document.getElementById('typed-preview').textContent=this.value" />
+          <div class="typed-preview" id="typed-preview"></div>
+        </div>
+        <label class="consent"><input type="checkbox" id="consent" />
+          <span>I have read this lease. I agree to sign it electronically, and I agree that my electronic signature is the legal equivalent of my handwritten signature on this lease.</span></label>
+        <button class="btn" id="sign-btn" onclick="submitSign()">Sign the lease</button>
+        <div class="err" id="sign-err"></div>
+      </div>
+    </div>
+  </main>
+
+<script>
+const FN_URL = SUPABASE_URL + '/functions/v1/lease-sign';
+const token = new URLSearchParams(location.hash.slice(1)).get('t') || new URLSearchParams(location.search).get('t') || '';
+let mode = 'drawn', role = '', hasInk = false;
+
+async function call(action, extra) {
+  const r = await fetch(FN_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY },
+    body: JSON.stringify(Object.assign({ action, token }, extra || {})),
+  });
+  let data = {}; try { data = await r.json(); } catch {}
+  if (!r.ok || data.error) throw new Error(data.error || ('Something went wrong (' + r.status + ').'));
+  return data;
+}
+function show(id) { ['state-loading','state-error','state-done','state-sign'].forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id)); }
+function fail(msg) { document.getElementById('error-text').textContent = msg; show('state-error'); }
+
+async function load() {
+  if (!token) return fail('This page needs the private link from your email. Please open the link in the email again.');
+  try {
+    const d = await call('view');
+    role = d.role;
+    document.getElementById('lease-css').textContent = d.css;
+    document.getElementById('lease').innerHTML = d.html;   // built by the server; every value is escaped
+    document.getElementById('hello').textContent = 'Hello ' + d.name + ', please review and sign your lease';
+    document.getElementById('role-word').textContent = role === 'tenant' ? 'Tenant' : 'Landlord';
+    show('state-sign');
+    setupPad();
+  } catch (e) { fail(e.message); }
+}
+
+// ── Signature pad ──
+let pad, ctx, drawing = false, last = null;
+function setupPad() {
+  pad = document.getElementById('pad');
+  const resize = () => {
+    const r = pad.getBoundingClientRect(), dpr = Math.max(1, window.devicePixelRatio || 1);
+    pad.width = r.width * dpr; pad.height = r.height * dpr;
+    ctx = pad.getContext('2d'); ctx.scale(dpr, dpr);
+    ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111';
+    hasInk = false; document.getElementById('pad-hint').style.display = '';
+  };
+  resize(); window.addEventListener('resize', () => { if (!hasInk) resize(); });
+  const pos = e => { const r = pad.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  pad.addEventListener('pointerdown', e => { drawing = true; last = pos(e); pad.setPointerCapture(e.pointerId); });
+  pad.addEventListener('pointermove', e => {
+    if (!drawing) return; const p = pos(e);
+    ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke(); last = p;
+    if (!hasInk) { hasInk = true; document.getElementById('pad-hint').style.display = 'none'; }
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(t => pad.addEventListener(t, () => { drawing = false; }));
+}
+function clearPad() { ctx.clearRect(0, 0, pad.width, pad.height); hasInk = false; document.getElementById('pad-hint').style.display = ''; }
+function setMode(m) {
+  mode = m;
+  document.getElementById('tab-draw').classList.toggle('on', m === 'drawn');
+  document.getElementById('tab-type').classList.toggle('on', m === 'typed');
+  document.getElementById('mode-draw').classList.toggle('hidden', m !== 'drawn');
+  document.getElementById('mode-type').classList.toggle('hidden', m !== 'typed');
+}
+// Trim the drawing to its ink so it sits nicely on the line
+function trimmedPng(src) {
+  const c = src.getContext('2d'), { width: w, height: h } = src, d = c.getImageData(0, 0, w, h).data;
+  let x0 = w, y0 = h, x1 = -1, y1 = -1;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 10) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  if (x1 < 0) return null;
+  const p = 8, out = document.createElement('canvas');
+  out.width = x1 - x0 + 2 * p; out.height = y1 - y0 + 2 * p;
+  out.getContext('2d').drawImage(src, x0 - p, y0 - p, out.width, out.height, 0, 0, out.width, out.height);
+  return out.toDataURL('image/png');
+}
+async function typedPng(name) {
+  try { await document.fonts.load("600 64px 'Dancing Script'"); } catch {}
+  const c = document.createElement('canvas'); const g = c.getContext('2d');
+  g.font = "600 64px 'Dancing Script', cursive";
+  c.width = Math.ceil(g.measureText(name).width) + 40; c.height = 110;
+  g.font = "600 64px 'Dancing Script', cursive"; g.fillStyle = '#111'; g.textBaseline = 'middle';
+  g.fillText(name, 20, 58);
+  return trimmedPng(c);
+}
+
+async function submitSign() {
+  const err = document.getElementById('sign-err'); err.style.display = 'none';
+  const btn = document.getElementById('sign-btn');
+  const say = m => { err.textContent = m; err.style.display = 'block'; };
+  if (!document.getElementById('consent').checked) return say('Please tick the box to agree to sign electronically.');
+  let png = null, typed = '';
+  if (mode === 'drawn') { if (!hasInk) return say('Please draw your signature in the box.'); png = trimmedPng(pad); }
+  else {
+    typed = document.getElementById('typed').value.trim().replace(/\s+/g, ' ');
+    if (typed.length < 2) return say('Please type your full name.');
+    png = await typedPng(typed);
+  }
+  if (!png) return say('Please add your signature.');
+  btn.disabled = true; btn.textContent = 'Signing…';
+  try {
+    const d = await call('sign', { consent: true, consent_at: new Date().toISOString(), method: mode, signature_png: png, typed_name: typed });
+    document.getElementById('done-text').textContent = d.done
+      ? 'Everyone has now signed. A copy of the signed lease is on its way to your email.'
+      : 'Your signature is saved. The other party has been asked to sign, and you will get the fully signed copy by email.';
+    show('state-done'); window.scrollTo(0, 0);
+    history.replaceState(null, '', location.pathname);   // remove the private link from the address bar
+  } catch (e) { say(e.message); btn.disabled = false; btn.textContent = 'Sign the lease'; }
+}
+load();
+</script>
+</body>
+</html>
