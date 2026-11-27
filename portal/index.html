@@ -2548,6 +2548,18 @@
       z-index:350; display:none; align-items:center; justify-content:center; padding:24px;
     }
     #edit-lease-overlay.open { display:flex; }
+    /* Leases + e-sign */
+    .ls-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0 14px; align-items:end; }
+    .ls-grid .field input, .ls-grid .field select, .ls-grid .field textarea { width:100%; }
+    #lease-overlay { position:fixed; inset:0; background:rgba(12,15,10,0.50); backdrop-filter:blur(4px); z-index:360; display:none; align-items:flex-start; justify-content:center; padding:24px; overflow-y:auto; }
+    #lease-overlay.open { display:flex; }
+    .lease-modal { background:var(--white); border-radius:16px; padding:26px 28px; width:100%; max-width:760px; box-shadow:var(--shadow-l); }
+    .lease-modal h4 { font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin:18px 0 8px; }
+    .lease-preview { border:1px solid var(--parch3); border-radius:10px; padding:28px 30px; max-height:60vh; overflow-y:auto; background:#fff; margin-top:14px; }
+    .ls-row { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 0; border-bottom:1px solid var(--parch2); }
+    .ls-row:last-child { border-bottom:none; }
+    .ls-signers { font-size:12px; color:var(--muted); margin-top:4px; }
+    .ls-actions { display:flex; gap:6px; flex-wrap:wrap; }
     /* Email Settings */
     .es-toggle-row { display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid var(--parch2); }
     .es-toggle-info { flex:1; }
@@ -3734,6 +3746,37 @@
         </select>
       </div>
       <div id="cd-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading clients…</p></div></div>
+    </div>
+
+    <!-- ── ADMIN: Leases (create + e-sign) ─────────────── -->
+    <div id="page-admin-leases" class="page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h2>Leases</h2>
+          <p>Leases sent for e-signing. Create one from a client on the Clients page (📝 Lease).</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadLeasesPage()">↻ Refresh</button>
+      </div>
+      <div class="card" style="max-width:820px;margin-bottom:20px;">
+        <div class="card-title">🏢 Landlord details (used on every lease)</div>
+        <div class="ls-grid">
+          <div class="field"><label for="ll-name">Landlord name</label><input type="text" id="ll-name" maxlength="120" /></div>
+          <div class="field"><label for="ll-phone">Phone</label><input type="text" id="ll-phone" maxlength="40" /></div>
+          <div class="field"><label for="ll-email">Email</label><input type="text" id="ll-email" maxlength="160" /></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin:-4px 0 12px;">The landlord's signing invitations are sent to this email.</div>
+        <div class="error-banner" id="ll-error" style="margin-bottom:10px;"></div>
+        <button class="btn btn-gold btn-sm" id="ll-save" onclick="saveLandlord()">💾 Save landlord details</button>
+      </div>
+      <div class="card" id="ls-missing-card" style="display:none;margin-bottom:20px;border-color:#fca5a5;">
+        <div class="card-title">⚠ Clients with no lease template for their state</div>
+        <div style="font-size:12.5px;color:var(--muted);margin:-6px 0 10px;">Their assigned address is in a state we don't have a lease for yet (or the state can't be read from the address). Send the template for that state to add it.</div>
+        <div id="ls-missing"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 All leases</div>
+        <div id="ls-list"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Loading…</p></div></div>
+      </div>
     </div>
 
     <!-- ── ADMIN: Email Settings ──────────────────────── -->
@@ -6153,6 +6196,23 @@ function docThumb(d) {
   return '<span>📎</span>';
 }
 
+// Staff: delete a document (the file in storage and its row)
+async function deleteDocument(id) {
+  if (!isStaff()) return;
+  const d = allDocHistory.find(x => String(x.id) === String(id));
+  if (!d) return;
+  const ok = await uiConfirm({ icon: '🗑', title: 'Delete this document?', confirmText: 'Delete',
+    message: '“' + (d.name || 'Document') + '” will be removed for staff and the client. This can’t be undone.' });
+  if (!ok) return;
+  const { data: gone, error } = await sb.from('documents').delete().eq('id', d.id).select('id');
+  if (error || !(gone || []).length) { showToast(error ? 'Could not delete: ' + error.message : 'Could not delete: you may not have permission.', true); return; }
+  const mm = (d.file_url || '').match(_SB_PUBLIC_RE);
+  if (mm) { const { error: sErr } = await sb.storage.from(mm[1]).remove([decodeURIComponent(mm[2])]); if (sErr) devLog('storage remove:', sErr.message); }
+  allDocHistory = allDocHistory.filter(x => x.id !== d.id);
+  renderDocHistory();
+  showToast('✓ Document deleted');
+}
+
 function dhDocTileHTML(d, withCheckbox) {
   const cb = withCheckbox
     ? `<input type="checkbox" class="doc-tile-checkbox dh-doc-checkbox" data-doc-id="${d.id}" onchange="updateDhSelectionState()" onclick="event.stopPropagation()" ${d.file_url?'':'disabled'} />`
@@ -6169,6 +6229,7 @@ function dhDocTileHTML(d, withCheckbox) {
         </div>
       </div>
       ${d.file_url ? `<div class="doc-tile-actions"><a href="${esc(d.file_url)}" target="_blank" class="btn btn-ghost btn-sm" style="font-size:11.5px;width:100%;justify-content:center;" onclick="event.stopPropagation()">⬇ Open / Download</a></div>` : ''}
+      ${isStaff() ? `<div class="doc-tile-actions" style="padding-top:0;"><button type="button" class="btn btn-ghost btn-sm" style="font-size:11.5px;width:100%;justify-content:center;color:var(--red);" onclick="event.stopPropagation();deleteDocument(${jsArg(d.id)})">🗑 Delete</button></div>` : ''}
     </div>`;
 }
 
@@ -7965,6 +8026,61 @@ async function submitCreateTicket() {
 <!-- ================================================================
      EDIT LEASE / ADDRESS MODAL
 ================================================================ -->
+<div id="lease-overlay" onclick="if(event.target===this)closeLeaseForm()">
+  <div class="lease-modal">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+      <div>
+        <div style="font-family:'Cormorant Garamond', serif;font-size:22px;font-weight:500;color:var(--ink);">Create lease</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px;"><span id="lf-subtitle">Florida Residential Lease Agreement</span> · filled in from the client's details, edit anything before sending</div>
+      </div>
+      <button onclick="closeLeaseForm()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;">✕</button>
+    </div>
+    <div class="ls-grid" style="margin-top:14px;">
+      <div class="field"><label for="lf-state">State (lease law)</label>
+        <select id="lf-state" class="filter-select" style="width:100%;padding:11px 14px;" onchange="leaseTypeChanged()"></select></div>
+      <div class="field"><label for="lf-ltype">Lease type</label>
+        <select id="lf-ltype" class="filter-select" style="width:100%;padding:11px 14px;" onchange="leaseTypeChanged()"><option value="residential">Residential</option><option value="commercial">Commercial (office)</option></select></div>
+    </div>
+    <input type="hidden" id="lf-template" />
+    <div id="lf-tpl-note" style="font-size:12.5px;margin:-4px 0 4px;color:var(--muted);"></div>
+    <h4>Tenant</h4>
+    <div class="ls-grid">
+      <div class="field" id="lf-biz-wrap" style="display:none;"><label for="lf-business_name">Business / LLC name</label><input type="text" id="lf-business_name" maxlength="160" /></div>
+      <div class="field"><label for="lf-tenant_name" id="lf-tenant_label">Tenant name</label><input type="text" id="lf-tenant_name" maxlength="120" /></div>
+      <div class="field"><label for="lf-tenant_phone">Tenant phone</label><input type="text" id="lf-tenant_phone" maxlength="40" /></div>
+      <div class="field"><label for="lf-tenant_email">Tenant email</label><input type="text" id="lf-tenant_email" maxlength="160" /></div>
+    </div>
+    <h4>Property and term</h4>
+    <div class="field"><label for="lf-address">Assigned address</label><textarea id="lf-address" rows="2" maxlength="300" oninput="leaseAddressChanged()" style="width:100%;padding:11px 14px;border:1.5px solid var(--parch3);border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;"></textarea></div>
+    <div class="ls-grid">
+      <div class="field"><label for="lf-lease_date">Lease dated</label><input type="date" id="lf-lease_date" /></div>
+      <div class="field"><label for="lf-start_date">Lease starts</label><input type="date" id="lf-start_date" onchange="leaseAutoEnd()" /></div>
+      <div class="field"><label for="lf-end_date">Lease ends</label><input type="date" id="lf-end_date" /></div>
+      <div class="field"><label for="lf-rent">Rent per month (USD)</label><input type="text" id="lf-rent" maxlength="12" /></div>
+    </div>
+    <h4>Landlord <span style="text-transform:none;letter-spacing:0;font-weight:400;">(from the Leases page; change here for this lease only)</span></h4>
+    <div class="ls-grid">
+      <div class="field"><label for="lf-landlord_name">Landlord name</label><input type="text" id="lf-landlord_name" maxlength="120" /></div>
+      <div class="field"><label for="lf-landlord_phone">Landlord phone</label><input type="text" id="lf-landlord_phone" maxlength="40" /></div>
+      <div class="field"><label for="lf-landlord_email">Landlord email</label><input type="text" id="lf-landlord_email" maxlength="160" /></div>
+    </div>
+    <h4>Signing</h4>
+    <div class="ls-grid">
+      <div class="field"><label for="lf-sign_order">Who signs first</label>
+        <select id="lf-sign_order" class="filter-select" style="width:100%;padding:11px 14px;"><option value="tenant_first">Tenant first, then landlord</option><option value="landlord_first">Landlord first, then tenant</option></select></div>
+      <div class="field"><label for="lf-date_blanks">Signature dates (day / month / year)</label>
+        <select id="lf-date_blanks" class="filter-select" style="width:100%;padding:11px 14px;"><option value="signed">Date each person actually signs</option><option value="lease">The "lease dated" date above</option></select></div>
+    </div>
+    <div class="error-banner" id="lf-error" style="margin:6px 0 10px;"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px;">
+      <button class="btn btn-ghost" onclick="closeLeaseForm()">Cancel</button>
+      <button class="btn btn-ghost" id="lf-preview-btn" onclick="previewLease()">👁 Preview</button>
+      <button class="btn btn-gold" id="lf-send-btn" onclick="sendLease()">✉️ Send for signing</button>
+    </div>
+    <div id="lf-preview" class="lease-preview" style="display:none;"></div>
+  </div>
+</div>
+
 <div id="edit-lease-overlay" onclick="if(event.target===this)closeEditLease()">
   <div style="background:var(--white);border-radius:16px;padding:28px 30px;width:100%;max-width:460px;box-shadow:var(--shadow-l);animation:pageIn 0.22s ease;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
@@ -7997,6 +8113,239 @@ async function submitCreateTicket() {
 </div>
 
 <script>
+// ================================================================
+// ADMIN — LEASES: create from template, send for e-signing
+// ================================================================
+// The lease text, signing links, emails and the final signed PDF are all
+// handled by the `lease-sign` Edge Function (see LEASES.md).
+let leaseFormClientId = null;
+const LEASE_FIELDS = ['template','business_name','tenant_name','tenant_phone','tenant_email','address','lease_date','start_date','end_date','rent','landlord_name','landlord_phone','landlord_email','sign_order','date_blanks'];
+const LEASE_DEFAULT_RENT = '950.00';
+// Lease templates by state + type. Must match TEMPLATES in the lease-sign
+// function (template.ts). To add a state, add it in both places.
+const LEASE_TEMPLATES = [
+  { id: 'florida_residential_v1', state: 'FL', type: 'residential' },
+  { id: 'florida_commercial_v1',  state: 'FL', type: 'commercial' },
+  { id: 'texas_residential_v1',   state: 'TX', type: 'residential' },
+];
+const LEASE_COMMERCIAL = 'florida_commercial_v1';
+const leaseTplIsCommercial = id => (LEASE_TEMPLATES.find(t => t.id === id) || {}).type === 'commercial';
+const US_STATES = { AL:'Alabama', AK:'Alaska', AZ:'Arizona', AR:'Arkansas', CA:'California', CO:'Colorado', CT:'Connecticut', DE:'Delaware', DC:'District of Columbia', FL:'Florida', GA:'Georgia', HI:'Hawaii', ID:'Idaho', IL:'Illinois', IN:'Indiana', IA:'Iowa', KS:'Kansas', KY:'Kentucky', LA:'Louisiana', ME:'Maine', MD:'Maryland', MA:'Massachusetts', MI:'Michigan', MN:'Minnesota', MS:'Mississippi', MO:'Missouri', MT:'Montana', NE:'Nebraska', NV:'Nevada', NH:'New Hampshire', NJ:'New Jersey', NM:'New Mexico', NY:'New York', NC:'North Carolina', ND:'North Dakota', OH:'Ohio', OK:'Oklahoma', OR:'Oregon', PA:'Pennsylvania', RI:'Rhode Island', SC:'South Carolina', SD:'South Dakota', TN:'Tennessee', TX:'Texas', UT:'Utah', VT:'Vermont', VA:'Virginia', WA:'Washington', WV:'West Virginia', WI:'Wisconsin', WY:'Wyoming', PR:'Puerto Rico' };
+// The US state of an address: "…, Austin, TX 78758" or "… Lauderhill FL 33319" or a state name.
+function leaseStateOf(addr) {
+  const a = String(addr || '').toUpperCase();
+  if (!a.trim()) return null;
+  const zip = [...a.matchAll(/\b([A-Z]{2})\b[\s,.]*\d{5}(?:-\d{4})?\b/g)].map(m => m[1]).filter(c => US_STATES[c]);
+  if (zip.length) return zip[zip.length - 1];
+  const names = Object.entries(US_STATES).sort((x, y) => y[1].length - x[1].length);
+  for (const [c, n] of names) if (new RegExp('\\b' + n.toUpperCase().replace(/ /g, '\\s+') + '\\b').test(a)) return c;
+  const tail = a.split(',').map(x => x.trim()).filter(Boolean).pop() || '';
+  const t = (tail.match(/^([A-Z]{2})\b/) || [])[1];
+  return t && US_STATES[t] ? t : null;
+}
+// Suite / office addresses suggest a commercial lease; apartments residential.
+const leaseTypeOf = addr => /\b(STE|SUITE|OFFICE)\b/i.test(String(addr || '')) ? 'commercial' : 'residential';
+const leaseTemplateFor = (state, type) => LEASE_TEMPLATES.find(t => t.state === state && t.type === type) || null;
+const leaseStatesWithTemplates = () => [...new Set(LEASE_TEMPLATES.map(t => t.state))];
+// A client's address needs attention if its state has no lease template at all.
+function leaseAddressProblem(addr) {
+  if (!String(addr || '').trim()) return null;
+  const st = leaseStateOf(addr);
+  if (!st) return 'state not recognised';
+  return leaseStatesWithTemplates().includes(st) ? null : 'no lease template for ' + US_STATES[st];
+}
+function _leaseFillStates(detected) {
+  const sel = document.getElementById('lf-state');
+  const states = leaseStatesWithTemplates();
+  if (detected && !states.includes(detected)) states.push(detected);
+  sel.innerHTML = states.map(c => '<option value="' + c + '">' + esc(US_STATES[c]) + (LEASE_TEMPLATES.some(t => t.state === c) ? '' : ' (no template yet)') + '</option>').join('') +
+    (detected ? '' : '<option value="">Not recognised</option>');
+  sel.value = detected || '';
+}
+function leaseAddressChanged() {
+  const addr = document.getElementById('lf-address').value;
+  _leaseFillStates(leaseStateOf(addr));
+  document.getElementById('lf-ltype').value = leaseTypeOf(addr);
+  leaseTypeChanged(true);
+}
+// Pick the template from state + type, and say what was picked (or what's missing)
+function leaseTypeChanged(fromAddress) {
+  const state = document.getElementById('lf-state').value, type = document.getElementById('lf-ltype').value;
+  const tpl = leaseTemplateFor(state, type), com = type === 'commercial';
+  const detected = leaseStateOf(document.getElementById('lf-address').value);
+  document.getElementById('lf-template').value = tpl ? tpl.id : '';
+  document.getElementById('lf-biz-wrap').style.display = com ? '' : 'none';
+  document.getElementById('lf-tenant_label').textContent = com ? 'Signed by (owner name)' : 'Tenant name';
+  const stName = US_STATES[state] || 'Unknown state';
+  document.getElementById('lf-subtitle').textContent = stName + ' ' + (com ? 'Commercial' : 'Residential') + ' Lease Agreement';
+  const note = document.getElementById('lf-tpl-note');
+  if (!tpl) {
+    note.style.color = 'var(--red)';
+    note.textContent = '⚠ No ' + type + ' lease template for ' + stName + ' yet, so it cannot be sent. The template needs adding first, or pick another state/type if this is wrong.';
+  } else if (!detected) {
+    note.style.color = 'var(--red)';
+    note.textContent = '⚠ Couldn\'t tell the state from the assigned address. Check the state above before sending.';
+  } else if (detected !== state) {
+    note.style.color = 'var(--red)';
+    note.textContent = '⚠ The assigned address is in ' + US_STATES[detected] + ', but the ' + stName + ' lease is selected.';
+  } else {
+    note.style.color = 'var(--muted)';
+    note.textContent = 'Picked from the assigned address: ' + stName + ', ' + type + (fromAddress ? ' (type suggested from the address, change it if needed)' : '') + '.';
+  }
+  document.getElementById('lf-send-btn').disabled = !tpl;
+  document.getElementById('lf-preview-btn').disabled = !tpl;
+  document.getElementById('lf-preview').style.display = 'none';
+}
+
+async function leaseFn(action, payload) {
+  const { data: { session } } = await sb.auth.getSession();
+  const r = await fetch(SUPABASE_URL + '/functions/v1/lease-sign', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + (session?.access_token || '') },
+    body: JSON.stringify(Object.assign({ action }, payload || {})),
+  });
+  let d = {}; try { d = await r.json(); } catch {}
+  if (r.status === 404 && !d.error) d.error = 'The lease-sign function is not deployed yet (see LEASES.md).';
+  if (!r.ok || d.error) throw new Error(d.error || ('Request failed (' + r.status + ')'));
+  return d;
+}
+async function getLandlord() {
+  const { data } = await sb.from('portal_settings').select('value').eq('key', 'lease_landlord').maybeSingle();
+  return Object.assign({ name: '', phone: '', email: '' }, data?.value || {});
+}
+function leaseTodayISO() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function _isoPlusYear(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ''); if (!m) return '';
+  return (+m[1] + 1) + '-' + m[2] + '-' + m[3];
+}
+function leaseAutoEnd() {
+  const s = document.getElementById('lf-start_date').value, e = document.getElementById('lf-end_date');
+  if (s && (!e.value || e.value <= s)) e.value = _isoPlusYear(s);
+}
+async function openLeaseForm(clientId) {
+  if (currentProfile?.role !== 'admin') return;   // lease-sign is admin-only
+  const c = (cdAllClients.length ? cdAllClients : allClients).find(x => x.id === clientId);
+  if (!c) return;
+  leaseFormClientId = clientId;
+  const ll = await getLandlord();
+  const today = leaseTodayISO();
+  const start = (c.cs?.lease_start ? String(c.cs.lease_start).slice(0, 10) : '') || today;
+  const v = {
+    template: '', business_name: c.llc_name || '',
+    tenant_name: c.full_name || '', tenant_phone: c.phone || c.whatsapp || '', tenant_email: c.email || '',
+    address: c.cs?.assigned_address || '', lease_date: today, start_date: start,
+    end_date: (c.cs?.lease_end ? String(c.cs.lease_end).slice(0, 10) : '') || _isoPlusYear(start),
+    rent: LEASE_DEFAULT_RENT, landlord_name: ll.name, landlord_phone: ll.phone, landlord_email: ll.email,
+    sign_order: 'tenant_first', date_blanks: 'signed',
+  };
+  LEASE_FIELDS.forEach(k => { document.getElementById('lf-' + k).value = v[k] || ''; });
+  leaseAddressChanged();
+  document.getElementById('lf-error').style.display = 'none';
+  document.getElementById('lf-preview').style.display = 'none';
+  document.getElementById('lease-overlay').classList.add('open');
+  if (!document.getElementById('lf-address').value.trim()) _leaseErr('This client has no assigned address yet. Type it in, and the state and lease are picked from it.');
+  else if (!ll.name || !ll.email) _leaseErr('Landlord details are empty. Fill them in here, or save them once on the Leases page.');
+}
+function closeLeaseForm() { document.getElementById('lease-overlay').classList.remove('open'); leaseFormClientId = null; }
+function _leaseErr(msg) { const el = document.getElementById('lf-error'); el.textContent = msg; el.style.display = msg ? 'block' : 'none'; }
+function _leaseFormValues() {
+  const f = {}; LEASE_FIELDS.forEach(k => { f[k] = document.getElementById('lf-' + k).value.trim(); });
+  return f;
+}
+async function previewLease() {
+  _leaseErr('');
+  const f = _leaseFormValues(), btn = document.getElementById('lf-preview-btn');
+  btn.disabled = true;
+  try {
+    const d = await leaseFn('preview', { fields: f, date_blanks: f.date_blanks, template: f.template });
+    const box = document.getElementById('lf-preview');
+    box.innerHTML = '<style>' + d.css + '</style>' + d.html;   // built by the server; values escaped
+    box.style.display = 'block'; box.scrollTop = 0; box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch (e) { _leaseErr(e.message); }
+  btn.disabled = false;
+}
+async function sendLease() {
+  _leaseErr('');
+  const f = _leaseFormValues();
+  if (!f.template) { _leaseErr('There is no lease template for this state and type yet.'); return; }
+  const first = f.sign_order === 'landlord_first' ? 'the landlord (' + f.landlord_email + ')' : 'the tenant (' + f.tenant_email + ')';
+  const ok = await uiConfirm({ icon: '✉️', title: 'Send this lease for signing?', confirmText: 'Send',
+    message: 'An email with a private signing link goes to ' + first + ' now. The other party is emailed once they have signed.' });
+  if (!ok) return;
+  const btn = document.getElementById('lf-send-btn'); btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    await leaseFn('send', { client_id: leaseFormClientId, fields: f, sign_order: f.sign_order, date_blanks: f.date_blanks, template: f.template });
+    [cdAllClients, allClients].forEach(list => {
+      const c = list.find(x => x.id === leaseFormClientId);
+      if (c) { c.cs = c.cs || {}; if (!c.cs.lease_sent_on) c.cs.lease_sent_on = leaseTodayISO(); }
+    });
+    showToast('✓ Lease sent for signing');
+    closeLeaseForm();
+    if (document.getElementById('page-admin-clients')?.classList.contains('active')) renderClientDetail();
+  } catch (e) { _leaseErr(e.message); }
+  btn.disabled = false; btn.textContent = '✉️ Send for signing';
+}
+
+// ── Leases page ──
+function renderLeaseMissing() {
+  const card = document.getElementById('ls-missing-card'), el = document.getElementById('ls-missing');
+  if (!card || !el) return;
+  const list = (cdAllClients.length ? cdAllClients : allClients)
+    .map(c => ({ c, addr: c.cs?.assigned_address || c.assigned_address, why: leaseAddressProblem(c.cs?.assigned_address || c.assigned_address) }))
+    .filter(x => x.why);
+  card.style.display = list.length ? '' : 'none';
+  el.innerHTML = list.map(x => '<div class="ls-row"><div style="min-width:0;flex:1;"><div style="font-weight:600;color:var(--ink);">' + esc(x.c.full_name || x.c.email || '') + '</div>' +
+    '<div style="font-size:12.5px;color:var(--muted);">' + esc(x.addr) + ' · <span style="color:var(--red);">' + esc(x.why) + '</span></div></div></div>').join('');
+}
+async function loadLeasesPage() {
+  renderLeaseMissing();
+  const ll = await getLandlord();
+  document.getElementById('ll-name').value = ll.name; document.getElementById('ll-phone').value = ll.phone; document.getElementById('ll-email').value = ll.email;
+  const el = document.getElementById('ls-list');
+  const [{ data: leases, error }, { data: signers }] = await Promise.all([
+    sb.from('leases').select('id, client_id, template, fields, status, sign_order, created_at, completed_at, pdf_path').order('created_at', { ascending: false }).limit(200),
+    sb.from('lease_signers').select('lease_id, role, position, name, email, status, invited_at, signed_at'),
+  ]);
+  if (error) { el.innerHTML = '<div class="empty-state"><p>' + esc(isSchemaMissing(error) ? 'Run tra-leases.sql in Supabase first.' : error.message) + '</p></div>'; return; }
+  if (!leases?.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📝</div><p>No leases yet. Open a client on the Clients page and click 📝 Lease.</p></div>'; return; }
+  const by = {}; (signers || []).forEach(s => { (by[s.lease_id] = by[s.lease_id] || []).push(s); });
+  const ST = { sent: ['Waiting for first signature', 'pill-pending'], partially_signed: ['Partly signed', 'pill-pending'], completed: ['Fully signed', 'pill-active'], cancelled: ['Cancelled', 'pill-inactive'] };
+  const SS = { waiting: 'not invited yet', invited: 'invited', viewed: 'opened', signed: 'signed' };
+  el.innerHTML = leases.map(l => {
+    const f = l.fields || {}, st = ST[l.status] || [l.status, ''];
+    const sg = (by[l.id] || []).sort((a, b) => a.position - b.position).map(s =>
+      (s.role === 'tenant' ? 'Tenant' : 'Landlord') + ' ' + esc(s.name) + ': ' + (SS[s.status] || s.status) + (s.signed_at ? ' ' + fmtDate(s.signed_at) : '')).join(' · ');
+    const open = l.status === 'sent' || l.status === 'partially_signed';
+    return '<div class="ls-row"><div style="min-width:0;flex:1;">' +
+      '<div style="font-weight:600;color:var(--ink);">' + esc(leaseTplIsCommercial(l.template) ? (f.business_name || f.tenant_name || '') : (f.tenant_name || '')) + ' <span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:6px;">' + esc(US_STATES[(LEASE_TEMPLATES.find(t => t.id === (l.template || 'florida_residential_v1')) || {}).state] || '') + ' ' + (leaseTplIsCommercial(l.template) ? 'Commercial' : 'Residential') + '</span> <span class="pill ' + st[1] + '" style="font-size:11px;margin-left:6px;">' + st[0] + '</span></div>' +
+      '<div style="font-size:12.5px;color:var(--muted);">' + esc(f.address || '') + ' · ' + esc(f.start_date || '') + ' to ' + esc(f.end_date || '') + ' · sent ' + fmtDate(l.created_at) + '</div>' +
+      '<div class="ls-signers">' + sg + '</div></div><div class="ls-actions">' +
+      (open ? '<button class="btn btn-ghost btn-sm" onclick="leaseAction(\'resend\',\'' + l.id + '\')">↻ Resend link</button><button class="btn btn-ghost btn-sm" onclick="leaseAction(\'cancel\',\'' + l.id + '\')">✕ Cancel</button>' : '') +
+      (l.pdf_path ? '<button class="btn btn-gold btn-sm" onclick="leaseAction(\'pdf_link\',\'' + l.id + '\')">⬇ Signed PDF</button>' : '') +
+      '</div></div>';
+  }).join('');
+}
+async function leaseAction(action, id) {
+  if (action === 'cancel' && !(await uiConfirm({ title: 'Cancel this lease?', message: 'The signing links stop working. You can create a new lease afterwards.', confirmText: 'Cancel lease' }))) return;
+  try {
+    const d = await leaseFn(action, { lease_id: id });
+    if (action === 'pdf_link' && d.url) { window.open(d.url, '_blank', 'noopener'); return; }
+    showToast(action === 'resend' ? '✓ Signing link sent again' : '✓ Lease cancelled');
+    loadLeasesPage();
+  } catch (e) { showToast(e.message, true); }
+}
+async function saveLandlord() {
+  const err = document.getElementById('ll-error'); err.style.display = 'none';
+  const v = { name: document.getElementById('ll-name').value.trim(), phone: document.getElementById('ll-phone').value.trim(), email: document.getElementById('ll-email').value.trim().toLowerCase() };
+  if (!v.name || !isValidEmail(v.email)) { err.textContent = 'Please enter the landlord name and a valid email.'; err.style.display = 'block'; return; }
+  const { error } = await sb.from('portal_settings').upsert({ key: 'lease_landlord', value: v, updated_at: new Date().toISOString(), updated_by: currentUser.id }, { onConflict: 'key' });
+  if (error) { err.textContent = 'Could not save: ' + error.message; err.style.display = 'block'; return; }
+  showToast('✓ Landlord details saved');
+}
+
 // ================================================================
 // ADMIN — CLIENTS DETAIL PAGE
 // ================================================================
@@ -8103,6 +8452,7 @@ function renderClientDetail() {
           '<div class="cd-proofs">' + proofHtml + '</div>' +
         '</div>' +
         '<div class="cd-row-actions">' +
+          (currentProfile?.role === 'admin' ? '<button class="btn btn-ghost btn-sm cd-lease-btn">📝 Lease</button>' : '') +
           '<button class="btn btn-gold btn-sm cd-edit-btn">✏️ Edit</button>' +
           '<button class="btn btn-ghost btn-sm cd-mail-btn">📤 Mail</button>' +
           '<button class="btn btn-ghost btn-sm cd-proof-btn">🏠 Proof</button>' +
@@ -8114,6 +8464,7 @@ function renderClientDetail() {
     const row = e.target.closest('.cd-row'); if (!row) return;
     const cid = row.dataset.cid; if (!cid) return;
     if (e.target.classList.contains('cd-edit-btn'))       openEditLease(cid);
+    else if (e.target.classList.contains('cd-lease-btn')) openLeaseForm(cid);
     else if (e.target.classList.contains('cd-mail-btn'))  goUploadFor(cid);
     else if (e.target.classList.contains('cd-proof-btn')) openAssignFor(cid);
     else openEditLease(cid);
@@ -8890,6 +9241,7 @@ function setupSidebar() {
       ${sbLabel(isReferrer ? 'Referral Partner' : 'Overview')}
       ${sbItem('admin-dash',       '📊', 'Dashboard')}
       ${sbItem('admin-clients',    '👥', 'Clients')}
+      ${isReferrer ? '' : sbItem('admin-leases', '📝', 'Leases')}
       ${sbLabel('Mail')}
       ${sbItem('admin-upload',     '📤', 'Upload Mail')}
       ${sbItem('admin-all-mail',   '📬', 'All Mail',           'admin-mailreq-badge')}
@@ -8931,6 +9283,7 @@ function navTo(pageId) {
     if (ADMIN_INQ_VIEWS[pageId])     { PG.reset('adminInquiries'); renderAdminInquiries(); loadAdminTickets(); }
     if (pageId === 'admin-clients')  loadClientDetailPage();
     if (pageId === 'admin-settings' && currentProfile?.role === 'admin') populateSettingsForm();
+    if (pageId === 'admin-leases')   loadLeasesPage();
   } else if (currentProfile) {
     if (pageId === 'proof')    loadClientProofs();
     if (pageId === 'tickets' || pageId === 'ship-mail' || pageId === 'mail') loadClientTickets();
@@ -9099,6 +9452,7 @@ function renderAdminAttention() {
   const cards = [
     { n: _pendingMailReqCount, icon: '📬', label: 'Mail requests to do', go: "navTo('admin-all-mail');setTimeout(()=>{const s=document.getElementById('aml-filter-action');if(s){s.value='pending';PG.reset('adminMail');renderAdminAllMail();}},50)" },
     { n: allTickets.filter(t => t.type === 'ship_mail' && t.status !== 'completed').length, icon: '📦', label: 'Ship requests open', go: "navTo('admin-ship')" },
+    { n: (cdAllClients.length ? cdAllClients : (allClients || [])).filter(c => leaseAddressProblem(c.cs?.assigned_address || c.assigned_address)).length, icon: '🗺', label: 'Clients with no lease template for their state', go: "navTo('admin-leases')" },
     ...Object.entries(ADMIN_INQ_VIEWS).map(([k, v]) => ({ n: waiting(v.cats), icon: v.icon, label: v.title + ' awaiting reply', go: `navTo('${k}')` })),
   ];
   el.innerHTML = cards.map(c => `
